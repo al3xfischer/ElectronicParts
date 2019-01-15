@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicParts.Tests", "El
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicParts.Components", "ElectronicParts.Components\ElectronicParts.Components.csproj", "{6F6E2300-099A-41D5-A3F0-D0B12F91C1B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicParts.Models", "ElectronicParts.Models\ElectronicParts.Models.csproj", "{4294C9BE-14F0-4618-A5EC-F18A30B760FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{6F6E2300-099A-41D5-A3F0-D0B12F91C1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F6E2300-099A-41D5-A3F0-D0B12F91C1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F6E2300-099A-41D5-A3F0-D0B12F91C1B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4294C9BE-14F0-4618-A5EC-F18A30B760FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4294C9BE-14F0-4618-A5EC-F18A30B760FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4294C9BE-14F0-4618-A5EC-F18A30B760FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4294C9BE-14F0-4618-A5EC-F18A30B760FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Shared;
 
-namespace ElectronicParts.Components
+namespace ElectronicParts.Models
 {
-    public class MyValue<T> : IValueGeneric<T>
+    public class Value<T> : IValueGeneric<T>
     {
         public T Current { get; set; }
 

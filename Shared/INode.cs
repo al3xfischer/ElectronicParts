@@ -10,6 +10,8 @@ namespace Shared
 
         void Execute();
 
+        void Activate();
+
         string Label { get; }
 
         string Description { get; }

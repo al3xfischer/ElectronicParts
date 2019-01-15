@@ -1,11 +1,12 @@
 ﻿// ***********************************************************************
+// Assembly         : ElectronicParts.Services
 // Author           : Kevin Janisch
 // ***********************************************************************
-// <copyright file="AssemblyService.cs" company="FHWN">
-//     Copyright (c) . All rights reserved.
+// <copyright file="PinConnectorService.cs" company="FHWN">
+//     Copyright ©  2019
 // </copyright>
 
-// <summary>Represents the AssemblyService class of the ElectronicParts Programm</summary>
+// <summary>Represents the PinConnectorService class of the ElectronicParts programm</summary>
 // ***********************************************************************
 namespace ElectronicParts.Services.Assemblies
 {
