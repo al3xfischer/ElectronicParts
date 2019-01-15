@@ -15,15 +15,13 @@ namespace ElectronicParts.DI
         {
             IServiceCollection services = new ServiceCollection();
 
-            /// Configuration
-            services.AddSingleton<IConfigurationService, ConfigurationService>();
-
             /// ViewModels
             services.AddTransient<MainViewModel>();
             services.AddTransient<PreferencesViewModel>();
 
             // Services
             services.AddSingleton<IAssemblyService, AssemblyService>();
+            services.AddSingleton<IConfigurationService, ConfigurationService>();
 
             provider = services.BuildServiceProvider();
         }

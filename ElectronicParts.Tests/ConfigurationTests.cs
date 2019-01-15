@@ -1,14 +1,9 @@
-﻿using ElectronicParts.Services;
-using ElectronicParts.Services.Interfaces;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ElectronicParts.Tests
+﻿namespace ElectronicParts.Tests
 {
+    using ElectronicParts.Services;
+    using ElectronicParts.Services.Interfaces;
+    using NUnit.Framework;
+
     [TestFixture]
     class ConfigurationTests
     {
