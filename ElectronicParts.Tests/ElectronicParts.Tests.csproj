@@ -70,20 +70,15 @@
       <Project>{4294C9BE-14F0-4618-A5EC-F18A30B760FB}</Project>
       <Name>ElectronicParts.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ElectronicParts.Services\ElectronicParts.Services.csproj">
+      <Project>{a1d0a7f5-2dd5-4bbc-9def-38b017072b5f}</Project>
+      <Name>ElectronicParts.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{F90C9CBB-2FAA-4B3C-BB12-9D481EE86F19}</Project>
       <Name>Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ElectronicParts.Services\ElectronicParts.Services.csproj">
-      <Project>{a1d0a7f5-2dd5-4bbc-9def-38b017072b5f}</Project>
-    </ProjectReference>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ElectronicParts.Services\ElectronicParts.Services.csproj">
-      <Project>{A1D0A7F5-2DD5-4BBC-9DEF-38B017072B5F}</Project>
-      <Name>ElectronicParts.Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
