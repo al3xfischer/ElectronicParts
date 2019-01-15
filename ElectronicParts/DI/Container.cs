@@ -1,4 +1,5 @@
-﻿using ElectronicParts.ViewModels;
+﻿using ElectronicParts.Services.Assemblies;
+using ElectronicParts.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -12,9 +13,12 @@ namespace ElectronicParts.DI
         {
             IServiceCollection services = new ServiceCollection();
 
-            /// ViewModels
+            // ViewModels
             services.AddTransient<MainViewModel>();
             services.AddTransient<PreferencesViewModel>();
+
+            // Services
+            services.AddSingleton<IAssemblyService, AssemblyService>();
 
             provider = services.BuildServiceProvider();
         }
