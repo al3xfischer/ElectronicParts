@@ -90,6 +90,7 @@
     <Compile Include="Interfaces\IConfigurationService.cs" />
     <Compile Include="Implementations\AssemblyService.cs" />
     <Compile Include="Interfaces\IAssemblyService.cs" />
+    <Compile Include="MyColors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

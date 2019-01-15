@@ -7,6 +7,26 @@
         mc:Ignorable="d"
         Title="Preferences" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Viewbox Grid.Row="0">
+            <TextBlock TextWrapping="Wrap" FontSize="30" Padding="20">               
+                A connection between 2 pins of the type string will have the color:<ComboBox Width="100" Height="Auto" ItemsSource="{Binding ViewModel.AvailableColors}"/> when the value is: <TextBox Width="150" Height="Auto"/>
+            </TextBlock>
+        </Viewbox>
+        <Viewbox Grid.Row="1">
+            <TextBlock TextWrapping="Wrap" FontSize="30" Padding="20">                
+                A connection between 2 pins of the type integer will have the color:<ComboBox Width="100" Height="Auto" ItemsSource="{Binding ViewModel.AvailableColors}"/> when the value is: <TextBox Width="150" Height="Auto" PreviewTextInput="PreviewNumberInput"/>
+            </TextBlock>
+        </Viewbox>
+        <Viewbox Grid.Row="2">
+            <TextBlock TextWrapping="Wrap" FontSize="30" Padding="20">
+                A connection between 2 pins of the type bool will have the color:<ComboBox Width="100" Height="Auto" ItemsSource="{Binding ViewModel.AvailableColors}"/> when the value is: <ComboBox Width="100" Height="Auto"/>
+            </TextBlock>            
+        </Viewbox>
+        <Button Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="50" Height="20" Content="Apply"/>
     </Grid>
 </Window>
