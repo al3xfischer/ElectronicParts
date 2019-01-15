@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.IO;
 using System.Diagnostics;
+using System.Collections.Immutable;
 
 namespace ElectronicParts.Services.Assemblies
 {
     public class AssemblyService : IAssemblyService
     {
-        public List<IDisplayableNode> AvailableNodes { get; private set; }
+        public ImmutableList<IDisplayableNode> AvailableNodes { get; private set; }
         private readonly string assemblyPath;
 
         public AssemblyService()
@@ -21,7 +22,6 @@ namespace ElectronicParts.Services.Assemblies
             // C:\Programme\ElectronicParts\electronicParts.exe
             // C:\Programme\ElectronicParts\assemblies\????.dll
             this.assemblyPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies");
-            this.AvailableNodes = new List<IDisplayableNode>();
             Directory.CreateDirectory(this.assemblyPath);
         }
 
@@ -31,8 +31,11 @@ namespace ElectronicParts.Services.Assemblies
         /// <returns>Task.</returns>
         public async Task LoadAssemblies()
         {
+           
             await Task.Run(() =>
             {
+                // Creating temporary nodelist.
+                List<IDisplayableNode> loadedNodes = new List<IDisplayableNode>();
                 IEnumerable<FileInfo> files;
                 try
                 {
@@ -65,7 +68,7 @@ namespace ElectronicParts.Services.Assemblies
                         // Iterating over every type and adding an instance to the AvailableNodeslist.
                         foreach (var node in availableNodes)
                         {
-                            this.AvailableNodes.Add(Activator.CreateInstance(node) as IDisplayableNode);
+                            loadedNodes.Add(Activator.CreateInstance(node) as IDisplayableNode);
                         }
                     }
                     catch (Exception e)
@@ -73,6 +76,9 @@ namespace ElectronicParts.Services.Assemblies
                         Debug.WriteLine("Assembly loading error");
                     }
                 }
+                
+                // writing loadedNodes into availableNodes immutableList.
+                this.AvailableNodes = loadedNodes.ToImmutableList();
             });
         }
     }
