@@ -50,6 +50,9 @@
     <Compile Include="IValue.cs" />
     <Compile Include="IValueGeneric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestNode.cs" />
+    <Compile Include="TestPin.cs" />
+    <Compile Include="TestValue.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

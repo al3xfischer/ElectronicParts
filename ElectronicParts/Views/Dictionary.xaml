@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ElectronicParts.Views.Controls"
+                    xmlns:shared="clr-namespace:Shared;assembly=Shared"
+                    xmlns:converter="clr-namespace:ElectronicParts.Views.Converter">
+    <!-- NodeTemplate -->
+    <DataTemplate x:Key="NodeTemplate" DataType="{x:Type shared:IDisplayableNode}" >
+        <Rectangle Width="50" Stroke="Black" DataContext="{Binding RelativeSource={RelativeSource AncestorType=ContentPresenter}}" >
+            <Rectangle.Height>
+                <Binding Path="Inputs.Count">
+                    <Binding.Converter>
+                        <converter:PinToHeightConverter/>
+                    </Binding.Converter>
+                </Binding>
+            </Rectangle.Height>
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="{Binding Path=Picture}"/>
+            </Rectangle.Fill>
+        </Rectangle>
+    </DataTemplate>
+
+    <!-- PinTemplate -->
+    <DataTemplate x:Key="PinTemplate" DataType="{x:Type shared:IPin}">
+        <Border Height="4" Width="15" Margin="0 8 0 8"  Background="Black" />
+    </DataTemplate>
+</ResourceDictionary>

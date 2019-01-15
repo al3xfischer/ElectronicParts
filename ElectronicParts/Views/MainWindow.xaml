@@ -4,9 +4,91 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElectronicParts.Views"
+        xmlns:converter="clr-namespace:ElectronicParts.Views.Converter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Electronic Parts" MinWidth="500" MinHeight="400" WindowState="Maximized" >
+
+    <Window.Resources>
+
+        <Style TargetType="ListView">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
         
-    </Grid>
+        <!-- Pin -->
+        <DataTemplate x:Key="PinTemplate">
+            <Border Height="4" Width="15" Margin="0 8 0 8"  Background="Black" />
+        </DataTemplate>
+        
+        <!-- Node -->
+        <DataTemplate x:Key="NodeTemplate" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <!-- Inputs -->
+                <ListView Grid.Column="0" ItemsSource="{Binding  Inputs}" ItemTemplate="{StaticResource PinTemplate}" >
+                </ListView>
+                
+                <!-- Body -->
+                <Rectangle Width="50" Stroke="Black" Grid.Column="1" >
+                    <Rectangle.Height>
+                        <Binding Path="Inputs.Count">
+                            <Binding.Converter>
+                                <converter:PinToHeightConverter/>
+                            </Binding.Converter>
+                        </Binding>
+                    </Rectangle.Height>
+                    <Rectangle.Fill>
+                        <ImageBrush>
+                            <ImageBrush.ImageSource>
+                                <Binding Path="Picture">
+                                    <Binding.Converter>
+                                        <converter:BitmapToImageSourceConverter/>
+                                    </Binding.Converter>
+                                </Binding>
+                            </ImageBrush.ImageSource>
+                        </ImageBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+
+                <!-- Outputs -->
+                <ListView Grid.Column="2" ItemsSource="{Binding  Outputs}" ItemTemplate="{StaticResource PinTemplate}" >
+                </ListView>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+
+    <!-- Shortcuts -->
+    <Window.InputBindings>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding ViewModel.SaveCommand}"/>
+        <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding ViewModel.LoadCommand}"/>
+    </Window.InputBindings>
+
+    <DockPanel>
+        <!-- Menu -->
+        <Menu DockPanel.Dock="Top" FontSize="14" >
+            <MenuItem Header="_File">
+                <MenuItem Header="_Save" Command="{Binding ViewModel.SaveCommand}" InputGestureText="Ctrl+S" />
+                <MenuItem Header="_Open" Command="{Binding ViewModel.LoadCommand}" InputGestureText="Ctrl+O" />
+                <Separator/>
+                <MenuItem Header="_Preferences" Name="preferences" Click="Preferences_Click"/>
+                <MenuItem Header="_Exit" Command="{Binding ViewModel.ExitCommand}" />
+            </MenuItem>
+        </Menu>
+
+        <!-- Components -->
+        <ListView ItemsSource="{Binding ViewModel.Components}" DockPanel.Dock="Left" Width="200" />
+
+        <!-- Canvas -->
+        <ItemsControl DockPanel.Dock="Right" ItemsSource="{Binding ViewModel.Nodes}" ItemTemplate="{StaticResource NodeTemplate}" >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True" Background="LightGray"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </DockPanel>
 </Window>
