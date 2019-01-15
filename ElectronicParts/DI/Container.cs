@@ -16,7 +16,7 @@ namespace ElectronicParts.DI
             IServiceCollection services = new ServiceCollection();
 
             /// Configuration
-            services.AddSingleton<IConfigurationService, ConfigurationManager>();
+            services.AddSingleton<IConfigurationService, ConfigurationService>();
 
             /// ViewModels
             services.AddTransient<MainViewModel>();

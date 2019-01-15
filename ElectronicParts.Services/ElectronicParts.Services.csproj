@@ -85,7 +85,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementations\ConfigurationManager.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="Implementations\ConfigurationService.cs" />
     <Compile Include="Interfaces\IConfigurationService.cs" />
     <Compile Include="Implementations\AssemblyService.cs" />
     <Compile Include="Interfaces\IAssemblyService.cs" />

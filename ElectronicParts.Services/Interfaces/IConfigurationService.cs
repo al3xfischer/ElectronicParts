@@ -9,7 +9,7 @@ namespace ElectronicParts.Services.Interfaces
 {
     public interface IConfigurationService
     {
-        IConfiguration Configuration { get; }
+        Configuration Configuration { get; }
 
         void SaveConfiguration();
     }
