@@ -86,12 +86,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementations\ConfigurationManager.cs" />
+    <Compile Include="Implementations\PinConnectorService.cs" />
     <Compile Include="Interfaces\IConfigurationService.cs" />
     <Compile Include="Implementations\AssemblyService.cs" />
     <Compile Include="Interfaces\IAssemblyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ElectronicParts.Models\ElectronicParts.Models.csproj">
+      <Project>{4294c9be-14f0-4618-a5ec-f18a30b760fb}</Project>
+      <Name>ElectronicParts.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{f90c9cbb-2faa-4b3c-bb12-9d481ee86f19}</Project>
       <Name>Shared</Name>
