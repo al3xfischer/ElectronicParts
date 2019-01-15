@@ -18,7 +18,7 @@ namespace ElectronicParts.Services.Implementations
 
     public class PinConnectorService
     {
-        private List<Connector> ExistingConnections;
+        private readonly List<Connector> ExistingConnections;
 
         public PinConnectorService()
         {
