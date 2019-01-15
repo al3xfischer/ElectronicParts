@@ -107,7 +107,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration">
       <Version>2.2.0</Version>
@@ -126,13 +128,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Shared\Shared.csproj">
-      <Project>{f90c9cbb-2faa-4b3c-bb12-9d481ee86f19}</Project>
-      <Name>Shared</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ElectronicParts.Services\ElectronicParts.Services.csproj">
       <Project>{a1d0a7f5-2dd5-4bbc-9def-38b017072b5f}</Project>
       <Name>ElectronicParts.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{f90c9cbb-2faa-4b3c-bb12-9d481ee86f19}</Project>
+      <Name>Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

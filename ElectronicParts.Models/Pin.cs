@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Shared;
 
-namespace ElectronicParts.Components
+namespace ElectronicParts.Models
 {
     public class Pin<T> : IPinGeneric<T>
     {
         public Pin()
         {
-            this.Value = new MyValue<T>();
+            this.Value = new Value<T>();
         }
         public IValueGeneric<T> Value { get; set; }
 
@@ -32,7 +32,6 @@ namespace ElectronicParts.Components
                 }
                 catch (InvalidCastException e)
                 {
-                    // TODO proper exception handeling
                     Debug.WriteLine(e.Message);
                 }
             }

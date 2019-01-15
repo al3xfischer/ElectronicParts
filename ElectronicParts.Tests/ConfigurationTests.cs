@@ -1,4 +1,5 @@
 ﻿using ElectronicParts.Services;
+using ElectronicParts.Services.Implementations;
 using ElectronicParts.Services.Interfaces;
 using NUnit.Framework;
 using System;
@@ -13,28 +14,17 @@ namespace ElectronicParts.Tests
     class ConfigurationTests
     {
         [Test]
-        public void TestConfigChange()
-        {
-            IConfigurationService configurationManager = new ConfigurationManager();
-
-            configurationManager.Configuration.GetSection("MySection1")["Key1"] = "123";
-
-            Assert.That(configurationManager.Configuration.GetSection("MySection1")["Key1"] == "123");
-        }
-
-        [Test]
         public void TestConfigSave()
         {
-            IConfigurationService configurationManager = new ConfigurationManager();
+            IConfigurationService configuration1 = new ConfigurationService();
 
-            configurationManager.Configuration.GetSection("MySection1")["Key1"] = "123";
+            configuration1.Configuration.BoolColor = "purple";
+            
+            configuration1.SaveConfiguration();
 
-            configurationManager.SaveConfiguration();
+            IConfigurationService configuration2 = new ConfigurationService();
 
-
-            IConfigurationService configurationManager2 = new ConfigurationManager();
-
-            Assert.That(configurationManager2.Configuration.GetSection("MySection1")["Key1"] == "123");
+            Assert.That(configuration2.Configuration.BoolColor == "purple");
         }
     }
 }

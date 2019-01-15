@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Shared;
 
-namespace ElectronicParts.Services.Assemblies
+namespace ElectronicParts.Services.Interfaces
 {
     public interface IAssemblyService
     {
