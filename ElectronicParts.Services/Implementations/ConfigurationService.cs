@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using ElectronicParts.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 
-namespace ElectronicParts.Services
+namespace ElectronicParts.Services.Implementations
 {
     public class ConfigurationService : IConfigurationService
     {
