@@ -8,6 +8,6 @@ namespace Shared
 {
     public interface IValue
     {
-        object Value { get; set; }
+        object Current { get; set; }
     }
 }

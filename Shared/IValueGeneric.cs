@@ -2,6 +2,6 @@
 {
     public interface IValueGeneric<T> : IValue
     {
-        new T Value { get; set; }
+        new T Current { get; set; }
     }
 }
