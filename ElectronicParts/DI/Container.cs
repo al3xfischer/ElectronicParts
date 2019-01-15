@@ -1,4 +1,6 @@
-﻿using ElectronicParts.ViewModels;
+﻿using ElectronicParts.Services;
+using ElectronicParts.Services.Interfaces;
+using ElectronicParts.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -11,6 +13,9 @@ namespace ElectronicParts.DI
         static Container()
         {
             IServiceCollection services = new ServiceCollection();
+
+            /// Configuration
+            services.AddSingleton<IConfigurationService, ConfigurationManager>();
 
             /// ViewModels
             services.AddTransient<MainViewModel>();
