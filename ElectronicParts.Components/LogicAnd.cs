@@ -43,6 +43,13 @@
         /// <value>The description of this gate.</value>
         public string Description => "Under Construction";
 
+        public NodeType Type => throw new System.NotImplementedException();
+
+        public void Activate()
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// Evaluates all set input pins and sets output pin to true if all input pins are true otherwise to false.
         /// </summary>

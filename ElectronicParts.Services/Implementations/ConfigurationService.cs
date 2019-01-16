@@ -1,10 +1,16 @@
-﻿namespace ElectronicParts.Services
-{
-    using System.IO;
-    using System.Runtime.Serialization.Json;
-    using ElectronicParts.Services.Interfaces;
-    using Microsoft.Extensions.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using System.Text;
+using System.Threading.Tasks;
+using ElectronicParts.Services.Interfaces;
+using Microsoft.Extensions.Configuration;
 
+namespace ElectronicParts.Services.Implementations
+{
     public class ConfigurationService : IConfigurationService
     {
         public Configuration Configuration { get; private set; }

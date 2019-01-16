@@ -1,10 +1,15 @@
-﻿namespace ElectronicParts.Tests
-{
-    using ElectronicParts.Services;
-    using ElectronicParts.Services.Interfaces;
-    using NUnit.Framework;
-    using System.Windows.Media;
+﻿using ElectronicParts.Services;
+using ElectronicParts.Services.Implementations;
+using ElectronicParts.Services.Interfaces;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
+namespace ElectronicParts.Tests
+{
     [TestFixture]
     class ConfigurationTests
     {
@@ -13,13 +18,13 @@
         {
             IConfigurationService configuration1 = new ConfigurationService();
 
-            configuration1.Configuration.BoolColor = (Color)ColorConverter.ConvertFromString("Purple");
+            configuration1.Configuration.BoolColor = "purple";
             
             configuration1.SaveConfiguration();
 
             IConfigurationService configuration2 = new ConfigurationService();
 
-            Assert.That(configuration2.Configuration.BoolColor == (Color)ColorConverter.ConvertFromString("purple"));
+            Assert.That(configuration2.Configuration.BoolColor == "purple");
         }
     }
 }
