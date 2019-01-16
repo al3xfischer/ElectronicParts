@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace ElectronicParts.Views.Converter
+namespace ElectronicParts.Converter
 {
     public class PinToHeightConverter : IValueConverter
     {

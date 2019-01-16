@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace ElectronicParts.Views.Converter
+namespace ElectronicParts.Converter
 {
     public class BitmapToImageSourceConverter : IValueConverter
     {

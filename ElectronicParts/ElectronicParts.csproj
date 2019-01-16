@@ -56,15 +56,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Views\Converter\BitmapToImageSourceConverter.cs" />
-    <Compile Include="Views\Converter\PinToHeightConverter.cs" />
+    <Compile Include="Converter\BitmapToImageSourceConverter.cs" />
+    <Compile Include="Converter\PinToHeightConverter.cs" />
+    <Compile Include="EventArgs\StoppedEventArgs.cs" />
+    <Compile Include="Extentions\Extentioins.cs" />
+    <Compile Include="ViewModels\NodeViewModel.cs" />
+    <Compile Include="Views\Node.xaml.cs">
+      <DependentUpon>Node.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\Dictionary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -82,6 +84,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\Node.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Preferences.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

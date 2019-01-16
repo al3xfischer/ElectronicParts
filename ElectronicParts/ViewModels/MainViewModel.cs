@@ -8,20 +8,20 @@ namespace ElectronicParts.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        private ObservableCollection<IDisplayableNode> nodes;
+        private ObservableCollection<NodeViewModel> nodes;
 
         public MainViewModel()
         {
             this.SaveCommand = new RelayCommand(arg => { });
             this.LoadCommand = new RelayCommand(arg => { });
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
-            this.Nodes = new ObservableCollection<IDisplayableNode>
+            this.Nodes = new ObservableCollection<NodeViewModel>
             {
-                new TestNode()
+                new NodeViewModel(new TestNode())
             };
         }
 
-        public ObservableCollection<IDisplayableNode> Nodes
+        public ObservableCollection<NodeViewModel> Nodes
         {
             get => this.nodes;
 
@@ -30,6 +30,8 @@ namespace ElectronicParts.ViewModels
                 Set(ref this.nodes, value);
             }
         }
+
+        public NodeViewModel SelectedNode { get; set; }
 
         public ICommand SaveCommand { get; }
 

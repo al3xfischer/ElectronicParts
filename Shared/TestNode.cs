@@ -13,7 +13,11 @@ namespace Shared
                   new TestPin(),
                   new TestPin()
             };
-            this.Outputs = new List<IPin>();
+            this.Outputs = new List<IPin>()
+            {
+                new TestPin(),
+                new TestPin()
+            };
         }
         public ICollection<IPin> Inputs { get; set; }
 
