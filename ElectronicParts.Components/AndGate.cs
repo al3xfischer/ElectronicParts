@@ -1,23 +1,40 @@
-﻿namespace ElectronicParts.Components
+﻿// ***********************************************************************
+// Author           : Roman Jahn
+// ***********************************************************************
+// <copyright file="AndGate.cs" company="FHWN">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary>Represents the AndGate class of the ElectronicParts Programm</summary>
+// ***********************************************************************
+
+namespace ElectronicParts.Components
 {
+    using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Linq;
     using Shared;
 
     /// <summary>
-    /// Represents an "logic AND-Gate" with one output pin as boolean.
+    /// Represents an <see cref="AndGate"/> with one output pin as boolean.
     /// </summary>
-    public class LogicAnd : INode
+    public class AndGate : IDisplayableNode
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LogicAnd"/> class.
+        /// Initializes a new instance of the <see cref="AndGate"/> class.
         /// </summary>
-        public LogicAnd()
+        public AndGate()
         {
             this.Inputs = new List<IPin>();
+
             this.Outputs = new List<IPin>();
             this.Outputs.Add(new Pin<bool>());
         }
+
+        /// <summary>
+        /// Event to be called when picture has changed.
+        /// </summary>
+        public event EventHandler PictureChanged;
 
         /// <summary>
         /// Gets the input pins of this gate.
@@ -26,7 +43,7 @@
         public ICollection<IPin> Inputs { get; private set; }
 
         /// <summary>
-        /// Gets the output pins of this gate. There is only one pin - so use first pin of the Collection.
+        /// Gets the output pins of this gate. There is only one output pin - so use first pin of the Collection.
         /// </summary>
         /// <value>The output pins of this gate.</value>
         public ICollection<IPin> Outputs { get; private set; }
@@ -41,13 +58,26 @@
         /// Gets the description of this gate.
         /// </summary>
         /// <value>The description of this gate.</value>
-        public string Description => "Under Construction";
+        public string Description => "A logic And-gate.";
 
-        public NodeType Type => throw new System.NotImplementedException();
+        /// <summary>
+        /// Gets the type of the node.
+        /// </summary>
+        /// <value>The type of the node.</value>
+        public NodeType Type => NodeType.Logic;
 
+        /// <summary>
+        /// Gets the current picture of this node.
+        /// </summary>
+        /// <value>The current picture of this node.</value>
+        public Bitmap Picture => Properties.Resources.And_Gate;
+
+        /// <summary>
+        /// Empty Method. <see cref="AndGate"/> is always active.
+        /// </summary>
         public void Activate()
         {
-            throw new System.NotImplementedException();
+            return;
         }
 
         /// <summary>
