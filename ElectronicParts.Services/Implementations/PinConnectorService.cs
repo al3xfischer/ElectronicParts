@@ -95,7 +95,7 @@ namespace ElectronicParts.Services.Implementations
                 return true;
             }
             // If the types of pins are not compatible an InvalidCastException gets thrown by the pin instance
-            catch (InvalidCastException e)
+            catch (InvalidCastException)
             {
                 return false;
             }
