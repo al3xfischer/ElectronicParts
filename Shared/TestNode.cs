@@ -31,8 +31,6 @@ namespace Shared
 
         public NodeType Type => throw new NotImplementedException();
 
-        public NodeType Type => throw new NotImplementedException();
-
         public event EventHandler PictureChanged;
 
         public void Activate()
