@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace ElectronicParts.Tests
 {
@@ -18,13 +19,13 @@ namespace ElectronicParts.Tests
         {
             IConfigurationService configuration1 = new ConfigurationService();
 
-            configuration1.Configuration.BoolColor = "purple";
+            configuration1.Configuration.BoolColor = "Purple";
             
             configuration1.SaveConfiguration();
 
             IConfigurationService configuration2 = new ConfigurationService();
 
-            Assert.That(configuration2.Configuration.BoolColor == "purple");
+            Assert.That(configuration2.Configuration.BoolColor == "Purple");
         }
     }
 }
