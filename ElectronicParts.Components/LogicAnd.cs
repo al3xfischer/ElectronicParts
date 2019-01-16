@@ -43,6 +43,8 @@
         /// <value>The description of this gate.</value>
         public string Description => "Under Construction";
 
+        public NodeType Type => throw new System.NotImplementedException();
+
         public void Activate()
         {
             throw new System.NotImplementedException();
