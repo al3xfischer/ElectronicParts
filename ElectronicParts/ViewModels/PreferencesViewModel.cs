@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared
+namespace ElectronicParts.ViewModels
 {
-    public interface IValue
+    public class PreferencesViewModel : BaseViewModel
     {
-        object Current { get; set; }
     }
 }

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1556C8BD-6949-47CD-97B6-24ABFF7311D9}</ProjectGuid>
+    <ProjectGuid>{4294C9BE-14F0-4618-A5EC-F18A30B760FB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ElectronicParts.Tests</RootNamespace>
-    <AssemblyName>ElectronicParts.Tests</AssemblyName>
+    <RootNamespace>ElectronicParts.Models</RootNamespace>
+    <AssemblyName>ElectronicParts.Models</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Shared">
+      <HintPath>..\Shared\bin\Debug\Shared.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,46 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComponentsTests.cs" />
-    <Compile Include="ConfigurationTests.cs" />
-    <Compile Include="AssemblyTest.cs" />
-    <Compile Include="PinConnectorTest.cs" />
+    <Compile Include="Connector.cs" />
+    <Compile Include="Pin.cs" />
+    <Compile Include="Value.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration">
-      <Version>2.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="NUnit">
-      <Version>3.11.0</Version>
-    </PackageReference>
-    <PackageReference Include="NUnit3TestAdapter">
-      <Version>3.12.0</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ElectronicParts.Components\ElectronicParts.Components.csproj">
-      <Project>{6f6e2300-099a-41d5-a3f0-d0b12f91c1b5}</Project>
-      <Name>ElectronicParts.Components</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ElectronicParts.Models\ElectronicParts.Models.csproj">
-      <Project>{4294c9be-14f0-4618-a5ec-f18a30b760fb}</Project>
-      <Name>ElectronicParts.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ElectronicParts.Services\ElectronicParts.Services.csproj">
-      <Project>{a1d0a7f5-2dd5-4bbc-9def-38b017072b5f}</Project>
-      <Name>ElectronicParts.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared\Shared.csproj">
-      <Project>{f90c9cbb-2faa-4b3c-bb12-9d481ee86f19}</Project>
-      <Name>Shared</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

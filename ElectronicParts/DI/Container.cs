@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ElectronicParts.Services;
+using ElectronicParts.Services.Interfaces;
+﻿using ElectronicParts.Services.Implementations;
+using ElectronicParts.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace ElectronicParts.DI
@@ -11,7 +15,16 @@ namespace ElectronicParts.DI
         {
             IServiceCollection services = new ServiceCollection();
 
+            /// Configuration
+            services.AddSingleton<IConfigurationService, ConfigurationService>();
 
+            /// ViewModels
+            services.AddTransient<MainViewModel>();
+            services.AddTransient<PreferencesViewModel>();
+
+            // Services
+            services.AddSingleton<IAssemblyService, AssemblyService>();
+            services.AddSingleton<IPinConnectorService, PinConnectorService>();
 
             provider = services.BuildServiceProvider();
         }
