@@ -49,6 +49,7 @@
     <Compile Include="IPinGeneric.cs" />
     <Compile Include="IValue.cs" />
     <Compile Include="IValueGeneric.cs" />
+    <Compile Include="NodeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
