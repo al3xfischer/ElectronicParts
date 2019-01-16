@@ -52,7 +52,7 @@
         </Menu>
 
         <!-- Components -->
-        <ListView ItemsSource="{Binding ViewModel.Components}" DockPanel.Dock="Left" Width="200" />
+        <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" DockPanel.Dock="Left" Width="200" />
 
         
         <DockPanel Margin="0 1 0 0" Background="LightGray" DockPanel.Dock="Right">

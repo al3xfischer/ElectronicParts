@@ -19,14 +19,16 @@ namespace ElectronicParts.ViewModels
         private readonly IExecutionService myExecutionService;
         private readonly IAssemblyService myAssemblyService;
 
-        public MainViewModel(IExecutionService executionService, IAssemblyService myAssemblyService)
+        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService)
         {
             this.myExecutionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
-            this.myAssemblyService = myAssemblyService;
+            this.myAssemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
 
             this.SaveCommand = new RelayCommand(arg => { });
             this.LoadCommand = new RelayCommand(arg => { });
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
+
+            this.AvailableNodes = new ObservableCollection<NodeViewModel>();
 
             this.ExecutionStepCommand = new RelayCommand(async arg =>
             {
@@ -60,11 +62,24 @@ namespace ElectronicParts.ViewModels
 
             }, arg => this.myExecutionService.IsEnabled);
 
-            this.myAssemblyService.LoadAssemblies();
+            this.myAssemblyService.LoadAssemblies()
+                .ContinueWith(t => {
 
-            this.Nodes = this.myAssemblyService.AvailableNodes.Select(node => new NodeViewModel(node)).ToObservableCollection();
+                    var list = this.myAssemblyService.AvailableNodes.Select(node => new NodeViewModel(node));
+
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        foreach (var node in list)
+                        {
+                            this.AvailableNodes.Add(node);
+                        }
+                    });
+                    
+                });
+
 
             this.Connections = new ObservableCollection<Connector>();
+
         }
 
         public ObservableCollection<NodeViewModel> Nodes
