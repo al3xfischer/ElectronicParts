@@ -16,6 +16,19 @@ namespace ElectronicParts.Models
             this.CommonValue = commonVal ?? throw new ArgumentNullException(nameof(commonVal));
         }
 
+        public void ResetValue()
+        {
+            Type valueType = this.CommonValue.GetType();
+            Type[] genericTypeArgs = valueType.GetGenericArguments();
+            if (genericTypeArgs.Count() == 0 || genericTypeArgs.Count() > 1)
+            {
+                throw new InvalidOperationException("The node containing the output pin is not implemented correctly. There have been 0 or more than one generic type arguments.");
+            }
+
+            Type genericType = genericTypeArgs.First();
+
+            this.CommonValue.Current = Activator.CreateInstance(genericType);
+        }
         public IPin OutputPin { get; private set; }
         public IPin InputPin { get; private set; }
         public IValue CommonValue { get; private set; }

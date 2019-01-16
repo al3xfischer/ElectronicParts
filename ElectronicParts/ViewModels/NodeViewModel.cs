@@ -7,7 +7,7 @@ namespace ElectronicParts.ViewModels
 {
     public class NodeViewModel : BaseViewModel
     {
-        private readonly IDisplayableNode node;
+        internal readonly IDisplayableNode node;
 
         private int top;
 
