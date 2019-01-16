@@ -24,10 +24,15 @@ namespace ElectronicParts.ViewModels
 
         public int Left { get => this.left; set { Set(ref this.left, value); } }
 
-
         public ObservableCollection<IPin> Inputs { get => this.node.Inputs.ToObservableCollection(); }
+
         public ObservableCollection<IPin> Outputs { get => this.node.Outputs.ToObservableCollection(); }
+
         public Bitmap Picture { get => this.node.Picture; }
+
+        public string Label { get => this.node.Label; }
+
+        public string Description { get => this.node.Description; }
 
     }
 }

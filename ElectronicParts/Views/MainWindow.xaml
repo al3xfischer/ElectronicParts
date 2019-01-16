@@ -26,6 +26,11 @@
         <DataTemplate x:Key="NodeTemplate">
             <local:Node Canvas.Left="30" x:Name="Node"/>
         </DataTemplate>
+        
+        <!-- NideInformationTemplate -->
+        <DataTemplate x:Key="NodeInformationTemplate">
+            <local:NodeInformation/>
+        </DataTemplate>
 
     </Window.Resources>
 
@@ -48,7 +53,8 @@
         </Menu>
 
         <!-- Components -->
-        <ListView ItemsSource="{Binding ViewModel.Components}" DockPanel.Dock="Left" Width="200" />
+        <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" DockPanel.Dock="Left" Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}" >
+        </ListView>
 
         <!-- Canvas -->
 

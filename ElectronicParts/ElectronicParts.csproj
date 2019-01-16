@@ -64,6 +64,9 @@
     <Compile Include="Views\Node.xaml.cs">
       <DependentUpon>Node.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NodeInformation.xaml.cs">
+      <DependentUpon>NodeInformation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>
@@ -85,6 +88,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Node.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NodeInformation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
