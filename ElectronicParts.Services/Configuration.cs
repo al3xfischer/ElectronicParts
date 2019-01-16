@@ -22,21 +22,6 @@ namespace ElectronicParts.Services
         [DataMember]
         public List<Rule<bool>> BoolRules { get; set; }
 
-        [DataMember]
-        public string StringValue { get; set; }
-        [DataMember]
-        public string StringColor { get; set; }
-
-        [DataMember]
-        public int IntValue { get; set; }
-        [DataMember]
-        public string IntColor { get; set; }
-
-        [DataMember]
-        public bool BoolValue { get; set; }
-        [DataMember]
-        public string BoolColor { get; set; }
-
         public Configuration(IConfiguration config)
         {
             this.StringRules = new List<Rule<string>>();
@@ -68,20 +53,6 @@ namespace ElectronicParts.Services
                 string color = rule["Color"];
                 this.BoolRules.Add(new Rule<bool>(value, color));
             }
-
-            this.StringColor = config["StringColor"];
-
-            this.IntColor = config["IntColor"];
-
-            this.BoolColor = config["BoolColor"];
-
-            this.StringValue = config["StringValue"];
-
-            int.TryParse(config["IntValue"], out int intValue);
-
-            this.IntValue = intValue;
-
-            this.BoolValue = config["BoolValue"] == "True";
         }
     }
 }

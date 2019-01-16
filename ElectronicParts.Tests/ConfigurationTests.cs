@@ -17,15 +17,6 @@ namespace ElectronicParts.Tests
         [Test]
         public void TestConfigSave()
         {
-            IConfigurationService configuration1 = new ConfigurationService();
-
-            configuration1.Configuration.BoolColor = "Purple";
-            
-            configuration1.SaveConfiguration();
-
-            IConfigurationService configuration2 = new ConfigurationService();
-
-            Assert.That(configuration2.Configuration.BoolColor == "Purple");
         }
     }
 }

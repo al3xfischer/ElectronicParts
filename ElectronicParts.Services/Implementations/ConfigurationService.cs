@@ -35,7 +35,7 @@ namespace ElectronicParts.Services.Implementations
 
         public void SaveConfiguration()
         {
-            using (FileStream fileStream = new FileStream(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\appsettings.json", FileMode.Open))
+            using (FileStream fileStream = new FileStream(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\appsettings.json", FileMode.OpenOrCreate))
             {
                 DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Configuration));
                 ser.WriteObject(fileStream, this.Configuration);

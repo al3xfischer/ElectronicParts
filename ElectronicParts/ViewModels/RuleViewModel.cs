@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ElectronicParts.ViewModels
 {
@@ -14,7 +15,10 @@ namespace ElectronicParts.ViewModels
         {
             this.Rule = rule;
             this.DeletionCommand = deletionCommand;
+            this.Color = (Color)ColorConverter.ConvertFromString(rule.Color);
         }
+
+        public Color Color { get; set; }
 
         public ICommand DeletionCommand { get; } 
 

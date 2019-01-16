@@ -18,6 +18,9 @@ namespace ElectronicParts.ViewModels
         public IConfigurationService ConfigurationService { get; }
 
         public ICommand ApplyCommand { get; }
+        public ICommand AddStringRuleCommand { get; }
+        public ICommand AddIntRuleCommand { get; }
+        public ICommand AddBoolRuleCommand { get; }
 
         public ObservableCollection<RuleViewModel<string>> StringRules { get; }
 
@@ -29,7 +32,7 @@ namespace ElectronicParts.ViewModels
         {
             this.ConfigurationService = configurationService;
 
-            ICommand StringDeletionCommand = new RelayCommand(ruleObj =>
+            ICommand stringDeletionCommand = new RelayCommand(ruleObj =>
             {
                 RuleViewModel<string> ruleVM = ruleObj as RuleViewModel<string>;
 
@@ -37,7 +40,7 @@ namespace ElectronicParts.ViewModels
                 configurationService.Configuration.StringRules.Remove(ruleVM.Rule);
             });
 
-            ICommand IntDeletionCommand = new RelayCommand(ruleObj =>
+            ICommand intDeletionCommand = new RelayCommand(ruleObj =>
             {
                 RuleViewModel<int> ruleVM = ruleObj as RuleViewModel<int>;
 
@@ -45,7 +48,7 @@ namespace ElectronicParts.ViewModels
                 configurationService.Configuration.IntRules.Remove(ruleVM.Rule);
             });
 
-            ICommand BoolDeletionCommand = new RelayCommand(ruleObj =>
+            ICommand boolDeletionCommand = new RelayCommand(ruleObj =>
             {
                 RuleViewModel<bool> ruleVM = ruleObj as RuleViewModel<bool>;
 
@@ -61,22 +64,43 @@ namespace ElectronicParts.ViewModels
 
             foreach (var stringRule in configurationService.Configuration.StringRules)
             {
-                this.StringRules.Add(new RuleViewModel<string>(stringRule, StringDeletionCommand));                
+                this.StringRules.Add(new RuleViewModel<string>(stringRule, stringDeletionCommand));                
             }
 
             foreach (var intRule in configurationService.Configuration.IntRules)
             {
-                this.IntRules.Add(new RuleViewModel<int>(intRule, StringDeletionCommand));
+                this.IntRules.Add(new RuleViewModel<int>(intRule, intDeletionCommand));
             }
 
             foreach (var boolRule in configurationService.Configuration.BoolRules)
             {
-                this.BoolRules.Add(new RuleViewModel<bool>(boolRule, StringDeletionCommand));
+                this.BoolRules.Add(new RuleViewModel<bool>(boolRule, boolDeletionCommand));
             }
 
             this.ApplyCommand = new RelayCommand(obj => 
             {
                 this.ConfigurationService.SaveConfiguration();
+            });
+
+            this.AddStringRuleCommand = new RelayCommand(obj =>
+            {
+                Rule<string> newRule = new Rule<string>("", "Black");
+                this.StringRules.Add(new RuleViewModel<string>(newRule, stringDeletionCommand));
+                configurationService.Configuration.StringRules.Add(newRule);
+            });
+
+            this.AddIntRuleCommand = new RelayCommand(obj =>
+            {
+                Rule<int> newRule = new Rule<int>(0, "Black");
+                this.IntRules.Add(new RuleViewModel<int>(newRule, intDeletionCommand));
+                configurationService.Configuration.IntRules.Add(newRule);
+            });
+
+            this.AddBoolRuleCommand = new RelayCommand(obj =>
+            {
+                Rule<bool> newRule = new Rule<bool>(false, "Black");
+                this.BoolRules.Add(new RuleViewModel<bool>(newRule, stringDeletionCommand));
+                configurationService.Configuration.BoolRules.Add(newRule);
             });
         }
     }

@@ -63,6 +63,7 @@
     <Compile Include="ViewModels\ConnectorViewModel.cs" />
     <Compile Include="ViewModels\NodeViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModel.cs" />
+    <Compile Include="Views\NameObserver.cs" />
     <Compile Include="Views\Node.xaml.cs">
       <DependentUpon>Node.xaml</DependentUpon>
     </Compile>
