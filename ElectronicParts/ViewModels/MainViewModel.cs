@@ -4,12 +4,15 @@ using System.Windows;
 using Shared;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using ElectronicParts.Models;
 
 namespace ElectronicParts.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
         private ObservableCollection<NodeViewModel> nodes;
+        private ObservableCollection<Connector> connections;
+        private ObservableCollection<NodeViewModel> availableNodes;
 
         public MainViewModel()
         {
@@ -32,11 +35,33 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        public ObservableCollection<Connector> Connections
+        {
+            get => this.connections;
+
+            set
+            {
+                Set(ref this.connections, value);
+            }
+        }
+
+        public ObservableCollection<NodeViewModel> AvailableNodes
+        {
+            get => this.availableNodes;
+
+            set
+            {
+                Set(ref this.availableNodes, value);
+            }
+        }
+
         public NodeViewModel SelectedNode { get; set; }
 
         public ICommand SaveCommand { get; }
 
         public ICommand LoadCommand { get; }
+
+        public ICommand ReloadAssembliesCommand { get; }
 
         public ICommand ExitCommand { get; }
     }
