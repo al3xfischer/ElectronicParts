@@ -29,7 +29,14 @@ namespace Shared
 
         public Bitmap Picture { get { return new Bitmap(@"C:\Users\alexfh\Desktop\GetPersonaPhoto.jpg"); } }
 
+        public NodeType Type => throw new NotImplementedException();
+
         public event EventHandler PictureChanged;
+
+        public void Activate()
+        {
+            throw new NotImplementedException();
+        }
 
         public void Execute()
         {

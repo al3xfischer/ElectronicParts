@@ -1,14 +1,9 @@
 ﻿using ElectronicParts.DI;
 using ElectronicParts.ViewModels;
-<<<<<<< HEAD
-using System;
-using System.Windows;
-=======
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
->>>>>>> NodeTemplate
 
 namespace ElectronicParts.Views
 {
@@ -34,8 +29,6 @@ namespace ElectronicParts.Views
         {
             var preferences = new Preferences();
             preferences.ShowDialog();
-<<<<<<< HEAD
-=======
         }
 
         private void Node_Moving(object sender, System.EventArgs e)
@@ -81,8 +74,6 @@ namespace ElectronicParts.Views
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
->>>>>>> NodeTemplate
         }
     }
 }

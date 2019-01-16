@@ -29,7 +29,6 @@ namespace ElectronicParts.Services
 
         public Configuration(IConfiguration config)
         {
-
             this.StringColor = (Color)ColorConverter.ConvertFromString(config["StringColor"]);
 
             this.IntColor = (Color)ColorConverter.ConvertFromString(config["IntColor"]);
