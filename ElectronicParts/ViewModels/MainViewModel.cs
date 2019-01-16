@@ -19,10 +19,11 @@ namespace ElectronicParts.ViewModels
         private readonly IExecutionService myExecutionService;
         private readonly IAssemblyService myAssemblyService;
 
-        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService)
+        public MainViewModel(IExecutionService executionService, IAssemblyService myAssemblyService)
         {
             this.myExecutionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
-            this.myAssemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
+            this.myAssemblyService = myAssemblyService;
+
             this.SaveCommand = new RelayCommand(arg => { });
             this.LoadCommand = new RelayCommand(arg => { });
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
@@ -37,29 +38,33 @@ namespace ElectronicParts.ViewModels
             {
                 var nodeList = this.Nodes.Select(nodeVM => nodeVM.node);
                 await this.myExecutionService.StartExecutionLoop(nodeList);
+
             }, arg => !this.myExecutionService.IsEnabled);
 
             this.ExecutionStopLoopCommand = new RelayCommand(arg =>
             {
                 this.myExecutionService.StopExecutionLoop();
+
             }, arg => this.myExecutionService.IsEnabled);
 
-            this.ResetAllConnections = new RelayCommand(async arg =>
+            this.ResetAllConnectionsCommand = new RelayCommand(async arg =>
             {
-                await Task.Run(() =>
-                {
-                    foreach (var connection in this.Connections)
-                    {
-                        connection.ResetValue();
-                    }
-                });
+                await this.ResetAllConnections();
 
-            }, arg => !this.myExecutionService.IsEnabled);
+            });
 
-            this.myAssemblyService.LoadAssemblies().Wait();
+            this.ExecutionStopLoopAndResetCommand = new RelayCommand(async arg =>
+            {
+                this.myExecutionService.StopExecutionLoop();
+                await this.ResetAllConnections();
 
-            
-            this.Nodes = this.myAssemblyService.AvailableNodes.Select(x => new NodeViewModel(x)).ToObservableCollection();
+            }, arg => this.myExecutionService.IsEnabled);
+
+            this.myAssemblyService.LoadAssemblies();
+
+            this.Nodes = this.myAssemblyService.AvailableNodes.Select(node => new NodeViewModel(node)).ToObservableCollection();
+
+            this.Connections = new ObservableCollection<Connector>();
         }
 
         public ObservableCollection<NodeViewModel> Nodes
@@ -98,12 +103,21 @@ namespace ElectronicParts.ViewModels
         public ICommand ExecutionStepCommand { get; }
         public ICommand ExecutionStartLoopCommand { get; }
         public ICommand ExecutionStopLoopCommand { get; }
-        public ICommand ResetAllConnections { get; }
-
+        public ICommand ExecutionStopLoopAndResetCommand { get; }
+        public ICommand ResetAllConnectionsCommand { get; }
         public ICommand LoadCommand { get; }
-
         public ICommand ReloadAssembliesCommand { get; }
-
         public ICommand ExitCommand { get; }
+
+        private async Task ResetAllConnections()
+        {
+            await Task.Run(() =>
+            {
+                foreach (var connection in this.Connections)
+                {
+                    connection.ResetValue();
+                }
+            });
+        }
     }
 }

@@ -17,6 +17,10 @@ namespace ElectronicParts.Tests
         public void TestAssemblyCtor()
         {
             var testService = new AssemblyService();
+            var x = testService.LoadAssemblies();
+            x.Wait();
+            var test = testService.AvailableNodes;
+            var y = 0;
         }
     }
 }

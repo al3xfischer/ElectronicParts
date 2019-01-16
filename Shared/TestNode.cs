@@ -27,7 +27,7 @@ namespace Shared
 
         public string Description { get { return "du W"; } }
 
-        public Bitmap Picture { get { return new Bitmap(@"C:\Users\alexfh\Desktop\GetPersonaPhoto.jpg"); } }
+        public Bitmap Picture { get { return null; } } // new Bitmap(@"C:\Users\alexfh\Desktop\GetPersonaPhoto.jpg"); } }
 
         public NodeType Type => throw new NotImplementedException();
 

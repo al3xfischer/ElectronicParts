@@ -7,7 +7,7 @@ namespace ElectronicParts.Services.Interfaces
 {
     public interface IAssemblyService
     {
-        ImmutableList<IDisplayableNode> AvailableNodes { get; }
+        IEnumerable<IDisplayableNode> AvailableNodes { get; }
 
         Task LoadAssemblies();
     }
