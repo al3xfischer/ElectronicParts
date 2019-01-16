@@ -15,14 +15,7 @@ namespace ElectronicParts.ViewModels
     {
         public IConfigurationService ConfigurationService { get; }
 
-        public IEnumerable<MyColors> AvailableColors
-        {
-            get
-            {
-                return Enum.GetValues(typeof(MyColors))
-                    .Cast<MyColors>();
-            }
-        }
+        public Color SelectedStringColor { get; set; }
 
         public PreferencesViewModel(IConfigurationService configurationService)
         {

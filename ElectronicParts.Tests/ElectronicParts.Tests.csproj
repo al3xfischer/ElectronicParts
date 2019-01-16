@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -69,9 +70,9 @@
       <Project>{F90C9CBB-2FAA-4B3C-BB12-9D481EE86F19}</Project>
       <Name>Shared</Name>
     </ProjectReference>
-      <ProjectReference Include="..\ElectronicParts.Services\ElectronicParts.Services.csproj">
-        <Project>{a1d0a7f5-2dd5-4bbc-9def-38b017072b5f}</Project>
-      </ProjectReference>
+    <ProjectReference Include="..\ElectronicParts.Services\ElectronicParts.Services.csproj">
+      <Project>{a1d0a7f5-2dd5-4bbc-9def-38b017072b5f}</Project>
+    </ProjectReference>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace ElectronicParts.Services
 {
@@ -14,25 +15,26 @@ namespace ElectronicParts.Services
         [DataMember]
         public string StringValue { get; set; }
         [DataMember]
-        public string StringColor { get; set; }
+        public Color StringColor { get; set; }
 
         [DataMember]
         public int IntValue { get; set; }
         [DataMember]
-        public string IntColor { get; set; }
+        public Color IntColor { get; set; }
 
         [DataMember]
         public bool BoolValue { get; set; }
         [DataMember]
-        public string BoolColor { get; set; }
+        public Color BoolColor { get; set; }
 
         public Configuration(IConfiguration config)
         {
-            this.StringColor = config["StringColor"];
 
-            this.IntColor = config["IntColor"];
+            this.StringColor = (Color)ColorConverter.ConvertFromString(config["StringColor"]);
 
-            this.BoolColor = config["BoolColor"];
+            this.IntColor = (Color)ColorConverter.ConvertFromString(config["IntColor"]);
+
+            this.BoolColor = (Color)ColorConverter.ConvertFromString(config["BoolColor"]);
 
             this.StringValue = config["StringValue"];
 
