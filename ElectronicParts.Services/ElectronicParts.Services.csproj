@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="Implementations\ConfigurationService.cs" />
+    <Compile Include="Interfaces\IPinConnectorService.cs" />
     <Compile Include="Interfaces\IConfigurationService.cs" />
     <Compile Include="Implementations\AssemblyService.cs" />
     <Compile Include="Implementations\PinConnectorService.cs" />

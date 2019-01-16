@@ -16,7 +16,7 @@ namespace ElectronicParts.Services.Implementations
     using System.Linq;
     using ElectronicParts.Models;
 
-    public class PinConnectorService
+    public class PinConnectorService : IPinConnectorService
     {
         private readonly List<Connector> ExistingConnections;
 
@@ -43,7 +43,7 @@ namespace ElectronicParts.Services.Implementations
             }
 
             // null checking value instances of the pins 
-            // if this returns true the we check for the generic type of the pin and set the Value to a new valueInstance.
+            // if this returns true then we check for the generic type of the pin and set the Value to a new valueInstance.
             if (inputPin.Value is null)
             {
                 var pinType = inputPin.GetType();
@@ -109,21 +109,21 @@ namespace ElectronicParts.Services.Implementations
         /// <returns>true if deletion was successfull, false otherwise.</returns>
         public bool TryRemoveConnection(Connector connectorToDelete)
         {
-            if (!this.ExistingConnections.Contains(connectorToDelete))
+            // In this case the connector is faulty and we have nothing to delete
+            if (connectorToDelete is null || !this.ExistingConnections.Contains(connectorToDelete))
             {
                 return false;
             }
 
-            if (connectorToDelete is null)
-            {
-                return false;
-            }
-
+            // Counting the connections for the output pin (one outputpin can supply multiple inputpins)
+            // In case this is the only connection for this outputPin we set the pinvalue to null to prevent further influences between the two pins
+            // In case the output pin has multiple connections we only remove the common value from the one inputpin that is to be deleted
             if (this.ExistingConnections.Count(conn => conn.OutputPin == connectorToDelete.OutputPin) == 1)
             {
                 connectorToDelete.OutputPin.Value = null;
             }
 
+            // In every case we will remove the connection from our known connections. And return true.
             connectorToDelete.InputPin.Value = null;
             this.ExistingConnections.Remove(connectorToDelete);
             return true;
