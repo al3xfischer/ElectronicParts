@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 ﻿using ElectronicParts.Services;
 using ElectronicParts.Services.Interfaces;
 ﻿using ElectronicParts.Services.Implementations;
 using ElectronicParts.ViewModels;
+=======
+﻿using ElectronicParts.ViewModels;
+>>>>>>> NodeTemplate
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -15,6 +19,7 @@ namespace ElectronicParts.DI
         {
             IServiceCollection services = new ServiceCollection();
 
+<<<<<<< HEAD
             /// Configuration
             services.AddSingleton<IConfigurationService, ConfigurationService>();
 
@@ -25,6 +30,11 @@ namespace ElectronicParts.DI
             // Services
             services.AddSingleton<IAssemblyService, AssemblyService>();
             services.AddSingleton<IPinConnectorService, PinConnectorService>();
+=======
+            /// ViewModels
+            services.AddTransient<MainViewModel>();
+            services.AddTransient<PreferencesViewModel>();
+>>>>>>> NodeTemplate
 
             provider = services.BuildServiceProvider();
         }
