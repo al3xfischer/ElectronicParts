@@ -17,10 +17,12 @@ namespace ElectronicParts.ViewModels
         private ObservableCollection<Connector> connections;
         private ObservableCollection<NodeViewModel> availableNodes;
         private readonly IExecutionService myExecutionService;
+        private readonly IAssemblyService myAssemblyService;
 
-        public MainViewModel(IExecutionService executionService)
+        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService)
         {
             this.myExecutionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
+            this.myAssemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
             this.SaveCommand = new RelayCommand(arg => { });
             this.LoadCommand = new RelayCommand(arg => { });
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
@@ -56,7 +58,7 @@ namespace ElectronicParts.ViewModels
 
             this.Nodes = new ObservableCollection<NodeViewModel>
             {
-                new NodeViewModel(new TestNode())
+                this.
             };
         }
 
