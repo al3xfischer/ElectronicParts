@@ -58,14 +58,14 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             </ItemsControl>
-        <ListView DockPanel.Dock="Right" SelectedItem="{Binding ViewModel.SelectedNode}" ItemsSource="{Binding ViewModel.Nodes}" ItemTemplate="{StaticResource NodeTemplate}" >
+            <ListView DockPanel.Dock="Right" SelectedItem="{Binding ViewModel.SelectedNode}" ItemsSource="{Binding ViewModel.Nodes}" ItemTemplate="{StaticResource NodeTemplate}" >
             <ItemsControl.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="Canvas.Left"
                             Value="{Binding Left}" />
                     <Setter Property="Canvas.Top"
                             Value="{Binding Top}"/>
-
+                    
                     <!-- Remove Selected Style -->
                     <Setter Property="Template">
                         <Setter.Value>

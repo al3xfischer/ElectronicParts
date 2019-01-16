@@ -54,7 +54,6 @@ namespace ElectronicParts.Services
                 this.StringRules.Add(new Rule<string>(value, color));
             }
 
-
             foreach (var rule in intRules)
             {
                 int.TryParse(rule["Value"], out int value);

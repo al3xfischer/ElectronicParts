@@ -3,31 +3,51 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"          
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:ElectronicParts.Views"
         mc:Ignorable="d"
-        Title="Preferences" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Preferences" Height="450" Width="850" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Viewbox Grid.Row="0">
-            <TextBlock TextWrapping="Wrap" FontSize="30" Padding="20">                 
-                A connection between 2 pins of the type string will have the color:<xctk:ColorPicker x:Name="StringColorPicker" DisplayColorAndName="True" SelectedColorChanged="StringColorPickerSelectedColorChanged" SelectedColor="{Binding ViewModel.SelectedStringColor}"/> when the value is: <TextBox Width="150" Height="Auto" Text="{Binding ViewModel.StringValue}"/>
-            </TextBlock>
-        </Viewbox>
-        <Viewbox Grid.Row="1">
-            <TextBlock TextWrapping="Wrap" FontSize="30" Padding="20">                
-                A connection between 2 pins of the type integer will have the color:<xctk:ColorPicker x:Name="IntColorPicker" DisplayColorAndName="True" SelectedColorChanged="IntColorPickerSelectedColorChanged" SelectedColor="{Binding ViewModel.SelectedIntColor}"/> when the value is: <TextBox Width="150" Height="Auto" PreviewTextInput="PreviewNumberInput" Text="{Binding ViewModel.IntValue}"/>
-            </TextBlock>
-        </Viewbox>
-        <Viewbox Grid.Row="2">
-            <TextBlock TextWrapping="Wrap" FontSize="30" Padding="20">
-                A connection between 2 pins of the type bool will have the color:<xctk:ColorPicker x:Name="BoolColorPicker" DisplayColorAndName="True" SelectedColorChanged="BoolColorPickerSelectedColorChanged" SelectedColor="{Binding ViewModel.SelectedBoolColor}"/> when the value is: <ComboBox Width="100" Height="Auto"/>
-            </TextBlock>            
-        </Viewbox>
-        <Button Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="50" Height="20" Content="Apply" Command="{Binding ViewModel.ApplyCommand}"/>
+        <ListView ItemsSource="{Binding ViewModel.StringRules}" Grid.Row="0" Width="Auto" Height="Auto">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        A connection between 2 pins of the type string will have the color:<xctk:ColorPicker DisplayColorAndName="True" Width="150"/> when the value is: <TextBox Width="150" Height="Auto" Text="{Binding Rule.Value}"/> <Button Command="{Binding DeletionCommand}" CommandParameter="{Binding}" Content="Delete"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView ItemsSource="{Binding ViewModel.IntRules}" Grid.Row="1" Width="Auto" Height="Auto">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                         A connection between 2 pins of the type integer will have the color:<xctk:ColorPicker DisplayColorAndName="True" Width="150"/> when the value is: <TextBox Width="150" Height="Auto" PreviewTextInput="PreviewNumberInput" Text="{Binding Rule.Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/> <Button Command="{Binding DeletionCommand}" CommandParameter="{Binding}" Content="Delete"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView ItemsSource="{Binding ViewModel.BoolRules}" Grid.Row="2" Width="Auto" Height="Auto">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                         A connection between 2 pins of the type bool will have the color:<xctk:ColorPicker DisplayColorAndName="True" Width="150"/> when the value is: 
+                        <ComboBox SelectedItem="{Binding Rule.Value}">
+                             <ComboBox.Items>
+                                <system:Boolean>True</system:Boolean>
+                                <system:Boolean>False</system:Boolean>
+                            </ComboBox.Items>
+                        </ComboBox> 
+                        <Button Command="{Binding DeletionCommand}" CommandParameter="{Binding}" Content="Delete"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="50" Height="20" Content="Save" Command="{Binding ViewModel.ApplyCommand}"/>
     </Grid>
 </Window>

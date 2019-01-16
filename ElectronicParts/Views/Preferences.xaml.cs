@@ -16,29 +16,17 @@ namespace ElectronicParts.Views
             InitializeComponent();
             this.DataContext = this;
             this.ViewModel = Container.Resolve<PreferencesViewModel>();
+            this.BoolSelection = new bool[] { true, false };
         }
 
         public PreferencesViewModel ViewModel { get; }
+        
+        public bool[] BoolSelection { get; set; }
 
         private void PreviewNumberInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             Regex regex = new Regex("^[^\\d]+$");
             e.Handled = regex.IsMatch(e.Text);            
-        }
-
-        private void StringColorPickerSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
-        {
-            ViewModel.SelectedStringColorString = this.StringColorPicker.SelectedColorText;
-        }
-
-        private void IntColorPickerSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
-        {
-            ViewModel.SelectedIntColorString = this.IntColorPicker.SelectedColorText;
-        }
-
-        private void BoolColorPickerSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
-        {
-            ViewModel.SelectedBoolColorString = this.BoolColorPicker.SelectedColorText;
         }
     }
 }

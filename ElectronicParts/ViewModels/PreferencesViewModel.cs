@@ -1,8 +1,10 @@
 ﻿using ElectronicParts.Commands;
+using ElectronicParts.Models;
 using ElectronicParts.Services;
 using ElectronicParts.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,53 +19,63 @@ namespace ElectronicParts.ViewModels
 
         public ICommand ApplyCommand { get; }
 
-        public Color SelectedStringColor { get; set; }
+        public ObservableCollection<RuleViewModel<string>> StringRules { get; }
 
-        public string SelectedStringColorString { get; set; }
+        public ObservableCollection<RuleViewModel<int>> IntRules { get; }
 
-        public string StringValue { get; set; }
-
-        public Color SelectedIntColor { get; set; }
-
-        public string SelectedIntColorString { get; set; }
-
-        public string IntValue { get; set; }
-
-        public Color SelectedBoolColor { get; set; }
-
-        public string SelectedBoolColorString { get; set; }
-
-        public string BoolValue { get; set; }
-
+        public ObservableCollection<RuleViewModel<bool>> BoolRules { get; }
+        
         public PreferencesViewModel(IConfigurationService configurationService)
         {
             this.ConfigurationService = configurationService;
 
-            this.SelectedStringColorString = configurationService.Configuration.StringColor;
-            this.SelectedIntColorString = configurationService.Configuration.IntColor;
-            this.SelectedBoolColorString = configurationService.Configuration.BoolColor;
+            ICommand StringDeletionCommand = new RelayCommand(ruleObj =>
+            {
+                RuleViewModel<string> ruleVM = ruleObj as RuleViewModel<string>;
 
-            this.StringValue = configurationService.Configuration.StringValue;
-            this.IntValue = configurationService.Configuration.IntValue.ToString();
-            this.BoolValue = configurationService.Configuration.BoolValue.ToString();
+                this.StringRules.Remove(ruleVM);
+                configurationService.Configuration.StringRules.Remove(ruleVM.Rule);
+            });
 
-            this.SelectedStringColor = (Color)ColorConverter.ConvertFromString(configurationService.Configuration.StringColor);
-                       
-            this.SelectedIntColor = (Color)ColorConverter.ConvertFromString(configurationService.Configuration.IntColor);
+            ICommand IntDeletionCommand = new RelayCommand(ruleObj =>
+            {
+                RuleViewModel<int> ruleVM = ruleObj as RuleViewModel<int>;
 
-            this.SelectedBoolColor = (Color)ColorConverter.ConvertFromString(configurationService.Configuration.BoolColor);
+                this.IntRules.Remove(ruleVM);
+                configurationService.Configuration.IntRules.Remove(ruleVM.Rule);
+            });
+
+            ICommand BoolDeletionCommand = new RelayCommand(ruleObj =>
+            {
+                RuleViewModel<bool> ruleVM = ruleObj as RuleViewModel<bool>;
+
+                this.BoolRules.Remove(ruleVM);
+                configurationService.Configuration.BoolRules.Remove(ruleVM.Rule);
+            });
+            
+            this.StringRules = new ObservableCollection<RuleViewModel<string>>();
+
+            this.IntRules = new ObservableCollection<RuleViewModel<int>>();
+
+            this.BoolRules = new ObservableCollection<RuleViewModel<bool>>();
+
+            foreach (var stringRule in configurationService.Configuration.StringRules)
+            {
+                this.StringRules.Add(new RuleViewModel<string>(stringRule, StringDeletionCommand));                
+            }
+
+            foreach (var intRule in configurationService.Configuration.IntRules)
+            {
+                this.IntRules.Add(new RuleViewModel<int>(intRule, StringDeletionCommand));
+            }
+
+            foreach (var boolRule in configurationService.Configuration.BoolRules)
+            {
+                this.BoolRules.Add(new RuleViewModel<bool>(boolRule, StringDeletionCommand));
+            }
 
             this.ApplyCommand = new RelayCommand(obj => 
             {
-                this.ConfigurationService.Configuration.StringColor = this.SelectedStringColorString;
-                this.ConfigurationService.Configuration.IntColor = this.SelectedIntColorString;
-                this.ConfigurationService.Configuration.BoolColor = this.SelectedBoolColorString;
-
-                this.ConfigurationService.Configuration.StringValue = this.StringValue;
-                int.TryParse(this.IntValue, out int newIntValue);
-                this.ConfigurationService.Configuration.IntValue = newIntValue;
-                this.ConfigurationService.Configuration.BoolValue = "true" == this.BoolValue;
-
                 this.ConfigurationService.SaveConfiguration();
             });
         }
