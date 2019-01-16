@@ -56,10 +56,10 @@ namespace ElectronicParts.ViewModels
 
             }, arg => !this.myExecutionService.IsEnabled);
 
-            this.Nodes = new ObservableCollection<NodeViewModel>
-            {
-                this.
-            };
+            this.myAssemblyService.LoadAssemblies().Wait();
+
+            
+            this.Nodes = this.myAssemblyService.AvailableNodes.Select(x => new NodeViewModel(x)).ToObservableCollection();
         }
 
         public ObservableCollection<NodeViewModel> Nodes
