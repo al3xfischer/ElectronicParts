@@ -56,8 +56,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-<<<<<<< HEAD
-=======
     <Compile Include="Converter\BitmapToImageSourceConverter.cs" />
     <Compile Include="Converter\PinToHeightConverter.cs" />
     <Compile Include="EventArgs\StoppedEventArgs.cs" />
@@ -66,7 +64,6 @@
     <Compile Include="Views\Node.xaml.cs">
       <DependentUpon>Node.xaml</DependentUpon>
     </Compile>
->>>>>>> NodeTemplate
     <Compile Include="Views\Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>
@@ -87,13 +84,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-<<<<<<< HEAD
-=======
     <Page Include="Views\Node.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
->>>>>>> NodeTemplate
     <Page Include="Views\Preferences.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,13 +120,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-<<<<<<< HEAD
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
-=======
   <ItemGroup />
->>>>>>> NodeTemplate
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration">
       <Version>2.2.0</Version>
