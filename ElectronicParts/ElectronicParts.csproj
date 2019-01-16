@@ -60,6 +60,7 @@
     <Compile Include="Converter\PinToHeightConverter.cs" />
     <Compile Include="EventArgs\StoppedEventArgs.cs" />
     <Compile Include="Extentions\Extentioins.cs" />
+    <Compile Include="ViewModels\ConnectorViewModel.cs" />
     <Compile Include="ViewModels\NodeViewModel.cs" />
     <Compile Include="Views\Node.xaml.cs">
       <DependentUpon>Node.xaml</DependentUpon>
@@ -142,6 +143,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ElectronicParts.Models\ElectronicParts.Models.csproj">
+      <Project>{4294C9BE-14F0-4618-A5EC-F18A30B760FB}</Project>
+      <Name>ElectronicParts.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{f90c9cbb-2faa-4b3c-bb12-9d481ee86f19}</Project>
       <Name>Shared</Name>
