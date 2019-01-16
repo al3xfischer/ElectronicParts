@@ -7,7 +7,7 @@ namespace ElectronicParts.ViewModels
 {
     public class NodeViewModel : BaseViewModel
     {
-        private readonly IDisplayableNode node;
+        internal readonly IDisplayableNode node;
 
         private int top;
 
@@ -20,9 +20,9 @@ namespace ElectronicParts.ViewModels
             this.Left = 20;
         }
 
-        public int Top { get => top; set { Set(ref this.top, value); } }
+        public int Top { get => this.top; set { Set(ref this.top, value); } }
 
-        public int Left { get => left; set { Set(ref this.left, value); } }
+        public int Left { get => this.left; set { Set(ref this.left, value); } }
 
 
         public ObservableCollection<IPin> Inputs { get => this.node.Inputs.ToObservableCollection(); }

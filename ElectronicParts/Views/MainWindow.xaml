@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElectronicParts.Views"
         xmlns:converter="clr-namespace:ElectronicParts.Converter"
+        xmlns:ViewModel="clr-namespace:ElectronicParts.ViewModels"
         mc:Ignorable="d"
+        d:DataContext="{Binding Source={d:DesignInstance Type=ViewModel:MainViewModel, IsDesignTimeCreatable=False}}" 
         Title="Electronic Parts" MinWidth="500" MinHeight="400" WindowState="Maximized" MouseLeftButtonDown="Window_MouseLeftButtonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" MouseMove="Window_MouseMove">
 
     <!-- Resources -->
@@ -37,10 +39,12 @@
 
     <DockPanel>
         <!-- Menu -->
-        <Menu DockPanel.Dock="Top" FontSize="14" >
+        <Menu Background="WhiteSmoke" BorderThickness="0,0,0,1" BorderBrush="DarkGray" DockPanel.Dock="Top" FontSize="14" >
             <MenuItem Header="_File">
                 <MenuItem Header="_Save" Command="{Binding ViewModel.SaveCommand}" InputGestureText="Ctrl+S" />
                 <MenuItem Header="_Open" Command="{Binding ViewModel.LoadCommand}" InputGestureText="Ctrl+O" />
+                <Separator/>
+                <MenuItem Header="_Reload Assemblies" Command="{Binding ViewModel.LoadCommand}"/>
                 <Separator/>
                 <MenuItem Header="_Preferences" Name="preferences" Click="Preferences_Click"/>
                 <MenuItem Header="_Exit" Command="{Binding ViewModel.ExitCommand}" />
@@ -50,45 +54,93 @@
         <!-- Components -->
         <ListView ItemsSource="{Binding ViewModel.Components}" DockPanel.Dock="Left" Width="200" />
 
-        <!-- Canvas -->
-        <ItemsControl DockPanel.Dock="Right">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas IsItemsHost="True" Background="LightGray"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            </ItemsControl>
-            <ListView DockPanel.Dock="Right" SelectedItem="{Binding ViewModel.SelectedNode}" ItemsSource="{Binding ViewModel.Nodes}" ItemTemplate="{StaticResource NodeTemplate}" >
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Canvas.Left"
+        
+        <DockPanel Margin="0 1 0 0" Background="LightGray" DockPanel.Dock="Right">
+            <Border Margin="0" DockPanel.Dock="Top" BorderThickness="1 0 0 1" BorderBrush="DarkGray">
+                <DockPanel Background="WhiteSmoke" Height="40px" LastChildFill="False">
+                    <DockPanel.Resources>
+                        <Style x:Name="ImageStyle" TargetType="{x:Type Image}">
+                            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+                        </Style>
+                        <Style x:Name="RoundedButton" TargetType="{x:Type Button}">
+                            <Setter Property="Margin" Value="10,0,0,0"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border x:Name="border" CornerRadius="20" Margin="5" Padding="0" BorderThickness="0" Background="LightGray">
+                                            <ContentPresenter x:Name="button" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="DarkGray"/>
+                                            </Trigger>
+                                            <Trigger  Property="Button.IsPressed" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="LightBlue"/>
+                                            </Trigger>
+                                            <Trigger  Property="Button.IsEnabled" Value="False">
+                                                <Setter TargetName="border" Property="Opacity" Value="0.3"/>
+                                                <Setter TargetName="button" Property="Opacity" Value="0.3"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DockPanel.Resources>
+
+                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStartLoopCommand}">
+                        <Image Source="/Resources/play.png"/>
+                    </Button>
+                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStepCommand}">
+                        <Image Source="/Resources/step.png"/>
+                    </Button>
+                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStopLoopCommand}">
+                        <Image Source="/Resources/pause.png"/>
+                    </Button>
+                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStopLoopAndResetCommand}">
+                        <Image Source="/Resources/stop.png"/>
+                    </Button>
+                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ResetAllConnectionsCommand}">
+                        <Image Source="/Resources/reset.png"/>
+                    </Button>
+                </DockPanel>
+            </Border>
+            
+
+            <!-- Canvas -->
+            <ListView DockPanel.Dock="Bottom" SelectedItem="{Binding ViewModel.SelectedNode}" ItemsSource="{Binding ViewModel.Nodes}" ItemTemplate="{StaticResource NodeTemplate}" >
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Canvas.Left"
                             Value="{Binding Left}" />
-                    <Setter Property="Canvas.Top"
+                        <Setter Property="Canvas.Top"
                             Value="{Binding Top}"/>
-                    
-                    <!-- Remove Selected Style -->
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
-                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsEnabled" Value="false">
-                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas IsItemsHost="True" Loaded="ItemsCanvas_Loaded" x:Name="ItemsCanvas" Background="LightGray">
-                    </Canvas>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ListView>
+
+                        <!-- Remove Selected Style -->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas IsItemsHost="True" Loaded="ItemsCanvas_Loaded" x:Name="ItemsCanvas" Background="LightGray">
+                        </Canvas>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ListView>
+        </DockPanel>
     </DockPanel>
 </Window>

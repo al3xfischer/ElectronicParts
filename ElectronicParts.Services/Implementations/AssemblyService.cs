@@ -33,6 +33,8 @@ namespace ElectronicParts.Services.Implementations
         /// </summary>
         private readonly string assemblyPath;
 
+        private List<IDisplayableNode> nodeList;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AssemblyService"/> class.
         /// </summary>
@@ -49,7 +51,10 @@ namespace ElectronicParts.Services.Implementations
         /// Gets the available nodes.
         /// </summary>
         /// <value>The List of available lists.</value>
-        public ImmutableList<IDisplayableNode> AvailableNodes { get; private set; }
+        public IEnumerable<IDisplayableNode> AvailableNodes
+        {
+            get => this.nodeList.AsEnumerable();
+        }
 
         /// <summary>
         /// Loads the assemblies in the assembly paths.
@@ -103,7 +108,7 @@ namespace ElectronicParts.Services.Implementations
                 }
 
                 // writing loadedNodes into availableNodes immutableList.
-                this.AvailableNodes = loadedNodes.ToImmutableList();
+                this.nodeList = loadedNodes;
             });
         }
     }

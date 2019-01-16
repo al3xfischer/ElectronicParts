@@ -2,8 +2,6 @@
 {
     public class TestValue : IValue
     {
-        public object Value { get => true; set { } }
-
-        public object Current { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public object Current { get => true; set { } }
     }
 }

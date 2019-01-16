@@ -1,7 +1,8 @@
 ﻿using ElectronicParts.DI;
 using ElectronicParts.ViewModels;
-using System.Drawing;
+using System;
 using System.Windows;
+using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -74,6 +75,7 @@ namespace ElectronicParts.Views
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+
         }
     }
 }

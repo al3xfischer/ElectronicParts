@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ElectronicParts.Properties {
+namespace ElectronicParts.Components.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ElectronicParts.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ElectronicParts.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ElectronicParts.Components.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,9 +63,9 @@ namespace ElectronicParts.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap pause {
+        internal static System.Drawing.Bitmap And_Gate {
             get {
-                object obj = ResourceManager.GetObject("pause", resourceCulture);
+                object obj = ResourceManager.GetObject("And_Gate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace ElectronicParts.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap play {
+        internal static System.Drawing.Bitmap ExOr_Gate {
             get {
-                object obj = ResourceManager.GetObject("play", resourceCulture);
+                object obj = ResourceManager.GetObject("ExOr_Gate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace ElectronicParts.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap reset {
+        internal static System.Drawing.Bitmap Inverter {
             get {
-                object obj = ResourceManager.GetObject("reset", resourceCulture);
+                object obj = ResourceManager.GetObject("Inverter", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,19 +93,9 @@ namespace ElectronicParts.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap step {
+        internal static System.Drawing.Bitmap Or_Gate {
             get {
-                object obj = ResourceManager.GetObject("step", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap stop {
-            get {
-                object obj = ResourceManager.GetObject("stop", resourceCulture);
+                object obj = ResourceManager.GetObject("Or_Gate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

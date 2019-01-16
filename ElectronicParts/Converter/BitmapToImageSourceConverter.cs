@@ -11,6 +11,11 @@ namespace ElectronicParts.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value is null)
+            {
+                return null;
+            }
+
             MemoryStream ms = new MemoryStream();
             (value as Bitmap).Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
             BitmapImage image = new BitmapImage();

@@ -60,6 +60,7 @@
     <Compile Include="Converter\PinToHeightConverter.cs" />
     <Compile Include="EventArgs\StoppedEventArgs.cs" />
     <Compile Include="Extentions\Extentioins.cs" />
+    <Compile Include="ViewModels\ConnectorViewModel.cs" />
     <Compile Include="ViewModels\NodeViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModel.cs" />
     <Compile Include="Views\Node.xaml.cs">
@@ -123,7 +124,9 @@
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\pause.png" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit">
       <Version>3.4.0</Version>
@@ -157,6 +160,18 @@
       <Project>{a1d0a7f5-2dd5-4bbc-9def-38b017072b5f}</Project>
       <Name>ElectronicParts.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\reset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\step.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
