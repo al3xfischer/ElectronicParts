@@ -40,9 +40,12 @@ namespace ElectronicParts.Services.Implementations
             if (!this.IsEnabled)
             {
                 this.IsEnabled = true;
+                Stopwatch watch = new Stopwatch();
 
                 while (this.IsEnabled)
                 {
+                    watch.Reset();
+                    watch.Start();
                     try
                     {
                         await this.ExecuteOnce(nodes);
@@ -52,6 +55,13 @@ namespace ElectronicParts.Services.Implementations
                         // TODO Proper Exception handeling
                         Debug.WriteLine(e.Message);
                     }
+                    watch.Stop();
+                    var waitingTime = 16 - watch.ElapsedMilliseconds;
+                    try
+                    {
+                        await Task.Delay(Math.Max((int)waitingTime, 1));
+                    }
+                    catch { }
                 }
             }
         }
