@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +56,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+<<<<<<< HEAD
+=======
+    <Compile Include="Converter\BitmapToImageSourceConverter.cs" />
+    <Compile Include="Converter\PinToHeightConverter.cs" />
+    <Compile Include="EventArgs\StoppedEventArgs.cs" />
+    <Compile Include="Extentions\Extentioins.cs" />
+    <Compile Include="ViewModels\NodeViewModel.cs" />
+    <Compile Include="Views\Node.xaml.cs">
+      <DependentUpon>Node.xaml</DependentUpon>
+    </Compile>
+>>>>>>> NodeTemplate
     <Compile Include="Views\Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>
@@ -75,6 +87,13 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+<<<<<<< HEAD
+=======
+    <Page Include="Views\Node.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+>>>>>>> NodeTemplate
     <Page Include="Views\Preferences.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -107,9 +126,13 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+<<<<<<< HEAD
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
+=======
+  <ItemGroup />
+>>>>>>> NodeTemplate
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration">
       <Version>2.2.0</Version>
@@ -128,6 +151,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{f90c9cbb-2faa-4b3c-bb12-9d481ee86f19}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ElectronicParts.Services\ElectronicParts.Services.csproj">
       <Project>{a1d0a7f5-2dd5-4bbc-9def-38b017072b5f}</Project>
       <Name>ElectronicParts.Services</Name>

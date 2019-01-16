@@ -4,8 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElectronicParts.Views"
+        xmlns:converter="clr-namespace:ElectronicParts.Converter"
         mc:Ignorable="d"
+<<<<<<< HEAD
         Title="Electronic Parts" MinWidth="500" MinHeight="400" WindowState="Maximized" >
+=======
+        Title="Electronic Parts" MinWidth="500" MinHeight="400" WindowState="Maximized" MouseLeftButtonDown="Window_MouseLeftButtonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" MouseMove="Window_MouseMove">
+
+    <!-- Resources -->
+    <Window.Resources>
+
+        <!-- ListViewStyle -->
+        <Style TargetType="ListView">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <!-- Pin -->
+        <DataTemplate x:Key="PinTemplate">
+            <Border Height="2" Width="10" Margin="-6 7 -6 7" Padding="0" Background="Black" />
+        </DataTemplate>
+
+        <!-- NodeTemplate -->
+        <DataTemplate x:Key="NodeTemplate">
+            <local:Node Canvas.Left="30" x:Name="Node"/>
+        </DataTemplate>
+
+    </Window.Resources>
+>>>>>>> NodeTemplate
 
     <!-- Shortcuts -->
     <Window.InputBindings>
@@ -29,6 +55,7 @@
         <ListView ItemsSource="{Binding ViewModel.Components}" DockPanel.Dock="Left" Width="200" />
 
         <!-- Canvas -->
+<<<<<<< HEAD
         <ItemsControl DockPanel.Dock="Right">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -36,5 +63,39 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+=======
+        <ListView DockPanel.Dock="Right" SelectedItem="{Binding ViewModel.SelectedNode}" ItemsSource="{Binding ViewModel.Nodes}" ItemTemplate="{StaticResource NodeTemplate}" >
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Canvas.Left"
+                            Value="{Binding Left}" />
+                    <Setter Property="Canvas.Top"
+                            Value="{Binding Top}"/>
+                    
+                    <!-- Remove Selected Style -->
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsEnabled" Value="false">
+                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True" Loaded="ItemsCanvas_Loaded" x:Name="ItemsCanvas" Background="LightGray">
+                    </Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ListView>
+>>>>>>> NodeTemplate
     </DockPanel>
 </Window>
