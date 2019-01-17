@@ -24,11 +24,31 @@ namespace ElectronicParts.Services.Implementations
     /// <seealso cref="ElectronicParts.Services.Implementations.IExecutionService" />
     public class ExecutionService : IExecutionService
     {
+        private int framesPerSecond;
+
         /// <summary>
         /// Gets a value indicating whether this instance is enabled.
         /// </summary>
         /// <value>true if this instance is enabled; otherwise, false.</value>
         public bool IsEnabled { get; private set; }
+
+        public int FramesPerSecond
+        {
+            get => this.framesPerSecond;
+            set
+            {
+                if (value > 0)
+                {
+                    this.framesPerSecond = value;
+                }
+            }
+        }
+
+
+        public ExecutionService()
+        {
+            this.FramesPerSecond = 60;
+        }
 
         /// <summary>
         /// Starts the execution loop.
@@ -56,7 +76,7 @@ namespace ElectronicParts.Services.Implementations
                         Debug.WriteLine(e.Message);
                     }
                     watch.Stop();
-                    var waitingTime = 16 - watch.ElapsedMilliseconds;
+                    var waitingTime = (60000 / this.FramesPerSecond) - watch.ElapsedMilliseconds;
                     try
                     {
                         await Task.Delay(Math.Max((int)waitingTime, 1));

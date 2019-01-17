@@ -1,6 +1,5 @@
 ﻿using ElectronicParts.Commands;
 using System;
-using System.Windows;
 using System.Linq;
 using Shared;
 using System.Collections.ObjectModel;
@@ -17,17 +16,14 @@ namespace ElectronicParts.ViewModels
         private ObservableCollection<Connector> connections;
         private ObservableCollection<NodeViewModel> availableNodes;
         private readonly IExecutionService myExecutionService;
-        private readonly IAssemblyService myAssemblyService;
 
-        public MainViewModel(IExecutionService executionService, IAssemblyService myAssemblyService)
+        public MainViewModel(IExecutionService executionService)
         {
             this.myExecutionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
-            this.myAssemblyService = myAssemblyService;
 
             this.SaveCommand = new RelayCommand(arg => { });
             this.LoadCommand = new RelayCommand(arg => { });
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
-
             this.ExecutionStepCommand = new RelayCommand(async arg =>
             {
                 var nodeList = this.Nodes.Select(nodeVM => nodeVM.node);
@@ -60,9 +56,41 @@ namespace ElectronicParts.ViewModels
 
             }, arg => this.myExecutionService.IsEnabled);
 
-            this.myAssemblyService.LoadAssemblies();
+            this.InputPinCommand = new RelayCommand(arg => { });
+            this.OutputPinCommand = new RelayCommand(arg => { });
+            this.DeleteCommand = new RelayCommand(arg =>
+            {
+                var nodeVm = arg as NodeViewModel;
 
-            this.Nodes = this.myAssemblyService.AvailableNodes.Select(node => new NodeViewModel(node)).ToObservableCollection();
+                if (nodeVm is null)
+                {
+                    return;
+                }
+
+                this.Nodes.Remove(nodeVm);
+            });
+            this.AddNodeCommand = new RelayCommand(arg =>
+            {
+                var node = arg as IDisplayableNode;
+                if (node is null)
+                {
+                    return;
+                }
+
+                var copy = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;
+                var vm = new NodeViewModel(copy, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand);
+                this.Nodes.Add(vm);
+                this.FirePropertyChanged(nameof(Nodes));
+            });
+            this.Nodes = new ObservableCollection<NodeViewModel>
+            {
+                new NodeViewModel(new TestNode(),this.DeleteCommand,this.InputPinCommand,this.OutputPinCommand)
+            };
+
+            this.AvailableNodes = new ObservableCollection<NodeViewModel>
+            {
+                new NodeViewModel(new TestNode(),this.DeleteCommand,this.InputPinCommand,this.OutputPinCommand)
+            };
 
             this.Connections = new ObservableCollection<Connector>();
         }
@@ -99,6 +127,8 @@ namespace ElectronicParts.ViewModels
 
         public NodeViewModel SelectedNode { get; set; }
 
+        public NodeViewModel SelectedNodeInformation { get; set; }
+
         public ICommand SaveCommand { get; }
         public ICommand ExecutionStepCommand { get; }
         public ICommand ExecutionStartLoopCommand { get; }
@@ -119,5 +149,12 @@ namespace ElectronicParts.ViewModels
                 }
             });
         }
+        public ICommand AddNodeCommand { get; }
+
+        public ICommand DeleteCommand { get; }
+
+        public ICommand InputPinCommand { get; }
+
+        public ICommand OutputPinCommand { get; }
     }
 }
