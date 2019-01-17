@@ -96,13 +96,13 @@ namespace ElectronicParts.ViewModels
 
             this.ExecutionStepCommand = new RelayCommand(async arg =>
             {
-                var nodeList = this.Nodes.Select(nodeVM => nodeVM.node);
+                var nodeList = this.Nodes.Select(nodeVM => nodeVM.Node);
                 await this.executionService.ExecuteOnce(nodeList);
             }, arg => !this.executionService.IsEnabled);
 
             this.ExecutionStartLoopCommand = new RelayCommand(async arg =>
             {
-                var nodeList = this.Nodes.Select(nodeVM => nodeVM.node);
+                var nodeList = this.Nodes.Select(nodeVM => nodeVM.Node);
                 await this.executionService.StartExecutionLoop(nodeList);
 
             }, arg => !this.executionService.IsEnabled);
@@ -233,11 +233,27 @@ namespace ElectronicParts.ViewModels
         {
             await this.assemblyService.LoadAssemblies();
             this.AvailableNodes.Clear();
-            foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node)))
+            foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand)))
             {
                 this.AvailableNodes.Add(assembly);
             }
         }
+
+        private int framesPerSecond;
+
+        public int FramesPerSecond
+        {
+            get => this.framesPerSecond;
+            set
+            {
+                if (value > 0 && value <= 100)
+                {
+                    Set(ref this.framesPerSecond, value);
+                    this.executionService.FramesPerSecond = value;
+                }
+            }
+        }
+
 
         public ICommand AddNodeCommand { get; }
 
@@ -246,6 +262,7 @@ namespace ElectronicParts.ViewModels
         public ICommand InputPinCommand { get; }
 
         public ICommand OutputPinCommand { get; }
+
 
         private void Connect()
         {

@@ -28,6 +28,8 @@ namespace ElectronicParts.ViewModels
         public NodeViewModel(IDisplayableNode node)
         {
             this.Node = node ?? throw new ArgumentNullException(nameof(node));
+            this.Inputs = node.Inputs.Select(n => new PinViewModel(n, null)).ToObservableCollection();
+            this.Outputs = node.Outputs.Select(n => new PinViewModel(n, null)).ToObservableCollection();
         }
 
         public int Top
