@@ -20,6 +20,7 @@ namespace ElectronicParts.Components
     /// <summary>
     /// Represents an <see cref="OrGate"/> with one output pin as boolean.
     /// </summary>
+    [Serializable]
     public class OrGate : IDisplayableNode
     {
         /// <summary>

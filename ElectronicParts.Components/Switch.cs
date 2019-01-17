@@ -18,6 +18,7 @@ namespace ElectronicParts.Components
     /// <summary>
     /// Represents an <see cref="Switch"/> with one input and one output pin as boolean.
     /// </summary>
+    [Serializable]
     public class Switch : IDisplayableNode
     {
         /// <summary>

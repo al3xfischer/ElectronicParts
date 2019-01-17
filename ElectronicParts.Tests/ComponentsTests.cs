@@ -7,6 +7,7 @@ using NUnit.Framework;
 using ElectronicParts.Components;
 using Shared;
 using System.Drawing;
+using System.Threading;
 
 namespace ElectronicParts.Tests
 {
@@ -70,9 +71,27 @@ namespace ElectronicParts.Tests
             IDisplayableNode adder = new IntegerAdder();
             IDisplayableNode display = new IntegerDisplay();
 
-            source1.Execute();
-            source2.Execute();
+            string a = source1.Outputs.ElementAt(0).Value.Current.ToString();
+            string b = source2.Outputs.ElementAt(0).Value.Current.ToString();
 
+            source1.Execute();
+            string source1Val = source1.Outputs.ElementAt(0).Value.Current.ToString();
+
+            source2.Execute();
+            string source2Val = source2.Outputs.ElementAt(0).Value.Current.ToString();
+
+            adder.Inputs.ElementAt(0).Value.Current = source1.Outputs.ElementAt(0).Value.Current;
+            adder.Inputs.ElementAt(1).Value.Current = source2.Outputs.ElementAt(0).Value.Current;
+
+            adder.Execute();
+
+            display.Inputs.ElementAt(0).Value.Current = adder.Outputs.ElementAt(0).Value.Current;
+
+            string s1 = display.Label;
+            display.Execute();
+            string s2 = display.Label;
+
+            var x = 0;
             
         }
     }
