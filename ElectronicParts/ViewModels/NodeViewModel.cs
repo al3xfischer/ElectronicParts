@@ -1,5 +1,6 @@
 ﻿using Shared;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
@@ -32,8 +33,8 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.top, value);
-                this.Inputs[0].Top = this.Top + 10;
-                this.Outputs[0].Top = this.Top + 10;
+                this.updateTop(this.Inputs.Select((p, i) => Tuple.Create(p, i)),this.Top);
+                this.updateTop(this.Outputs.Select((p, i) => Tuple.Create(p, i)),this.Top);
             }
         }
 
@@ -44,8 +45,8 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.left, value);
-                this.Inputs[0].Left = this.left - 10;
-                this.Outputs[0].Left = this.Left + 60;
+                this.updateLeft(this.Inputs, this.left);
+                this.updateLeft(this.Outputs, this.Left + 73);
             }
         }
         public ObservableCollection<PinViewModel> Inputs { get; }
@@ -62,13 +63,20 @@ namespace ElectronicParts.ViewModels
 
         public ICommand DeleteCommand { get; }
 
-        private Point GetPintPositions()
+        private void updateLeft(IEnumerable<PinViewModel> pins, int value)
         {
-            var pinX = this.Left - 20;
-            var pinY = this.Top - 20;
-
-            return new Point(pinX, pinY);
+            foreach (var pin in pins)
+            {
+                pin.Left = value;
+            }
         }
 
+        private void updateTop(IEnumerable<Tuple<PinViewModel, int>> pins, int value)
+        {
+            foreach (var pin in pins)
+            {
+                pin.Item1.Top = (pin.Item2 * 22) + value + 13;
+            }
+        }
     }
 }

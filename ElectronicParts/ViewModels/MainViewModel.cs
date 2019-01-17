@@ -28,11 +28,15 @@ namespace ElectronicParts.ViewModels
 
         private PinViewModel outputPin;
 
-        public MainViewModel(IExecutionService executionService,IAssemblyService assemblyService, IPinConnectorService pinConnectorService)
+        private NodeViewModel selectedNode;
+
+        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService)
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
             this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
+
+            this.AvailableNodes = new ObservableCollection<NodeViewModel>();
 
             this.SaveCommand = new RelayCommand(arg => { });
             this.LoadCommand = new RelayCommand(arg => { });
@@ -113,7 +117,8 @@ namespace ElectronicParts.ViewModels
             };
 
             this.assemblyService.LoadAssemblies()
-                .ContinueWith(t => {
+                .ContinueWith(t =>
+                {
 
                     var list = this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand));
 
@@ -123,6 +128,8 @@ namespace ElectronicParts.ViewModels
                         {
                             this.AvailableNodes.Add(node);
                         }
+
+                        this.AvailableNodes.Add(new NodeViewModel(new TestNode(), this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand));
                     });
                 });
 
@@ -159,7 +166,18 @@ namespace ElectronicParts.ViewModels
             }
         }
 
-        public NodeViewModel SelectedNode { get; set; }
+        public NodeViewModel SelectedNode
+        {
+            get => this.selectedNode;
+
+            set
+            {
+                if(value is NodeViewModel)
+                {
+                    Set(ref this.selectedNode, value);
+                }
+            }
+        }
 
         public NodeViewModel SelectedNodeInformation { get; set; }
 

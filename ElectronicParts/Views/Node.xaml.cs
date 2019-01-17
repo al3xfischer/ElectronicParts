@@ -14,5 +14,10 @@ namespace ElectronicParts.Views
         {
             InitializeComponent();
         }
+
+        private void UserControl_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var z = 1;
+        }
     }
 }

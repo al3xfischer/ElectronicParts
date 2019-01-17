@@ -13,6 +13,8 @@ namespace ElectronicParts.Views
     {
         private Canvas canvas;
 
+        private NodeViewModel currentNode;
+
         public MainWindow()
         {
             this.DataContext = this;
@@ -27,20 +29,12 @@ namespace ElectronicParts.Views
             preferences.ShowDialog();
         }
 
-        private void Node_Moving(object sender, System.EventArgs e)
-        {
-        }
-
-        private void Node_Stopped(object sender, EventArgs.StoppedEventArgs e)
-        {
-            MessageBox.Show(e.Position.Y.ToString());
-        }
-
         private void Node_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var point = e.GetPosition(this.canvas);
-            this.ViewModel.SelectedNode.Left = (int)point.X;
-            this.ViewModel.SelectedNode.Top = (int)point.Y;
+            this.currentNode = (e.OriginalSource as FrameworkElement).DataContext as NodeViewModel;
+            //var point = e.GetPosition(this.canvas);
+            //this.ViewModel.SelectedNode.Left = (int)point.X;
+            //this.ViewModel.SelectedNode.Top = (int)point.Y;
         }
 
         private void ItemsCanvas_Loaded(object sender, RoutedEventArgs e)
@@ -50,39 +44,30 @@ namespace ElectronicParts.Views
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed && !(this.ViewModel.SelectedNode is null))
+            //var vm = (e.OriginalSource as FrameworkElement).DataContext as NodeViewModel;
+            if (e.LeftButton == MouseButtonState.Pressed && !(currentNode is null))
             {
                 var point = e.GetPosition(this.canvas);
 
-                if (point.X <= 0 || point.Y <= 0 || point.X >= this.canvas.ActualWidth || point.Y >= this.canvas.ActualHeight)
+                if (this.currentNode is null || point.X <= 0 || point.Y <= 0 || point.X >= this.canvas.ActualWidth || point.Y >= this.canvas.ActualHeight)
                 {
                     return;
                 }
 
-                this.ViewModel.SelectedNode.Left = (int)point.X - 40;
-                this.ViewModel.SelectedNode.Top = (int)point.Y - 20;
+                this.currentNode.Left = (int)point.X - 40;
+                this.currentNode.Top = (int)point.Y - 20;
             }
-        }
-
-        private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            //this.ViewModel.SelectedNode = null;
-        }
-
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(e.AddedItems.Count == 0)
+            if (e.AddedItems.Count == 0)
             {
                 return;
             }
 
             var vm = e.AddedItems[0] as NodeViewModel;
-            if(vm is null)
+            if (vm is null)
             {
                 return;
             }
@@ -91,9 +76,14 @@ namespace ElectronicParts.Views
             (sender as ListView).SelectedItems.Clear();
         }
 
-        private void AvilableNodes_Selected(object sender, RoutedEventArgs e)
+        private void Node_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            this.currentNode = null;
+        }
 
+        private void Line_Loaded(object sender, RoutedEventArgs e)
+        {
+            Panel.SetZIndex(sender as UIElement, 0);
         }
     }
 }
