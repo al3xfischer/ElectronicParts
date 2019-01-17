@@ -29,6 +29,8 @@ namespace ElectronicParts.Services.Implementations
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
 
+                    formatter.AssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple;
+
                     snapShot = formatter.Deserialize(fileStream) as SnapShot;
                 }
             }
@@ -47,6 +49,8 @@ namespace ElectronicParts.Services.Implementations
                 using (FileStream fileStream = (FileStream)saveFileDialog.OpenFile())
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
+
+                    formatter.AssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple;
 
                     formatter.Serialize(fileStream, snapShot);
                 }                
