@@ -22,6 +22,13 @@ namespace ElectronicParts.Services
         [DataMember]
         public List<Rule<bool>> BoolRules { get; set; }
 
+        public Configuration()
+        {
+            this.StringRules = new List<Rule<string>>();
+            this.IntRules = new List<Rule<int>>();
+            this.BoolRules = new List<Rule<bool>>();
+        }
+
         public Configuration(IConfiguration config)
         {
             this.StringRules = new List<Rule<string>>();

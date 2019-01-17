@@ -25,12 +25,19 @@ namespace ElectronicParts.Services.Implementations
 
         private void SetupConfiguration()
         {
-            this.configuration = new ConfigurationBuilder()
-                .SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
-                .AddJsonFile("appsettings.json")
-                .Build();
+            try
+            {
+                this.configuration = new ConfigurationBuilder()
+                    .SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
+                    .AddJsonFile("appsettings.json")
+                    .Build();
 
-            this.Configuration = new Configuration(this.configuration);
+                this.Configuration = new Configuration(this.configuration);
+            }
+            catch
+            {
+                this.Configuration = new Configuration();
+            }
         }
 
         public void SaveConfiguration()
