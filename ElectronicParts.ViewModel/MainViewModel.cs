@@ -37,6 +37,7 @@ namespace ElectronicParts.ViewModels
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
             this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
+            this.AvailableNodes = new ObservableCollection<NodeViewModel>();
 
             this.SaveCommand = new RelayCommand(arg =>
             {
@@ -170,7 +171,9 @@ namespace ElectronicParts.ViewModels
             this.assemblyService.LoadAssemblies()
                 .ContinueWith(t => {
 
-                    var list = this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand));
+                    var list = this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand)).ToList();
+
+                    var x = 0;
 
                     Application.Current.Dispatcher.Invoke(() =>
                     {
