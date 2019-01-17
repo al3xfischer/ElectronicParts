@@ -74,12 +74,8 @@ namespace ElectronicParts.ViewModels
                             this.AvailableNodes.Add(node);
                         }
                     });
-                    
                 });
-
-
             this.Connections = new ObservableCollection<Connector>();
-
         }
 
         public ObservableCollection<NodeViewModel> Nodes
