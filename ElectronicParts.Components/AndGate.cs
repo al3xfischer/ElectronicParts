@@ -18,6 +18,7 @@ namespace ElectronicParts.Components
     /// <summary>
     /// Represents an <see cref="AndGate"/> with one output pin as boolean.
     /// </summary>
+    [Serializable]
     public class AndGate : IDisplayableNode
     {
         /// <summary>

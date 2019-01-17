@@ -17,6 +17,7 @@ namespace ElectronicParts.Components
     using System.Threading.Tasks;
     using Shared;
 
+    [Serializable]
     public class IntegerDisplay : IDisplayableNode
     {
         public IntegerDisplay()

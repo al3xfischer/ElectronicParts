@@ -17,9 +17,10 @@ namespace ElectronicParts.Components
     using System.Threading.Tasks;
     using Shared;
 
+    [Serializable]
     public class IntegerSource : IDisplayableNode
     {
-        private Random random;
+        private static Random random = new Random();
 
         public IntegerSource()
         {
@@ -27,8 +28,6 @@ namespace ElectronicParts.Components
 
             this.Outputs = new List<IPin>();
             this.Outputs.Add(new Pin<int>());
-
-            this.random = new Random();
         }
         public ICollection<IPin> Inputs { get; private set; }
 
@@ -57,7 +56,7 @@ namespace ElectronicParts.Components
         /// </summary>
         public void Execute()
         {
-            int newVal = this.random.Next(10);
+            int newVal = random.Next(10);
             this.Outputs.ElementAt(0).Value.Current = newVal;
         }
     }
