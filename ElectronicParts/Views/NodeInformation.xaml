@@ -27,6 +27,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -36,11 +37,14 @@
         
         <!-- ToolTip -->
         <Grid.ToolTip>
+            <StackPanel>
+            <TextBlock Width="150" TextWrapping="Wrap" Text="{Binding Label}" FontSize="15" FontWeight="Bold" />
             <TextBlock Width="150" TextWrapping="Wrap" Text="{Binding Description}"/>
+            </StackPanel>
         </Grid.ToolTip>        
         
         <!-- Label -->
-        <Label Content="{Binding Label}" />
+        <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" MaxWidth="50" TextAlignment="Center" TextTrimming="WordEllipsis" TextWrapping="NoWrap" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
 
         <!-- Inputs -->
         <ListView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Inputs}" ItemTemplate="{StaticResource PinTemplate}" >

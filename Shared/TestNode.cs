@@ -23,7 +23,7 @@ namespace Shared
 
         public ICollection<IPin> Outputs { get; set; }
 
-        public string Label { get { return "hupf"; } }
+        public string Label { get { return "hupfasdfasdfasdasdasdasdfasdfasdfasd"; } }
 
         public string Description { get { return "du W"; } }
 
