@@ -18,6 +18,7 @@ namespace ElectronicParts.Components
     /// <summary>
     /// Represents an <see cref="PowerOnOff"/> node with one output pin as boolean.
     /// </summary>
+    [Serializable]
     public class PowerOnOff : IDisplayableNode
     {
         /// <summary>
