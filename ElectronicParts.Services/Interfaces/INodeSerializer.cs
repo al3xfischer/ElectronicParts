@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElectronicParts.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace ElectronicParts.Services.Interfaces
 {
     public interface INodeSerializer
     {
-        void Serialize();
+        void Serialize(SnapShot snapShot, string path);
 
-        void Deserialize();
+        SnapShot Deserialize(string path);
     }
 }
