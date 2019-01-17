@@ -76,7 +76,7 @@ namespace ElectronicParts.Components
         /// Gets the current picture of this node.
         /// </summary>
         /// <value>The current picture of this node.</value>
-        public Bitmap Picture => throw new NotImplementedException();
+        public Bitmap Picture => null;
         
         /// <summary>
         /// Toggles between switched on and off.

@@ -25,6 +25,8 @@ namespace ElectronicParts.Services.Interfaces
         /// <value>true if this instance is enabled; otherwise, false.</value>
         bool IsEnabled { get; }
 
+        int FramesPerSecond { get; set; }
+
         /// <summary>
         /// Executes one step.
         /// </summary>
