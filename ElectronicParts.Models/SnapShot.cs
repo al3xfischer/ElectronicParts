@@ -12,9 +12,9 @@ namespace ElectronicParts.Models
     {
         public IEnumerable<NodeSnapShot> Nodes { get; set; }
 
-        public IEnumerable<Connector> Connections { get; set; }
+        public IEnumerable<ConnectionSnapShot> Connections { get; set; }
 
-        public SnapShot(IEnumerable<NodeSnapShot> nodes, IEnumerable<Connector> connections)
+        public SnapShot(IEnumerable<NodeSnapShot> nodes, IEnumerable<ConnectionSnapShot> connections)
         {
             this.Nodes = nodes;
             this.Connections = connections;

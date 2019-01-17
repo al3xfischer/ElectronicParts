@@ -46,9 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionSnapShot.cs" />
     <Compile Include="Connector.cs" />
     <Compile Include="NodeSnapShot.cs" />
     <Compile Include="Pin.cs" />
+    <Compile Include="PinSnapShot.cs" />
     <Compile Include="Rule.cs" />
     <Compile Include="SnapShot.cs" />
     <Compile Include="Value.cs" />

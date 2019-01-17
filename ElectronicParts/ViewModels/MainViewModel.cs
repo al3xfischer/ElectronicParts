@@ -15,7 +15,7 @@ namespace ElectronicParts.ViewModels
     public class MainViewModel : BaseViewModel
     {
         private ObservableCollection<NodeViewModel> nodes;
-        private ObservableCollection<Connector> connections;
+        private ObservableCollection<ConnectorViewModel> connections;
         private ObservableCollection<NodeViewModel> availableNodes;
         private readonly IExecutionService myExecutionService;
 
@@ -39,7 +39,7 @@ namespace ElectronicParts.ViewModels
                 }
 
                 List<NodeViewModel> nodes = new List<NodeViewModel>();
-                List<Connector> connections = new List<Connector>();
+                List<ConnectorViewModel> connections = new List<ConnectorViewModel>();
 
                 foreach (NodeSnapShot node in snapShot.Nodes)
                 {
@@ -50,9 +50,14 @@ namespace ElectronicParts.ViewModels
                     nodes.Add(nodeViewModel);
                 }
 
-                foreach (Connector connection in snapShot.Connections)
+                foreach (ConnectionSnapShot connection in snapShot.Connections)
                 {
-                    connections.Add(connection);
+                    PinViewModel inputPinViewModel = new PinViewModel(connection.InputPin.Pin, this.InputPinCommand);
+                    PinViewModel outputPinViewModel = new PinViewModel(connection.InputPin.Pin, this.OutputPinCommand);
+
+                    //ConnectorViewModel connectorViewModel = new ConnectorViewModel();
+
+                    connections.Add(connectorViewModel);
                 }
 
                 this.nodes.Clear();
@@ -64,7 +69,7 @@ namespace ElectronicParts.ViewModels
 
                 this.connections.Clear();
 
-                foreach (Connector connection in connections)
+                foreach (ConnectorViewModel connection in connections)
                 {
                     this.connections.Add(connection);
                 }
