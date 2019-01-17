@@ -1,7 +1,10 @@
 ﻿using ElectronicParts.Commands;
 using System;
+<<<<<<< HEAD
 using System.Windows;
 using System.Linq;
+=======
+>>>>>>> UI
 using Shared;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -25,6 +28,7 @@ namespace ElectronicParts.ViewModels
             this.SaveCommand = new RelayCommand(arg => { });
             this.LoadCommand = new RelayCommand(arg => { });
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
+<<<<<<< HEAD
 
             this.ExecutionStepCommand = new RelayCommand(async arg =>
             {
@@ -58,9 +62,42 @@ namespace ElectronicParts.ViewModels
 
             }, arg => this.myExecutionService.IsEnabled);
 
+=======
+            this.InputPinCommand = new RelayCommand(arg => { });
+            this.OutputPinCommand = new RelayCommand(arg => { });
+            this.DeleteCommand = new RelayCommand(arg =>
+            {
+                var nodeVm = arg as NodeViewModel;
+
+                if (nodeVm is null)
+                {
+                    return;
+                }
+
+                this.Nodes.Remove(nodeVm);
+            });
+            this.AddNodeCommand = new RelayCommand(arg =>
+            {
+                var node = arg as IDisplayableNode;
+                if (node is null)
+                {
+                    return;
+                }
+
+                var copy = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;
+                var vm = new NodeViewModel(copy, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand);
+                this.Nodes.Add(vm);
+                this.FirePropertyChanged(nameof(Nodes));
+            });
+>>>>>>> UI
             this.Nodes = new ObservableCollection<NodeViewModel>
             {
-                new NodeViewModel(new TestNode())
+                new NodeViewModel(new TestNode(),this.DeleteCommand,this.InputPinCommand,this.OutputPinCommand)
+            };
+
+            this.AvailableNodes = new ObservableCollection<NodeViewModel>
+            {
+                new NodeViewModel(new TestNode(),this.DeleteCommand,this.InputPinCommand,this.OutputPinCommand)
             };
 
             this.Connections = new ObservableCollection<Connector>();
@@ -98,6 +135,8 @@ namespace ElectronicParts.ViewModels
 
         public NodeViewModel SelectedNode { get; set; }
 
+        public NodeViewModel SelectedNodeInformation { get; set; }
+
         public ICommand SaveCommand { get; }
         public ICommand ExecutionStepCommand { get; }
         public ICommand ExecutionStartLoopCommand { get; }
@@ -108,6 +147,7 @@ namespace ElectronicParts.ViewModels
         public ICommand ReloadAssembliesCommand { get; }
         public ICommand ExitCommand { get; }
 
+<<<<<<< HEAD
         private async Task ResetAllConnections()
         {
             await Task.Run(() =>
@@ -118,5 +158,14 @@ namespace ElectronicParts.ViewModels
                 }
             });
         }
+=======
+        public ICommand AddNodeCommand { get; }
+
+        public ICommand DeleteCommand { get; }
+
+        public ICommand InputPinCommand { get; }
+
+        public ICommand OutputPinCommand { get; }
+>>>>>>> UI
     }
 }
