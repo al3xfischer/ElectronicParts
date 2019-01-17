@@ -86,7 +86,7 @@ namespace ElectronicParts.Services.Implementations
                 {
                     try
                     {
-                        // Loading Assembly.
+                        // Loading file into mainmemory and loading assembly.
                         var assembly = Assembly.Load(File.ReadAllBytes(file.FullName));
 
                         // Getting all Types that implement IDisplayableNode interface.
