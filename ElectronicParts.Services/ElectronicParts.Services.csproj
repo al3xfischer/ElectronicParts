@@ -90,6 +90,7 @@
     <Compile Include="Implementations\ConfigurationService.cs" />
     <Compile Include="Implementations\ExecutionService.cs" />
     <Compile Include="Interfaces\IExecutionService.cs" />
+    <Compile Include="Interfaces\INodeSerializer.cs" />
     <Compile Include="Interfaces\IPinConnectorService.cs" />
     <Compile Include="Interfaces\IConfigurationService.cs" />
     <Compile Include="Implementations\AssemblyService.cs" />
