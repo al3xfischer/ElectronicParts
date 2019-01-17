@@ -32,7 +32,8 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.top, value);
-                var point = this.GetPintPositions();
+                this.Inputs[0].Top = this.Top + 10;
+                this.Outputs[0].Top = this.Top + 10;
             }
         }
 
@@ -43,7 +44,8 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.left, value);
-                var point = this.GetPintPositions();
+                this.Inputs[0].Left = this.left - 10;
+                this.Outputs[0].Left = this.Left + 60;
             }
         }
         public ObservableCollection<PinViewModel> Inputs { get; }
