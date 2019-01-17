@@ -10,7 +10,7 @@ namespace ElectronicParts.ViewModels
 {
     public class ConnectorViewModel : BaseViewModel
     {
-        private Connector myConnector;
+        private readonly Connector myConnector;
 
         public ConnectorViewModel(Connector connector)
         {
