@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"          
         xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:converter="clr-namespace:ElectronicParts.Converter"
         xmlns:local="clr-namespace:ElectronicParts.Views"
         mc:Ignorable="d"
         Title="Preferences" Height="450" Width="850" WindowStartupLocation="CenterScreen">
@@ -18,7 +19,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
-                        A connection between 2 pins of the type string will have the color:<xctk:ColorPicker DisplayColorAndName="True" Width="150" ShowTabHeaders="False" SelectedColor="{Binding Color}" local:NameObserver.Observe="True" local:NameObserver.ObservedName="{Binding Rule.Color, Mode=OneWayToSource}"/> when the value is: <TextBox Width="150" Height="Auto" Text="{Binding Rule.Value}"/> <Button Command="{Binding DeletionCommand}" CommandParameter="{Binding}" Content="Delete"/>
+                        A connection between 2 pins of the type string will have the color:<xctk:ColorPicker DisplayColorAndName="True" Width="150" ShowTabHeaders="False" SelectedColor="{Binding Color}" converter:NameObserver.Observe="True" converter:NameObserver.ObservedName="{Binding Rule.Color, Mode=OneWayToSource}"/> when the value is: <TextBox Width="150" Height="Auto" Text="{Binding Rule.Value}"/> <Button Command="{Binding DeletionCommand}" CommandParameter="{Binding}" Content="Delete"/>
                     </TextBlock>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -27,7 +28,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
-                         A connection between 2 pins of the type integer will have the color:<xctk:ColorPicker DisplayColorAndName="True" Width="150" ShowTabHeaders="False" SelectedColor="{Binding Color}" local:NameObserver.Observe="True" local:NameObserver.ObservedName="{Binding Rule.Color, Mode=OneWayToSource}"/> when the value is: <TextBox Width="150" Height="Auto" PreviewTextInput="PreviewNumberInput" Text="{Binding Rule.Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/> <Button Command="{Binding DeletionCommand}" CommandParameter="{Binding}" Content="Delete"/>
+                         A connection between 2 pins of the type integer will have the color:<xctk:ColorPicker DisplayColorAndName="True" Width="150" ShowTabHeaders="False" SelectedColor="{Binding Color}" converter:NameObserver.Observe="True" converter:NameObserver.ObservedName="{Binding Rule.Color, Mode=OneWayToSource}"/> when the value is: <TextBox Width="150" Height="Auto" PreviewTextInput="PreviewNumberInput" Text="{Binding Rule.Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/> <Button Command="{Binding DeletionCommand}" CommandParameter="{Binding}" Content="Delete"/>
                     </TextBlock>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -36,7 +37,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
-                         A connection between 2 pins of the type bool will have the color:<xctk:ColorPicker x:Name="colorPick" DisplayColorAndName="True" Width="150" ShowTabHeaders="False" SelectedColor="{Binding Color}" local:NameObserver.Observe="True" local:NameObserver.ObservedName="{Binding Rule.Color, Mode=OneWayToSource}"/> when the value is: 
+                         A connection between 2 pins of the type bool will have the color:<xctk:ColorPicker x:Name="colorPick" DisplayColorAndName="True" Width="150" ShowTabHeaders="False" SelectedColor="{Binding Color}" converter:NameObserver.Observe="True" converter:NameObserver.ObservedName="{Binding Rule.Color, Mode=OneWayToSource}"/> when the value is: 
                         <ComboBox SelectedItem="{Binding Rule.Value}">
                              <ComboBox.Items>
                                 <system:Boolean>True</system:Boolean>

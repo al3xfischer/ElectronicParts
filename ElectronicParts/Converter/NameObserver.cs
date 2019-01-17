@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Xceed.Wpf.Toolkit;
 
-namespace ElectronicParts.Views
+namespace ElectronicParts.Converter
 {
     public static class NameObserver
     {
