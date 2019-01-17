@@ -83,6 +83,36 @@ namespace ElectronicParts.Components.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap IntegerAdder {
+            get {
+                object obj = ResourceManager.GetObject("IntegerAdder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IntegerDisplay {
+            get {
+                object obj = ResourceManager.GetObject("IntegerDisplay", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IntegerSource {
+            get {
+                object obj = ResourceManager.GetObject("IntegerSource", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Inverter {
             get {
                 object obj = ResourceManager.GetObject("Inverter", resourceCulture);

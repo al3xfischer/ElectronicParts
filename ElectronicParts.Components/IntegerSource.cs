@@ -39,7 +39,7 @@ namespace ElectronicParts.Components
 
         public NodeType Type => NodeType.Source;
 
-        public Bitmap Picture => throw new NotImplementedException();
+        public Bitmap Picture => Properties.Resources.IntegerSource;
 
         public event EventHandler PictureChanged;
 
