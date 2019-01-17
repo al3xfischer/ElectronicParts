@@ -19,7 +19,6 @@ namespace ElectronicParts.Views
 
         public MainWindow()
         {
-            InitializeComponent();
             this.DataContext = this;
             this.ViewModel = Container.Resolve<MainViewModel>();
         }
