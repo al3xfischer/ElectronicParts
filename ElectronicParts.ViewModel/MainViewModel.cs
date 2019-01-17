@@ -168,21 +168,8 @@ namespace ElectronicParts.ViewModels
                 new NodeViewModel(new TestNode(),this.DeleteCommand,this.InputPinCommand,this.OutputPinCommand)
             };
 
-            this.assemblyService.LoadAssemblies()
-                .ContinueWith(t => {
-
-                    var list = this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand)).ToList();
-
-                    var x = 0;
-
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        foreach (var node in list)
-                        {
-                            this.AvailableNodes.Add(node);
-                        }
-                    });
-                });
+            this.AvailableNodes = new ObservableCollection<NodeViewModel>();
+            var reloadingTask = this.ReloadAssemblies();
 
             this.Connections = new ObservableCollection<ConnectorViewModel>();
         }
@@ -241,6 +228,17 @@ namespace ElectronicParts.ViewModels
                 }
             });
         }
+
+        public async Task ReloadAssemblies()
+        {
+            await this.assemblyService.LoadAssemblies();
+            this.AvailableNodes.Clear();
+            foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node)))
+            {
+                this.AvailableNodes.Add(assembly);
+            }
+        }
+
         public ICommand AddNodeCommand { get; }
 
         public ICommand DeleteCommand { get; }
