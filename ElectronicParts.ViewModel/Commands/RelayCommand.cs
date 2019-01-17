@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace ElectronicParts.Commands
+namespace ElectronicParts.ViewModels.Commands
 {
     public class RelayCommand : ICommand
     {

@@ -1,12 +1,13 @@
-﻿using ElectronicParts.Commands;
+﻿using ElectronicParts.ViewModels.Commands;
 using System;
 using System.Linq;
 using Shared;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using ElectronicParts.Services.Interfaces;
 using System.Threading.Tasks;
 using ElectronicParts.Services.Implementations;
+using System.Windows;
+using ElectronicParts.Services.Interfaces;
 
 namespace ElectronicParts.ViewModels
 {
@@ -117,7 +118,7 @@ namespace ElectronicParts.ViewModels
 
                     var list = this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand));
 
-                    App.Current.Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
                         foreach (var node in list)
                         {

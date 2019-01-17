@@ -1,4 +1,4 @@
-﻿using ElectronicParts.Commands;
+﻿using ElectronicParts.ViewModels.Commands;
 using ElectronicParts.Models;
 using ElectronicParts.Services;
 using ElectronicParts.Services.Interfaces;

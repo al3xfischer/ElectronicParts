@@ -61,12 +61,7 @@
     <Compile Include="Converter\PinToHeightConverter.cs" />
     <Compile Include="Converter\SnapShotConverter.cs" />
     <Compile Include="EventArgs\StoppedEventArgs.cs" />
-    <Compile Include="Extentions\Extentioins.cs" />
-    <Compile Include="ViewModels\ConnectorViewModel.cs" />
-    <Compile Include="ViewModels\NodeViewModel.cs" />
-    <Compile Include="ViewModels\RuleViewModel.cs" />
     <Compile Include="Converter\NameObserver.cs" />
-    <Compile Include="ViewModels\PinViewModel.cs" />
     <Compile Include="Views\Connection.xaml.cs">
       <DependentUpon>Connection.xaml</DependentUpon>
     </Compile>
@@ -91,11 +86,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="DI\Container.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\PreferencesViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -167,6 +158,10 @@
     <ProjectReference Include="..\ElectronicParts.Models\ElectronicParts.Models.csproj">
       <Project>{4294C9BE-14F0-4618-A5EC-F18A30B760FB}</Project>
       <Name>ElectronicParts.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ElectronicParts.ViewModel\ElectronicParts.ViewModel.csproj">
+      <Project>{79fae5a3-223e-4841-ad5b-9aa02a2857b3}</Project>
+      <Name>ElectronicParts.ViewModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{f90c9cbb-2faa-4b3c-bb12-9d481ee86f19}</Project>
