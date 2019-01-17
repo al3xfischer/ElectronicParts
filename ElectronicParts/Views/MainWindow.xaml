@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElectronicParts.Views"
         xmlns:vm="clr-namespace:ElectronicParts.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         d:DataContext="{Binding Source={d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}}"
         Title="Electronic Parts" MinWidth="500" MinHeight="400" WindowState="Maximized" MouseLeftButtonDown="Window_MouseLeftButtonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" MouseMove="Window_MouseMove">
@@ -22,11 +23,6 @@
         <DataTemplate x:Key="NodeInformationTemplate">
             <local:NodeInformation HorizontalAlignment="Center"/>
         </DataTemplate>
-
-        <ContextMenu x:Key="DeleteContextMenu">
-            <MenuItem Header="Delte" Command="{Binding ViewModel.DeleteCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
-            <!--CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>-->
-        </ContextMenu>
 
     </Window.Resources>
 
