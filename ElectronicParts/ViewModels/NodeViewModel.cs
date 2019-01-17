@@ -33,8 +33,8 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.top, value);
-                this.updateTop(this.Inputs.Select((p, i) => Tuple.Create(p, i)),this.Top);
-                this.updateTop(this.Outputs.Select((p, i) => Tuple.Create(p, i)),this.Top);
+                this.UpdateTop(this.Inputs.Select((p, i) => Tuple.Create(p, i)),this.Top);
+                this.UpdateTop(this.Outputs.Select((p, i) => Tuple.Create(p, i)),this.Top);
             }
         }
 
@@ -45,8 +45,8 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.left, value);
-                this.updateLeft(this.Inputs, this.left);
-                this.updateLeft(this.Outputs, this.Left + 73);
+                this.UpdateLeft(this.Inputs, this.left);
+                this.UpdateLeft(this.Outputs, this.Left + 73);
             }
         }
         public ObservableCollection<PinViewModel> Inputs { get; }
@@ -71,7 +71,7 @@ namespace ElectronicParts.ViewModels
             }
         }
 
-        private void updateLeft(IEnumerable<PinViewModel> pins, int value)
+        private void UpdateLeft(IEnumerable<PinViewModel> pins, int value)
         {
             foreach (var pin in pins)
             {
@@ -79,7 +79,7 @@ namespace ElectronicParts.ViewModels
             }
         }
 
-        private void updateTop(IEnumerable<Tuple<PinViewModel, int>> pins, int value)
+        private void UpdateTop(IEnumerable<Tuple<PinViewModel, int>> pins, int value)
         {
             foreach (var pin in pins)
             {
