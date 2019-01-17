@@ -16,10 +16,12 @@ namespace ElectronicParts.ViewModels
         private ObservableCollection<Connector> connections;
         private ObservableCollection<NodeViewModel> availableNodes;
         private readonly IExecutionService myExecutionService;
+        private readonly IAssemblyService myAssemblyService;
 
-        public MainViewModel(IExecutionService executionService)
+        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService)
         {
             this.myExecutionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
+            this.myAssemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
 
             this.SaveCommand = new RelayCommand(arg => { });
             this.LoadCommand = new RelayCommand(arg => { });
@@ -87,10 +89,19 @@ namespace ElectronicParts.ViewModels
                 new NodeViewModel(new TestNode(),this.DeleteCommand,this.InputPinCommand,this.OutputPinCommand)
             };
 
-            this.AvailableNodes = new ObservableCollection<NodeViewModel>
-            {
-                new NodeViewModel(new TestNode(),this.DeleteCommand,this.InputPinCommand,this.OutputPinCommand)
-            };
+            this.myAssemblyService.LoadAssemblies()
+                .ContinueWith(t => {
+
+                    var list = this.myAssemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand));
+
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        foreach (var node in list)
+                        {
+                            this.AvailableNodes.Add(node);
+                        }
+                    });
+                });
 
             this.Connections = new ObservableCollection<Connector>();
         }
