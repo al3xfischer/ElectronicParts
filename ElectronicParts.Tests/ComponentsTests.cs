@@ -16,25 +16,19 @@ namespace ElectronicParts.Tests
         [Test]
         public void AndGateTest()
         {
-            IPin pin1 = new Pin<bool>();
-            pin1.Value.Current = true;
-
-            IPin pin2 = new Pin<bool>();
-            pin2.Value.Current = false;
-
-            IPin pin3 = new Pin<bool>();
-            pin3.Value.Current = true;
 
             IDisplayableNode node = new AndGate();
-            node.Inputs.Add(pin1);
-            node.Inputs.Add(pin2);
-            node.Inputs.Add(pin3);
+            node.Inputs.ElementAt(0).Value.Current = true;
+            node.Inputs.ElementAt(1).Value.Current = false;
 
+            node.Inputs.Add(new Pin<bool>());
+            node.Inputs.ElementAt(2).Value.Current = true;
+            
             node.Execute();
 
             Assert.IsFalse((bool)node.Outputs.ElementAt(0).Value.Current);
 
-            pin2.Value.Current = true;
+            node.Inputs.ElementAt(1).Value.Current = true;
 
             node.Execute();
 
@@ -44,37 +38,42 @@ namespace ElectronicParts.Tests
         [Test]
         public void OrGateTest()
         {
-            IPin pin1 = new Pin<bool>();
-            pin1.Value.Current = true;
-
-            IPin pin2 = new Pin<bool>();
-            pin2.Value.Current = false;
-
-            IPin pin3 = new Pin<bool>();
-            pin3.Value.Current = true;
-
             IDisplayableNode node = new OrGate();
-            node.Inputs.Add(pin1);
-            node.Inputs.Add(pin2);
-            node.Inputs.Add(pin3);
+            node.Inputs.ElementAt(0).Value.Current = true;
+            node.Inputs.ElementAt(1).Value.Current = false;
+
+            node.Inputs.Add(new Pin<bool>());
+            node.Inputs.ElementAt(2).Value.Current = true;
 
             node.Execute();
 
             Assert.IsTrue((bool)node.Outputs.ElementAt(0).Value.Current);
 
-            pin1.Value.Current = false;
+            node.Inputs.ElementAt(0).Value.Current = false;
 
             node.Execute();
 
             Assert.IsTrue((bool)node.Outputs.ElementAt(0).Value.Current);
 
-            pin3.Value.Current = false;
+            node.Inputs.ElementAt(2).Value.Current = false;
 
             node.Execute();
 
             Assert.IsFalse((bool)node.Outputs.ElementAt(0).Value.Current);
+        }
 
-            Bitmap bm = node.Picture;
+        [Test]
+        public void IntegerSourceAdderDisplayTest()
+        {
+            IDisplayableNode source1 = new IntegerSource();
+            IDisplayableNode source2 = new IntegerSource();
+            IDisplayableNode adder = new IntegerAdder();
+            IDisplayableNode display = new IntegerDisplay();
+
+            source1.Execute();
+            source2.Execute();
+
+            
         }
     }
 }

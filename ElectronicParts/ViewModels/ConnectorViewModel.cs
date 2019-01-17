@@ -10,16 +10,22 @@ namespace ElectronicParts.ViewModels
 {
     public class ConnectorViewModel : BaseViewModel
     {
-        private readonly Connector myConnector;
-
-        public ConnectorViewModel(Connector connector)
+        public ConnectorViewModel(Connector connector, PinViewModel input, PinViewModel output)
         {
-            this.myConnector = connector;
+            this.Connector = connector ?? throw new ArgumentNullException(nameof(connector));
+            this.Input = input ?? throw new ArgumentNullException(nameof(input));
+            this.Output = output ?? throw new ArgumentNullException(nameof(output));
         }
 
-        public IValue MyCurrentValue
+        public Connector Connector { get; }
+
+        public PinViewModel Input { get; }
+
+        public PinViewModel Output { get; }
+
+        public IValue CurrentValue
         {
-            get => this.myConnector.CommonValue;
+            get => this.Connector.CommonValue;
         }
     }
 }

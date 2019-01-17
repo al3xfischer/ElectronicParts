@@ -21,11 +21,13 @@ namespace ElectronicParts.Components
     public class AndGate : IDisplayableNode
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AndGate"/> class.
+        /// Initializes a new instance of the <see cref="AndGate"/> class with two input pins and one output pin.
         /// </summary>
         public AndGate()
         {
             this.Inputs = new List<IPin>();
+            this.Inputs.Add(new Pin<bool>());
+            this.Inputs.Add(new Pin<bool>());
 
             this.Outputs = new List<IPin>();
             this.Outputs.Add(new Pin<bool>());
@@ -40,13 +42,13 @@ namespace ElectronicParts.Components
         /// Gets the input pins of this gate.
         /// </summary>
         /// <value>The input pins of this gate.</value>
-        public ICollection<IPin> Inputs { get; private set; }
+        public ICollection<IPin> Inputs { get; }
 
         /// <summary>
         /// Gets the output pins of this gate. There is only one output pin - so use first pin of the Collection.
         /// </summary>
         /// <value>The output pins of this gate.</value>
-        public ICollection<IPin> Outputs { get; private set; }
+        public ICollection<IPin> Outputs { get; }
 
         /// <summary>
         /// Gets the Label of this gate.

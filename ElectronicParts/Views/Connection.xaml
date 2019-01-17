@@ -6,5 +6,5 @@
              xmlns:local="clr-namespace:ElectronicParts.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" Stroke="Black" StrokeThickness="3"/>
+    <Line X1="{Binding Input.Left}" Y1="{Binding Input.Top}" X2="{Binding Output.Left}" Y2="{Binding Output.Top}" Stroke="Black" StrokeThickness="3"/>
 </UserControl>

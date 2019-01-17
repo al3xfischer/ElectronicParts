@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IntegerAdder.cs" />
+    <Compile Include="IntegerDisplay.cs" />
+    <Compile Include="IntegerSource.cs" />
     <Compile Include="OrGate.cs" />
     <Compile Include="Pin.cs" />
     <Compile Include="AndGate.cs" />
@@ -72,6 +75,10 @@
     <Content Include="Pictures\ExOr_Gate.png" />
     <Content Include="Pictures\Inverter.png" />
     <Content Include="Pictures\Or_Gate.png" />
+    <Content Include="Pictures\PowerOff.png" />
+    <Content Include="Pictures\PowerOn.png" />
+    <Content Include="Pictures\SwitchOff.png" />
+    <Content Include="Pictures\SwitchOn.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

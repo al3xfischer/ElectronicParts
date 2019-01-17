@@ -40,13 +40,13 @@ namespace ElectronicParts.Components
         /// Gets the input pins of this gate. List is empty because <see cref="PowerOnOff"/> has no inputs.
         /// </summary>
         /// <value>The input pins of this gate (Empty).</value>
-        public ICollection<IPin> Inputs { get; private set; }
+        public ICollection<IPin> Inputs { get; }
 
         /// <summary>
         /// Gets the output pins of this gate. There is only one pin - so use first pin of the Collection.
         /// </summary>
         /// <value>The output pins of this gate.</value>
-        public ICollection<IPin> Outputs { get; private set; }
+        public ICollection<IPin> Outputs { get; }
 
         /// <summary>
         /// Gets the label of this node.
@@ -64,7 +64,20 @@ namespace ElectronicParts.Components
         /// Gets the current picture of this node.
         /// </summary>
         /// <value>The current picture of this node.</value>
-        public Bitmap Picture => throw new NotImplementedException();
+        public Bitmap Picture
+        {
+            get
+            {
+                if ((bool)this.Outputs.ElementAt(0).Value.Current)
+                {
+                    return Properties.Resources.PowerOn;
+                }
+                else
+                {
+                    return Properties.Resources.PowerOff;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the type of the node.
@@ -86,8 +99,6 @@ namespace ElectronicParts.Components
         public void Activate()
         {
             this.Outputs.ElementAt(0).Value.Current = !(bool)this.Outputs.ElementAt(0).Value.Current;
-
-            //// TODO: change picture
 
             this.PictureChanged?.Invoke(this, EventArgs.Empty);
         }
