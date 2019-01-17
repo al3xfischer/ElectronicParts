@@ -40,7 +40,7 @@ namespace ElectronicParts.Components
 
         public NodeType Type => NodeType.Logic;
 
-        public Bitmap Picture => throw new NotImplementedException();
+        public Bitmap Picture => null;
 
         public event EventHandler PictureChanged;
 
