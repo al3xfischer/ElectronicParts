@@ -9,18 +9,11 @@ namespace ElectronicParts.ViewModels
 {
     public class NodeViewModel : BaseViewModel
     {
-<<<<<<< HEAD
         internal readonly IDisplayableNode node;
 
-=======
->>>>>>> UI
         private int top;
 
         private int left;
-
-        private int pinTop;
-
-        private int pinLeft;
 
         public NodeViewModel(IDisplayableNode node, ICommand deleteCommand, ICommand inputPinCommand, ICommand OutputPinCommand)
         {
@@ -40,7 +33,6 @@ namespace ElectronicParts.ViewModels
             {
                 Set(ref this.top, value);
                 var point = this.GetPintPositions();
-                this.PinTop = point.Y;
             }
         }
 
@@ -52,12 +44,8 @@ namespace ElectronicParts.ViewModels
             {
                 Set(ref this.left, value);
                 var point = this.GetPintPositions();
-                this.PinLeft = point.X;
             }
         }
-        public int PinLeft { get => this.pinLeft; set { Set(ref this.pinLeft, value); } }
-        public int PinTop { get => this.pinTop; set { Set(ref this.pinTop, value); } }
-
         public ObservableCollection<PinViewModel> Inputs { get; }
 
         public ObservableCollection<PinViewModel> Outputs { get; }
