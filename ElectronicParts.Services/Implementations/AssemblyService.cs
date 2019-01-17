@@ -34,6 +34,7 @@ namespace ElectronicParts.Services.Implementations
         private readonly string assemblyPath;
 
         private List<IDisplayableNode> nodeList;
+        private AppDomain currentDomain;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AssemblyService"/> class.
@@ -85,8 +86,8 @@ namespace ElectronicParts.Services.Implementations
                 {
                     try
                     {
-                        // Loading Assembly.
-                        var assembly = Assembly.LoadFrom(file.FullName);
+                        // Loading file into mainmemory and loading assembly.
+                        var assembly = Assembly.Load(File.ReadAllBytes(file.FullName));
 
                         // Getting all Types that implement IDisplayableNode interface.
                         var types = assembly.GetTypes();
