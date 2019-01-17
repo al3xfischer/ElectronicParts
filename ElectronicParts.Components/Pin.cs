@@ -8,6 +8,7 @@ using Shared;
 
 namespace ElectronicParts.Components
 {
+    [Serializable]
     public class Pin<T> : IPinGeneric<T>
     {
         public Pin()

@@ -7,6 +7,7 @@ using Shared;
 
 namespace ElectronicParts.Components
 {
+    [Serializable]
     public class MyValue<T> : IValueGeneric<T>
     {
         public T Current { get; set; }
