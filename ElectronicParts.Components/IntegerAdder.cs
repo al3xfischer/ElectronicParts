@@ -40,7 +40,7 @@ namespace ElectronicParts.Components
 
         public NodeType Type => NodeType.Logic;
 
-        public Bitmap Picture => null;
+        public Bitmap Picture => Properties.Resources.IntegerAdder;
 
         public event EventHandler PictureChanged;
 

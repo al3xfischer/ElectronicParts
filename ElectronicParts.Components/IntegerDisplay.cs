@@ -39,7 +39,7 @@ namespace ElectronicParts.Components
 
         public NodeType Type => NodeType.Display;
 
-        public Bitmap Picture => null;
+        public Bitmap Picture => Properties.Resources.IntegerDisplay;
 
         public event EventHandler PictureChanged;
 
