@@ -49,7 +49,7 @@
                 <MenuItem Header="_Save" Command="{Binding ViewModel.SaveCommand}" InputGestureText="Ctrl+S" />
                 <MenuItem Header="_Open" Command="{Binding ViewModel.LoadCommand}" InputGestureText="Ctrl+O" />
                 <Separator/>
-                <MenuItem Header="_Reload Assemblies" Command="{Binding ViewModel.LoadCommand}"/>
+                <MenuItem Header="_Reload Assemblies" Command="{Binding ViewModel.ReloadAssembliesCommand}"/>
                 <MenuItem Header="_Add new Assembly" Name="addAssembly" Click="AddAssembly_Click"/>
                 <MenuItem Header="_Open Assembly Folder" Name="openAssemblyFolder" Click="OpenAssemblyFolder_Click"/>
                 <Separator/>

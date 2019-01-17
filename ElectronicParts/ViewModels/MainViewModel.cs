@@ -28,6 +28,7 @@ namespace ElectronicParts.ViewModels
             this.SaveCommand = new RelayCommand(arg => { });
             this.LoadCommand = new RelayCommand(arg => { });
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
+            this.ReloadAssembliesCommand = new RelayCommand(async arg => { await this.ReloadAssemblies(); });
             this.ExecutionStepCommand = new RelayCommand(async arg =>
             {
                 var nodeList = this.Nodes.Select(nodeVM => nodeVM.node);
