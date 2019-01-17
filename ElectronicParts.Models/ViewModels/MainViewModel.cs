@@ -16,14 +16,19 @@ namespace ElectronicParts.ViewModels
         private ObservableCollection<Connector> connections;
         private ObservableCollection<NodeViewModel> availableNodes;
         private readonly IExecutionService myExecutionService;
+        private readonly IAssemblyService assemblyService;
+        private int framesPerSecond;
 
-        public MainViewModel(IExecutionService executionService)
+        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService)
         {
             this.myExecutionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
+            this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
+            this.FramesPerSecond = 50;
 
             this.SaveCommand = new RelayCommand(arg => { });
             this.LoadCommand = new RelayCommand(arg => { });
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
+            this.ReloadAssembliesCommand = new RelayCommand(async arg => { await this.ReloadAssemblies(); });
             this.ExecutionStepCommand = new RelayCommand(async arg =>
             {
                 var nodeList = this.Nodes.Select(nodeVM => nodeVM.node);
@@ -93,6 +98,7 @@ namespace ElectronicParts.ViewModels
             };
 
             this.Connections = new ObservableCollection<Connector>();
+            var loadingTask = this.ReloadAssemblies();
         }
 
         public ObservableCollection<NodeViewModel> Nodes
@@ -129,6 +135,19 @@ namespace ElectronicParts.ViewModels
 
         public NodeViewModel SelectedNodeInformation { get; set; }
 
+        public int FramesPerSecond
+        {
+            get => this.framesPerSecond;
+            set 
+            {
+                if (value > 0 && value <= 100)
+                {
+                    Set(ref this.framesPerSecond, value);
+                    this.myExecutionService.FramesPerSecond = value;
+                }
+            }
+        }
+
         public ICommand SaveCommand { get; }
         public ICommand ExecutionStepCommand { get; }
         public ICommand ExecutionStartLoopCommand { get; }
@@ -149,6 +168,17 @@ namespace ElectronicParts.ViewModels
                 }
             });
         }
+
+        public async Task ReloadAssemblies()
+        {
+            await this.assemblyService.LoadAssemblies();
+            this.AvailableNodes.Clear();
+            foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node)))
+            {
+                this.AvailableNodes.Add(assembly);
+            }
+        }
+
         public ICommand AddNodeCommand { get; }
 
         public ICommand DeleteCommand { get; }

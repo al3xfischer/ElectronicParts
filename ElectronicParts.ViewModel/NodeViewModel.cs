@@ -25,6 +25,11 @@ namespace ElectronicParts.ViewModels
             this.Left = 20;
         }
 
+        public NodeViewModel(IDisplayableNode node)
+        {
+            this.Node = node ?? throw new ArgumentNullException(nameof(node));
+        }
+
         public int Top
         {
             get => this.top;
@@ -32,8 +37,11 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.top, value);
-                this.Inputs[0].Top = this.Top + 10;
-                this.Outputs[0].Top = this.Top + 10;
+                if(Inputs.Count > 0)
+                    this.Inputs[0].Top = this.Top + 10;
+
+                if (Outputs.Count > 0)
+                    this.Outputs[0].Top = this.Top + 10;
             }
         }
 
@@ -44,8 +52,11 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.left, value);
-                this.Inputs[0].Left = this.left - 10;
-                this.Outputs[0].Left = this.Left + 60;
+                if (Inputs.Count > 0)
+                    this.Inputs[0].Left = this.left - 10;
+
+                if (Outputs.Count > 0)
+                    this.Outputs[0].Left = this.Left + 60;
             }
         }
         public ObservableCollection<PinViewModel> Inputs { get; }

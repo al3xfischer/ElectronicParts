@@ -1,8 +1,14 @@
 ﻿using ElectronicParts.DI;
 using ElectronicParts.ViewModels;
+using Microsoft.Win32;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Linq;
+using System;
 
 namespace ElectronicParts.Views
 {
@@ -94,6 +100,49 @@ namespace ElectronicParts.Views
         private void AvilableNodes_Selected(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void OpenAssemblyFolder_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies"));
+            }
+            catch
+            {
+                // TODO Proper exception handeling
+                Debug.WriteLine("Folder opening error");
+            }
+        }
+
+        private void AddAssembly_Click(object sender, RoutedEventArgs e)
+        {
+            var assemblyPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies");
+            var fileDialog = new OpenFileDialog();
+            fileDialog.CheckFileExists = true;
+            fileDialog.CheckPathExists = true;
+            fileDialog.AddExtension = true;
+            fileDialog.Multiselect = true;
+            fileDialog.Filter = "Node Assemblies |*.dll";
+            var result = fileDialog.ShowDialog();
+            if(result.HasValue && result.Value)
+            {
+                var files = fileDialog.FileNames.Select(path => new FileInfo(path));
+                foreach (var file in files)
+                {
+                    try
+                    {
+                        file.CopyTo(Path.Combine(assemblyPath, file.Name), true);
+                    }
+                    catch (Exception XX)
+                    {
+                        // TODO Proper exceptionHandeling.
+                        Debug.WriteLine("file exception");
+                    }
+                }
+            }
+
+            var reloadTask = this.ViewModel.ReloadAssemblies();
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectronicParts.Converter
+namespace ElectronicParts.ViewModels.Converter
 {
     public static class SnapShotConverter
     {

@@ -25,6 +25,11 @@ namespace ElectronicParts.ViewModels
             this.Left = 20;
         }
 
+        public NodeViewModel(IDisplayableNode node)
+        {
+            this.Node = node ?? throw new ArgumentNullException(nameof(node));
+        }
+
         public int Top
         {
             get => this.top;
