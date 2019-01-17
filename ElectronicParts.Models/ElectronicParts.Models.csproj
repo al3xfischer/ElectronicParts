@@ -48,6 +48,7 @@
     <Compile Include="Connector.cs" />
     <Compile Include="Pin.cs" />
     <Compile Include="Rule.cs" />
+    <Compile Include="SnapShot.cs" />
     <Compile Include="Value.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
