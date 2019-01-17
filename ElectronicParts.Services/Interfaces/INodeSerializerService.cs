@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ElectronicParts.Services.Interfaces
 {
-    public interface INodeSerializer
+    public interface INodeSerializerService
     {
-        void Serialize(SnapShot snapShot, string path);
+        void Serialize(SnapShot snapShot);
 
-        SnapShot Deserialize(string path);
+        SnapShot Deserialize();
     }
 }

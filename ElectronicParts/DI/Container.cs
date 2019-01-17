@@ -26,6 +26,7 @@ namespace ElectronicParts.DI
             services.AddSingleton<IAssemblyService, AssemblyService>();
             services.AddSingleton<IPinConnectorService, PinConnectorService>();
             services.AddSingleton<IExecutionService, ExecutionService>();
+            services.AddTransient<INodeSerializerService, NodeSerializerService>();
 
             provider = services.BuildServiceProvider();
         }

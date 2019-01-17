@@ -7,6 +7,8 @@ using System.Windows.Input;
 using ElectronicParts.Models;
 using ElectronicParts.Services.Interfaces;
 using System.Threading.Tasks;
+using ElectronicParts.Converter;
+using System.Collections.Generic;
 
 namespace ElectronicParts.ViewModels
 {
@@ -17,12 +19,52 @@ namespace ElectronicParts.ViewModels
         private ObservableCollection<NodeViewModel> availableNodes;
         private readonly IExecutionService myExecutionService;
 
-        public MainViewModel(IExecutionService executionService)
+        public MainViewModel(IExecutionService executionService, INodeSerializerService nodeSerializerService)
         {
             this.myExecutionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
 
-            this.SaveCommand = new RelayCommand(arg => { });
-            this.LoadCommand = new RelayCommand(arg => { });
+            this.SaveCommand = new RelayCommand(arg => 
+            {
+                SnapShot snapShot = SnapShotConverter.Convert(this.nodes, this.connections);
+                nodeSerializerService.Serialize(snapShot);
+            });
+
+            this.LoadCommand = new RelayCommand(arg => 
+            {
+                SnapShot snapShot = nodeSerializerService.Deserialize();
+
+                List<NodeViewModel> nodes = new List<NodeViewModel>();
+                List<Connector> connections = new List<Connector>();
+
+                foreach (NodeSnapShot node in snapShot.Nodes)
+                {
+                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand);
+                    nodeViewModel.Left = node.Position.X;
+                    nodeViewModel.Top = node.Position.Y;
+
+                    nodes.Add(nodeViewModel);
+                }
+
+                foreach (Connector connection in snapShot.Connections)
+                {
+                    connections.Add(connection);
+                }
+
+                this.nodes.Clear();
+
+                foreach (NodeViewModel node in nodes)
+                {
+                    this.nodes.Add(node);
+                }
+
+                this.connections.Clear();
+
+                foreach (Connector connection in connections)
+                {
+                    this.connections.Add(connection);
+                }
+            });
+            
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
             this.ExecutionStepCommand = new RelayCommand(async arg =>
             {

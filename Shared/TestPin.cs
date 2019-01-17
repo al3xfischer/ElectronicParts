@@ -1,5 +1,8 @@
-﻿namespace Shared
+﻿using System;
+
+namespace Shared
 {
+    [Serializable]
     public class TestPin : IPin
     {
         private IValue test;

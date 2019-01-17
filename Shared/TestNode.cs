@@ -4,6 +4,7 @@ using System.Drawing;
 
 namespace Shared
 {
+    [Serializable]
     public class TestNode : IDisplayableNode
     {
         public TestNode()

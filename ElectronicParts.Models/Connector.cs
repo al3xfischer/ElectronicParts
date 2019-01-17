@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ElectronicParts.Models
 {
+    [Serializable]
     public class Connector
     {
         public Connector(IPin input, IPin output, IValue commonVal)

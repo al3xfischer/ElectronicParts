@@ -59,6 +59,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -78,6 +79,7 @@
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -89,8 +91,9 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Implementations\ConfigurationService.cs" />
     <Compile Include="Implementations\ExecutionService.cs" />
+    <Compile Include="Implementations\NodeSerializerService.cs" />
     <Compile Include="Interfaces\IExecutionService.cs" />
-    <Compile Include="Interfaces\INodeSerializer.cs" />
+    <Compile Include="Interfaces\INodeSerializerService.cs" />
     <Compile Include="Interfaces\IPinConnectorService.cs" />
     <Compile Include="Interfaces\IConfigurationService.cs" />
     <Compile Include="Implementations\AssemblyService.cs" />

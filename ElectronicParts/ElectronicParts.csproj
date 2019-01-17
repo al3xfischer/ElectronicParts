@@ -58,6 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="Converter\BitmapToImageSourceConverter.cs" />
     <Compile Include="Converter\PinToHeightConverter.cs" />
+    <Compile Include="Converter\SnapShotConverter.cs" />
     <Compile Include="EventArgs\StoppedEventArgs.cs" />
     <Compile Include="Extentions\Extentioins.cs" />
     <Compile Include="ViewModels\ConnectorViewModel.cs" />
