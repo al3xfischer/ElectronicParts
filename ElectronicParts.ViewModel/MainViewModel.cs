@@ -119,6 +119,11 @@ namespace ElectronicParts.ViewModels
 
             });
 
+            this.ReloadAssembliesCommand = new RelayCommand(async arg =>
+            {
+                await this.ReloadAssemblies();
+            });
+
             this.ExecutionStopLoopAndResetCommand = new RelayCommand(async arg =>
             {
                 this.executionService.StopExecutionLoop();
