@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using ElectronicParts.Services.Implementations;
 using System.Windows;
 using ElectronicParts.Services.Interfaces;
+using ElectronicParts.Models;
+using ElectronicParts.ViewModels.Converter;
+using System.Collections.Generic;
 
 namespace ElectronicParts.ViewModels
 {
@@ -29,14 +32,65 @@ namespace ElectronicParts.ViewModels
 
         private PinViewModel outputPin;
 
-        public MainViewModel(IExecutionService executionService,IAssemblyService assemblyService, IPinConnectorService pinConnectorService)
+        public MainViewModel(IExecutionService executionService,IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService)
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
             this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
 
-            this.SaveCommand = new RelayCommand(arg => { });
-            this.LoadCommand = new RelayCommand(arg => { });
+            this.SaveCommand = new RelayCommand(arg =>
+            {
+                SnapShot snapShot = SnapShotConverter.Convert(this.nodes, this.connections);
+                nodeSerializerService.Serialize(snapShot);
+            });
+
+            this.LoadCommand = new RelayCommand(arg =>
+            {
+                SnapShot snapShot = nodeSerializerService.Deserialize();
+
+                if (snapShot == null)
+                {
+                    return;
+                }
+
+                List<NodeViewModel> nodes = new List<NodeViewModel>();
+                List<ConnectorViewModel> connections = new List<ConnectorViewModel>();
+
+                foreach (NodeSnapShot node in snapShot.Nodes)
+                {
+                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand);
+                    nodeViewModel.Left = node.Position.X;
+                    nodeViewModel.Top = node.Position.Y;
+
+                    nodes.Add(nodeViewModel);
+                }
+
+                foreach (ConnectionSnapShot connection in snapShot.Connections)
+                {
+                    PinViewModel inputPinViewModel = new PinViewModel(connection.InputPin.Pin, this.InputPinCommand);
+                    PinViewModel outputPinViewModel = new PinViewModel(connection.InputPin.Pin, this.OutputPinCommand);
+
+                    ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel);
+
+                    connections.Add(connectorViewModel);
+                }
+
+                this.nodes.Clear();
+
+                foreach (NodeViewModel node in nodes)
+                {
+                    this.nodes.Add(node);
+                }
+
+                this.connections.Clear();
+
+                foreach (ConnectorViewModel connection in connections)
+                {
+                    this.connections.Add(connection);
+                }
+            });
+
+
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
 
             this.ExecutionStepCommand = new RelayCommand(async arg =>
