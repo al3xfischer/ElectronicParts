@@ -33,6 +33,11 @@ namespace ElectronicParts.ViewModels
             {
                 SnapShot snapShot = nodeSerializerService.Deserialize();
 
+                if (snapShot == null)
+                {
+                    return;
+                }
+
                 List<NodeViewModel> nodes = new List<NodeViewModel>();
                 List<Connector> connections = new List<Connector>();
 
