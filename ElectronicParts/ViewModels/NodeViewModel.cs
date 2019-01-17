@@ -63,6 +63,14 @@ namespace ElectronicParts.ViewModels
 
         public ICommand DeleteCommand { get; }
 
+        public int MaxPins
+        {
+            get
+            {
+                return this.Inputs.Count >= this.Outputs.Count ? this.Inputs.Count : this.Outputs.Count;
+            }
+        }
+
         private void updateLeft(IEnumerable<PinViewModel> pins, int value)
         {
             foreach (var pin in pins)

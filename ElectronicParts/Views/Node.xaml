@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ElectronicParts.Views"
              xmlns:converter="clr-namespace:ElectronicParts.Converter"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" MouseLeftButtonDown="UserControl_MouseLeftButtonDown" >
+             d:DesignHeight="450" d:DesignWidth="800" >
 
     <!-- Resources -->
     <UserControl.Resources>
@@ -59,7 +59,7 @@
         <!-- Body -->
         <Rectangle Width="50" Stroke="Black" Grid.Column="1" >
             <Rectangle.Height>
-                <Binding Path="Inputs.Count()">
+                <Binding Path="MaxPins">
                     <Binding.Converter>
                         <converter:PinToHeightConverter/>
                     </Binding.Converter>

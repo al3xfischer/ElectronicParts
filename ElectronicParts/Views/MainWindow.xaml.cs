@@ -80,10 +80,5 @@ namespace ElectronicParts.Views
         {
             this.currentNode = null;
         }
-
-        private void Line_Loaded(object sender, RoutedEventArgs e)
-        {
-            Panel.SetZIndex(sender as UIElement, 0);
-        }
     }
 }
