@@ -65,12 +65,23 @@
     <Compile Include="ViewModels\NodeViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModel.cs" />
     <Compile Include="Converter\NameObserver.cs" />
+    <Compile Include="ViewModels\PinViewModel.cs" />
+    <Compile Include="Views\Connection.xaml.cs">
+      <DependentUpon>Connection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Node.xaml.cs">
       <DependentUpon>Node.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NodeInformation.xaml.cs">
+      <DependentUpon>NodeInformation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Connection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -89,6 +100,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Node.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NodeInformation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
