@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ElectronicParts.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace ElectronicParts.Services
 {
@@ -12,35 +14,52 @@ namespace ElectronicParts.Services
     public class Configuration
     {
         [DataMember]
-        public string StringValue { get; set; }
-        [DataMember]
-        public string StringColor { get; set; }
+        public List<Rule<string>> StringRules { get; set; }
 
         [DataMember]
-        public int IntValue { get; set; }
-        [DataMember]
-        public string IntColor { get; set; }
+        public List<Rule<int>> IntRules { get; set; }
 
         [DataMember]
-        public bool BoolValue { get; set; }
-        [DataMember]
-        public string BoolColor { get; set; }
+        public List<Rule<bool>> BoolRules { get; set; }
+
+        public Configuration()
+        {
+            this.StringRules = new List<Rule<string>>();
+            this.IntRules = new List<Rule<int>>();
+            this.BoolRules = new List<Rule<bool>>();
+        }
 
         public Configuration(IConfiguration config)
         {
-            this.StringColor = config["StringColor"];
+            this.StringRules = new List<Rule<string>>();
+            this.IntRules = new List<Rule<int>>();
+            this.BoolRules = new List<Rule<bool>>();
 
-            this.IntColor = config["IntColor"];
+            var stringRules = config.GetSection("StringRules").GetChildren().AsEnumerable();
+            var intRules = config.GetSection("IntRules").GetChildren().AsEnumerable();
+            var boolRules = config.GetSection("BoolRules").GetChildren().AsEnumerable();
 
-            this.BoolColor = config["BoolColor"];
+            foreach (var rule in stringRules)
+            {
+                string value = rule["Value"];
+                string color = rule["Color"];
+                this.StringRules.Add(new Rule<string>(value, color));
+            }
 
-            this.StringValue = config["StringValue"];
+            foreach (var rule in intRules)
+            {
+                int.TryParse(rule["Value"], out int value);
+                string color = rule["Color"];
+                this.IntRules.Add(new Rule<int>(value, color));
+            }
 
-            int.TryParse(config["IntValue"], out int intValue);
 
-            this.IntValue = intValue;
-
-            this.BoolValue = config["BoolValue"] == "True";
+            foreach (var rule in boolRules)
+            {
+                bool value = rule["Value"] == "True";
+                string color = rule["Color"];
+                this.BoolRules.Add(new Rule<bool>(value, color));
+            }
         }
     }
 }

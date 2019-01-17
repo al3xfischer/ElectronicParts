@@ -1,8 +1,6 @@
 ﻿using ElectronicParts.DI;
 using ElectronicParts.ViewModels;
-using System;
 using System.Windows;
-using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -15,11 +13,8 @@ namespace ElectronicParts.Views
     {
         private Canvas canvas;
 
-        private bool ShowCross;
-
         public MainWindow()
         {
-            InitializeComponent();
             this.DataContext = this;
             this.ViewModel = Container.Resolve<MainViewModel>();
         }
@@ -59,7 +54,7 @@ namespace ElectronicParts.Views
             {
                 var point = e.GetPosition(this.canvas);
 
-                if (point.X <= 0 || point.Y <= 0 ||point.X >= this.canvas.ActualWidth || point.Y >= this.canvas.ActualHeight)
+                if (point.X <= 0 || point.Y <= 0 || point.X >= this.canvas.ActualWidth || point.Y >= this.canvas.ActualHeight)
                 {
                     return;
                 }
@@ -71,9 +66,32 @@ namespace ElectronicParts.Views
 
         private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            //this.ViewModel.SelectedNode = null;
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(e.AddedItems.Count == 0)
+            {
+                return;
+            }
+
+            var vm = e.AddedItems[0] as NodeViewModel;
+            if(vm is null)
+            {
+                return;
+            }
+
+            this.ViewModel.AddNodeCommand.Execute(vm.Node);
+            (sender as ListView).SelectedItems.Clear();
+        }
+
+        private void AvilableNodes_Selected(object sender, RoutedEventArgs e)
         {
 
         }

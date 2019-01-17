@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
@@ -24,17 +25,24 @@ namespace ElectronicParts.Services.Implementations
 
         private void SetupConfiguration()
         {
-            this.configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
+            try
+            {
+                this.configuration = new ConfigurationBuilder()
+                    .SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
+                    .AddJsonFile("appsettings.json")
+                    .Build();
 
-            this.Configuration = new Configuration(this.configuration);
+                this.Configuration = new Configuration(this.configuration);
+            }
+            catch
+            {
+                this.Configuration = new Configuration();
+            }
         }
 
         public void SaveConfiguration()
         {
-            using (FileStream fileStream = new FileStream(Directory.GetCurrentDirectory() + @"\appsettings.json", FileMode.Open))
+            using (FileStream fileStream = new FileStream(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\appsettings.json", FileMode.OpenOrCreate))
             {
                 DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Configuration));
                 ser.WriteObject(fileStream, this.Configuration);
