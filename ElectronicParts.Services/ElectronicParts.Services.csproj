@@ -89,8 +89,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="Implementations\AssemblyNameExtractorService.cs" />
     <Compile Include="Implementations\ConfigurationService.cs" />
     <Compile Include="Implementations\ExecutionService.cs" />
+    <Compile Include="Interfaces\IAssemblyNameExtractorService.cs" />
     <Compile Include="Interfaces\IAssemblyBinder.cs" />
     <Compile Include="Implementations\NodeSerializerService.cs" />
     <Compile Include="Implementations\AssemblyBinder.cs" />

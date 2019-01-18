@@ -18,7 +18,8 @@ namespace ElectronicParts.Services.Implementations
             try
             {
                 string assemblyName = fullAssemblyString.Split(',')[0];
-                Assembly[] currentlyLoadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+                Assembly[] currentlyLoadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().Reverse().ToArray();
+                currentlyLoadedAssemblies.Reverse();
                 foreach (Assembly assembly in currentlyLoadedAssemblies)
                 {
                     if (assembly.FullName.Split(',')[0] == assemblyName)

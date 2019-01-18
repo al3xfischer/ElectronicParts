@@ -11,6 +11,8 @@ using ElectronicParts.Services.Interfaces;
 using ElectronicParts.Models;
 using ElectronicParts.ViewModels.Converter;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.Serialization;
 
 namespace ElectronicParts.ViewModels
 {
@@ -47,9 +49,25 @@ namespace ElectronicParts.ViewModels
 
             this.LoadCommand = new RelayCommand(arg =>
             {
-                SnapShot snapShot = nodeSerializerService.Deserialize();
+                SnapShot snapShot = default(SnapShot);
 
-                if (snapShot == null)
+                try
+                {
+
+                    snapShot = nodeSerializerService.Deserialize();
+                }
+                catch(SerializationException e)
+                {
+                    // TODO proper exception Handeling
+                    Debug.WriteLine("Failed deserialiszation");
+
+                    var missingAssembly = new AssemblyNameExtractorService().ExtractAssemblyNameFromErrorMessage(e);
+                    var result = MessageBox.Show($"There are missing assemblies: {missingAssembly}\nDo you want to add new assemblies?", "Loading Failed", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                   
+                }
+                
+
+                if (snapShot is null)
                 {
                     return;
                 }
