@@ -29,6 +29,7 @@ namespace ElectronicParts.DI
             services.AddSingleton<IExecutionService, ExecutionService>();
             services.AddSingleton<INodeSerializerService, NodeSerializerService>();
             services.AddSingleton<IAssemblyBinder, AssemblyBinder>();
+            services.AddSingleton<IGenericTypeComparerService, GenericTypeComparerService>();
 
             // Logging
             services.AddLogging();
