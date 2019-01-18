@@ -64,9 +64,11 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-
+    
+        <!-- Controls and ItemsDisplay -->
         <DockPanel Margin="0 1 0 0" Background="LightGray" DockPanel.Dock="Right">
             <Border Margin="0" DockPanel.Dock="Top" BorderThickness="1 0 0 1" BorderBrush="DarkGray">
+                <!-- Controls -->
                 <DockPanel Background="WhiteSmoke" Height="40px" LastChildFill="False">
                     <DockPanel.Effect>
                         <DropShadowEffect Opacity="0.4" ShadowDepth="5" BlurRadius="5" Direction="270" />
@@ -117,6 +119,22 @@
                     <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ResetAllConnectionsCommand}">
                         <Image Source="/Resources/reset.png"/>
                     </Button>
+                    <Border BorderBrush="DarkGray" BorderThickness="1px" Margin="2px" Padding="3px">
+                        <DockPanel DockPanel.Dock="Left" HorizontalAlignment="Left"  MaxWidth="300px" Margin="10 0 0 0">
+                            <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center" Height="20px" TextAlignment="Center" Text="FPS"></TextBlock>
+                            <TextBlock Text="{Binding ViewModel.FramesPerSecond}" TextAlignment="Center" Margin="10 0 2 0"  DockPanel.Dock="Right" Width="20px" Height="20px" TextWrapping="NoWrap"/>
+                            <Slider x:Name="slider" 
+                                DockPanel.Dock="Left" 
+                                MinWidth="200px"
+                                Maximum="100" 
+                                Minimum="1" 
+                                VerticalAlignment="Center"
+                                TickFrequency="5"
+                                TickPlacement="BottomRight"
+                                IsSnapToTickEnabled="True"
+                                Value="{Binding ViewModel.FramesPerSecond, UpdateSourceTrigger=PropertyChanged}"></Slider>
+                        </DockPanel>
+                    </Border>
                 </DockPanel>
             </Border>
 
