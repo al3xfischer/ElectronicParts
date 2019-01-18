@@ -39,7 +39,7 @@ namespace ElectronicParts.ViewModels
 
         private PinViewModel outputPin;
 
-        public MainViewModel(IExecutionService executionService,IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger)
+        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger)
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
@@ -63,16 +63,16 @@ namespace ElectronicParts.ViewModels
 
                     snapShot = nodeSerializerService.Deserialize();
                 }
-                catch(SerializationException e)
+                catch (SerializationException e)
                 {
                     // TODO proper exception Handeling
                     Debug.WriteLine("Failed deserialiszation");
 
                     var missingAssembly = new AssemblyNameExtractorService().ExtractAssemblyNameFromErrorMessage(e);
                     var result = MessageBox.Show($"There are missing assemblies: {missingAssembly}\nDo you want to add new assemblies?", "Loading Failed", MessageBoxButton.YesNo, MessageBoxImage.Error);
-                   
+
                 }
-                
+
 
                 if (snapShot is null)
                 {
@@ -97,7 +97,7 @@ namespace ElectronicParts.ViewModels
 
                     foreach (NodeViewModel node in nodes)
                     {
-                        if(node.Outputs.Any(outputPin => outputPin.Pin == connection.OutputPin.Pin))
+                        if (node.Outputs.Any(outputPin => outputPin.Pin == connection.OutputPin.Pin))
                         {
                             outputPinViewModel = node.Outputs.First(outputPin => outputPin.Pin == connection.OutputPin.Pin);
                             break;
@@ -121,7 +121,7 @@ namespace ElectronicParts.ViewModels
                     inputPinViewModel.Left = connection.InputPin.Position.X;
                     inputPinViewModel.Top = connection.InputPin.Position.Y;
 
-                    ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel);
+                    ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel, this.DeleteConnectionCommand);
 
                     connections.Add(connectorViewModel);
                 }
@@ -153,9 +153,15 @@ namespace ElectronicParts.ViewModels
             this.ExecutionStartLoopCommand = new RelayCommand(async arg =>
             {
                 var nodeList = this.Nodes.Select(nodeVM => nodeVM.Node);
-                await this.executionService.StartExecutionLoop(nodeList, async () =>
+                await this.executionService.StartExecutionLoop(nodeList, () =>
                 {
-                    return;
+                    Task.Run(() =>
+                    {
+                        foreach (var connection in this.Connections)
+                        {
+                            connection.Update();
+                        }
+                    });
                 });
 
             }, arg => !this.executionService.IsEnabled);
@@ -168,12 +174,13 @@ namespace ElectronicParts.ViewModels
                     
                 }
 
+
             }, arg => this.executionService.IsEnabled);
 
             this.ResetAllConnectionsCommand = new RelayCommand(async arg =>
             {
                 await this.ResetAllConnections();
-
+                
             });
 
             this.ReloadAssembliesCommand = new RelayCommand(async arg =>
@@ -200,6 +207,18 @@ namespace ElectronicParts.ViewModels
                 this.Connect();
             }, arg => !this.executionService.IsEnabled);
 
+            this.DeleteConnectionCommand = new RelayCommand(arg => 
+            {
+                var connectionVm = arg as ConnectorViewModel;
+
+                if (connectionVm is null)
+                {
+                    return;
+                }
+
+                this.connections.Remove(connectionVm);
+            });
+
             this.DeleteNodeCommand = new RelayCommand(arg =>
             {
                 var nodeVm = arg as NodeViewModel;
@@ -209,6 +228,18 @@ namespace ElectronicParts.ViewModels
                     return;
                 }
 
+                List<ConnectorViewModel> connectionsMarkedForDeletion = new List<ConnectorViewModel>();
+
+                foreach (var connection in this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input) 
+                                                                    || nodeVm.Outputs.Contains(connection.Output)))
+                {
+                    connectionsMarkedForDeletion.Add(connection);
+                }
+
+                foreach (var connection in connectionsMarkedForDeletion)
+                {
+                    this.Connections.Remove(connection);
+                }
 
                 this.Nodes.Remove(nodeVm);
             });
@@ -287,6 +318,16 @@ namespace ElectronicParts.ViewModels
                 {
                     connectionVM.Connector.ResetValue();
                 }
+
+                foreach (var connection in this.Connections)
+                {
+                    connection.Update();
+                }
+
+                foreach(var nodeVm in this.Nodes)
+                {
+                    nodeVm.Update();
+                }
             });
         }
 
@@ -332,7 +373,7 @@ namespace ElectronicParts.ViewModels
             {
                 if (this.pinConnectorService.TryConnectPins(this.inputPin.Pin, this.outputPin.Pin, out var connection))
                 {
-                    this.Connections.Add(new ConnectorViewModel(connection, this.inputPin, this.outputPin));
+                    this.Connections.Add(new ConnectorViewModel(connection, this.inputPin, this.outputPin, this.DeleteConnectionCommand));
                 }
 
                 this.inputPin = null;

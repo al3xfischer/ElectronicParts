@@ -45,19 +45,20 @@ namespace ElectronicParts.Converter
             switch (type)
             {
                 case var obj when type == typeof(bool):
-                    colorName = conf.BoolRules.First(r => r.Value == (value as IValueGeneric<bool>).Current).Color;
+                    colorName = conf.BoolRules.FirstOrDefault(r => r.Value == (value as IValueGeneric<bool>).Current)?.Color;
                     break;
                 case var obj when type == typeof(int):
-                    colorName = conf.IntRules.First(r => r.Value == (value as IValueGeneric<int>).Current).Color;
+                    colorName = conf.IntRules.FirstOrDefault(r => r.Value == (value as IValueGeneric<int>).Current)?.Color;
                     break;
                 case var obj when type == typeof(string):
-                    colorName = conf.StringRules.First(r => r.Value == (value as IValueGeneric<string>).Current).Color;
+                    colorName = conf.StringRules.FirstOrDefault(r => r.Value == (value as IValueGeneric<string>).Current)?.Color;
                     break;
                 default:
                     colorName = "black";
                     break;
             }
 
+            colorName = colorName is null ? "black" : colorName;
             return new SolidColorBrush((Color)ColorConverter.ConvertFromString(colorName));
         }
 
