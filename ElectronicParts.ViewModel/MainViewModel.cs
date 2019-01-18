@@ -121,7 +121,7 @@ namespace ElectronicParts.ViewModels
                     inputPinViewModel.Left = connection.InputPin.Position.X;
                     inputPinViewModel.Top = connection.InputPin.Position.Y;
 
-                    ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel);
+                    ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel, this.DeleteConnectionCommand);
 
                     connections.Add(connectorViewModel);
                 }
@@ -196,6 +196,18 @@ namespace ElectronicParts.ViewModels
                 this.Connect();
             }, arg => !this.executionService.IsEnabled);
 
+            this.DeleteConnectionCommand = new RelayCommand(arg => 
+            {
+                var connectionVm = arg as ConnectorViewModel;
+
+                if (connectionVm is null)
+                {
+                    return;
+                }
+
+                this.connections.Remove(connectionVm);
+            });
+
             this.DeleteNodeCommand = new RelayCommand(arg =>
             {
                 var nodeVm = arg as NodeViewModel;
@@ -205,6 +217,18 @@ namespace ElectronicParts.ViewModels
                     return;
                 }
 
+                List<ConnectorViewModel> connectionsMarkedForDeletion = new List<ConnectorViewModel>();
+
+                foreach (var connection in this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input) 
+                                                                    || nodeVm.Outputs.Contains(connection.Output)))
+                {
+                    connectionsMarkedForDeletion.Add(connection);
+                }
+
+                foreach (var connection in connectionsMarkedForDeletion)
+                {
+                    this.Connections.Remove(connection);
+                }
 
                 this.Nodes.Remove(nodeVm);
             });
@@ -328,7 +352,7 @@ namespace ElectronicParts.ViewModels
             {
                 if (this.pinConnectorService.TryConnectPins(this.inputPin.Pin, this.outputPin.Pin, out var connection))
                 {
-                    this.Connections.Add(new ConnectorViewModel(connection, this.inputPin, this.outputPin));
+                    this.Connections.Add(new ConnectorViewModel(connection, this.inputPin, this.outputPin, this.DeleteConnectionCommand));
                 }
 
                 this.inputPin = null;
