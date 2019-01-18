@@ -84,7 +84,7 @@ namespace ElectronicParts.ViewModels
 
                 foreach (NodeSnapShot node in snapShot.Nodes)
                 {
-                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand);
+                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand);
                     nodeViewModel.Left = node.Position.X;
                     nodeViewModel.Top = node.Position.Y;
 
@@ -121,7 +121,7 @@ namespace ElectronicParts.ViewModels
                     inputPinViewModel.Left = connection.InputPin.Position.X;
                     inputPinViewModel.Top = connection.InputPin.Position.Y;
 
-                    ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel);
+                    ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel, this.DeleteConnectionCommand);
 
                     connections.Add(connectorViewModel);
                 }
@@ -153,7 +153,10 @@ namespace ElectronicParts.ViewModels
             this.ExecutionStartLoopCommand = new RelayCommand(async arg =>
             {
                 var nodeList = this.Nodes.Select(nodeVM => nodeVM.Node);
-                await this.executionService.StartExecutionLoop(nodeList);
+                await this.executionService.StartExecutionLoop(nodeList, async () =>
+                {
+                    return;
+                });
 
             }, arg => !this.executionService.IsEnabled);
 
@@ -193,7 +196,19 @@ namespace ElectronicParts.ViewModels
                 this.Connect();
             }, arg => !this.executionService.IsEnabled);
 
-            this.DeleteCommand = new RelayCommand(arg =>
+            this.DeleteConnectionCommand = new RelayCommand(arg => 
+            {
+                var connectionVm = arg as ConnectorViewModel;
+
+                if (connectionVm is null)
+                {
+                    return;
+                }
+
+                this.connections.Remove(connectionVm);
+            });
+
+            this.DeleteNodeCommand = new RelayCommand(arg =>
             {
                 var nodeVm = arg as NodeViewModel;
 
@@ -202,6 +217,18 @@ namespace ElectronicParts.ViewModels
                     return;
                 }
 
+                List<ConnectorViewModel> connectionsMarkedForDeletion = new List<ConnectorViewModel>();
+
+                foreach (var connection in this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input) 
+                                                                    || nodeVm.Outputs.Contains(connection.Output)))
+                {
+                    connectionsMarkedForDeletion.Add(connection);
+                }
+
+                foreach (var connection in connectionsMarkedForDeletion)
+                {
+                    this.Connections.Remove(connection);
+                }
 
                 this.Nodes.Remove(nodeVm);
             });
@@ -214,14 +241,11 @@ namespace ElectronicParts.ViewModels
                 }
 
                 var copy = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;
-                var vm = new NodeViewModel(copy, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand);
+                var vm = new NodeViewModel(copy, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand);
                 this.Nodes.Add(vm);
                 this.FirePropertyChanged(nameof(Nodes));
             });
-            this.Nodes = new ObservableCollection<NodeViewModel>
-            {
-                new NodeViewModel(new TestNode(),this.DeleteCommand,this.InputPinCommand,this.OutputPinCommand)
-            };
+            this.Nodes = new ObservableCollection<NodeViewModel>();
 
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             var reloadingTask = this.ReloadAssemblies();
@@ -290,7 +314,7 @@ namespace ElectronicParts.ViewModels
         {
             await this.assemblyService.LoadAssemblies();
             this.AvailableNodes.Clear();
-            foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand)))
+            foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand)))
             {
                 this.AvailableNodes.Add(assembly);
             }
@@ -314,7 +338,8 @@ namespace ElectronicParts.ViewModels
 
         public ICommand AddNodeCommand { get; }
 
-        public ICommand DeleteCommand { get; }
+        public ICommand DeleteNodeCommand { get; }
+        public ICommand DeleteConnectionCommand { get; }
 
         public ICommand InputPinCommand { get; }
 
@@ -327,7 +352,7 @@ namespace ElectronicParts.ViewModels
             {
                 if (this.pinConnectorService.TryConnectPins(this.inputPin.Pin, this.outputPin.Pin, out var connection))
                 {
-                    this.Connections.Add(new ConnectorViewModel(connection, this.inputPin, this.outputPin));
+                    this.Connections.Add(new ConnectorViewModel(connection, this.inputPin, this.outputPin, this.DeleteConnectionCommand));
                 }
 
                 this.inputPin = null;

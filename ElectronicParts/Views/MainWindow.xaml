@@ -55,7 +55,7 @@
             </MenuItem>
         </Menu>
 
-        <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" SelectedItem="{Binding SelectedNodeInformation}" DockPanel.Dock="Left" Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}" SelectionChanged="ListView_SelectionChanged" Name="AvilableNodes" >
+        <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" SelectedItem="{Binding ViewModel.SelectedNodeInformation}" DockPanel.Dock="Left" Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}" SelectionChanged="ListView_SelectionChanged" Name="AvilableNodes" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -130,7 +130,13 @@
                         </local:Node>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
-                        <local:Connection/>
+                        <local:Connection>
+                            <local:Connection.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
+                                </ContextMenu>
+                            </local:Connection.ContextMenu>
+                        </local:Connection>
                     </DataTemplate>
                 </ItemsControl.Resources>
                 <ItemsControl.ItemContainerStyle>
