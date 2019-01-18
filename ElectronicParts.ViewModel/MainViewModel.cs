@@ -69,7 +69,12 @@ namespace ElectronicParts.ViewModels
                 foreach (ConnectionSnapShot connection in snapShot.Connections)
                 {
                     PinViewModel inputPinViewModel = new PinViewModel(connection.InputPin.Pin, this.InputPinCommand);
+                    inputPinViewModel.Left = connection.InputPin.Position.X;
+                    inputPinViewModel.Top = connection.InputPin.Position.Y;
+
                     PinViewModel outputPinViewModel = new PinViewModel(connection.InputPin.Pin, this.OutputPinCommand);
+                    outputPinViewModel.Left = connection.OutputPin.Position.X;
+                    outputPinViewModel.Top = connection.OutputPin.Position.Y;
 
                     ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel);
 
