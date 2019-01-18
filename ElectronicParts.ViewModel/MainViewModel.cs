@@ -28,6 +28,8 @@ namespace ElectronicParts.ViewModels
 
         private readonly IPinConnectorService pinConnectorService;
 
+        private readonly INodeSerializerService nodeSerializerService;
+
         private PinViewModel inputPin;
 
         private PinViewModel outputPin;
@@ -36,18 +38,19 @@ namespace ElectronicParts.ViewModels
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
+            this.nodeSerializerService = nodeSerializerService ?? throw new ArgumentNullException(nameof(nodeSerializerService));
             this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
 
             this.SaveCommand = new RelayCommand(arg =>
             {
                 SnapShot snapShot = SnapShotConverter.Convert(this.nodes, this.connections);
-                nodeSerializerService.Serialize(snapShot);
+                this.nodeSerializerService.Serialize(snapShot);
             });
 
             this.LoadCommand = new RelayCommand(arg =>
             {
-                SnapShot snapShot = nodeSerializerService.Deserialize();
+                SnapShot snapShot = this.nodeSerializerService.Deserialize();
 
                 if (snapShot == null)
                 {
