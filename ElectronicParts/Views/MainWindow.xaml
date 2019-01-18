@@ -132,9 +132,9 @@
                     <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
                         <local:Connection>
                             <local:Connection.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Delete" Command="{Binding ViewModel.DeleteConnectionCommand}" CommandParameter="{Binding}"/>
-                            </ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
+                                </ContextMenu>
                             </local:Connection.ContextMenu>
                         </local:Connection>
                     </DataTemplate>
