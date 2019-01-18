@@ -39,7 +39,7 @@ namespace ElectronicParts.ViewModels
 
         private PinViewModel outputPin;
 
-        public MainViewModel(IExecutionService executionService,IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger)
+        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger)
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
@@ -63,16 +63,16 @@ namespace ElectronicParts.ViewModels
 
                     snapShot = nodeSerializerService.Deserialize();
                 }
-                catch(SerializationException e)
+                catch (SerializationException e)
                 {
                     // TODO proper exception Handeling
                     Debug.WriteLine("Failed deserialiszation");
 
                     var missingAssembly = new AssemblyNameExtractorService().ExtractAssemblyNameFromErrorMessage(e);
                     var result = MessageBox.Show($"There are missing assemblies: {missingAssembly}\nDo you want to add new assemblies?", "Loading Failed", MessageBoxButton.YesNo, MessageBoxImage.Error);
-                   
+
                 }
-                
+
 
                 if (snapShot is null)
                 {
@@ -97,7 +97,7 @@ namespace ElectronicParts.ViewModels
 
                     foreach (NodeViewModel node in nodes)
                     {
-                        if(node.Outputs.Any(outputPin => outputPin.Pin == connection.OutputPin.Pin))
+                        if (node.Outputs.Any(outputPin => outputPin.Pin == connection.OutputPin.Pin))
                         {
                             outputPinViewModel = node.Outputs.First(outputPin => outputPin.Pin == connection.OutputPin.Pin);
                             break;
@@ -153,9 +153,15 @@ namespace ElectronicParts.ViewModels
             this.ExecutionStartLoopCommand = new RelayCommand(async arg =>
             {
                 var nodeList = this.Nodes.Select(nodeVM => nodeVM.Node);
-                await this.executionService.StartExecutionLoop(nodeList, async () =>
+                await this.executionService.StartExecutionLoop(nodeList, () =>
                 {
-                    return;
+                    Task.Run(() =>
+                    {
+                        foreach (var connection in this.Connections)
+                        {
+                            connection.Update();
+                        }
+                    });
                 });
 
             }, arg => !this.executionService.IsEnabled);
@@ -164,12 +170,13 @@ namespace ElectronicParts.ViewModels
             {
                 this.executionService.StopExecutionLoop();
 
+
             }, arg => this.executionService.IsEnabled);
 
             this.ResetAllConnectionsCommand = new RelayCommand(async arg =>
             {
                 await this.ResetAllConnections();
-
+                
             });
 
             this.ReloadAssembliesCommand = new RelayCommand(async arg =>
@@ -308,6 +315,16 @@ namespace ElectronicParts.ViewModels
                 foreach (var connectionVM in this.Connections)
                 {
                     connectionVM.Connector.ResetValue();
+                }
+
+                foreach (var connection in this.Connections)
+                {
+                    connection.Update();
+                }
+
+                foreach(var nodeVm in this.Nodes)
+                {
+                    nodeVm.Update();
                 }
             });
         }

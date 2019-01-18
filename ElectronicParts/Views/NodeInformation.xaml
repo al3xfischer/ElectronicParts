@@ -44,7 +44,7 @@
         </Grid.ToolTip>        
         
         <!-- Label -->
-        <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" MaxWidth="50" TextAlignment="Center" TextTrimming="WordEllipsis" TextWrapping="NoWrap" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
+        <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" MaxWidth="100" TextAlignment="Center" TextTrimming="WordEllipsis" TextWrapping="NoWrap" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
 
         <!-- Inputs -->
         <ListView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Inputs}" ItemTemplate="{StaticResource PinTemplate}" >
