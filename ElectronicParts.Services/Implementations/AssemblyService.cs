@@ -65,29 +65,40 @@ namespace ElectronicParts.Services.Implementations
         {
             await Task.Run(() =>
             {
-                // Creating temporary nodelist.
-                List<IDisplayableNode> loadedNodes = new List<IDisplayableNode>();
-                IEnumerable<FileInfo> files;
+            // Creating temporary nodelist.
+            List<IDisplayableNode> loadedNodes = new List<IDisplayableNode>();
+            IEnumerable<FileInfo> files;
+            try
+            {
+                // Finding all files in the assembly directory with .dll extension.
+                files = Directory.GetFiles(this.assemblyPath).Select(path => new FileInfo(path))
+                .Where(file => file.Extension == ".dll");
+            }
+            catch (Exception e)
+            {
+                // TODO proper exception-handeling
+                Debug.WriteLine($"{e.Message}");
+                return;
+            }
+
+            // Iterating over every dll-file and finding dlls with types that implement IDisplayableNode.
+            foreach (var file in files)
+            {
                 try
                 {
-                    // Finding all files in the assembly directory with .dll extension.
-                    files = Directory.GetFiles(this.assemblyPath).Select(path => new FileInfo(path))
-                    .Where(file => file.Extension == ".dll");
-                }
-                catch (Exception e)
-                {
-                    // TODO proper exception-handeling
-                    Debug.WriteLine($"{e.Message}");
-                    return;
-                }
-
-                // Iterating over every dll-file and finding dlls with types that implement IDisplayableNode.
-                foreach (var file in files)
-                {
-                    try
-                    {
+                    Assembly assembly;
+                    var x = Path.Combine(file.DirectoryName, Path.GetFileNameWithoutExtension(file.Name) + ".pdb");
                         // Loading file into mainmemory and loading assembly.
-                        var assembly = Assembly.Load(File.ReadAllBytes(file.FullName));
+                        if (File.Exists(Path.Combine(file.DirectoryName, Path.GetFileNameWithoutExtension(file.Name) + ".pdb")))
+                        {
+                            assembly = Assembly.Load(File.ReadAllBytes(file.FullName), File.ReadAllBytes(Path.Combine(file.DirectoryName, Path.GetFileNameWithoutExtension(file.Name) + ".pdb")));
+                        }
+                        else
+                        {
+                            assembly = Assembly.Load(File.ReadAllBytes(file.FullName));
+                        }
+
+                        
 
                         // Getting all Types that implement IDisplayableNode interface.
                         var types = assembly.GetTypes();

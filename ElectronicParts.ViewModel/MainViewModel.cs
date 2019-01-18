@@ -163,6 +163,10 @@ namespace ElectronicParts.ViewModels
             this.ExecutionStopLoopCommand = new RelayCommand(arg =>
             {
                 this.executionService.StopExecutionLoop();
+                foreach (var node in this.Nodes)
+                {
+                    
+                }
 
             }, arg => this.executionService.IsEnabled);
 
