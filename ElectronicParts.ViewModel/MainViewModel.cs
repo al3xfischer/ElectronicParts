@@ -153,7 +153,10 @@ namespace ElectronicParts.ViewModels
             this.ExecutionStartLoopCommand = new RelayCommand(async arg =>
             {
                 var nodeList = this.Nodes.Select(nodeVM => nodeVM.Node);
-                await this.executionService.StartExecutionLoop(nodeList);
+                await this.executionService.StartExecutionLoop(nodeList, async () =>
+                {
+                    return;
+                });
 
             }, arg => !this.executionService.IsEnabled);
 
