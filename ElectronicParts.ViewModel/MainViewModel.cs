@@ -13,6 +13,7 @@ using ElectronicParts.ViewModels.Converter;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using Microsoft.Extensions.Logging;
 
 namespace ElectronicParts.ViewModels
 {
@@ -30,16 +31,19 @@ namespace ElectronicParts.ViewModels
 
         private readonly IPinConnectorService pinConnectorService;
 
+        private readonly ILogger<MainViewModel> logger;
+
         private PinViewModel inputPin;
 
         private PinViewModel outputPin;
 
-        public MainViewModel(IExecutionService executionService,IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService)
+        public MainViewModel(IExecutionService executionService,IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger)
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
             this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             this.SaveCommand = new RelayCommand(arg =>
             {
@@ -86,8 +90,33 @@ namespace ElectronicParts.ViewModels
 
                 foreach (ConnectionSnapShot connection in snapShot.Connections)
                 {
-                    PinViewModel inputPinViewModel = new PinViewModel(connection.InputPin.Pin, this.InputPinCommand);
-                    PinViewModel outputPinViewModel = new PinViewModel(connection.InputPin.Pin, this.OutputPinCommand);
+                    PinViewModel outputPinViewModel = null;
+
+                    foreach (NodeViewModel node in nodes)
+                    {
+                        if(node.Outputs.Any(outputPin => outputPin.Pin == connection.OutputPin.Pin))
+                        {
+                            outputPinViewModel = node.Outputs.First(outputPin => outputPin.Pin == connection.OutputPin.Pin);
+                            break;
+                        }
+                    }
+
+                    outputPinViewModel.Left = connection.OutputPin.Position.X;
+                    outputPinViewModel.Top = connection.OutputPin.Position.Y;
+
+                    PinViewModel inputPinViewModel = null;
+
+                    foreach (NodeViewModel node in nodes)
+                    {
+                        if (node.Inputs.Any(inputPin => inputPin.Pin == connection.InputPin.Pin))
+                        {
+                            inputPinViewModel = node.Inputs.First(inputPin => inputPin.Pin == connection.InputPin.Pin);
+                            break;
+                        }
+                    }
+
+                    inputPinViewModel.Left = connection.InputPin.Position.X;
+                    inputPinViewModel.Top = connection.InputPin.Position.Y;
 
                     ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel);
 
@@ -195,6 +224,8 @@ namespace ElectronicParts.ViewModels
             var reloadingTask = this.ReloadAssemblies();
 
             this.Connections = new ObservableCollection<ConnectorViewModel>();
+
+            this.logger.LogInformation("Ctor MainVM done");
         }
 
         public ObservableCollection<NodeViewModel> Nodes

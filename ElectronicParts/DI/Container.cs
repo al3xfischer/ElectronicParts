@@ -1,9 +1,10 @@
-﻿using ElectronicParts.Services;
-using ElectronicParts.Services.Interfaces;
-﻿using ElectronicParts.Services.Implementations;
+﻿using ElectronicParts.Services.Interfaces;
+using ElectronicParts.Services.Implementations;
 using ElectronicParts.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 
 namespace ElectronicParts.DI
 {
@@ -29,7 +30,13 @@ namespace ElectronicParts.DI
             services.AddSingleton<INodeSerializerService, NodeSerializerService>();
             services.AddSingleton<IAssemblyBinder, AssemblyBinder>();
 
+            // Logging
+            services.AddLogging();
+
             provider = services.BuildServiceProvider();
+
+            // Loggin configuration
+            provider.GetService<ILoggerFactory>().AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logs/electronicparts.log"), minimumLevel: LogLevel.Trace, fileSizeLimitBytes: 1024 * 1024 * 3);
         }
 
 
