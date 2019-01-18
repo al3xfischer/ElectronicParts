@@ -129,5 +129,10 @@ namespace ElectronicParts.Views
 
             var reloadTask = this.ViewModel.ReloadAssemblies();
         }
+
+        private void ListViewItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var vm = (e.OriginalSource as FrameworkElement).DataContext as NodeViewModel;
+        }
     }
 }
