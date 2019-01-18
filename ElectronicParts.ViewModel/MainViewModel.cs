@@ -68,13 +68,33 @@ namespace ElectronicParts.ViewModels
 
                 foreach (ConnectionSnapShot connection in snapShot.Connections)
                 {
-                    PinViewModel inputPinViewModel = new PinViewModel(connection.InputPin.Pin, this.InputPinCommand);
-                    inputPinViewModel.Left = connection.InputPin.Position.X;
-                    inputPinViewModel.Top = connection.InputPin.Position.Y;
+                    PinViewModel outputPinViewModel = null;
 
-                    PinViewModel outputPinViewModel = new PinViewModel(connection.InputPin.Pin, this.OutputPinCommand);
+                    foreach (NodeViewModel node in nodes)
+                    {
+                        if(node.Outputs.Any(outputPin => outputPin.Pin == connection.OutputPin.Pin))
+                        {
+                            outputPinViewModel = node.Outputs.First(outputPin => outputPin.Pin == connection.OutputPin.Pin);
+                            break;
+                        }
+                    }
+
                     outputPinViewModel.Left = connection.OutputPin.Position.X;
                     outputPinViewModel.Top = connection.OutputPin.Position.Y;
+
+                    PinViewModel inputPinViewModel = null;
+
+                    foreach (NodeViewModel node in nodes)
+                    {
+                        if (node.Inputs.Any(inputPin => inputPin.Pin == connection.InputPin.Pin))
+                        {
+                            inputPinViewModel = node.Inputs.First(inputPin => inputPin.Pin == connection.InputPin.Pin);
+                            break;
+                        }
+                    }
+
+                    inputPinViewModel.Left = connection.InputPin.Position.X;
+                    inputPinViewModel.Top = connection.InputPin.Position.Y;
 
                     ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel);
 
