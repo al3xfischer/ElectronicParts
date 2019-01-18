@@ -1,5 +1,6 @@
 ﻿using Shared;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
@@ -25,13 +26,6 @@ namespace ElectronicParts.ViewModels
             this.Left = 20;
         }
 
-        public NodeViewModel(IDisplayableNode node)
-        {
-            this.Node = node ?? throw new ArgumentNullException(nameof(node));
-            this.Inputs = node.Inputs.Select(n => new PinViewModel(n, null)).ToObservableCollection();
-            this.Outputs = node.Outputs.Select(n => new PinViewModel(n, null)).ToObservableCollection();
-        }
-
         public int Top
         {
             get => this.top;
@@ -39,11 +33,8 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.top, value);
-                if(Inputs.Count > 0)
-                    this.Inputs[0].Top = this.Top + 10;
-
-                if (Outputs.Count > 0)
-                    this.Outputs[0].Top = this.Top + 10;
+                this.UpdateTop(this.Inputs.Select((p, i) => Tuple.Create(p, i)),this.Top);
+                this.UpdateTop(this.Outputs.Select((p, i) => Tuple.Create(p, i)),this.Top);
             }
         }
 
@@ -54,11 +45,8 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.left, value);
-                if (Inputs.Count > 0)
-                    this.Inputs[0].Left = this.left - 10;
-
-                if (Outputs.Count > 0)
-                    this.Outputs[0].Left = this.Left + 60;
+                this.UpdateLeft(this.Inputs, this.left);
+                this.UpdateLeft(this.Outputs, this.Left + 73);
             }
         }
         public ObservableCollection<PinViewModel> Inputs { get; }
@@ -75,13 +63,28 @@ namespace ElectronicParts.ViewModels
 
         public ICommand DeleteCommand { get; }
 
-        private Point GetPintPositions()
+        public int MaxPins
         {
-            var pinX = this.Left - 20;
-            var pinY = this.Top - 20;
-
-            return new Point(pinX, pinY);
+            get
+            {
+                return this.Inputs.Count >= this.Outputs.Count ? this.Inputs.Count : this.Outputs.Count;
+            }
         }
 
+        private void UpdateLeft(IEnumerable<PinViewModel> pins, int value)
+        {
+            foreach (var pin in pins)
+            {
+                pin.Left = value;
+            }
+        }
+
+        private void UpdateTop(IEnumerable<Tuple<PinViewModel, int>> pins, int value)
+        {
+            foreach (var pin in pins)
+            {
+                pin.Item1.Top = (pin.Item2 * 22) + value + 13;
+            }
+        }
     }
 }

@@ -59,7 +59,7 @@
         <!-- Body -->
         <Rectangle Width="50" Stroke="Black" Grid.Column="1" >
             <Rectangle.Height>
-                <Binding Path="Inputs.Count()">
+                <Binding Path="MaxPins">
                     <Binding.Converter>
                         <converter:PinToHeightConverter/>
                     </Binding.Converter>
