@@ -40,7 +40,7 @@ namespace ElectronicParts.Services.Interfaces
         /// </summary>
         /// <param name="nodes">The nodes to simulate</param>
         /// <returns>Task.</returns>
-        Task StartExecutionLoop(IEnumerable<INode> nodes, Func<Task> asyncCallback);
+        Task StartExecutionLoop(IEnumerable<INode> nodes, Action callback);
 
         /// <summary>
         /// Stops the execution loop.
