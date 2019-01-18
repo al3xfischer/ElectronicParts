@@ -8,7 +8,7 @@
 // <summary>Represents the Configuration class of the ElectronicParts programm</summary>
 // ***********************************************************************
 
-namespace ElectronicParts.Services
+namespace ElectronicParts.Models
 {
     using System.Collections.Generic;
     using System.Linq;

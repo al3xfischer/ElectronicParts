@@ -13,6 +13,7 @@ namespace ElectronicParts.Services.Implementations
     using System.IO;
     using System.Reflection;
     using System.Runtime.Serialization.Json;
+    using ElectronicParts.Models;
     using ElectronicParts.Services.Interfaces;
     using Microsoft.Extensions.Configuration;
 
