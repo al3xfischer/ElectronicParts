@@ -15,11 +15,7 @@ namespace ElectronicParts.Tests
         [Test]
         public void TestPinConnectorNullValuePin()
         {
-            var testInputPin = new Pin<bool>();
-            var testOutputPin = new Pin<bool>();
-            testInputPin.Value = null;
-            var pinConnector = new PinConnectorService();
-            pinConnector.TryConnectPins(testInputPin, testOutputPin, out Connector test);
+           
         }
     }
 }
