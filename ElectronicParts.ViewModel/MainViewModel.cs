@@ -205,6 +205,8 @@ namespace ElectronicParts.ViewModels
                     return;
                 }
 
+                this.pinConnectorService.TryRemoveConnection(connectionVm.Connector);
+
                 this.connections.Remove(connectionVm);
             });
 
