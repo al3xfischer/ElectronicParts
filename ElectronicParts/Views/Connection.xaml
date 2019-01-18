@@ -3,6 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ElectronicParts.Views">
-    <Line X1="{Binding Input.Left}" Y1="{Binding Input.Top}" X2="{Binding Output.Left}" Y2="{Binding Output.Top}" Stroke="Black" StrokeThickness="3"/>
+             xmlns:local="clr-namespace:ElectronicParts.Views"
+             xmlns:converter="clr-namespace:ElectronicParts.Converter">
+    <UserControl.Resources>
+        <converter:ValueColorConverter x:Key="valueToColor"/>
+    </UserControl.Resources>
+
+    <Line X1="{Binding Input.Left}" Y1="{Binding Input.Top}" X2="{Binding Output.Left}" Y2="{Binding Output.Top}" Stroke="{Binding CurrentValue, Converter={StaticResource valueToColor} }" StrokeThickness="3"/>
 </UserControl>

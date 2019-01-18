@@ -59,6 +59,7 @@
     </ApplicationDefinition>
     <Compile Include="Converter\BitmapToImageSourceConverter.cs" />
     <Compile Include="Converter\PinToHeightConverter.cs" />
+    <Compile Include="Converter\ValueColorConverter.cs" />
     <Compile Include="EventArgs\StoppedEventArgs.cs" />
     <Compile Include="Converter\NameObserver.cs" />
     <Compile Include="Views\Connection.xaml.cs">
