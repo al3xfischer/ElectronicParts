@@ -11,6 +11,7 @@ using ElectronicParts.Services.Interfaces;
 using ElectronicParts.Models;
 using ElectronicParts.ViewModels.Converter;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace ElectronicParts.ViewModels
 {
@@ -28,16 +29,19 @@ namespace ElectronicParts.ViewModels
 
         private readonly IPinConnectorService pinConnectorService;
 
+        private readonly ILogger<MainViewModel> logger;
+
         private PinViewModel inputPin;
 
         private PinViewModel outputPin;
 
-        public MainViewModel(IExecutionService executionService,IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService)
+        public MainViewModel(IExecutionService executionService,IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger)
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
             this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             this.SaveCommand = new RelayCommand(arg =>
             {
@@ -182,6 +186,8 @@ namespace ElectronicParts.ViewModels
             var reloadingTask = this.ReloadAssemblies();
 
             this.Connections = new ObservableCollection<ConnectorViewModel>();
+
+            this.logger.LogInformation("Ctor MainVM done");
         }
 
         public ObservableCollection<NodeViewModel> Nodes
