@@ -91,6 +91,8 @@
     <Compile Include="Implementations\AssemblyNameExtractorService.cs" />
     <Compile Include="Implementations\ConfigurationService.cs" />
     <Compile Include="Implementations\ExecutionService.cs" />
+    <Compile Include="Implementations\GenericTypeComparerService.cs" />
+    <Compile Include="Interfaces\IGenericTypeComparerService.cs" />
     <Compile Include="Interfaces\IAssemblyNameExtractorService.cs" />
     <Compile Include="Interfaces\IAssemblyBinder.cs" />
     <Compile Include="Implementations\NodeSerializerService.cs" />

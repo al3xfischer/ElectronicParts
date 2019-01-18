@@ -15,14 +15,17 @@ namespace ElectronicParts.Services.Implementations
     using System.Collections.Generic;
     using System.Linq;
     using ElectronicParts.Models;
+    using ElectronicParts.Services.Interfaces;
 
     public class PinConnectorService : IPinConnectorService
     {
         private readonly List<Connector> ExistingConnections;
+        private readonly IGenericTypeComparerService typeComparerService;
 
-        public PinConnectorService()
+        public PinConnectorService(IGenericTypeComparerService typeComparerService)
         {
             this.ExistingConnections = new List<Connector>();
+            this.typeComparerService = typeComparerService ?? throw new ArgumentNullException(nameof(typeComparerService));
         }
 
         /// <summary>
@@ -37,7 +40,7 @@ namespace ElectronicParts.Services.Implementations
             newConnection = null;
 
             // nullcheck returning false if one pin is null
-            if (inputPin is null || outputPin is null)
+            if (inputPin is null || outputPin is null || !this.typeComparerService.IsSameGenericType(inputPin, outputPin))
             {
                 return false;
             }
