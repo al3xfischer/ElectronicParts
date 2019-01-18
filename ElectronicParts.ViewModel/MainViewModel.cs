@@ -11,6 +11,9 @@ using ElectronicParts.Services.Interfaces;
 using ElectronicParts.Models;
 using ElectronicParts.ViewModels.Converter;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.Serialization;
+using Microsoft.Extensions.Logging;
 
 namespace ElectronicParts.ViewModels
 {
@@ -30,17 +33,20 @@ namespace ElectronicParts.ViewModels
 
         private readonly INodeSerializerService nodeSerializerService;
 
+        private readonly ILogger<MainViewModel> logger;
+
         private PinViewModel inputPin;
 
         private PinViewModel outputPin;
 
-        public MainViewModel(IExecutionService executionService,IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService)
+        public MainViewModel(IExecutionService executionService,IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger)
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
             this.nodeSerializerService = nodeSerializerService ?? throw new ArgumentNullException(nameof(nodeSerializerService));
             this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             this.SaveCommand = new RelayCommand(arg =>
             {
@@ -50,9 +56,25 @@ namespace ElectronicParts.ViewModels
 
             this.LoadCommand = new RelayCommand(arg =>
             {
-                SnapShot snapShot = this.nodeSerializerService.Deserialize();
+                SnapShot snapShot = default(SnapShot);
 
-                if (snapShot == null)
+                try
+                {
+
+                    snapShot = nodeSerializerService.Deserialize();
+                }
+                catch(SerializationException e)
+                {
+                    // TODO proper exception Handeling
+                    Debug.WriteLine("Failed deserialiszation");
+
+                    var missingAssembly = new AssemblyNameExtractorService().ExtractAssemblyNameFromErrorMessage(e);
+                    var result = MessageBox.Show($"There are missing assemblies: {missingAssembly}\nDo you want to add new assemblies?", "Loading Failed", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                   
+                }
+                
+
+                if (snapShot is null)
                 {
                     return;
                 }
@@ -205,6 +227,8 @@ namespace ElectronicParts.ViewModels
             var reloadingTask = this.ReloadAssemblies();
 
             this.Connections = new ObservableCollection<ConnectorViewModel>();
+
+            this.logger.LogInformation("Ctor MainVM done");
         }
 
         public ObservableCollection<NodeViewModel> Nodes
