@@ -23,7 +23,8 @@
         <DataTemplate x:Key="NodeInformationTemplate">
             <local:NodeInformation HorizontalAlignment="Center"/>
         </DataTemplate>
-
+    
+        <!-- Display Items-->
         <CollectionViewSource Source="{Binding ViewModel.Nodes}" x:Key="Nodes"/>
         <CollectionViewSource Source="{Binding ViewModel.Connections}" x:Key="Connections"/>
         <CompositeCollection x:Key="DisplayItems">
@@ -55,11 +56,11 @@
             </MenuItem>
         </Menu>
 
-        <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" SelectedItem="{Binding ViewModel.SelectedNodeInformation}" DockPanel.Dock="Left" Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}" Name="AvilableNodes" SelectionChanged="ListView_SelectionChanged" >
+        <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" SelectedItem="{Binding ViewModel.SelectedNodeInformation}" DockPanel.Dock="Left" Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}" Name="AvilableNodes" PreviewMouseLeftButtonDown="ListViewItem_MouseLeftButtonDown">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <EventSetter Event="MouseLeftButtonDown" Handler="ListViewItem_MouseLeftButtonDown"/>
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseLeftButtonDown"/>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
