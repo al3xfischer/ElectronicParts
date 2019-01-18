@@ -121,6 +121,9 @@
   <data name="And_Gate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Pictures\And_Gate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Converter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Pictures\Converter.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ExOr_Gate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Pictures\ExOr_Gate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -150,5 +153,8 @@
   </data>
   <data name="SwitchOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Pictures\SwitchOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Timer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Pictures\Timer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

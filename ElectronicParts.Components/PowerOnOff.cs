@@ -28,8 +28,7 @@ namespace ElectronicParts.Components
         {
             this.Inputs = new List<IPin>();
 
-            this.Outputs = new List<IPin>();
-            this.Outputs.Add(new Pin<bool>());
+            this.Outputs = new List<IPin>() { new Pin<bool>() };
         }
 
         /// <summary>

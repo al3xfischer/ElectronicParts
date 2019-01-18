@@ -22,8 +22,7 @@ namespace ElectronicParts.Components
     {
         public IntegerDisplay()
         {
-            this.Inputs = new List<IPin>();
-            this.Inputs.Add(new Pin<int>());
+            this.Inputs = new List<IPin>() { new Pin<int>() };
 
             this.Outputs = new List<IPin>();
 

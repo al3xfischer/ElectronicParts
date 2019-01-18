@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitToInteger.cs" />
     <Compile Include="IntegerAdder.cs" />
     <Compile Include="IntegerDisplay.cs" />
     <Compile Include="IntegerSource.cs" />
@@ -57,6 +58,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Switch.cs" />
+    <Compile Include="Timer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.csproj">
@@ -72,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pictures\And_Gate.png" />
+    <Content Include="Pictures\Converter.jpg" />
     <Content Include="Pictures\ExOr_Gate.png" />
     <Content Include="Pictures\IntegerAdder.png" />
     <Content Include="Pictures\IntegerDisplay.png" />
@@ -82,6 +85,7 @@
     <Content Include="Pictures\PowerOn.png" />
     <Content Include="Pictures\SwitchOff.png" />
     <Content Include="Pictures\SwitchOn.png" />
+    <Content Include="Pictures\Timer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
