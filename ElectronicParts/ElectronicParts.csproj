@@ -167,6 +167,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ElectronicParts.Components\ElectronicParts.Components.csproj">
+      <Project>{6f6e2300-099a-41d5-a3f0-d0b12f91c1b5}</Project>
+      <Name>ElectronicParts.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ElectronicParts.Models\ElectronicParts.Models.csproj">
       <Project>{4294C9BE-14F0-4618-A5EC-F18A30B760FB}</Project>
       <Name>ElectronicParts.Models</Name>

@@ -169,6 +169,10 @@ namespace ElectronicParts.ViewModels
             this.ExecutionStopLoopCommand = new RelayCommand(arg =>
             {
                 this.executionService.StopExecutionLoop();
+                foreach (var node in this.Nodes)
+                {
+                    
+                }
 
 
             }, arg => this.executionService.IsEnabled);
@@ -211,6 +215,8 @@ namespace ElectronicParts.ViewModels
                 {
                     return;
                 }
+                
+                this.pinConnectorService.TryRemoveConnection(connectionVm.Connector);
 
                 this.connections.Remove(connectionVm);
             });

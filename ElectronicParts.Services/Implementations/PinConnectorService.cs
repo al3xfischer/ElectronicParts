@@ -49,34 +49,18 @@ namespace ElectronicParts.Services.Implementations
             // if this returns true then we check for the generic type of the pin and set the Value to a new valueInstance.
             if (inputPin.Value is null)
             {
-                var pinType = inputPin.GetType();
-                var argumentList = pinType.GetGenericArguments();
-                if (argumentList.Length > 1)
+                if (!this.TryRefreshPinValue(inputPin))
                 {
                     return false;
                 }
-
-                var genericPinType = argumentList[0];
-                var nonGenericValueType = typeof(Value<>);
-                var genericValueType = nonGenericValueType.MakeGenericType(genericPinType);
-                var instance = Activator.CreateInstance(genericValueType);
-                inputPin.Value = (IValue)instance;
             }
 
             if (outputPin.Value is null)
             {
-                var pinType = outputPin.GetType();
-                var argumentList = pinType.GetGenericArguments();
-                if (argumentList.Length > 1)
+                if (!this.TryRefreshPinValue(outputPin))
                 {
                     return false;
                 }
-
-                var genericPinType = argumentList[0];
-                var nonGenericValueType = typeof(Value<>);
-                var genericValueType = nonGenericValueType.MakeGenericType(genericPinType);
-                var instance = Activator.CreateInstance(genericValueType);
-                outputPin.Value = (IValue)instance;
             }
 
             // checking if the secondPin already has a connection
@@ -129,6 +113,24 @@ namespace ElectronicParts.Services.Implementations
             // In every case we will remove the connection from our known connections. And return true.
             connectorToDelete.InputPin.Value = null;
             this.ExistingConnections.Remove(connectorToDelete);
+            return true;
+        }
+
+        private bool TryRefreshPinValue(IPin pin)
+        {
+            var pinType = pin.GetType();
+            var argumentList = pinType.GetGenericArguments();
+            if (argumentList.Length > 1)
+            {
+                return false;
+            }
+
+            var genericPinType = argumentList[0];
+            var nonGenericValueType = typeof(Value<>);
+            var genericValueType = nonGenericValueType.MakeGenericType(genericPinType);
+            var instance = Activator.CreateInstance(genericValueType);
+            pin.Value = (IValue)instance;
+
             return true;
         }
     }
