@@ -10,6 +10,7 @@
 // ***********************************************************************
 namespace ElectronicParts.Services.Interfaces
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Shared;
@@ -39,7 +40,7 @@ namespace ElectronicParts.Services.Interfaces
         /// </summary>
         /// <param name="nodes">The nodes to simulate</param>
         /// <returns>Task.</returns>
-        Task StartExecutionLoop(IEnumerable<INode> nodes);
+        Task StartExecutionLoop(IEnumerable<INode> nodes, Func<Task> asyncCallback);
 
         /// <summary>
         /// Stops the execution loop.

@@ -55,7 +55,7 @@ namespace ElectronicParts.Services.Implementations
         /// </summary>
         /// <param name="nodes">The nodes to simulate.</param>
         /// <returns>Task.</returns>
-        public async Task StartExecutionLoop(IEnumerable<INode> nodes)
+        public async Task StartExecutionLoop(IEnumerable<INode> nodes, Func<Task> asyncCallback)
         {
             if (!this.IsEnabled)
             {
@@ -69,6 +69,7 @@ namespace ElectronicParts.Services.Implementations
                     try
                     {
                         await this.ExecuteOnce(nodes);
+                        await asyncCallback?.Invoke();
                     }
                     catch (Exception e)
                     {
