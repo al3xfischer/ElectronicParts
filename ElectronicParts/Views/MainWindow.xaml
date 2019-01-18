@@ -68,9 +68,12 @@
         <DockPanel Margin="0 1 0 0" Background="LightGray" DockPanel.Dock="Right">
             <Border Margin="0" DockPanel.Dock="Top" BorderThickness="1 0 0 1" BorderBrush="DarkGray">
                 <DockPanel Background="WhiteSmoke" Height="40px" LastChildFill="False">
+                    <DockPanel.Effect>
+                        <DropShadowEffect Opacity="0.4" ShadowDepth="5" BlurRadius="5" Direction="270" />
+                    </DockPanel.Effect>
                     <DockPanel.Resources>
                         <Style x:Name="ImageStyle" TargetType="{x:Type Image}">
-                            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+                            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
                         </Style>
                         <Style x:Name="RoundedButton" TargetType="{x:Type Button}">
                             <Setter Property="Margin" Value="10,0,0,0"/>
@@ -117,10 +120,8 @@
                 </DockPanel>
             </Border>
 
-
-
             <!-- Nodes Display -->
-            <ItemsControl DockPanel.Dock="Right" ItemsSource="{StaticResource DisplayItems}">
+            <ItemsControl DockPanel.Dock="Right" ItemsSource="{StaticResource DisplayItems}" Background="White" >
                 <ItemsControl.Resources>
                     <DataTemplate DataType="{x:Type vm:NodeViewModel}">
                         <local:Node MouseLeftButtonDown="Node_MouseLeftButtonDown" MouseLeftButtonUp="Node_MouseLeftButtonUp" >
@@ -151,7 +152,22 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas IsItemsHost="True" Loaded="ItemsCanvas_Loaded" x:Name="ItemsCanvas" Background="LightGray" Validation.ErrorTemplate="{x:Null}">
+                        <Canvas IsItemsHost="True" Loaded="ItemsCanvas_Loaded" x:Name="ItemsCanvas" Width="2400" Height="1600" >
+                            <Canvas.Background>
+                                <DrawingBrush TileMode="Tile" Viewport="-10,-10,10,10" 
+                                     ViewportUnits="Absolute">
+                                    <DrawingBrush.Drawing>
+                                        <GeometryDrawing>
+                                            <GeometryDrawing.Geometry>
+                                                <RectangleGeometry Rect="0,0,10,10"/>
+                                            </GeometryDrawing.Geometry>
+                                            <GeometryDrawing.Pen>
+                                                <Pen Brush="Black" Thickness="0.1"/>
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Canvas.Background>
                         </Canvas>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
