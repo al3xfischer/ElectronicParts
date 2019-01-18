@@ -55,7 +55,7 @@
             </MenuItem>
         </Menu>
 
-        <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" SelectedItem="{Binding ViewModel.SelectedNodeInformation}" DockPanel.Dock="Left" Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}" Name="AvilableNodes" >
+        <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" SelectedItem="{Binding ViewModel.SelectedNodeInformation}" DockPanel.Dock="Left" Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}" Name="AvilableNodes" SelectionChanged="ListView_SelectionChanged" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
