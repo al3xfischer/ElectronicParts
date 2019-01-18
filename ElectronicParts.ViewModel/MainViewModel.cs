@@ -84,7 +84,7 @@ namespace ElectronicParts.ViewModels
 
                 foreach (NodeSnapShot node in snapShot.Nodes)
                 {
-                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand);
+                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand);
                     nodeViewModel.Left = node.Position.X;
                     nodeViewModel.Top = node.Position.Y;
 
@@ -196,7 +196,7 @@ namespace ElectronicParts.ViewModels
                 this.Connect();
             }, arg => !this.executionService.IsEnabled);
 
-            this.DeleteCommand = new RelayCommand(arg =>
+            this.DeleteNodeCommand = new RelayCommand(arg =>
             {
                 var nodeVm = arg as NodeViewModel;
 
@@ -217,14 +217,11 @@ namespace ElectronicParts.ViewModels
                 }
 
                 var copy = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;
-                var vm = new NodeViewModel(copy, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand);
+                var vm = new NodeViewModel(copy, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand);
                 this.Nodes.Add(vm);
                 this.FirePropertyChanged(nameof(Nodes));
             });
-            this.Nodes = new ObservableCollection<NodeViewModel>
-            {
-                new NodeViewModel(new TestNode(),this.DeleteCommand,this.InputPinCommand,this.OutputPinCommand)
-            };
+            this.Nodes = new ObservableCollection<NodeViewModel>();
 
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             var reloadingTask = this.ReloadAssemblies();
@@ -293,7 +290,7 @@ namespace ElectronicParts.ViewModels
         {
             await this.assemblyService.LoadAssemblies();
             this.AvailableNodes.Clear();
-            foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand)))
+            foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand)))
             {
                 this.AvailableNodes.Add(assembly);
             }
@@ -317,7 +314,8 @@ namespace ElectronicParts.ViewModels
 
         public ICommand AddNodeCommand { get; }
 
-        public ICommand DeleteCommand { get; }
+        public ICommand DeleteNodeCommand { get; }
+        public ICommand DeleteConnectionCommand { get; }
 
         public ICommand InputPinCommand { get; }
 

@@ -1,4 +1,5 @@
-﻿using Shared;
+﻿using ElectronicParts.ViewModels.Commands;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,8 +11,6 @@ namespace ElectronicParts.ViewModels
 {
     public class NodeViewModel : BaseViewModel
     {
-        internal readonly IDisplayableNode node;
-
         private int top;
 
         private int left;
@@ -24,6 +23,16 @@ namespace ElectronicParts.ViewModels
             this.Outputs = node.Outputs.Select(n => new PinViewModel(n, OutputPinCommand)).ToObservableCollection();
             this.Top = 20;
             this.Left = 20;
+
+            this.ActivateCommand = new RelayCommand(arg =>
+            {
+                this.Node.Activate();
+            });
+
+            this.Node.PictureChanged += (sender, e) =>
+            {
+                this.FirePropertyChanged(nameof(Picture));
+            };
         }
 
         public int Top
@@ -33,8 +42,8 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.top, value);
-                this.UpdateTop(this.Inputs.Select((p, i) => Tuple.Create(p, i)),this.Top);
-                this.UpdateTop(this.Outputs.Select((p, i) => Tuple.Create(p, i)),this.Top);
+                this.UpdateTop(this.Inputs.Select((p, i) => Tuple.Create(p, i)), this.Top);
+                this.UpdateTop(this.Outputs.Select((p, i) => Tuple.Create(p, i)), this.Top);
             }
         }
 
@@ -62,6 +71,8 @@ namespace ElectronicParts.ViewModels
         public IDisplayableNode Node { get; }
 
         public ICommand DeleteCommand { get; }
+
+        public ICommand ActivateCommand { get; }
 
         public int MaxPins
         {

@@ -59,6 +59,7 @@
     </ApplicationDefinition>
     <Compile Include="Converter\BitmapToImageSourceConverter.cs" />
     <Compile Include="Converter\PinToHeightConverter.cs" />
+    <Compile Include="Converter\ValueColorConverter.cs" />
     <Compile Include="EventArgs\StoppedEventArgs.cs" />
     <Compile Include="Converter\NameObserver.cs" />
     <Compile Include="Views\Connection.xaml.cs">
@@ -154,6 +155,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions">
       <Version>2.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="MvvmEventBinding">
+      <Version>1.0.0</Version>
     </PackageReference>
     <PackageReference Include="Serilog.Extensions.Logging.File">
       <Version>1.1.0</Version>
