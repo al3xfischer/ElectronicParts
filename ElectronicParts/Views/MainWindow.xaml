@@ -8,7 +8,13 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         d:DataContext="{Binding Source={d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}}"
-        Title="Electronic Parts" MinWidth="500" MinHeight="400" WindowState="Maximized" MouseLeftButtonDown="Window_MouseLeftButtonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" MouseMove="Window_MouseMove">
+        Title="Electronic Parts"
+        MinWidth="800"
+        MinHeight="400"
+        WindowState="Maximized"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        MouseLeftButtonUp="Window_MouseLeftButtonUp"
+        MouseMove="Window_MouseMove" Height="168" Width="600">
 
     <!-- Resources -->
     <Window.Resources>
@@ -39,7 +45,9 @@
                 <MenuItem Header="_Save" Command="{Binding ViewModel.SaveCommand}" InputGestureText="Ctrl+S" />
                 <MenuItem Header="_Open" Command="{Binding ViewModel.LoadCommand}" InputGestureText="Ctrl+O" />
                 <Separator/>
-                <MenuItem Header="_Reload Assemblies" Command="{Binding ViewModel.LoadCommand}"/>
+                <MenuItem Header="_Reload Assemblies" Command="{Binding ViewModel.ReloadAssembliesCommand}"/>
+                <MenuItem Header="_Add new Assembly" Name="addAssembly" Click="AddAssembly_Click"/>
+                <MenuItem Header="_Open Assembly Folder" Name="openAssemblyFolder" Click="OpenAssemblyFolder_Click"/>
                 <Separator/>
                 <MenuItem Header="_Preferences" Name="preferences" Click="Preferences_Click"/>
                 <MenuItem Header="_Exit" Command="{Binding ViewModel.ExitCommand}" />
@@ -56,7 +64,7 @@
 
         <DockPanel Margin="0 1 0 0" Background="LightGray" DockPanel.Dock="Right">
             <Border Margin="0" DockPanel.Dock="Top" BorderThickness="1 0 0 1" BorderBrush="DarkGray">
-                <DockPanel Background="WhiteSmoke" Height="40px" LastChildFill="False">
+                <DockPanel Background="WhiteSmoke" Height="40px" LastChildFill="false">
                     <DockPanel.Resources>
                         <Style x:Name="ImageStyle" TargetType="{x:Type Image}">
                             <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
@@ -103,6 +111,22 @@
                     <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ResetAllConnectionsCommand}">
                         <Image Source="/Resources/reset.png"/>
                     </Button>
+                    <Border BorderBrush="DarkGray" BorderThickness="1px" Margin="2px" Padding="3px">
+                        <DockPanel DockPanel.Dock="Left" HorizontalAlignment="Left"  MaxWidth="300px" Margin="10 0 0 0">
+                            <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center" Height="20px" TextAlignment="Center" Text="FPS"></TextBlock>
+                            <TextBlock Text="{Binding ViewModel.FramesPerSecond}" TextAlignment="Center" Margin="10 0 2 0"  DockPanel.Dock="Right" Width="20px" Height="20px" TextWrapping="NoWrap"/>
+                            <Slider x:Name="slider" 
+                                DockPanel.Dock="Left" 
+                                MinWidth="200px"
+                                Maximum="100" 
+                                Minimum="1" 
+                                VerticalAlignment="Center"
+                                TickFrequency="5"
+                                TickPlacement="BottomRight"
+                                IsSnapToTickEnabled="True"
+                                Value="{Binding ViewModel.FramesPerSecond, UpdateSourceTrigger=PropertyChanged}"></Slider>
+                        </DockPanel>
+                    </Border>
                 </DockPanel>
             </Border>
 

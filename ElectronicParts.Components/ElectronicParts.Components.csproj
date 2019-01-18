@@ -73,6 +73,9 @@
   <ItemGroup>
     <Content Include="Pictures\And_Gate.png" />
     <Content Include="Pictures\ExOr_Gate.png" />
+    <Content Include="Pictures\IntegerAdder.png" />
+    <Content Include="Pictures\IntegerDisplay.png" />
+    <Content Include="Pictures\IntegerSource.png" />
     <Content Include="Pictures\Inverter.png" />
     <Content Include="Pictures\Or_Gate.png" />
     <Content Include="Pictures\PowerOff.png" />

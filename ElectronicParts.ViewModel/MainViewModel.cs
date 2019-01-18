@@ -69,12 +69,7 @@ namespace ElectronicParts.ViewModels
                 foreach (ConnectionSnapShot connection in snapShot.Connections)
                 {
                     PinViewModel inputPinViewModel = new PinViewModel(connection.InputPin.Pin, this.InputPinCommand);
-                    inputPinViewModel.Left = connection.InputPin.Position.X;
-                    inputPinViewModel.Top = connection.InputPin.Position.Y;
-
                     PinViewModel outputPinViewModel = new PinViewModel(connection.InputPin.Pin, this.OutputPinCommand);
-                    outputPinViewModel.Left = connection.OutputPin.Position.X;
-                    outputPinViewModel.Top = connection.OutputPin.Position.Y;
 
                     ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel);
 
@@ -101,13 +96,13 @@ namespace ElectronicParts.ViewModels
 
             this.ExecutionStepCommand = new RelayCommand(async arg =>
             {
-                var nodeList = this.Nodes.Select(nodeVM => nodeVM.node);
+                var nodeList = this.Nodes.Select(nodeVM => nodeVM.Node);
                 await this.executionService.ExecuteOnce(nodeList);
             }, arg => !this.executionService.IsEnabled);
 
             this.ExecutionStartLoopCommand = new RelayCommand(async arg =>
             {
-                var nodeList = this.Nodes.Select(nodeVM => nodeVM.node);
+                var nodeList = this.Nodes.Select(nodeVM => nodeVM.Node);
                 await this.executionService.StartExecutionLoop(nodeList);
 
             }, arg => !this.executionService.IsEnabled);
@@ -122,6 +117,11 @@ namespace ElectronicParts.ViewModels
             {
                 await this.ResetAllConnections();
 
+            });
+
+            this.ReloadAssembliesCommand = new RelayCommand(async arg =>
+            {
+                await this.ReloadAssemblies();
             });
 
             this.ExecutionStopLoopAndResetCommand = new RelayCommand(async arg =>
@@ -173,19 +173,8 @@ namespace ElectronicParts.ViewModels
                 new NodeViewModel(new TestNode(),this.DeleteCommand,this.InputPinCommand,this.OutputPinCommand)
             };
 
-            this.assemblyService.LoadAssemblies()
-                .ContinueWith(t => {
-
-                    var list = this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand)).ToList();
-
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        foreach (var node in list)
-                        {
-                            this.AvailableNodes.Add(node);
-                        }
-                    });
-                });
+            this.AvailableNodes = new ObservableCollection<NodeViewModel>();
+            var reloadingTask = this.ReloadAssemblies();
 
             this.Connections = new ObservableCollection<ConnectorViewModel>();
         }
@@ -244,6 +233,33 @@ namespace ElectronicParts.ViewModels
                 }
             });
         }
+
+        public async Task ReloadAssemblies()
+        {
+            await this.assemblyService.LoadAssemblies();
+            this.AvailableNodes.Clear();
+            foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteCommand, this.InputPinCommand, this.OutputPinCommand)))
+            {
+                this.AvailableNodes.Add(assembly);
+            }
+        }
+
+        private int framesPerSecond;
+
+        public int FramesPerSecond
+        {
+            get => this.framesPerSecond;
+            set
+            {
+                if (value > 0 && value <= 100)
+                {
+                    Set(ref this.framesPerSecond, value);
+                    this.executionService.FramesPerSecond = value;
+                }
+            }
+        }
+
+
         public ICommand AddNodeCommand { get; }
 
         public ICommand DeleteCommand { get; }
@@ -251,6 +267,7 @@ namespace ElectronicParts.ViewModels
         public ICommand InputPinCommand { get; }
 
         public ICommand OutputPinCommand { get; }
+
 
         private void Connect()
         {

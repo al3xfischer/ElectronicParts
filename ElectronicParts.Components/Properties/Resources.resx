@@ -124,6 +124,15 @@
   <data name="ExOr_Gate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Pictures\ExOr_Gate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="IntegerAdder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Pictures\IntegerAdder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IntegerDisplay" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Pictures\IntegerDisplay.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IntegerSource" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Pictures\IntegerSource.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Inverter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Pictures\Inverter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
