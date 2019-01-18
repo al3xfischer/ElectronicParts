@@ -27,5 +27,10 @@ namespace ElectronicParts.ViewModels
         {
             get => this.Connector.CommonValue;
         }
+
+        public void Update()
+        {
+            this.FirePropertyChanged(nameof(CurrentValue));
+        }
     }
 }

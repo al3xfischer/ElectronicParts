@@ -74,6 +74,11 @@ namespace ElectronicParts.ViewModels
 
         public ICommand ActivateCommand { get; }
 
+        public void Update()
+        {
+            this.FirePropertyChanged(nameof(Picture));
+        }
+
         public int MaxPins
         {
             get

@@ -124,7 +124,7 @@
                         <local:Node MouseLeftButtonDown="Node_MouseLeftButtonDown" MouseLeftButtonUp="Node_MouseLeftButtonUp" >
                             <local:Node.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Delete" Command="{Binding ViewModel.DeleteNodeCommand}" CommandParameter="{Binding}"/>
+                                    <MenuItem Header="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
                                 </ContextMenu>
                             </local:Node.ContextMenu>
                         </local:Node>
