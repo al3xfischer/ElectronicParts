@@ -73,6 +73,16 @@ namespace ElectronicParts.Components.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Converter {
+            get {
+                object obj = ResourceManager.GetObject("Converter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ExOr_Gate {
             get {
                 object obj = ResourceManager.GetObject("ExOr_Gate", resourceCulture);
@@ -166,6 +176,16 @@ namespace ElectronicParts.Components.Properties {
         internal static System.Drawing.Bitmap SwitchOn {
             get {
                 object obj = ResourceManager.GetObject("SwitchOn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Timer {
+            get {
+                object obj = ResourceManager.GetObject("Timer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -26,8 +26,7 @@ namespace ElectronicParts.Components
         {
             this.Inputs = new List<IPin>();
 
-            this.Outputs = new List<IPin>();
-            this.Outputs.Add(new Pin<int>());
+            this.Outputs = new List<IPin>() { new Pin<int>() };
         }
         public ICollection<IPin> Inputs { get; private set; }
 

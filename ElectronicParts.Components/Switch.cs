@@ -31,11 +31,9 @@ namespace ElectronicParts.Components
         /// </summary>
         public Switch()
         {
-            this.Inputs = new List<IPin>();
-            this.Inputs.Add(new Pin<bool>());
+            this.Inputs = new List<IPin>() { new Pin<bool>() };
 
-            this.Outputs = new List<IPin>();
-            this.Outputs.Add(new Pin<bool>());
+            this.Outputs = new List<IPin>() { new Pin<bool>() };
         }
 
         /// <summary>

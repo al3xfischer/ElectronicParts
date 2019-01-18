@@ -22,12 +22,9 @@ namespace ElectronicParts.Components
     {
         public IntegerAdder()
         {
-            this.Inputs = new List<IPin>();
-            this.Inputs.Add(new Pin<int>());
-            this.Inputs.Add(new Pin<int>());
+            this.Inputs = new List<IPin>() { new Pin<int>(), new Pin<int>() };
 
-            this.Outputs = new List<IPin>();
-            this.Outputs.Add(new Pin<int>());
+            this.Outputs = new List<IPin>() { new Pin<int>() };
         }
 
         public ICollection<IPin> Inputs { get; private set; }
