@@ -14,6 +14,7 @@ namespace ElectronicParts.Components
     /// Class IntTwoString.
     /// </summary>
     /// <seealso cref="Shared.IDisplayableNode" />
+    [Serializable]
     public class IntToString : IDisplayableNode
     {
         public IntToString()

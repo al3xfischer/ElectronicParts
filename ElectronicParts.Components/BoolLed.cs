@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace ElectronicParts.Components
 {
+    [Serializable]
     public class BoolLed : IDisplayableNode
     {
         public BoolLed()

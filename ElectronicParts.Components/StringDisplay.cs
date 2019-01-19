@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace ElectronicParts.Components
 {
+    [Serializable]
     public class StringDisplay : IDisplayableNode
     {
         public StringDisplay()
