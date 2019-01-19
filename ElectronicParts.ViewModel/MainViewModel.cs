@@ -255,19 +255,8 @@ namespace ElectronicParts.ViewModels
                     return;
                 }
 
-                List<ConnectorViewModel> connectionsMarkedForDeletion = new List<ConnectorViewModel>();
-
-                foreach (var connection in this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input)
-                                                                    || nodeVm.Outputs.Contains(connection.Output)))
-                {
-                    connectionsMarkedForDeletion.Add(connection);
-                }
-
-                foreach (var connection in connectionsMarkedForDeletion)
-                {
-                    this.Connections.Remove(connection);
-                }
-
+                var connectionsMarkedForDeletion = this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input) || nodeVm.Outputs.Contains(connection.Output)).ToList();
+                connectionsMarkedForDeletion.ForEach(c => this.connections.Remove(c));
                 this.Nodes.Remove(nodeVm);
             });
 
