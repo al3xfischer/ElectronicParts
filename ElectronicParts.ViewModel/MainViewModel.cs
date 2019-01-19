@@ -73,7 +73,7 @@ namespace ElectronicParts.ViewModels
 
             this.SaveCommand = new RelayCommand(arg =>
             {
-                SnapShot snapShot = SnapShotConverter.Convert(this.nodes, this.connections);
+                SnapShot snapShot = SnapShotConverter.Convert(this.Nodes, this.connections);
                 this.nodeSerializerService.Serialize(snapShot);
             });
 

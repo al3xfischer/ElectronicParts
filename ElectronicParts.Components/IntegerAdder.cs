@@ -39,6 +39,7 @@ namespace ElectronicParts.Components
 
         public Bitmap Picture => Properties.Resources.IntegerAdder;
 
+        [field: NonSerialized]
         public event EventHandler PictureChanged;
 
         /// <summary>

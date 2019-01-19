@@ -8,6 +8,7 @@ using Shared;
 
 namespace ElectronicParts.Components
 {
+    [Serializable]
     public class BitToInteger : IDisplayableNode
     {
         public BitToInteger()
@@ -33,6 +34,7 @@ namespace ElectronicParts.Components
 
         public Bitmap Picture => Properties.Resources.Converter;
 
+        [field: NonSerialized]
         public event EventHandler PictureChanged;
 
         public void Activate()
