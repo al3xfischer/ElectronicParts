@@ -56,7 +56,7 @@
             </MenuItem>
         </Menu>
 
-        <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" SelectedItem="{Binding ViewModel.SelectedNodeInformation}" DockPanel.Dock="Left" Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}" Name="AvilableNodes" PreviewMouseLeftButtonDown="ListViewItem_MouseLeftButtonDown">
+        <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" IsEnabled="{Binding ViewModel.CanAddNode}" SelectedItem="{Binding ViewModel.SelectedNodeInformation}" DockPanel.Dock="Left" Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}" Name="AvilableNodes" PreviewMouseLeftButtonDown="ListViewItem_MouseLeftButtonDown">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
