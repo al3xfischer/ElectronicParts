@@ -20,7 +20,7 @@ namespace ElectronicParts.Components
                 this.Inputs.Add(new Pin<bool>());
             }
 
-            this.Outputs = new List<IPin>() { new Pin<bool>() };
+            this.Outputs = new List<IPin>() { new Pin<int>() };
         }
         public ICollection<IPin> Inputs { get; }
 
@@ -51,7 +51,7 @@ namespace ElectronicParts.Components
                 arr[i] = (bool)this.Inputs.ElementAt(i).Value.Current;
             }
 
-            this.Outputs.ElementAt(0).Value.Current = this.BoolArrayToByteConverter(arr);
+            this.Outputs.ElementAt(0).Value.Current = (int)this.BoolArrayToByteConverter(arr);
         }
 
         private byte BoolArrayToByteConverter(bool[] arr)
