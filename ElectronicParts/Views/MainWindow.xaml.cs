@@ -136,7 +136,7 @@ namespace ElectronicParts.Views
             if (item != null)
             {
                 var vm = item.DataContext as NodeViewModel;
-                if (!(vm is null))
+                if (!(vm is null) && this.ViewModel.AddNodeCommand.CanExecute(null))
                 {
                     this.ViewModel.AddNodeCommand.Execute(vm.Node);
                 }

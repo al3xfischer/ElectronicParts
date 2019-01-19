@@ -96,7 +96,6 @@ namespace ElectronicParts.ViewModels
 
                 }
 
-
                 if (snapShot is null)
                 {
                     return;
@@ -164,7 +163,6 @@ namespace ElectronicParts.ViewModels
                 }
             });
 
-
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
 
             this.ExecutionStepCommand = new RelayCommand(async arg =>
@@ -175,6 +173,7 @@ namespace ElectronicParts.ViewModels
                 {
                     connection.Update();
                 }
+                this.FirePropertyChanged(nameof(CanAddNode));
             }, arg => !this.executionService.IsEnabled);
 
             this.ExecutionStartLoopCommand = new RelayCommand(async arg =>
@@ -182,6 +181,7 @@ namespace ElectronicParts.ViewModels
                 var nodeList = this.Nodes.Select(nodeVM => nodeVM.Node);
                 await this.executionService.StartExecutionLoop(nodeList, () =>
                 {
+                    this.FirePropertyChanged(nameof(CanAddNode));
                     Task.Run(() =>
                     {
                         foreach (var connection in this.Connections)
@@ -190,24 +190,18 @@ namespace ElectronicParts.ViewModels
                         }
                     });
                 });
-
             }, arg => !this.executionService.IsEnabled);
 
             this.ExecutionStopLoopCommand = new RelayCommand(arg =>
             {
                 this.executionService.StopExecutionLoop();
-                foreach (var node in this.Nodes)
-                {
-
-                }
-
-
+                this.FirePropertyChanged(nameof(CanAddNode));
             }, arg => this.executionService.IsEnabled);
 
             this.ResetAllConnectionsCommand = new RelayCommand(async arg =>
             {
                 await this.ResetAllConnections();
-
+                this.FirePropertyChanged(nameof(CanAddNode));
             });
 
             this.ReloadAssembliesCommand = new RelayCommand(async arg =>
@@ -219,6 +213,7 @@ namespace ElectronicParts.ViewModels
             {
                 this.executionService.StopExecutionLoop();
                 await this.ResetAllConnections();
+                this.FirePropertyChanged(nameof(CanAddNode));
 
             }, arg => this.executionService.IsEnabled);
 
@@ -246,7 +241,7 @@ namespace ElectronicParts.ViewModels
                 this.pinConnectorService.TryRemoveConnection(connectionVm.Connector);
 
                 this.connections.Remove(connectionVm);
-            });
+            }, arg => !this.executionService.IsEnabled);
 
             this.DeleteNodeCommand = new RelayCommand(arg =>
             {
@@ -257,21 +252,11 @@ namespace ElectronicParts.ViewModels
                     return;
                 }
 
-                List<ConnectorViewModel> connectionsMarkedForDeletion = new List<ConnectorViewModel>();
-
-                foreach (var connection in this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input)
-                                                                    || nodeVm.Outputs.Contains(connection.Output)))
-                {
-                    connectionsMarkedForDeletion.Add(connection);
-                }
-
-                foreach (var connection in connectionsMarkedForDeletion)
-                {
-                    this.Connections.Remove(connection);
-                }
-
+                var connectionsMarkedForDeletion = this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input) || nodeVm.Outputs.Contains(connection.Output)).ToList();
+                connectionsMarkedForDeletion.ForEach(c => this.connections.Remove(c));
                 this.Nodes.Remove(nodeVm);
-            });
+            }, arg => !this.executionService.IsEnabled);
+
             this.AddNodeCommand = new RelayCommand(arg =>
             {
                 var node = arg as IDisplayableNode;
@@ -285,14 +270,12 @@ namespace ElectronicParts.ViewModels
                 this.Nodes.Add(vm);
                 vm.SnapToNewGrid(this.GridSize, false);
                 this.FirePropertyChanged(nameof(Nodes));
-            });
+            }, arg => !this.executionService.IsEnabled);
+
             this.Nodes = new ObservableCollection<NodeViewModel>();
-
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
-            var reloadingTask = this.ReloadAssemblies();
-
             this.Connections = new ObservableCollection<ConnectorViewModel>();
-
+            var reloadingTask = this.ReloadAssemblies();
             this.logger.LogInformation("Ctor MainVM done");
         }
 
@@ -370,6 +353,11 @@ namespace ElectronicParts.ViewModels
         public NodeViewModel SelectedNode { get; set; }
 
         public NodeViewModel SelectedNodeInformation { get; set; }
+
+        public bool CanAddNode
+        {
+            get => !this.executionService.IsEnabled;
+        }
 
         public ICommand SaveCommand { get; }
         public ICommand ExecutionStepCommand { get; }

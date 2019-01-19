@@ -33,8 +33,10 @@ namespace ElectronicParts.Services.Implementations
         /// </summary>
         private readonly string assemblyPath;
 
+        /// <summary>
+        /// The <list type="IDisplayableNode"/> 
+        /// </summary>
         private List<IDisplayableNode> nodeList;
-        private AppDomain currentDomain;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AssemblyService"/> class.
