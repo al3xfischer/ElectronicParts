@@ -21,7 +21,7 @@ namespace ElectronicParts.ViewModels
             this.DeleteCommand = deleteCommand ?? throw new ArgumentNullException(nameof(deleteCommand));
             this.Inputs = node.Inputs?.Select(n => new PinViewModel(n, inputPinCommand)).ToObservableCollection();
             this.Outputs = node.Outputs?.Select(n => new PinViewModel(n, OutputPinCommand)).ToObservableCollection();
-            this.Top = 20;
+            this.Top = 18;
             this.Left = 20;
 
             this.ActivateCommand = new RelayCommand(arg =>
@@ -65,6 +65,45 @@ namespace ElectronicParts.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// Snaps to grid.
+        /// </summary>
+        /// <param name="gridSize">Size of the grid.</param>
+        /// <param name="floor">if set to true will floor value else will ceil value.</param>
+        public void SnapToNewGrid(int gridSize, bool floor)
+        {
+            int leftOffset;
+            leftOffset = this.Inputs.Count > 0 ? 10 : 0;
+
+            if (floor)
+            {
+                this.Left = Math.Max(this.Left.FloorTo(gridSize) - leftOffset, 0);
+                this.Top = Math.Max(this.Top.FloorTo(gridSize) - 2, 0);
+            }
+            else
+            {
+                this.Left = Math.Max(this.Left.CeilingTo(gridSize) + (gridSize - leftOffset), 0);
+                this.Top = Math.Max(this.Top.CeilingTo(gridSize) - 2, 0);
+                
+            }
+        }
+
+        /// <summary>
+        /// Snaps to grid.
+        /// Will round to the next possible value.
+        /// </summary>
+        /// <param name="gridSize">Size of the grid.</param>
+        public void SnapToNewGrid(int gridSize)
+        {
+            int leftOffset;
+            leftOffset = this.Inputs.Count > 0 ? 10 : 0;
+
+         
+            this.Left = Math.Max(this.Left.RoundTo(gridSize) - leftOffset, 0);
+            this.Top = Math.Max(this.Top.RoundTo(gridSize) - 2, 0);
+        }
+
         public ObservableCollection<PinViewModel> Inputs { get; }
 
         public ObservableCollection<PinViewModel> Outputs { get; }

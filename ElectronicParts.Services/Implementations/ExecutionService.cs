@@ -25,12 +25,15 @@ namespace ElectronicParts.Services.Implementations
     public class ExecutionService : IExecutionService
     {
         private int framesPerSecond;
+        private long passedMiliseconds;
 
         /// <summary>
         /// Gets a value indicating whether this instance is enabled.
         /// </summary>
         /// <value>true if this instance is enabled; otherwise, false.</value>
         public bool IsEnabled { get; private set; }
+
+        public long MillisecondsPerLoop { get => this.passedMiliseconds; }
 
         public int FramesPerSecond
         {
@@ -78,6 +81,7 @@ namespace ElectronicParts.Services.Implementations
                     }
                     watch.Stop();
                     var waitingTime = (1000 / this.FramesPerSecond) - watch.ElapsedMilliseconds;
+                    this.passedMiliseconds = watch.ElapsedMilliseconds;
                     try
                     {
                         await Task.Delay(Math.Max((int)waitingTime, 1));
