@@ -40,6 +40,7 @@ namespace ElectronicParts.Components
 
         public Bitmap Picture => Properties.Resources.IntegerSource;
 
+        [field: NonSerialized]
         public event EventHandler PictureChanged;
 
         /// <summary>

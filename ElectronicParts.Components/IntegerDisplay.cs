@@ -32,6 +32,7 @@ namespace ElectronicParts.Components
             this.SetNewPicture("int");
             this.Label = "IntegerDisplay";
         }
+
         public ICollection<IPin> Inputs { get; }
 
         public ICollection<IPin> Outputs { get; }
@@ -61,6 +62,7 @@ namespace ElectronicParts.Components
             }
         }
 
+        [field: NonSerialized]
         public event EventHandler PictureChanged;
 
         public void Activate()

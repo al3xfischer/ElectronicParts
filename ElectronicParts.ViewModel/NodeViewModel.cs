@@ -85,7 +85,7 @@ namespace ElectronicParts.ViewModels
             {
                 this.Left = Math.Max(this.Left.CeilingTo(gridSize) + (gridSize - leftOffset), 0);
                 this.Top = Math.Max(this.Top.CeilingTo(gridSize) - 2, 0);
-                
+
             }
         }
 
@@ -99,7 +99,7 @@ namespace ElectronicParts.ViewModels
             int leftOffset;
             leftOffset = this.Inputs.Count > 0 ? 10 : 0;
 
-         
+
             this.Left = Math.Max(this.Left.RoundTo(gridSize) - leftOffset, 0);
             this.Top = Math.Max(this.Top.RoundTo(gridSize) - 2, 0);
         }
@@ -115,7 +115,6 @@ namespace ElectronicParts.ViewModels
         public string Description { get => this.Node.Description; }
 
         public IDisplayableNode Node { get; }
-
         public ICommand DeleteCommand { get; }
 
         public ICommand ActivateCommand { get; }
