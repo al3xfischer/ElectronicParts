@@ -48,6 +48,7 @@
     <Compile Include="ComponentsTests.cs" />
     <Compile Include="ConfigurationTests.cs" />
     <Compile Include="AssemblyTest.cs" />
+    <Compile Include="ExtensionsTest.cs" />
     <Compile Include="PinConnectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -80,6 +81,10 @@
     <ProjectReference Include="..\ElectronicParts.Services\ElectronicParts.Services.csproj">
       <Project>{a1d0a7f5-2dd5-4bbc-9def-38b017072b5f}</Project>
       <Name>ElectronicParts.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ElectronicParts.ViewModel\ElectronicParts.ViewModels.csproj">
+      <Project>{79fae5a3-223e-4841-ad5b-9aa02a2857b3}</Project>
+      <Name>ElectronicParts.ViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{f90c9cbb-2faa-4b3c-bb12-9d481ee86f19}</Project>

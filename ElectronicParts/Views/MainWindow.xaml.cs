@@ -58,6 +58,10 @@ namespace ElectronicParts.Views
 
                 this.currentNode.Left = (int)point.X - 40;
                 this.currentNode.Top = (int)point.Y - 20;
+                if (this.ViewModel.GridSnappingEnabled)
+                {
+                    this.currentNode.SnapToNewGrid(this.ViewModel.GridSize, false);
+                }
             }
         }
 

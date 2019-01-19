@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElectronicParts.Views"
         xmlns:vm="clr-namespace:ElectronicParts.ViewModels;assembly=ElectronicParts.ViewModel"
+        xmlns:converters="clr-namespace:ElectronicParts.Converter"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         d:DataContext="{Binding Source={d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}}"
@@ -23,7 +24,7 @@
         <DataTemplate x:Key="NodeInformationTemplate">
             <local:NodeInformation HorizontalAlignment="Center"/>
         </DataTemplate>
-    
+
         <!-- Display Items-->
         <CollectionViewSource Source="{Binding ViewModel.Nodes}" x:Key="Nodes"/>
         <CollectionViewSource Source="{Binding ViewModel.Connections}" x:Key="Connections"/>
@@ -64,7 +65,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-    
+
         <!-- Controls and ItemsDisplay -->
         <DockPanel Margin="0 1 0 0" Background="LightGray" DockPanel.Dock="Right">
             <Border Margin="0" DockPanel.Dock="Top" BorderThickness="1 0 0 1" BorderBrush="DarkGray">
@@ -135,61 +136,88 @@
                                 Value="{Binding ViewModel.FramesPerSecond, UpdateSourceTrigger=PropertyChanged}"></Slider>
                         </DockPanel>
                     </Border>
+                    <StackPanel Margin="5 0 0 0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding ViewModel.MilisecondsPerLoop}"></TextBlock>
+                        <TextBlock Margin="5 0 0 0">ms/cycle</TextBlock>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Height="auto" Margin="0 0 10 0">
+                        <TextBlock VerticalAlignment="Center" Text="GridSize: "/>
+                        <TextBlock VerticalAlignment="Center" Text="{Binding ViewModel.GridSize, UpdateSourceTrigger=PropertyChanged}"/>
+                        <StackPanel Margin="8 0 18 0" Orientation="Vertical" VerticalAlignment="Center">
+                            <Button Style="{x:Null}" Height="15" Width="25" Command="{Binding ViewModel.IncreaseGridSize}">
+                                <TextBlock Text="+" Margin="0 0 0 2.5" FontSize="15" LineHeight="15" VerticalAlignment="Center" TextAlignment="Center"/>
+                            </Button>
+                            <Button Style="{x:Null}" Height="15" Width="25" Command="{Binding ViewModel.DecreaseGridSize}">
+                                <TextBlock Text="-" Margin="0 0 0 2.5" FontSize="15" LineHeight="15" VerticalAlignment="Center" TextAlignment="Center"/>
+                            </Button>
+                        </StackPanel>
+                        <TextBlock VerticalAlignment="Center">Snap:</TextBlock>
+                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding ViewModel.GridSnappingEnabled}"/>
+                    </StackPanel>
                 </DockPanel>
             </Border>
 
             <!-- Nodes Display -->
-            <ItemsControl DockPanel.Dock="Right" ItemsSource="{StaticResource DisplayItems}" Background="White" >
-                <ItemsControl.Resources>
-                    <DataTemplate DataType="{x:Type vm:NodeViewModel}">
-                        <local:Node MouseLeftButtonDown="Node_MouseLeftButtonDown" MouseLeftButtonUp="Node_MouseLeftButtonUp" >
-                            <local:Node.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
-                                </ContextMenu>
-                            </local:Node.ContextMenu>
-                        </local:Node>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
-                        <local:Connection>
-                            <local:Connection.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
-                                </ContextMenu>
-                            </local:Connection.ContextMenu>
-                        </local:Connection>
-                    </DataTemplate>
-                </ItemsControl.Resources>
-                <ItemsControl.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="Canvas.Left"
+            <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ItemsControl DockPanel.Dock="Right" ItemsSource="{StaticResource DisplayItems}" Background="White" >
+                    <ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type vm:NodeViewModel}">
+                            <local:Node MouseLeftButtonDown="Node_MouseLeftButtonDown" MouseLeftButtonUp="Node_MouseLeftButtonUp" >
+                                <local:Node.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
+                                    </ContextMenu>
+                                </local:Node.ContextMenu>
+                            </local:Node>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:ConnectorViewModel}">
+                            <local:Connection>
+                                <local:Connection.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
+                                    </ContextMenu>
+                                </local:Connection.ContextMenu>
+                            </local:Connection>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Canvas.Left"
                             Value="{Binding Left}" />
-                        <Setter Property="Canvas.Top"
+                            <Setter Property="Canvas.Top"
                             Value="{Binding Top}"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas IsItemsHost="True" Loaded="ItemsCanvas_Loaded" x:Name="ItemsCanvas" Width="2400" Height="1600" >
-                            <Canvas.Background>
-                                <DrawingBrush TileMode="Tile" Viewport="-10,-10,10,10" 
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas IsItemsHost="True" Loaded="ItemsCanvas_Loaded" x:Name="ItemsCanvas" Width="2400" Height="1200" >
+                                <Canvas.Background>
+                                    <DrawingBrush TileMode="Tile"
                                      ViewportUnits="Absolute">
-                                    <DrawingBrush.Drawing>
-                                        <GeometryDrawing>
-                                            <GeometryDrawing.Geometry>
-                                                <RectangleGeometry Rect="0,0,10,10"/>
-                                            </GeometryDrawing.Geometry>
-                                            <GeometryDrawing.Pen>
-                                                <Pen Brush="Black" Thickness="0.1"/>
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                    </DrawingBrush.Drawing>
-                                </DrawingBrush>
-                            </Canvas.Background>
-                        </Canvas>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+                                        <DrawingBrush.Viewport>
+                                            <Binding Path="ViewModel.GridSize">
+                                                <Binding.Converter>
+                                                    <converters:GridSizeConverter />
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </DrawingBrush.Viewport>
+                                        <DrawingBrush.Drawing>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Geometry>
+                                                    <RectangleGeometry Rect="0,0,10,10"></RectangleGeometry>
+                                                </GeometryDrawing.Geometry>
+                                                <GeometryDrawing.Pen>
+                                                    <Pen Brush="Black" Thickness="0.1"/>
+                                                </GeometryDrawing.Pen>
+                                            </GeometryDrawing>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Canvas.Background>
+                            </Canvas>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </DockPanel>
     </DockPanel>
 </Window>
