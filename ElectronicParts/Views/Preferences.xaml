@@ -8,50 +8,120 @@
         xmlns:converter="clr-namespace:ElectronicParts.Converter"
         xmlns:local="clr-namespace:ElectronicParts.Views"
         mc:Ignorable="d"
-        Title="Preferences" Height="450" Width="850" WindowStartupLocation="CenterScreen">
+        Title="Preferences" Height="450" Width="850" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <!-- Color Picker -->
+        <DataTemplate x:Key="colorPicker">
+            <xctk:ColorPicker x:Name="colorPick" DisplayColorAndName="True" Width="100" ShowTabHeaders="False" SelectedColor="{Binding Color}" converter:NameObserver.Observe="True" converter:NameObserver.ObservedName="{Binding Rule.Color, Mode=OneWayToSource}"/>
+        </DataTemplate>
+
+        <!-- Delete Button -->
+        <DataTemplate x:Key="deleteButton">
+            <Button Command="{Binding DeletionCommand}" CommandParameter="{Binding}" Content="Delete"/>
+        </DataTemplate>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding ViewModel.StringRules}" Grid.Row="0" Width="Auto" Height="Auto">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                        A connection between 2 pins of the type string will have the color:<xctk:ColorPicker DisplayColorAndName="True" Width="150" ShowTabHeaders="False" SelectedColor="{Binding Color}" converter:NameObserver.Observe="True" converter:NameObserver.ObservedName="{Binding Rule.Color, Mode=OneWayToSource}"/> when the value is: <TextBox Width="150" Height="Auto" Text="{Binding Rule.Value}"/> <Button Command="{Binding DeletionCommand}" CommandParameter="{Binding}" Content="Delete"/>
-                    </TextBlock>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <ListView ItemsSource="{Binding ViewModel.IntRules}" Grid.Row="1" Width="Auto" Height="Auto">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                         A connection between 2 pins of the type integer will have the color:<xctk:ColorPicker DisplayColorAndName="True" Width="150" ShowTabHeaders="False" SelectedColor="{Binding Color}" converter:NameObserver.Observe="True" converter:NameObserver.ObservedName="{Binding Rule.Color, Mode=OneWayToSource}"/> when the value is: <TextBox Width="150" Height="Auto" PreviewTextInput="PreviewNumberInput" Text="{Binding Rule.Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/> <Button Command="{Binding DeletionCommand}" CommandParameter="{Binding}" Content="Delete"/>
-                    </TextBlock>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <ListView ItemsSource="{Binding ViewModel.BoolRules}" Grid.Row="2" Width="Auto" Height="Auto">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                         A connection between 2 pins of the type bool will have the color:<xctk:ColorPicker x:Name="colorPick" DisplayColorAndName="True" Width="150" ShowTabHeaders="False" SelectedColor="{Binding Color}" converter:NameObserver.Observe="True" converter:NameObserver.ObservedName="{Binding Rule.Color, Mode=OneWayToSource}"/> when the value is: 
-                        <ComboBox SelectedItem="{Binding Rule.Value}">
-                             <ComboBox.Items>
-                                <system:Boolean>True</system:Boolean>
-                                <system:Boolean>False</system:Boolean>
-                            </ComboBox.Items>
-                        </ComboBox>
-                        <Button Command="{Binding DeletionCommand}" CommandParameter="{Binding}" Content="Delete"/>
-                    </TextBlock>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Button Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Height="20" Content="Add string rule" Command="{Binding ViewModel.AddStringRuleCommand}"/>
-        <Button Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Height="20" Content="Add int rule" Command="{Binding ViewModel.AddIntRuleCommand}"/>
-        <Button Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Height="20" Content="Add bool rule" Command="{Binding ViewModel.AddBoolRuleCommand}"/>
-        <Button Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="50" Height="20" Content="Save" Command="{Binding ViewModel.ApplyCommand}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.1*"/>
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <TabControl Grid.Row="0" Grid.Column="0">
+            
+            <!-- String Rules -->
+            <TabItem Header="String">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView ItemsSource="{Binding ViewModel.StringRules}" Grid.Row="0" Width="Auto">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}"/>
+                                <GridViewColumn Header="Value">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Width="90" Height="Auto" Text="{Binding Rule.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn CellTemplate="{StaticResource deleteButton}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Grid.Row="1" HorizontalAlignment="Center" Width="100" Height="25" Margin="0 5 0 0" Content="Add Rule" Command="{Binding ViewModel.AddStringRuleCommand}"/>
+                </Grid>
+            </TabItem>
+            
+            <!-- Integer Rules -->
+            <TabItem Header="Integer">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView ItemsSource="{Binding ViewModel.IntRules}" Grid.Row="0"  Width="Auto">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}"/>
+                                <GridViewColumn Header="Value">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Width="90" Height="Auto" PreviewTextInput="PreviewNumberInput" Text="{Binding Rule.Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn CellTemplate="{StaticResource deleteButton}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Grid.Row="1" HorizontalAlignment="Center" Width="100" Height="25" Margin="0 5 0 0" Content="Add Rule" Command="{Binding ViewModel.AddIntRuleCommand}"/>
+                </Grid>
+            </TabItem>
+            
+            <!-- Boolean Rules -->
+            <TabItem Header="Boolean">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Column="2" Grid.Row="0"   ItemsSource="{Binding ViewModel.BoolRules}">
+                        <ListView.Resources>
+                            <DataTemplate x:Key="value">
+                                <ComboBox SelectedItem="{Binding Rule.Value}" Width="80">
+                                    <ComboBox.Items>
+                                        <system:Boolean>True</system:Boolean>
+                                        <system:Boolean>False</system:Boolean>
+                                    </ComboBox.Items>
+                                </ComboBox>
+                            </DataTemplate>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False" >
+                                <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}" >
+                                </GridViewColumn>
+                                <GridViewColumn Header="Value" CellTemplate="{StaticResource value}">
+                                </GridViewColumn>
+                                <GridViewColumn CellTemplate="{StaticResource deleteButton}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Grid.Row="1" HorizontalAlignment="Center" Width="100" Height="25" Margin="0 5 0 0" Content="Add Rule" Command="{Binding ViewModel.AddBoolRuleCommand}"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    
+        <!-- Save -->
+        <DockPanel Background="LightGray" Height="40" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" HorizontalAlignment="Stretch">
+            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="25" Content="Save" Command="{Binding ViewModel.ApplyCommand}"/>
+        </DockPanel>
     </Grid>
 </Window>

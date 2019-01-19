@@ -38,9 +38,6 @@ namespace ElectronicParts.Views
         private void Node_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.currentNode = (e.OriginalSource as FrameworkElement).DataContext as NodeViewModel;
-            //var point = e.GetPosition(this.canvas);
-            //this.ViewModel.SelectedNode.Left = (int)point.X;
-            //this.ViewModel.SelectedNode.Top = (int)point.Y;
         }
 
         private void ItemsCanvas_Loaded(object sender, RoutedEventArgs e)
@@ -50,7 +47,6 @@ namespace ElectronicParts.Views
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            //var vm = (e.OriginalSource as FrameworkElement).DataContext as NodeViewModel;
             if (e.LeftButton == MouseButtonState.Pressed && !(currentNode is null))
             {
                 var point = e.GetPosition(this.canvas);
@@ -110,7 +106,7 @@ namespace ElectronicParts.Views
             fileDialog.Multiselect = true;
             fileDialog.Filter = "Node Assemblies |*.dll";
             var result = fileDialog.ShowDialog();
-            if(result.HasValue && result.Value)
+            if (result.HasValue && result.Value)
             {
                 var files = fileDialog.FileNames.Select(path => new FileInfo(path));
                 foreach (var file in files)
@@ -119,7 +115,7 @@ namespace ElectronicParts.Views
                     {
                         file.CopyTo(Path.Combine(assemblyPath, file.Name), true);
                     }
-                    catch (Exception XX)
+                    catch (Exception)
                     {
                         // TODO Proper exceptionHandeling.
                         Debug.WriteLine("file exception");
@@ -128,6 +124,19 @@ namespace ElectronicParts.Views
             }
 
             var reloadTask = this.ViewModel.ReloadAssemblies();
+        }
+
+        private void ListViewItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var item = ItemsControl.ContainerFromElement(sender as ListBox, e.OriginalSource as DependencyObject) as ListBoxItem;
+            if (item != null)
+            {
+                var vm = item.DataContext as NodeViewModel;
+                if (!(vm is null))
+                {
+                    this.ViewModel.AddNodeCommand.Execute(vm.Node);
+                }
+            }
         }
     }
 }

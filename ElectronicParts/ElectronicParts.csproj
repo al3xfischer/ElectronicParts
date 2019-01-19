@@ -175,9 +175,9 @@
       <Project>{4294C9BE-14F0-4618-A5EC-F18A30B760FB}</Project>
       <Name>ElectronicParts.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ElectronicParts.ViewModel\ElectronicParts.ViewModel.csproj">
+    <ProjectReference Include="..\ElectronicParts.ViewModel\ElectronicParts.ViewModels.csproj">
       <Project>{79fae5a3-223e-4841-ad5b-9aa02a2857b3}</Project>
-      <Name>ElectronicParts.ViewModel</Name>
+      <Name>ElectronicParts.ViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{f90c9cbb-2faa-4b3c-bb12-9d481ee86f19}</Project>

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows;
 
 namespace ElectronicParts.ViewModels
 {
@@ -80,6 +81,7 @@ namespace ElectronicParts.ViewModels
             this.ApplyCommand = new RelayCommand(obj => 
             {
                 this.ConfigurationService.SaveConfiguration();
+                MessageBox.Show("Changes were saved successfully.", "Saved", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
             });
 
             this.AddStringRuleCommand = new RelayCommand(obj =>

@@ -148,6 +148,10 @@ namespace ElectronicParts.ViewModels
             {
                 var nodeList = this.Nodes.Select(nodeVM => nodeVM.Node);
                 await this.executionService.ExecuteOnce(nodeList);
+                foreach (var connection in this.connections)
+                {
+                    connection.Update();
+                }
             }, arg => !this.executionService.IsEnabled);
 
             this.ExecutionStartLoopCommand = new RelayCommand(async arg =>
@@ -215,6 +219,8 @@ namespace ElectronicParts.ViewModels
                 {
                     return;
                 }
+                
+                this.pinConnectorService.TryRemoveConnection(connectionVm.Connector);
 
                 this.connections.Remove(connectionVm);
             });

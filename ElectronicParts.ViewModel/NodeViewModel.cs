@@ -19,8 +19,8 @@ namespace ElectronicParts.ViewModels
         {
             this.Node = node ?? throw new ArgumentNullException(nameof(node));
             this.DeleteCommand = deleteCommand ?? throw new ArgumentNullException(nameof(deleteCommand));
-            this.Inputs = node.Inputs.Select(n => new PinViewModel(n, inputPinCommand)).ToObservableCollection();
-            this.Outputs = node.Outputs.Select(n => new PinViewModel(n, OutputPinCommand)).ToObservableCollection();
+            this.Inputs = node.Inputs?.Select(n => new PinViewModel(n, inputPinCommand)).ToObservableCollection();
+            this.Outputs = node.Outputs?.Select(n => new PinViewModel(n, OutputPinCommand)).ToObservableCollection();
             this.Top = 20;
             this.Left = 20;
 
@@ -42,8 +42,8 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.top, value);
-                this.UpdateTop(this.Inputs.Select((p, i) => Tuple.Create(p, i)), this.Top);
-                this.UpdateTop(this.Outputs.Select((p, i) => Tuple.Create(p, i)), this.Top);
+                this.UpdateTop(this.Inputs?.Select((p, i) => Tuple.Create(p, i)), this.Top);
+                this.UpdateTop(this.Outputs?.Select((p, i) => Tuple.Create(p, i)), this.Top);
             }
         }
 
@@ -55,7 +55,14 @@ namespace ElectronicParts.ViewModels
             {
                 Set(ref this.left, value);
                 this.UpdateLeft(this.Inputs, this.left);
-                this.UpdateLeft(this.Outputs, this.Left + 73);
+                if (this.Inputs is null || this.Inputs.Count == 0)
+                {
+                    this.UpdateLeft(this.Outputs, this.Left + 63);
+                }
+                else
+                {
+                    this.UpdateLeft(this.Outputs, this.Left + 73);
+                }
             }
         }
         public ObservableCollection<PinViewModel> Inputs { get; }
@@ -89,6 +96,11 @@ namespace ElectronicParts.ViewModels
 
         private void UpdateLeft(IEnumerable<PinViewModel> pins, int value)
         {
+            if (pins is null)
+            {
+                return;
+            }
+
             foreach (var pin in pins)
             {
                 pin.Left = value;
@@ -97,6 +109,11 @@ namespace ElectronicParts.ViewModels
 
         private void UpdateTop(IEnumerable<Tuple<PinViewModel, int>> pins, int value)
         {
+            if (pins is null)
+            {
+                return;
+            }
+
             foreach (var pin in pins)
             {
                 pin.Item1.Top = (pin.Item2 * 22) + value + 13;
