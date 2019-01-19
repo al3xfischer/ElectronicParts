@@ -77,7 +77,7 @@ namespace ElectronicParts.Services.Implementations
                         Debug.WriteLine(e.Message);
                     }
                     watch.Stop();
-                    var waitingTime = (60000 / this.FramesPerSecond) - watch.ElapsedMilliseconds;
+                    var waitingTime = (1000 / this.FramesPerSecond) - watch.ElapsedMilliseconds;
                     try
                     {
                         await Task.Delay(Math.Max((int)waitingTime, 1));
