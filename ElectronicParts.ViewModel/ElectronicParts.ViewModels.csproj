@@ -54,7 +54,7 @@
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="ConnectorViewModel.cs" />
-    <Compile Include="Extentions\Extentioins.cs" />
+    <Compile Include="Extentions\Extensions.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="NodeViewModel.cs" />
     <Compile Include="PinViewModel.cs" />

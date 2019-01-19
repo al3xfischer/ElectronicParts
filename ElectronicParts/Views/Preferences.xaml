@@ -24,86 +24,104 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1.1*"/>
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Headers -->
-        <TextBlock Grid.Row="0" Grid.Column="0" FontWeight="Bold" FontSize="20" Text="String Rules" HorizontalAlignment="Center" />
-        <TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="20" Text="Integer Rules" HorizontalAlignment="Center" />
-        <TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Bold" FontSize="20" Text="Boolean Rules" HorizontalAlignment="Center" />
-
-        <!-- String Rules -->
-        <ListView ItemsSource="{Binding ViewModel.StringRules}" Grid.Column="0" Grid.Row="1" Width="Auto">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}"/>
-                    <GridViewColumn Header="Value">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Width="90" Height="Auto" Text="{Binding Rule.Value, UpdateSourceTrigger=PropertyChanged}"/>
+        <TabControl Grid.Row="0" Grid.Column="0">
+            
+            <!-- String Rules -->
+            <TabItem Header="String">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView ItemsSource="{Binding ViewModel.StringRules}" Grid.Row="0" Width="Auto">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}"/>
+                                <GridViewColumn Header="Value">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Width="90" Height="Auto" Text="{Binding Rule.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn CellTemplate="{StaticResource deleteButton}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Grid.Row="1" HorizontalAlignment="Center" Width="100" Height="25" Margin="0 5 0 0" Content="Add Rule" Command="{Binding ViewModel.AddStringRuleCommand}"/>
+                </Grid>
+            </TabItem>
+            
+            <!-- Integer Rules -->
+            <TabItem Header="Integer">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView ItemsSource="{Binding ViewModel.IntRules}" Grid.Row="0"  Width="Auto">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}"/>
+                                <GridViewColumn Header="Value">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Width="90" Height="Auto" PreviewTextInput="PreviewNumberInput" Text="{Binding Rule.Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn CellTemplate="{StaticResource deleteButton}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Grid.Row="1" HorizontalAlignment="Center" Width="100" Height="25" Margin="0 5 0 0" Content="Add Rule" Command="{Binding ViewModel.AddIntRuleCommand}"/>
+                </Grid>
+            </TabItem>
+            
+            <!-- Boolean Rules -->
+            <TabItem Header="Boolean">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Column="2" Grid.Row="0"   ItemsSource="{Binding ViewModel.BoolRules}">
+                        <ListView.Resources>
+                            <DataTemplate x:Key="value">
+                                <ComboBox SelectedItem="{Binding Rule.Value}" Width="80">
+                                    <ComboBox.Items>
+                                        <system:Boolean>True</system:Boolean>
+                                        <system:Boolean>False</system:Boolean>
+                                    </ComboBox.Items>
+                                </ComboBox>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn CellTemplate="{StaticResource deleteButton}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-
-        <!-- Integer Rules -->
-        <ListView ItemsSource="{Binding ViewModel.IntRules}" Grid.Column="1" Grid.Row="1"  Width="Auto">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}"/>
-                    <GridViewColumn Header="Value">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Width="90" Height="Auto" PreviewTextInput="PreviewNumberInput" Text="{Binding Rule.Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn CellTemplate="{StaticResource deleteButton}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-
-        <!-- Boolean Rules -->
-        <ListView Grid.Column="2" Grid.Row="1"   ItemsSource="{Binding ViewModel.BoolRules}">
-            <ListView.Resources>
-                <DataTemplate x:Key="value">
-                    <ComboBox SelectedItem="{Binding Rule.Value}" Width="80">
-                        <ComboBox.Items>
-                            <system:Boolean>True</system:Boolean>
-                            <system:Boolean>False</system:Boolean>
-                        </ComboBox.Items>
-                    </ComboBox>
-                </DataTemplate>
-            </ListView.Resources>
-            <ListView.View>
-                <GridView AllowsColumnReorder="False" >
-                    <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}" >
-                    </GridViewColumn>
-                    <GridViewColumn Header="Value" CellTemplate="{StaticResource value}">
-                    </GridViewColumn>
-                    <GridViewColumn CellTemplate="{StaticResource deleteButton}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-
-        
-        <!-- Buttons -->
-        <Button Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Width="100" Height="25" Content="Add Rule" Command="{Binding ViewModel.AddStringRuleCommand}"/>
-        <Button Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Width="100" Height="25" Content="Add Rule" Command="{Binding ViewModel.AddIntRuleCommand}"/>
-        <Button Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" Width="100" Height="25" Content="Add Rule" Command="{Binding ViewModel.AddBoolRuleCommand}"/>
-        <DockPanel Background="LightGray" Height="40" Margin="0 10 0 0" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" HorizontalAlignment="Stretch">
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="25" Content="Save" Command="{Binding ViewModel.ApplyCommand}"/>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False" >
+                                <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}" >
+                                </GridViewColumn>
+                                <GridViewColumn Header="Value" CellTemplate="{StaticResource value}">
+                                </GridViewColumn>
+                                <GridViewColumn CellTemplate="{StaticResource deleteButton}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Grid.Row="1" HorizontalAlignment="Center" Width="100" Height="25" Margin="0 5 0 0" Content="Add Rule" Command="{Binding ViewModel.AddBoolRuleCommand}"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    
+        <!-- Save -->
+        <DockPanel Background="LightGray" Height="40" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" HorizontalAlignment="Stretch">
+            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="25" Content="Save" Command="{Binding ViewModel.ApplyCommand}"/>
         </DockPanel>
     </Grid>
 </Window>

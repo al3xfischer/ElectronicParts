@@ -27,6 +27,7 @@ namespace ElectronicParts.Services.Interfaces
         bool IsEnabled { get; }
 
         int FramesPerSecond { get; set; }
+        long MillisecondsPerLoop { get; }
 
         /// <summary>
         /// Executes one step.

@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using Microsoft.Extensions.Logging;
+using System.Timers;
 
 namespace ElectronicParts.ViewModels
 {
@@ -39,6 +40,10 @@ namespace ElectronicParts.ViewModels
 
         private PinViewModel outputPin;
 
+        private readonly Timer updateMillisecondsPerLoopUpdateTimer;
+
+
+
         public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger)
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
@@ -47,6 +52,24 @@ namespace ElectronicParts.ViewModels
             this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
+            this.updateMillisecondsPerLoopUpdateTimer.Elapsed += UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
+            this.updateMillisecondsPerLoopUpdateTimer.Start();
+
+            this.GridSnappingEnabled = true;
+            this.GridSize = 10;
+
+            this.IncreaseGridSize = new RelayCommand(async arg =>
+            {
+                this.GridSize++;
+                await this.SnapAllNodesToGrid(true);
+            }, arg => this.GridSize < 30);
+
+            this.DecreaseGridSize = new RelayCommand(async arg =>
+            {
+                this.GridSize--;
+                await this.SnapAllNodesToGrid(false);
+            }, arg => this.GridSize > 5);
 
             this.SaveCommand = new RelayCommand(arg =>
             {
@@ -173,7 +196,7 @@ namespace ElectronicParts.ViewModels
                 this.executionService.StopExecutionLoop();
                 foreach (var node in this.Nodes)
                 {
-                    
+
                 }
 
 
@@ -182,7 +205,7 @@ namespace ElectronicParts.ViewModels
             this.ResetAllConnectionsCommand = new RelayCommand(async arg =>
             {
                 await this.ResetAllConnections();
-                
+
             });
 
             this.ReloadAssembliesCommand = new RelayCommand(async arg =>
@@ -209,7 +232,7 @@ namespace ElectronicParts.ViewModels
                 this.Connect();
             }, arg => !this.executionService.IsEnabled);
 
-            this.DeleteConnectionCommand = new RelayCommand(arg => 
+            this.DeleteConnectionCommand = new RelayCommand(arg =>
             {
                 var connectionVm = arg as ConnectorViewModel;
 
@@ -217,7 +240,7 @@ namespace ElectronicParts.ViewModels
                 {
                     return;
                 }
-                
+
                 this.pinConnectorService.TryRemoveConnection(connectionVm.Connector);
 
                 this.connections.Remove(connectionVm);
@@ -234,7 +257,7 @@ namespace ElectronicParts.ViewModels
 
                 List<ConnectorViewModel> connectionsMarkedForDeletion = new List<ConnectorViewModel>();
 
-                foreach (var connection in this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input) 
+                foreach (var connection in this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input)
                                                                     || nodeVm.Outputs.Contains(connection.Output)))
                 {
                     connectionsMarkedForDeletion.Add(connection);
@@ -259,6 +282,7 @@ namespace ElectronicParts.ViewModels
                 var copy = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;
                 var vm = new NodeViewModel(copy, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand);
                 this.Nodes.Add(vm);
+                vm.SnapToNewGrid(this.GridSize, false);
                 this.FirePropertyChanged(nameof(Nodes));
             });
 
@@ -269,6 +293,38 @@ namespace ElectronicParts.ViewModels
             this.logger.LogInformation("Ctor MainVM done");
         }
 
+        private void UpdateMillisecondsPerLoopUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (this.executionService.IsEnabled)
+            {
+                this.MilisecondsPerLoop = this.executionService.MillisecondsPerLoop;
+            }
+        }
+
+        public bool GridSnappingEnabled
+        {
+            get => this.gridSnappingEnabled;
+            set
+            {
+                if (value != this.gridSnappingEnabled)
+                {
+                    this.gridSnappingEnabled = value;
+                    var snappingTask = this.SnapAllNodesToGrid();
+                }
+            }
+        }
+        public int GridSize
+        {
+            get => this.gridSize;
+            set
+            {
+                if (value >= 5 && value <= 30)
+                {
+                    Set(ref this.gridSize, value);
+                }
+            }
+        }
+
         public ObservableCollection<NodeViewModel> Nodes
         {
             get => this.nodes;
@@ -276,6 +332,15 @@ namespace ElectronicParts.ViewModels
             set
             {
                 Set(ref this.nodes, value);
+            }
+        }
+
+        public long MilisecondsPerLoop
+        {
+            get => this.milisecondsPerLoop;
+            set
+            {
+                Set(ref this.milisecondsPerLoop, value);
             }
         }
 
@@ -312,6 +377,8 @@ namespace ElectronicParts.ViewModels
         public ICommand LoadCommand { get; }
         public ICommand ReloadAssembliesCommand { get; }
         public ICommand ExitCommand { get; }
+        public ICommand IncreaseGridSize { get; }
+        public ICommand DecreaseGridSize { get; }
 
         private async Task ResetAllConnections()
         {
@@ -327,7 +394,7 @@ namespace ElectronicParts.ViewModels
                     connection.Update();
                 }
 
-                foreach(var nodeVm in this.Nodes)
+                foreach (var nodeVm in this.Nodes)
                 {
                     nodeVm.Update();
                 }
@@ -344,7 +411,52 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        private async Task SnapAllNodesToGrid(bool floor)
+        {
+            await Task.Run(() =>
+            {
+                if (!(this.Nodes is null) && this.GridSnappingEnabled)
+                {
+                    foreach (var nodeVm in this.Nodes)
+                    {
+                        try
+                        {
+                            nodeVm.SnapToNewGrid(this.GridSize, floor);
+                        }
+                        catch
+                        {
+                            //TODO exception handeling
+                        }
+                    }
+                }
+            });
+        }
+
+        private async Task SnapAllNodesToGrid()
+        {
+            await Task.Run(() =>
+            {
+                if (!(this.Nodes is null) && this.GridSnappingEnabled)
+                {
+                    foreach (var nodeVm in this.Nodes)
+                    {
+                        try
+                        {
+                            nodeVm.SnapToNewGrid(this.GridSize);
+                        }
+                        catch
+                        {
+                            //TODO exception handeling
+                        }
+                    }
+                }
+            });
+        }
+
         private int framesPerSecond;
+        private long milisecondsPerLoop;
+        private int gridSize;
+        private bool gridSnappingEnabled;
 
         public int FramesPerSecond
         {
