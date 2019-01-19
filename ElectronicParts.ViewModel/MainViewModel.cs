@@ -73,7 +73,6 @@ namespace ElectronicParts.ViewModels
 
                 }
 
-
                 if (snapShot is null)
                 {
                     return;
@@ -140,7 +139,6 @@ namespace ElectronicParts.ViewModels
                     this.connections.Add(connection);
                 }
             });
-
 
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
 
@@ -249,6 +247,7 @@ namespace ElectronicParts.ViewModels
 
                 this.Nodes.Remove(nodeVm);
             });
+
             this.AddNodeCommand = new RelayCommand(arg =>
             {
                 var node = arg as IDisplayableNode;
@@ -262,13 +261,11 @@ namespace ElectronicParts.ViewModels
                 this.Nodes.Add(vm);
                 this.FirePropertyChanged(nameof(Nodes));
             });
-            this.Nodes = new ObservableCollection<NodeViewModel>();
 
+            this.Nodes = new ObservableCollection<NodeViewModel>();
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             var reloadingTask = this.ReloadAssemblies();
-
             this.Connections = new ObservableCollection<ConnectorViewModel>();
-
             this.logger.LogInformation("Ctor MainVM done");
         }
 
