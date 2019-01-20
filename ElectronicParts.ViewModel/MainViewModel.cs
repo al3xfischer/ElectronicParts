@@ -55,6 +55,7 @@ namespace ElectronicParts.ViewModels
             this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
             this.updateMillisecondsPerLoopUpdateTimer.Elapsed += UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
             this.updateMillisecondsPerLoopUpdateTimer.Start();
+            this.FramesPerSecond = 50;
 
             this.GridSnappingEnabled = true;
             this.GridSize = 10;

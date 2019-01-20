@@ -101,7 +101,7 @@ namespace ElectronicParts.ViewModels
             this.AddBoolRuleCommand = new RelayCommand(obj =>
             {
                 Rule<bool> newRule = new Rule<bool>(false, "Black");
-                this.BoolRules.Add(new RuleViewModel<bool>(newRule, stringDeletionCommand));
+                this.BoolRules.Add(new RuleViewModel<bool>(newRule, boolDeletionCommand));
                 configurationService.Configuration.BoolRules.Add(newRule);
             });
         }
