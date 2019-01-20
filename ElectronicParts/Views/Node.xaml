@@ -58,6 +58,16 @@
         </ListView>
 
         <!-- Body -->
+        <Rectangle Width="50" Stroke="Black" Grid.Column="1" Grid.Row="1" Fill="LightGray" >
+            <Rectangle.Height>
+                <Binding Path="MaxPins">
+                    <Binding.Converter>
+                        <converter:PinToHeightConverter/>
+                    </Binding.Converter>
+                </Binding>
+            </Rectangle.Height>
+        </Rectangle>
+        
         <Rectangle Width="50" Stroke="Black" Grid.Column="1" >
             <Rectangle.Height>
                 <Binding Path="MaxPins">
@@ -67,7 +77,7 @@
                 </Binding>
             </Rectangle.Height>
             <Rectangle.Fill>
-                <ImageBrush>
+                <ImageBrush Stretch="Uniform">
                     <ImageBrush.ImageSource>
                         <Binding Path="Picture">
                             <Binding.Converter>

@@ -1,9 +1,6 @@
 ﻿using Shared;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElectronicParts.Models
 {
@@ -28,7 +25,14 @@ namespace ElectronicParts.Models
 
             Type genericType = genericTypeArgs.First();
 
-            this.CommonValue.Current = Activator.CreateInstance(genericType);
+            if (genericType == typeof(string))
+            {
+                this.CommonValue.Current = Activator.CreateInstance(genericType, string.Empty.ToCharArray());
+            }
+            else
+            {
+                this.CommonValue.Current = Activator.CreateInstance(genericType);
+            }
         }
         public IPin OutputPin { get; private set; }
         public IPin InputPin { get; private set; }

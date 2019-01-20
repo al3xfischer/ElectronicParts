@@ -45,9 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitToInteger.cs" />
+    <Compile Include="BoolLed.cs" />
     <Compile Include="IntegerAdder.cs" />
     <Compile Include="IntegerDisplay.cs" />
     <Compile Include="IntegerSource.cs" />
+    <Compile Include="IntToString.cs" />
     <Compile Include="OrGate.cs" />
     <Compile Include="Pin.cs" />
     <Compile Include="AndGate.cs" />
@@ -59,6 +61,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="StringDisplay.cs" />
     <Compile Include="Switch.cs" />
     <Compile Include="Timer.cs" />
   </ItemGroup>
@@ -72,6 +75,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +92,8 @@
     <Content Include="Pictures\SwitchOff.png" />
     <Content Include="Pictures\SwitchOn.png" />
     <Content Include="Pictures\Timer.png" />
+    <None Include="Pictures\red_led.jpg" />
+    <None Include="Pictures\green_led.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
