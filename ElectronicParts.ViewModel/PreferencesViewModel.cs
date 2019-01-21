@@ -11,6 +11,8 @@
 namespace ElectronicParts.ViewModels
 {
     using System.Collections.ObjectModel;
+    using System.Windows.Media;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Input;
     using ElectronicParts.Models;
@@ -83,24 +85,49 @@ namespace ElectronicParts.ViewModels
 
             this.AddStringRuleCommand = new RelayCommand(obj =>
             {
-                Rule<string> newRule = new Rule<string>(string.Empty, "Black");
-                this.StringRules.Add(new RuleViewModel<string>(newRule, stringDeletionCommand));
-                configurationService.Configuration.StringRules.Add(newRule);
+                if (!this.ConfigurationService.Configuration.StringRules.Any(rule => rule.Value == this.TempStringRule.Rule.Value))
+                {
+                    Rule<string> newRule = new Rule<string>(this.TempStringRule.Rule.Value, this.TempStringRule.Rule.Color, (value) =>
+                    {
+                        return !this.ConfigurationService.Configuration.StringRules.Any(rule => rule.Value == value);
+                    });
+                    this.StringRules.Add(new RuleViewModel<string>(newRule, stringDeletionCommand));
+                    configurationService.Configuration.StringRules.Add(newRule);
+
+                    this.TempStringRule.Rule.Value = string.Empty;
+                    this.TempStringRule.Color = (Color)ColorConverter.ConvertFromString("Black");
+                }
             });
 
             this.AddIntRuleCommand = new RelayCommand(obj =>
             {
-                Rule<int> newRule = new Rule<int>(0, "Black");
-                this.IntRules.Add(new RuleViewModel<int>(newRule, intDeletionCommand));
-                configurationService.Configuration.IntRules.Add(newRule);
+                if (!this.ConfigurationService.Configuration.IntRules.Any(rule => rule.Value == this.TempIntRule.Rule.Value))
+                {
+                    Rule<int> newRule = new Rule<int>(this.TempIntRule.Rule.Value, this.TempIntRule.Rule.Color, (value) =>
+                    {
+                        return !this.ConfigurationService.Configuration.IntRules.Any(rule => rule.Value == value);
+                    });
+                    this.IntRules.Add(new RuleViewModel<int>(newRule, intDeletionCommand));
+                    configurationService.Configuration.IntRules.Add(newRule);
+
+                    this.TempIntRule.Rule.Value = 0;
+                    this.TempIntRule.Color = (Color)ColorConverter.ConvertFromString("Black");
+                }
             });
 
-            this.AddBoolRuleCommand = new RelayCommand(obj =>
+            Rule<string> tempStringRule = new Rule<string>(string.Empty, "Black", (value) =>
             {
-                Rule<bool> newRule = new Rule<bool>(false, "Black");
-                this.BoolRules.Add(new RuleViewModel<bool>(newRule, boolDeletionCommand));
-                configurationService.Configuration.BoolRules.Add(newRule);
+                return true;
             });
+
+            this.TempStringRule = new RuleViewModel<string>(tempStringRule, stringDeletionCommand);
+
+            Rule<int> tempIntRule = new Rule<int>(0, "Black", (value) =>
+            {
+                return true;
+            });
+
+            this.TempIntRule = new RuleViewModel<int>(tempIntRule, intDeletionCommand);
         }
 
         /// <summary>
@@ -128,22 +155,20 @@ namespace ElectronicParts.ViewModels
         public ICommand AddIntRuleCommand { get; }
 
         /// <summary>
-        /// Gets the command which is used to add a boolean rule.
-        /// </summary>
-        /// <value>The command which is used to add a boolean rule.</value>
-        public ICommand AddBoolRuleCommand { get; }
-
-        /// <summary>
         /// Gets all string rule view models.
         /// </summary>
         /// <value>All string rule view models.</value>
         public ObservableCollection<RuleViewModel<string>> StringRules { get; }
 
+        public RuleViewModel<string> TempStringRule { get; }
+                     
         /// <summary>
         /// Gets all integer rule view models.
         /// </summary>
         /// <value>All integer rule view models.</value>
         public ObservableCollection<RuleViewModel<int>> IntRules { get; }
+
+        public RuleViewModel<int> TempIntRule { get; }
 
         /// <summary>
         /// Gets all boolean rule view models.

@@ -50,7 +50,7 @@
                                 <GridViewColumn Header="Value">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox Width="90" Height="Auto" Text="{Binding Rule.Value, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <TextBox Width="90" Height="Auto" Text="{Binding Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -80,7 +80,7 @@
                                 <GridViewColumn Header="Value">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBox Width="90" Height="Auto" PreviewTextInput="PreviewNumberInput" Text="{Binding Rule.Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <TextBox Width="90" Height="Auto" PreviewTextInput="PreviewNumberInput" Text="{Binding Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -106,7 +106,7 @@
                     <ListView Grid.Column="2" Grid.Row="0"   ItemsSource="{Binding ViewModel.BoolRules}">
                         <ListView.Resources>
                             <DataTemplate x:Key="value">
-                                <ComboBox SelectedItem="{Binding Rule.Value}" Width="80">
+                                <ComboBox SelectedItem="{Binding Value}" Width="80">
                                     <ComboBox.Items>
                                         <system:Boolean>True</system:Boolean>
                                         <system:Boolean>False</system:Boolean>
@@ -118,9 +118,13 @@
                             <GridView AllowsColumnReorder="False" >
                                 <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}" >
                                 </GridViewColumn>
-                                <GridViewColumn Header="Value" CellTemplate="{StaticResource value}">
+                                <GridViewColumn Header="Value">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Width="90" Height="Auto" Text="{Binding Rule.Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn CellTemplate="{StaticResource deleteButton}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
