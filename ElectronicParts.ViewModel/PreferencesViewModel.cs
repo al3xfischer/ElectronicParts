@@ -11,6 +11,7 @@
 namespace ElectronicParts.ViewModels
 {
     using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Windows;
     using System.Windows.Input;
     using ElectronicParts.Models;
@@ -157,6 +158,11 @@ namespace ElectronicParts.ViewModels
 
             set
             {
+                if (value < 200)
+                {
+                    throw new ValidationException();
+                }
+
                 this.ConfigurationService.Configuration.BoardHeight = value;
             }
         }
@@ -167,6 +173,11 @@ namespace ElectronicParts.ViewModels
 
             set
             {
+                if(value < 200)
+                {
+                    throw new ValidationException();
+                }
+
                 this.ConfigurationService.Configuration.BoardWidth = value;
             }
         }
