@@ -110,7 +110,14 @@ namespace ElectronicParts.Services.Implementations
             {
                 Parallel.ForEach(nodes, node =>
                 {
-                    node.Execute();
+                    try
+                    {
+                        node.Execute();
+                    }
+                    catch
+                    {
+                        // TODO exception handling
+                    }
                 });
             });
         }

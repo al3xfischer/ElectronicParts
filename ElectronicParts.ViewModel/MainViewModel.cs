@@ -42,6 +42,8 @@ namespace ElectronicParts.ViewModels
 
         private readonly Timer updateMillisecondsPerLoopUpdateTimer;
 
+        private readonly Timer reSnappingTimer;
+
 
 
         public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger)
@@ -55,7 +57,11 @@ namespace ElectronicParts.ViewModels
             this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
             this.updateMillisecondsPerLoopUpdateTimer.Elapsed += UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
             this.updateMillisecondsPerLoopUpdateTimer.Start();
+            this.reSnappingTimer = new Timer(500);
+            this.reSnappingTimer.Elapsed += ReSnappingTimer_Elapsed;
+            this.reSnappingTimer.AutoReset = false;
             this.FramesPerSecond = 50;
+            this.SelectedCategory = this.NodeCategories.First();
 
             this.GridSnappingEnabled = true;
             this.GridSize = 10;
@@ -63,13 +69,15 @@ namespace ElectronicParts.ViewModels
             this.IncreaseGridSize = new RelayCommand(async arg =>
             {
                 this.GridSize++;
-                await this.SnapAllNodesToGrid(true);
+                this.reSnappingTimer.Stop();
+                this.reSnappingTimer.Start();
             }, arg => this.GridSize < 30);
 
             this.DecreaseGridSize = new RelayCommand(async arg =>
             {
                 this.GridSize--;
-                await this.SnapAllNodesToGrid(false);
+                this.reSnappingTimer.Stop();
+                this.reSnappingTimer.Start();
             }, arg => this.GridSize > 5);
 
             this.SaveCommand = new RelayCommand(arg =>
@@ -285,6 +293,11 @@ namespace ElectronicParts.ViewModels
             this.logger.LogInformation("Ctor MainVM done");
         }
 
+        private async void ReSnappingTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            await this.SnapAllNodesToGrid();
+        }
+
         private void UpdateMillisecondsPerLoopUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (this.executionService.IsEnabled)
@@ -313,6 +326,8 @@ namespace ElectronicParts.ViewModels
                 if (value >= 5 && value <= 30)
                 {
                     Set(ref this.gridSize, value);
+                    this.reSnappingTimer.Stop();
+                    this.reSnappingTimer.Start();
                 }
             }
         }
@@ -336,6 +351,27 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        public IEnumerable<string> NodeCategories
+        {
+            get
+            {
+                return Enum.GetNames(typeof(Shared.NodeType)).Prepend("All");
+            }
+        }
+
+        public string SelectedCategory
+        {
+            get => selectedCategory;
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                {
+                    Set(ref this.selectedCategory, value);
+                    this.FirePropertyChanged(nameof(this.AvailableNodes));
+                }
+            }
+        }
+
         public ObservableCollection<ConnectorViewModel> Connections
         {
             get => this.connections;
@@ -348,8 +384,15 @@ namespace ElectronicParts.ViewModels
 
         public ObservableCollection<NodeViewModel> AvailableNodes
         {
-            get => this.availableNodes;
+            get
+            {
+                
+                return this.availableNodes.Where(nodeVM =>
+                
+                   (Enum.GetName(typeof(NodeType), nodeVM.Type) == this.SelectedCategory || this.SelectedCategory == this.NodeCategories.First())
 
+                ).ToObservableCollection();
+            }
             set
             {
                 Set(ref this.availableNodes, value);
@@ -401,11 +444,12 @@ namespace ElectronicParts.ViewModels
         public async Task ReloadAssemblies()
         {
             await this.assemblyService.LoadAssemblies();
-            this.AvailableNodes.Clear();
+            this.availableNodes.Clear();
             foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand)))
             {
-                this.AvailableNodes.Add(assembly);
+                this.availableNodes.Add(assembly);
             }
+            this.FirePropertyChanged(nameof(this.AvailableNodes));
         }
 
         private async Task SnapAllNodesToGrid(bool floor)
@@ -454,6 +498,7 @@ namespace ElectronicParts.ViewModels
         private long milisecondsPerLoop;
         private int gridSize;
         private bool gridSnappingEnabled;
+        private string selectedCategory;
 
         public int FramesPerSecond
         {

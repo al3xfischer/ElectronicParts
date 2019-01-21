@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ElectronicParts.Views"
         xmlns:vm="clr-namespace:ElectronicParts.ViewModels;assembly=ElectronicParts.ViewModel"
         xmlns:converters="clr-namespace:ElectronicParts.Converter"
+        xmlns:shared="clr-namespace:Shared;assembly=Shared"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         d:DataContext="{Binding Source={d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}}"
@@ -56,15 +57,18 @@
                 <MenuItem Header="_Exit" Command="{Binding ViewModel.ExitCommand}" />
             </MenuItem>
         </Menu>
-
-        <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" IsEnabled="{Binding ViewModel.CanAddNode}" SelectedItem="{Binding ViewModel.SelectedNodeInformation}" DockPanel.Dock="Left" Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}" Name="AvilableNodes" PreviewMouseLeftButtonDown="ListViewItem_MouseLeftButtonDown">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseLeftButtonDown"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
+        <StackPanel>
+            <ComboBox ItemsSource="{Binding ViewModel.NodeCategories}" SelectedItem="{Binding ViewModel.SelectedCategory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></ComboBox>
+            <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" IsEnabled="{Binding ViewModel.CanAddNode}" SelectedItem="{Binding ViewModel.SelectedNodeInformation}" DockPanel.Dock="Left" Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}" Name="AvilableNodes" PreviewMouseLeftButtonDown="ListViewItem_MouseLeftButtonDown">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseLeftButtonDown"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </StackPanel>
+        
 
         <!-- Controls and ItemsDisplay -->
         <DockPanel Margin="0 1 0 0" Background="LightGray" DockPanel.Dock="Right">
@@ -147,7 +151,7 @@
                             <Button Style="{x:Null}" Height="15" Width="25" Command="{Binding ViewModel.IncreaseGridSize}">
                                 <TextBlock Text="+" Margin="0 0 0 2.5" FontSize="15" LineHeight="15" VerticalAlignment="Center" TextAlignment="Center"/>
                             </Button>
-                            <Button Style="{x:Null}" Height="15" Width="25" Command="{Binding ViewModel.DecreaseGridSize}" ContentTemplate="{DynamicResource NodeInformationTemplate}">
+                            <Button Style="{x:Null}" Height="15" Width="25" Command="{Binding ViewModel.DecreaseGridSize}">
                                 <TextBlock Text="-" Margin="0 0 0 2.5" FontSize="15" LineHeight="15" VerticalAlignment="Center" TextAlignment="Center"/>
                             </Button>
                         </StackPanel>
