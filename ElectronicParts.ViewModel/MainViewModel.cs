@@ -129,7 +129,7 @@ namespace ElectronicParts.ViewModels
 
                 foreach (NodeSnapShot node in snapShot.Nodes)
                 {
-                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand);
+                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand,this.executionService);
                     nodeViewModel.Left = node.Position.X;
                     nodeViewModel.Top = node.Position.Y;
 
@@ -289,7 +289,7 @@ namespace ElectronicParts.ViewModels
                 }
 
                 var copy = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;
-                var vm = new NodeViewModel(copy, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand);
+                var vm = new NodeViewModel(copy, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService);
                 this.Nodes.Add(vm);
                 vm.SnapToNewGrid(this.GridSize, false);
                 this.FirePropertyChanged(nameof(Nodes));
@@ -473,7 +473,7 @@ namespace ElectronicParts.ViewModels
         {
             await this.assemblyService.LoadAssemblies();
             this.availableNodes.Clear();
-            foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand)))
+            foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService)))
             {
                 this.availableNodes.Add(assembly);
             }

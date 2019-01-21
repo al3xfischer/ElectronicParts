@@ -1,4 +1,5 @@
-﻿using ElectronicParts.ViewModels.Commands;
+﻿using ElectronicParts.Services.Interfaces;
+using ElectronicParts.ViewModels.Commands;
 using Shared;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,15 @@ namespace ElectronicParts.ViewModels
         private int left;
 
         private int width;
+        private readonly IExecutionService executionService;
 
-        public NodeViewModel(IDisplayableNode node, ICommand deleteCommand, ICommand inputPinCommand, ICommand OutputPinCommand)
+        public NodeViewModel(IDisplayableNode node, ICommand deleteCommand, ICommand inputPinCommand, ICommand OutputPinCommand, IExecutionService executionService)
         {
             this.Node = node ?? throw new ArgumentNullException(nameof(node));
             this.DeleteCommand = deleteCommand ?? throw new ArgumentNullException(nameof(deleteCommand));
-            this.Inputs = node.Inputs?.Select(n => new PinViewModel(n, inputPinCommand)).ToObservableCollection();
-            this.Outputs = node.Outputs?.Select(n => new PinViewModel(n, OutputPinCommand)).ToObservableCollection();
+            this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
+            this.Inputs = node.Inputs?.Select(n => new PinViewModel(n, inputPinCommand, this.executionService)).ToObservableCollection();
+            this.Outputs = node.Outputs?.Select(n => new PinViewModel(n, OutputPinCommand, this.executionService)).ToObservableCollection();
             this.Top = 18;
             this.Left = 20;
             this.Width = 50;
