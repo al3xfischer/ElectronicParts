@@ -31,14 +31,14 @@ namespace ElectronicParts.Converter
             frameworkElement.SetValue(ObserveProperty, observe);
         }
 
-        public static double GetObservedName(FrameworkElement frameworkElement)
+        public static string GetObservedName(FrameworkElement frameworkElement)
         {
-            return (double)frameworkElement.GetValue(ObservedNameProperty);
+            return frameworkElement.GetValue(ObservedNameProperty).ToString();
         }
 
-        public static void SetObservedName(FrameworkElement frameworkElement, double observedWidth)
+        public static void SetObservedName(FrameworkElement frameworkElement, string observedName)
         {
-            frameworkElement.SetValue(ObservedNameProperty, observedWidth);
+            frameworkElement.SetValue(ObservedNameProperty, observedName);
         }
 
         private static void OnObserveChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -48,7 +48,7 @@ namespace ElectronicParts.Converter
             if ((bool)e.NewValue)
             {
                 ((ColorPicker)frameworkElement).SelectedColorChanged += NameObserverSelectedColorChanged; ;
-                UpdateObservedSizesForFrameworkElement(frameworkElement);
+                UpdateObservedNameForFrameworkElement(frameworkElement);
             }
             else
             {
@@ -58,10 +58,10 @@ namespace ElectronicParts.Converter
 
         private static void NameObserverSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
         {
-            UpdateObservedSizesForFrameworkElement((FrameworkElement)sender);
+            UpdateObservedNameForFrameworkElement((FrameworkElement)sender);
         }
 
-        private static void UpdateObservedSizesForFrameworkElement(FrameworkElement frameworkElement)
+        private static void UpdateObservedNameForFrameworkElement(FrameworkElement frameworkElement)
         {
             frameworkElement.SetCurrentValue(ObservedNameProperty, ((ColorPicker)frameworkElement).SelectedColorText);
         }

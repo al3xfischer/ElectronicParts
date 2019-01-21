@@ -15,6 +15,13 @@ namespace ElectronicParts.ViewModels
             this.DeleteCommand = deletionCommand ?? throw new ArgumentNullException(nameof(deletionCommand));
             this.Input.OnValueChanged += this.RefreshPins;
             this.Output.OnValueChanged += this.RefreshPins;
+            this.Input.PropertyChanged += ThisPropertyChanged;
+            this.Output.PropertyChanged += ThisPropertyChanged;
+        }
+
+        private void ThisPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.FirePropertyChanged(null);
         }
 
         public Connector Connector { get; }
