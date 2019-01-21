@@ -46,6 +46,7 @@ namespace ElectronicParts.Models
         /// Gets the position of the node.
         /// </summary>
         /// <value>The position of the node.</value>
+        
         public Point Position { get; }
     }
 }

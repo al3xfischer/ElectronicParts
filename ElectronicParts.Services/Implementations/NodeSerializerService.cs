@@ -57,10 +57,6 @@ namespace ElectronicParts.Services.Implementations
                 using (FileStream fileStream = (FileStream)saveFileDialog.OpenFile())
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
-                    formatter.AssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Full;
-
-                    formatter.AssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple;
-
                     formatter.Serialize(fileStream, snapShot);
                 }                
             }

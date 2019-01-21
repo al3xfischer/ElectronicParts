@@ -93,6 +93,16 @@ namespace ElectronicParts.Components.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap green_led {
+            get {
+                object obj = ResourceManager.GetObject("green_led", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap IntegerAdder {
             get {
                 object obj = ResourceManager.GetObject("IntegerAdder", resourceCulture);
@@ -156,6 +166,16 @@ namespace ElectronicParts.Components.Properties {
         internal static System.Drawing.Bitmap PowerOn {
             get {
                 object obj = ResourceManager.GetObject("PowerOn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap red_led {
+            get {
+                object obj = ResourceManager.GetObject("red_led", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

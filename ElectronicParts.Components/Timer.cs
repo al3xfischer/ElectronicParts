@@ -4,10 +4,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 using Shared;
+
 
 namespace ElectronicParts.Components
 {
+    [Serializable]
     public class Timer : IDisplayableNode
     {
         private DateTime lastChange;
@@ -32,6 +35,7 @@ namespace ElectronicParts.Components
 
         public Bitmap Picture => Properties.Resources.Timer;
 
+        [field: NonSerialized]
         public event EventHandler PictureChanged;
 
         public void Activate()

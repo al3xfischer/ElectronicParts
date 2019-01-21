@@ -1,10 +1,29 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿// ***********************************************************************
+// Assembly         : ElectronicParts.ViewModels
+// Author           : 
+// ***********************************************************************
+// <copyright file="Extensions.cs" company="FHWN">
+//     Copyright ©  2019
+// </copyright>
+// <summary>Represents the Extensions class of the ElectronicParts programm</summary>
+// ***********************************************************************
 
 namespace System
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+
+    /// <summary>
+    /// Includes extensions for the ElectronicParts program.
+    /// </summary>
     public static class Extensions
     {
+        /// <summary>
+        /// Returns a given IEnumerable as observable collection.
+        /// </summary>
+        /// <typeparam name="TValue">The generic type of the IEnumerable.</typeparam>
+        /// <param name="values">The IEnumerable which will be converted.</param>
+        /// <returns>The given IEnumerable as observable collection.</returns>
         public static ObservableCollection<TValue> ToObservableCollection<TValue>(this IEnumerable<TValue> values)
         {
             if (values is null)

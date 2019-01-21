@@ -1,17 +1,30 @@
-﻿using ElectronicParts.Models;
-using ElectronicParts.ViewModels;
-using Shared;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// ***********************************************************************
+// Assembly         : ElectronicParts.ViewModels
+// Author           : Peter Helf
+// ***********************************************************************
+// <copyright file="SnapShotConverter.cs" company="FHWN">
+//     Copyright ©  2019
+// </copyright>
+// <summary>Represents the SnapShotConverter class of the ElectronicParts programm</summary>
+// ***********************************************************************
 
 namespace ElectronicParts.ViewModels.Converter
 {
+    using System.Collections.Generic;
+    using System.Drawing;
+    using ElectronicParts.Models;
+
+    /// <summary>
+    /// Used for converting the view model of the ElectronicParts program to a snapshot.
+    /// </summary>
     public static class SnapShotConverter
     {
+        /// <summary>
+        /// Converts all nodes and connections to a snapshot.
+        /// </summary>
+        /// <param name="nodes">The nodes which will be converted.</param>
+        /// <param name="connections">The connections which will be converted.</param>
+        /// <returns>A snapshot of the view model.</returns>
         public static SnapShot Convert(IEnumerable<NodeViewModel> nodes, IEnumerable<ConnectorViewModel> connections)
         {
             List<NodeSnapShot> nodeSnapShots = new List<NodeSnapShot>();

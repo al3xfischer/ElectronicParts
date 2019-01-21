@@ -55,6 +55,7 @@ namespace ElectronicParts.ViewModels
             this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
             this.updateMillisecondsPerLoopUpdateTimer.Elapsed += UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
             this.updateMillisecondsPerLoopUpdateTimer.Start();
+            this.FramesPerSecond = 50;
 
             this.GridSnappingEnabled = true;
             this.GridSize = 10;
@@ -73,7 +74,7 @@ namespace ElectronicParts.ViewModels
 
             this.SaveCommand = new RelayCommand(arg =>
             {
-                SnapShot snapShot = SnapShotConverter.Convert(this.nodes, this.connections);
+                SnapShot snapShot = SnapShotConverter.Convert(this.Nodes, this.connections);
                 this.nodeSerializerService.Serialize(snapShot);
 
                 foreach (NodeViewModel nodeVM in this.Nodes)
