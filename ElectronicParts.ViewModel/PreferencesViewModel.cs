@@ -33,6 +33,7 @@ namespace ElectronicParts.ViewModels
         public PreferencesViewModel(IConfigurationService configurationService)
         {
             this.ConfigurationService = configurationService;
+            this.IntegerRuleValueText = "0";
 
             ICommand stringDeletionCommand = new RelayCommand(ruleObj =>
             {
@@ -96,7 +97,7 @@ namespace ElectronicParts.ViewModels
                     this.StringRules.Add(new RuleViewModel<string>(newRule, stringDeletionCommand));
                     configurationService.Configuration.StringRules.Add(newRule);
 
-                    this.TempStringRule.Rule.Value = string.Empty;
+                    this.TempStringRule.Value = string.Empty;
                     this.TempStringRule.Color = (Color)ColorConverter.ConvertFromString("Black");
                 }
             }, arg =>
@@ -116,7 +117,8 @@ namespace ElectronicParts.ViewModels
                     this.IntRules.Add(new RuleViewModel<int>(newRule, intDeletionCommand));
                     configurationService.Configuration.IntRules.Add(newRule);
 
-                    this.TempIntRule.Rule.Value = 0;
+                    this.IntegerRuleValueText = "0";
+                    this.TempIntRule.Value = 0;
                     this.TempIntRule.Color = (Color)ColorConverter.ConvertFromString("Black");
                 }
             }, arg =>
@@ -179,6 +181,7 @@ namespace ElectronicParts.ViewModels
             {
                 int.Parse(value);
                 this.integerRuleValueText = value;
+                FirePropertyChanged(nameof(IntegerRuleValueText));
             }
         }
 

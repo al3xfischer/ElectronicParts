@@ -20,6 +20,8 @@ namespace ElectronicParts.ViewModels
     /// <typeparam name="T">The type of connection that the rule applies to.</typeparam>
     public class RuleViewModel<T> : BaseViewModel
     {
+        private Color color;
+
         public RuleViewModel(Rule<T> rule, ICommand deletionCommand)
         {
             this.Rule = rule;
@@ -36,6 +38,7 @@ namespace ElectronicParts.ViewModels
             set
             {
                 this.Rule.Value = value;
+                this.FirePropertyChanged(nameof(this.Value));
             }
         }
 
@@ -43,12 +46,20 @@ namespace ElectronicParts.ViewModels
         /// Gets or sets the color of the connection when the rule is active.
         /// </summary>
         /// <value>The color of the connection when the rule is active.</value>
-        public Color Color { get; set; }
+        public Color Color
+        {
+            get { return color; }
+            set
+            {
+                color = value;
+                this.FirePropertyChanged(nameof(this.Color));
+            }
+        }
 
         /// <summary>
         /// Gets the command which is used for deleting the rule.
         /// </summary>
-        public ICommand DeletionCommand { get; } 
+        public ICommand DeletionCommand { get; }
 
         /// <summary>
         /// Gets the rule which can be changed.
