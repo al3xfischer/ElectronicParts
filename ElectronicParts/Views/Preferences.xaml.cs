@@ -25,7 +25,7 @@ namespace ElectronicParts.Views
 
         private void PreviewNumberInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("^[^\\d]+$");
+            Regex regex = new Regex("^[^\\d,-]+$");
             e.Handled = regex.IsMatch(e.Text);            
         }
     }
