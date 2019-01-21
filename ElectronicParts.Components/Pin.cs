@@ -33,7 +33,7 @@ namespace ElectronicParts.Components
                 }
                 catch (InvalidCastException e)
                 {
-                    // TODO proper exception handeling
+                    this.Value = new MyValue<T>();
                     Debug.WriteLine(e.Message);
                 }
             }

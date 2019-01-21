@@ -36,6 +36,9 @@ namespace ElectronicParts.ViewModels
 
         private readonly ILogger<MainViewModel> logger;
 
+        private readonly IAssemblyNameExtractorService assemblyNameExtractorService;
+
+        private readonly IConfigurationService configurationService;
         private PinViewModel inputPin;
 
         private PinViewModel outputPin;
@@ -54,6 +57,8 @@ namespace ElectronicParts.ViewModels
             this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.assemblyNameExtractorService = assemblyNameExtractorService ?? throw new ArgumentNullException(nameof(assemblyNameExtractorService)); ;
+            this.configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
             this.updateMillisecondsPerLoopUpdateTimer.Elapsed += UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
             this.updateMillisecondsPerLoopUpdateTimer.Start();
@@ -102,12 +107,13 @@ namespace ElectronicParts.ViewModels
                 }
                 catch (SerializationException e)
                 {
-                    // TODO proper exception Handeling
-                    Debug.WriteLine("Failed deserialiszation");
+                    this.logger.LogError(e, $"An error occurred while deserializing ({nameof(this.LoadCommand)}).");
+                    Debug.WriteLine("Failed deserialization");
 
-                    var missingAssembly = new AssemblyNameExtractorService().ExtractAssemblyNameFromErrorMessage(e);
+                    var missingAssembly = this.assemblyNameExtractorService.ExtractAssemblyNameFromErrorMessage(e);
                     var result = MessageBox.Show($"There are missing assemblies: {missingAssembly}\nDo you want to add new assemblies?", "Loading Failed", MessageBoxButton.YesNo, MessageBoxImage.Error);
 
+                    // TODO What happens after MessageBox?
                 }
 
                 if (snapShot is null)
@@ -286,6 +292,12 @@ namespace ElectronicParts.ViewModels
                 this.FirePropertyChanged(nameof(Nodes));
             }, arg => !this.executionService.IsEnabled);
 
+            this.UpdateBoardSize = new RelayCommand(arg =>
+            {
+                this.FirePropertyChanged(nameof(BoardHeight));
+                this.FirePropertyChanged(nameof(BoardWidth));
+            });
+
             this.Nodes = new ObservableCollection<NodeViewModel>();
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             this.Connections = new ObservableCollection<ConnectorViewModel>();
@@ -408,6 +420,16 @@ namespace ElectronicParts.ViewModels
             get => !this.executionService.IsEnabled;
         }
 
+        public int BoardWidth
+        {
+            get => this.configurationService.Configuration.BoardWidth;
+        }
+
+        public int BoardHeight
+        {
+            get => this.configurationService.Configuration.BoardHeight;
+        }
+
         public ICommand SaveCommand { get; }
         public ICommand ExecutionStepCommand { get; }
         public ICommand ExecutionStartLoopCommand { get; }
@@ -419,6 +441,7 @@ namespace ElectronicParts.ViewModels
         public ICommand ExitCommand { get; }
         public ICommand IncreaseGridSize { get; }
         public ICommand DecreaseGridSize { get; }
+        public ICommand UpdateBoardSize { get; }
 
         private async Task ResetAllConnections()
         {
@@ -464,9 +487,9 @@ namespace ElectronicParts.ViewModels
                         {
                             nodeVm.SnapToNewGrid(this.GridSize, floor);
                         }
-                        catch
+                        catch (Exception e)
                         {
-                            //TODO exception handeling
+                            this.logger.LogError(e, $"Unexpected error in {nameof(this.SnapAllNodesToGrid)}");
                         }
                     }
                 }
@@ -485,9 +508,9 @@ namespace ElectronicParts.ViewModels
                         {
                             nodeVm.SnapToNewGrid(this.GridSize);
                         }
-                        catch
+                        catch (Exception e)
                         {
-                            //TODO exception handeling
+                            this.logger.LogError(e, $"Unexpected error in {nameof(this.SnapAllNodesToGrid)}");
                         }
                     }
                 }

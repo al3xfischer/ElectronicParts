@@ -11,6 +11,7 @@
 namespace ElectronicParts.ViewModels
 {
     using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Windows.Media;
     using System.Linq;
     using System.Windows;
@@ -33,6 +34,7 @@ namespace ElectronicParts.ViewModels
         public PreferencesViewModel(IConfigurationService configurationService)
         {
             this.ConfigurationService = configurationService;
+            this.IntegerRuleValueText = "0";
 
             ICommand stringDeletionCommand = new RelayCommand(ruleObj =>
             {
@@ -96,7 +98,7 @@ namespace ElectronicParts.ViewModels
                     this.StringRules.Add(new RuleViewModel<string>(newRule, stringDeletionCommand));
                     configurationService.Configuration.StringRules.Add(newRule);
 
-                    this.TempStringRule.Rule.Value = string.Empty;
+                    this.TempStringRule.Value = string.Empty;
                     this.TempStringRule.Color = (Color)ColorConverter.ConvertFromString("Black");
                 }
             }, arg =>
@@ -116,7 +118,8 @@ namespace ElectronicParts.ViewModels
                     this.IntRules.Add(new RuleViewModel<int>(newRule, intDeletionCommand));
                     configurationService.Configuration.IntRules.Add(newRule);
 
-                    this.TempIntRule.Rule.Value = 0;
+                    this.IntegerRuleValueText = "0";
+                    this.TempIntRule.Value = 0;
                     this.TempIntRule.Color = (Color)ColorConverter.ConvertFromString("Black");
                 }
             }, arg =>
@@ -179,6 +182,7 @@ namespace ElectronicParts.ViewModels
             {
                 int.Parse(value);
                 this.integerRuleValueText = value;
+                FirePropertyChanged(nameof(IntegerRuleValueText));
             }
         }
 
@@ -203,5 +207,35 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <value>All boolean rule view models.</value>
         public ObservableCollection<RuleViewModel<bool>> BoolRules { get; }
+
+        public int BoardHeight
+        {
+            get => this.ConfigurationService.Configuration.BoardHeight;
+
+            set
+            {
+                if (value < 200)
+                {
+                    throw new ValidationException();
+                }
+
+                this.ConfigurationService.Configuration.BoardHeight = value;
+            }
+        }
+
+        public int BoardWidth
+        {
+            get => this.ConfigurationService.Configuration.BoardWidth;
+
+            set
+            {
+                if(value < 200)
+                {
+                    throw new ValidationException();
+                }
+
+                this.ConfigurationService.Configuration.BoardWidth = value;
+            }
+        }
     }
 }

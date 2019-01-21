@@ -98,6 +98,11 @@ namespace ElectronicParts.Models
                     return !this.BoolRules.Any(rule => rule.Value == value);
                 }));
             }
+
+            int.TryParse(config["BoardHeight"] ?? string.Empty, out int boardHeight);
+            int.TryParse(config["BoardWidth"] ?? string.Empty, out int boardWidth);
+            this.BoardHeight = boardHeight;
+            this.BoardWidth = boardHeight;
         }
 
         /// <summary>
@@ -119,6 +124,20 @@ namespace ElectronicParts.Models
         /// </summary>
         /// <value>All boolean rules.</value>
         [DataMember]
-        public List<Rule<bool>> BoolRules { get; set; }       
+        public List<Rule<bool>> BoolRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the width of the board.
+        /// </summary>
+        /// <value>The width of the board.</value>
+        [DataMember]
+        public int BoardWidth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the height of the board.
+        /// </summary>
+        /// <value>The height of the board.</value>
+        [DataMember]
+        public int BoardHeight { get; set; }
     }
 }

@@ -84,11 +84,10 @@ namespace ElectronicParts.ViewModels
         /// Snaps to grid.
         /// </summary>
         /// <param name="gridSize">Size of the grid.</param>
-        /// <param name="floor">if set to true will floor value else will ceil value.</param>
+        /// <param name="floor">If set to true will floor value else will ceil value.</param>
         public void SnapToNewGrid(int gridSize, bool floor)
         {
-            int leftOffset;
-            leftOffset = this.Inputs.Count > 0 ? 10 : 0;
+            int leftOffset = this.Inputs.Count > 0 ? 10 : 0;
 
             if (floor)
             {

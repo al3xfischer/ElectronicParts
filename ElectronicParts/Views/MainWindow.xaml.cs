@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Linq;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace ElectronicParts.Views
 {
@@ -17,6 +18,8 @@ namespace ElectronicParts.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ILogger<MainWindow> logger;
+
         private Canvas canvas;
 
         private NodeViewModel currentNode;
@@ -25,6 +28,7 @@ namespace ElectronicParts.Views
         {
             this.DataContext = this;
             this.ViewModel = Container.Resolve<MainViewModel>();
+            this.logger = Container.Resolve<ILogger<MainWindow>>();
         }
 
         public MainViewModel ViewModel { get; }
@@ -33,6 +37,7 @@ namespace ElectronicParts.Views
         {
             var preferences = new Preferences();
             preferences.ShowDialog();
+            this.ViewModel.UpdateBoardSize.Execute(null);
         }
 
         private void Node_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -93,9 +98,9 @@ namespace ElectronicParts.Views
             {
                 Process.Start(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies"));
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO Proper exception handeling
+                this.logger.LogError(ex, $"Error while opening folder {Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies")}");
                 Debug.WriteLine("Folder opening error");
             }
         }
@@ -119,9 +124,9 @@ namespace ElectronicParts.Views
                     {
                         file.CopyTo(Path.Combine(assemblyPath, file.Name), true);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        // TODO Proper exceptionHandeling.
+                        this.logger.LogError(ex, $"Error while copying a file to assemblies folder ({nameof(this.AddAssembly_Click)})");
                         Debug.WriteLine("file exception");
                     }
                 }

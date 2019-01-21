@@ -113,7 +113,7 @@
                         <Image Source="/Resources/play.png"/>
                     </Button>
                     <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStepCommand}">
-                        <Image Source="/Resources/step.png" Style="{DynamicResource NoMouseOver}"/>
+                        <Image Source="/Resources/step.png"/>
                     </Button>
                     <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStopLoopCommand}">
                         <Image Source="/Resources/pause.png"/>
@@ -194,7 +194,7 @@
                     </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas IsItemsHost="True" Loaded="ItemsCanvas_Loaded" x:Name="ItemsCanvas" Width="2400" Height="1200" >
+                            <Canvas IsItemsHost="True" Loaded="ItemsCanvas_Loaded" x:Name="ItemsCanvas" Width="{Binding ViewModel.BoardWidth}" Height="{Binding ViewModel.BoardHeight}" >
                                 <Canvas.Background>
                                     <DrawingBrush TileMode="Tile"
                                      ViewportUnits="Absolute">

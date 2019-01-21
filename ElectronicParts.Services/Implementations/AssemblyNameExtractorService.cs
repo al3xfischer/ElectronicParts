@@ -1,4 +1,5 @@
 ﻿using ElectronicParts.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Text.RegularExpressions;
 
@@ -6,6 +7,12 @@ namespace ElectronicParts.Services.Implementations
 {
     public class AssemblyNameExtractorService : IAssemblyNameExtractorService
     {
+        private readonly ILogger<AssemblyNameExtractorService> logger;
+
+        public AssemblyNameExtractorService(ILogger<AssemblyNameExtractorService> logger)
+        {
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
         public string ExtractAssemblyNameFromErrorMessage(Exception exception)
         {
             string result = "Unknown";
@@ -14,7 +21,7 @@ namespace ElectronicParts.Services.Implementations
             {
                 return result;
             }
-            var test = exception.Message;
+            
             Regex pattern = new Regex("\"[A-Za-z0-9_.]*,");
             var match = pattern.Match(exception.Message);
             if (match.Success)
@@ -25,7 +32,7 @@ namespace ElectronicParts.Services.Implementations
                 }
                 catch(Exception e)
                 {
-                    // TODO Exception handeling
+                    this.logger.LogError(e, $"Unexpected error in {this}");
                 }
             }
             return result;
