@@ -19,10 +19,13 @@
 
         <!-- Pin -->
         <DataTemplate x:Key="PinTemplate">
-            <Button Width="10" Margin="-7 3 -7 3" Padding="0 4 0 4" BorderThickness="0" Background="Transparent" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
-                <Border Height="2" Width="11" Padding="0" Background="Black">
-                </Border>
-            </Button>
+            <StackPanel Margin="0 0 0 0">
+                <TextBox FontSize="8" Margin="0" Height="13" Text="{Binding Pin.Label}"/>
+                <Button Width="10" Margin="-7 0 -7 0" Padding="0 0 0 0" BorderThickness="0" Background="Transparent" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
+                    <Border Height="2" Width="11" Padding="0" Background="Black">
+                    </Border>
+                </Button>
+            </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
 
@@ -63,6 +66,8 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
