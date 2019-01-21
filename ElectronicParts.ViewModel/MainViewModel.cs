@@ -76,6 +76,11 @@ namespace ElectronicParts.ViewModels
             {
                 SnapShot snapShot = SnapShotConverter.Convert(this.Nodes, this.connections);
                 this.nodeSerializerService.Serialize(snapShot);
+
+                foreach (NodeViewModel nodeVM in this.Nodes)
+                {
+                    nodeVM.AddDeleage();
+                }
             });
 
             this.LoadCommand = new RelayCommand(arg =>

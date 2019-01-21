@@ -34,8 +34,7 @@ namespace ElectronicParts.Components
         public NodeType Type => NodeType.Logic;
 
         public Bitmap Picture => Properties.Resources.Timer;
-
-        [field: NonSerialized]
+        
         public event EventHandler PictureChanged;
 
         public void Activate()
