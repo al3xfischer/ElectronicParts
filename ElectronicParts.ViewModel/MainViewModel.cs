@@ -66,14 +66,14 @@ namespace ElectronicParts.ViewModels
             this.GridSnappingEnabled = true;
             this.GridSize = 10;
 
-            this.IncreaseGridSize = new RelayCommand(async arg =>
+            this.IncreaseGridSize = new RelayCommand(arg =>
             {
                 this.GridSize++;
                 this.reSnappingTimer.Stop();
                 this.reSnappingTimer.Start();
             }, arg => this.GridSize < 30);
 
-            this.DecreaseGridSize = new RelayCommand(async arg =>
+            this.DecreaseGridSize = new RelayCommand(arg =>
             {
                 this.GridSize--;
                 this.reSnappingTimer.Stop();
