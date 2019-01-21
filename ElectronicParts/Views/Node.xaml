@@ -68,7 +68,7 @@
         </ListView>
 
         <!-- Body -->
-        <Rectangle Width="50" Stroke="Black" Grid.Column="1" Grid.Row="1" Fill="LightGray" >
+        <Rectangle Width="{Binding Width}" Stroke="Black" Grid.Column="1" Grid.Row="1" Fill="LightGray" >
             <Rectangle.Height>
                 <Binding Path="MaxPins">
                     <Binding.Converter>
@@ -78,7 +78,7 @@
             </Rectangle.Height>
         </Rectangle>
 
-        <Rectangle Width="50" Stroke="Black" Grid.Column="1" Grid.Row="1" >
+        <Rectangle Width="{Binding Width}" Stroke="Black" Grid.Column="1" Grid.Row="1" >
             <Rectangle.Height>
                 <Binding Path="MaxPins">
                     <Binding.Converter>
