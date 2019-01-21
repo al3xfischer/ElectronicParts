@@ -35,7 +35,7 @@ namespace ElectronicParts.Services.Implementations
                 using (FileStream fileStream = (FileStream)openFileDialog.OpenFile())
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
-                    formatter.Binder = new AssemblyBinder();
+                    formatter.Binder = this.assemblyBinder as SerializationBinder;
 
                     formatter.AssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple;
 

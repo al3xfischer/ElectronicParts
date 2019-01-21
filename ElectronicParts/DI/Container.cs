@@ -30,6 +30,7 @@ namespace ElectronicParts.DI
             services.AddSingleton<INodeSerializerService, NodeSerializerService>();
             services.AddSingleton<IAssemblyBinder, AssemblyBinder>();
             services.AddSingleton<IGenericTypeComparerService, GenericTypeComparerService>();
+            services.AddSingleton<IAssemblyNameExtractorService, AssemblyNameExtractorService>();
 
             // Logging
             services.AddLogging();

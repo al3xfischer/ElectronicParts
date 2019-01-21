@@ -1,4 +1,5 @@
 ﻿using ElectronicParts.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +13,13 @@ namespace ElectronicParts.Services.Implementations
 {
     public class AssemblyBinder : SerializationBinder, IAssemblyBinder
     {
+        private readonly ILogger<AssemblyBinder> logger;
+
+        public AssemblyBinder(ILogger<AssemblyBinder> logger)
+        {
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
         public override Type BindToType(string fullAssemblyString, string typeName)
         {
             Type wantedType = null;
@@ -19,7 +27,7 @@ namespace ElectronicParts.Services.Implementations
             {
                 string assemblyName = fullAssemblyString.Split(',')[0];
                 Assembly[] currentlyLoadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().Reverse().ToArray();
-                currentlyLoadedAssemblies.Reverse();
+
                 foreach (Assembly assembly in currentlyLoadedAssemblies)
                 {
                     if (assembly.FullName.Split(',')[0] == assemblyName)
@@ -31,7 +39,7 @@ namespace ElectronicParts.Services.Implementations
             }
             catch (Exception e)
             {
-                // TODO proper exception handeling
+                this.logger.LogError(e, $"Unexpected error in {this}");
                 Debug.WriteLine(e.Message);
             }
             return wantedType;

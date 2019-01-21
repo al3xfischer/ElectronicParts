@@ -11,6 +11,7 @@
 namespace ElectronicParts.Services.Implementations
 {
     using ElectronicParts.Services.Interfaces;
+    using Microsoft.Extensions.Logging;
     using Shared;
     using System;
     using System.Collections.Generic;
@@ -26,6 +27,13 @@ namespace ElectronicParts.Services.Implementations
     {
         private int framesPerSecond;
         private long passedMiliseconds;
+
+        private ILogger<ExecutionService> logger;
+
+        public ExecutionService(ILogger<ExecutionService> logger)
+        {
+            this.logger = logger;
+        }
 
         /// <summary>
         /// Gets a value indicating whether this instance is enabled.
@@ -76,7 +84,7 @@ namespace ElectronicParts.Services.Implementations
                     }
                     catch (Exception e)
                     {
-                        // TODO Proper Exception handeling
+                        this.logger.LogError(e, $"Unexpected error in {nameof(callback)} ({nameof(this.StartExecutionLoop)}).");
                         Debug.WriteLine(e.Message);
                     }
                     watch.Stop();
@@ -110,7 +118,14 @@ namespace ElectronicParts.Services.Implementations
             {
                 Parallel.ForEach(nodes, node =>
                 {
-                    node.Execute();
+                    try
+                    {
+                        node.Execute();
+                    }
+                    catch (Exception e)
+                    {
+                        this.logger.LogError(e, $"An error occurred in an execution method of a node ({node.ToString()})!");
+                    }
                 });
             });
         }

@@ -36,6 +36,8 @@ namespace ElectronicParts.ViewModels
 
         private readonly ILogger<MainViewModel> logger;
 
+        private readonly IAssemblyNameExtractorService assemblyNameExtractorService;
+
         private PinViewModel inputPin;
 
         private PinViewModel outputPin;
@@ -44,7 +46,7 @@ namespace ElectronicParts.ViewModels
 
 
 
-        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger)
+        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger, IAssemblyNameExtractorService assemblyNameExtractorService)
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
@@ -52,6 +54,7 @@ namespace ElectronicParts.ViewModels
             this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.assemblyNameExtractorService = assemblyNameExtractorService ?? throw new ArgumentNullException(nameof(assemblyNameExtractorService)); ;
             this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
             this.updateMillisecondsPerLoopUpdateTimer.Elapsed += UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
             this.updateMillisecondsPerLoopUpdateTimer.Start();
@@ -89,12 +92,13 @@ namespace ElectronicParts.ViewModels
                 }
                 catch (SerializationException e)
                 {
-                    // TODO proper exception Handeling
-                    Debug.WriteLine("Failed deserialiszation");
+                    this.logger.LogError(e, $"An error occurred while deserializing ({nameof(this.LoadCommand)}).");
+                    Debug.WriteLine("Failed deserialization");
 
-                    var missingAssembly = new AssemblyNameExtractorService().ExtractAssemblyNameFromErrorMessage(e);
+                    var missingAssembly = this.assemblyNameExtractorService.ExtractAssemblyNameFromErrorMessage(e);
                     var result = MessageBox.Show($"There are missing assemblies: {missingAssembly}\nDo you want to add new assemblies?", "Loading Failed", MessageBoxButton.YesNo, MessageBoxImage.Error);
 
+                    // TODO What happens after MessageBox?
                 }
 
                 if (snapShot is null)
@@ -415,9 +419,9 @@ namespace ElectronicParts.ViewModels
                         {
                             nodeVm.SnapToNewGrid(this.GridSize, floor);
                         }
-                        catch
+                        catch (Exception e)
                         {
-                            //TODO exception handeling
+                            this.logger.LogError(e, $"Unexpected error in {nameof(this.SnapAllNodesToGrid)}");
                         }
                     }
                 }
@@ -436,9 +440,9 @@ namespace ElectronicParts.ViewModels
                         {
                             nodeVm.SnapToNewGrid(this.GridSize);
                         }
-                        catch
+                        catch (Exception e)
                         {
-                            //TODO exception handeling
+                            this.logger.LogError(e, $"Unexpected error in {nameof(this.SnapAllNodesToGrid)}");
                         }
                     }
                 }
