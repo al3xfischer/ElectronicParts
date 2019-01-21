@@ -150,5 +150,25 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <value>All boolean rule view models.</value>
         public ObservableCollection<RuleViewModel<bool>> BoolRules { get; }
+
+        public int BoardHeight
+        {
+            get => this.ConfigurationService.Configuration.BoardHeight;
+
+            set
+            {
+                this.ConfigurationService.Configuration.BoardHeight = value;
+            }
+        }
+
+        public int BoardWidth
+        {
+            get => this.ConfigurationService.Configuration.BoardWidth;
+
+            set
+            {
+                this.ConfigurationService.Configuration.BoardWidth = value;
+            }
+        }
     }
 }
