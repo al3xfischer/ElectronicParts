@@ -121,8 +121,6 @@ namespace ElectronicParts.ViewModels
                 }
             }, arg =>
             {
-
-
                 if (!int.TryParse(this.IntegerRuleValueText, out int result))
                 {
                     return false;
