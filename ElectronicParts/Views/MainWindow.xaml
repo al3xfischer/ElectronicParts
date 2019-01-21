@@ -66,7 +66,7 @@
                     </ComboBox.Effect>
                     <ComboBox.ItemTemplate>
                         <ItemContainerTemplate>
-                            <ComboBoxItem Content="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+                            <TextBlock Text="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20"/>
                         </ItemContainerTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
