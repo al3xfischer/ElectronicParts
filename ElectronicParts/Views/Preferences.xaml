@@ -43,7 +43,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <ListView ItemsSource="{Binding ViewModel.StringRules}" Grid.Row="0" Width="Auto">
+                    <ListView ItemsSource="{Binding ViewModel.StringRules}" Grid.Row="0" Width="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}"/>
@@ -73,7 +73,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <ListView ItemsSource="{Binding ViewModel.IntRules}" Grid.Row="0"  Width="Auto">
+                    <ListView ItemsSource="{Binding ViewModel.IntRules}" Grid.Row="0"  Width="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}"/>
@@ -103,7 +103,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <ListView Grid.Column="2" Grid.Row="0"   ItemsSource="{Binding ViewModel.BoolRules}">
+                    <ListView Grid.Column="2" Grid.Row="0"   ItemsSource="{Binding ViewModel.BoolRules}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                         <ListView.Resources>
                             <DataTemplate x:Key="value">
                                 <ComboBox SelectedItem="{Binding Value}" Width="80">
