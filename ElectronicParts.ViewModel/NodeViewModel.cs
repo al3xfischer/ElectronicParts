@@ -32,14 +32,16 @@ namespace ElectronicParts.ViewModels
 
             this.IncreaseWidthCommand = new RelayCommand(arg =>
             {
-                this.Width += 10;
-                this.FirePropertyChanged(nameof(Width));
+                this.Width += 20;
+                this.UpdatePosition();
+                this.FirePropertyChanged(string.Empty);
             });
 
             this.DecreaseWidthCommand = new RelayCommand(arg =>
             {
-                this.Width -= 10;
-                this.FirePropertyChanged(nameof(Width));
+                this.Width -= 20;
+                this.UpdatePosition();
+                this.FirePropertyChanged(string.Empty);
             });
 
             this.ActivateCommand = new RelayCommand(arg =>
@@ -120,11 +122,11 @@ namespace ElectronicParts.ViewModels
                 this.UpdateLeft(this.Inputs, this.left);
                 if (this.Inputs is null || this.Inputs.Count == 0)
                 {
-                    this.UpdateLeft(this.Outputs, this.Left + 63);
+                    this.UpdateLeft(this.Outputs, this.Left + this.Width + 13);
                 }
                 else
                 {
-                    this.UpdateLeft(this.Outputs, this.Left + 73);
+                    this.UpdateLeft(this.Outputs, this.Left + this.Width + 23);
                 }
             }
         }
@@ -242,6 +244,18 @@ namespace ElectronicParts.ViewModels
             foreach (var pin in pins)
             {
                 pin.Item1.Top = (pin.Item2 * 20) + value + 11;
+            }
+        }
+
+        public void UpdatePosition()
+        {
+            if (this.Inputs is null || this.Inputs.Count == 0)
+            {
+                this.UpdateLeft(this.Outputs, this.Left + this.Width + 13);
+            }
+            else
+            {
+                this.UpdateLeft(this.Outputs, this.Left + this.Width + 23);
             }
         }
     }
