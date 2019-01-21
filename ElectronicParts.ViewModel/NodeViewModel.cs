@@ -15,6 +15,8 @@ namespace ElectronicParts.ViewModels
 
         private int left;
 
+        private int width;
+
         public NodeViewModel(IDisplayableNode node, ICommand deleteCommand, ICommand inputPinCommand, ICommand OutputPinCommand)
         {
             this.Node = node ?? throw new ArgumentNullException(nameof(node));
@@ -23,6 +25,19 @@ namespace ElectronicParts.ViewModels
             this.Outputs = node.Outputs?.Select(n => new PinViewModel(n, OutputPinCommand)).ToObservableCollection();
             this.Top = 18;
             this.Left = 20;
+            this.Width = 50;
+
+            this.IncreaseWidthCommand = new RelayCommand(arg =>
+            {
+                this.Width += 10;
+                this.FirePropertyChanged(nameof(Width));
+            });
+
+            this.DecreaseWidthCommand = new RelayCommand(arg =>
+            {
+                this.Width -= 10;
+                this.FirePropertyChanged(nameof(Width));
+            });
 
             this.ActivateCommand = new RelayCommand(arg =>
             {
@@ -31,7 +46,7 @@ namespace ElectronicParts.ViewModels
 
             this.Node.PictureChanged += NodePictureChanged;
         }
-        
+
         public void RemoveDelegate()
         {
             this.Node.PictureChanged -= NodePictureChanged;
@@ -46,6 +61,29 @@ namespace ElectronicParts.ViewModels
         private void NodePictureChanged(object sender, EventArgs e)
         {
             this.FirePropertyChanged(nameof(Picture));
+        }
+
+        public int Width
+        {
+            get => this.width;
+
+
+            private set
+            {
+                if (value < 50)
+                {
+                    this.width = 50;
+                    return;
+                }
+
+                if (value > 200)
+                {
+                    this.width = 200;
+                    return;
+                }
+
+                this.width = value;
+            }
         }
 
         public int Top
@@ -108,7 +146,7 @@ namespace ElectronicParts.ViewModels
                 }
                 if (this.Top % gridSize != 0)
                 {
-                    this.Top = Math.Max(this.Top.CeilingTo(gridSize) , 0);
+                    this.Top = Math.Max(this.Top.CeilingTo(gridSize), 0);
                 }
             }
         }
@@ -147,9 +185,14 @@ namespace ElectronicParts.ViewModels
         public NodeType Type { get => this.Node.Type; }
 
         public IDisplayableNode Node { get; }
+
         public ICommand DeleteCommand { get; }
 
         public ICommand ActivateCommand { get; }
+
+        public ICommand IncreaseWidthCommand { get; }
+
+        public ICommand DecreaseWidthCommand { get; }
 
         public void Update()
         {

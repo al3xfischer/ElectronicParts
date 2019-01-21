@@ -218,6 +218,8 @@
                                 <local:Node.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
+                                        <MenuItem Header="Increase Width" Command="{Binding IncreaseWidthCommand}"/>
+                                        <MenuItem Header="Decrease Width" Command="{Binding DecreaseWidthCommand}"/>
                                     </ContextMenu>
                                 </local:Node.ContextMenu>
                             </local:Node>
