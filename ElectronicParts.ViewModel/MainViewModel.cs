@@ -277,6 +277,11 @@ namespace ElectronicParts.ViewModels
                 this.Nodes.Remove(nodeVm);
             }, arg => !this.executionService.IsEnabled);
 
+            this.ClearAllNodesCommand = new RelayCommand(async arg =>
+            {
+                await this.ClearCanvas();
+            }, arg => !this.executionService.IsEnabled);
+
             this.AddNodeCommand = new RelayCommand(arg =>
             {
                 var node = arg as IDisplayableNode;
@@ -436,6 +441,7 @@ namespace ElectronicParts.ViewModels
         public ICommand ExecutionStopLoopCommand { get; }
         public ICommand ExecutionStopLoopAndResetCommand { get; }
         public ICommand ResetAllConnectionsCommand { get; }
+        public ICommand ClearAllNodesCommand { get; }
         public ICommand LoadCommand { get; }
         public ICommand ReloadAssembliesCommand { get; }
         public ICommand ExitCommand { get; }
@@ -461,6 +467,23 @@ namespace ElectronicParts.ViewModels
                 {
                     nodeVm.Update();
                 }
+            });
+        }
+
+        private async Task ClearCanvas()
+        {
+            await Task.Run(() =>
+            {
+                foreach (var connectionVM in this.Connections)
+                {
+                    this.pinConnectorService.TryRemoveConnection(connectionVM.Connector);
+                }
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    this.Connections.Clear();
+                    this.Nodes.Clear();
+                });
             });
         }
 
