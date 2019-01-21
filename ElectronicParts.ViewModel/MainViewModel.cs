@@ -45,10 +45,7 @@ namespace ElectronicParts.ViewModels
 
         private readonly Timer updateMillisecondsPerLoopUpdateTimer;
 
-
-
-        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger, IAssemblyNameExtractorService assemblyNameExtractorService)
-        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger, IConfigurationService configurationService)
+        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger, IConfigurationService configurationService, IAssemblyNameExtractorService assemblyNameExtractorService)
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
