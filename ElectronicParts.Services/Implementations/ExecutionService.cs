@@ -30,6 +30,8 @@ namespace ElectronicParts.Services.Implementations
 
         private ILogger<ExecutionService> logger;
 
+        public event EventHandler OnIsEnabledChanged;
+
         public ExecutionService(ILogger<ExecutionService> logger)
         {
             this.logger = logger;
@@ -71,6 +73,7 @@ namespace ElectronicParts.Services.Implementations
             if (!this.IsEnabled)
             {
                 this.IsEnabled = true;
+                this.FireOnIsEnabledChanged();
                 Stopwatch watch = new Stopwatch();
 
                 while (this.IsEnabled)
@@ -104,7 +107,11 @@ namespace ElectronicParts.Services.Implementations
         /// </summary>
         public void StopExecutionLoop()
         {
-            this.IsEnabled = false;
+            if (this.IsEnabled)
+            {
+                this.IsEnabled = false;
+                this.FireOnIsEnabledChanged();
+            }
         }
 
         /// <summary>
@@ -128,6 +135,11 @@ namespace ElectronicParts.Services.Implementations
                     }
                 });
             });
+        }
+
+        private void FireOnIsEnabledChanged()
+        {
+            this.OnIsEnabledChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
