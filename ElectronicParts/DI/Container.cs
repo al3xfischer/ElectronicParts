@@ -28,7 +28,7 @@ namespace ElectronicParts.DI
             services.AddSingleton<IPinConnectorService, PinConnectorService>();
             services.AddSingleton<IExecutionService, ExecutionService>();
             services.AddSingleton<INodeSerializerService, NodeSerializerService>();
-            services.AddSingleton<IAssemblyBinder, AssemblyBinder>();
+            services.AddSingleton<AssemblyBinder>();
             services.AddSingleton<IGenericTypeComparerService, GenericTypeComparerService>();
             services.AddSingleton<IAssemblyNameExtractorService, AssemblyNameExtractorService>();
 

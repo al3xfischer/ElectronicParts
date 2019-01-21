@@ -113,7 +113,6 @@
     <Compile Include="Implementations\GenericTypeComparerService.cs" />
     <Compile Include="Interfaces\IGenericTypeComparerService.cs" />
     <Compile Include="Interfaces\IAssemblyNameExtractorService.cs" />
-    <Compile Include="Interfaces\IAssemblyBinder.cs" />
     <Compile Include="Implementations\NodeSerializerService.cs" />
     <Compile Include="Implementations\AssemblyBinder.cs" />
     <Compile Include="Interfaces\IExecutionService.cs" />

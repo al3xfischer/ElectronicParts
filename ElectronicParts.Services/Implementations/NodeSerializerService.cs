@@ -15,9 +15,9 @@ namespace ElectronicParts.Services.Implementations
 {
     public class NodeSerializerService : INodeSerializerService
     {
-        private readonly IAssemblyBinder assemblyBinder;
+        private readonly AssemblyBinder assemblyBinder;
 
-        public NodeSerializerService(IAssemblyBinder assemblyBinder)
+        public NodeSerializerService(AssemblyBinder assemblyBinder)
         {
             this.assemblyBinder = assemblyBinder ?? throw new ArgumentNullException(nameof(assemblyBinder));
         }
@@ -35,7 +35,7 @@ namespace ElectronicParts.Services.Implementations
                 using (FileStream fileStream = (FileStream)openFileDialog.OpenFile())
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
-                    formatter.Binder = this.assemblyBinder as SerializationBinder;
+                    formatter.Binder = this.assemblyBinder;
 
                     formatter.AssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple;
 

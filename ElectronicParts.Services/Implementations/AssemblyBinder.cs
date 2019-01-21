@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ElectronicParts.Services.Implementations
 {
-    public class AssemblyBinder : SerializationBinder, IAssemblyBinder
+    public class AssemblyBinder : SerializationBinder
     {
         private readonly ILogger<AssemblyBinder> logger;
 
