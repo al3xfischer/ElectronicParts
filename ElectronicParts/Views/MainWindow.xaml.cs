@@ -37,6 +37,7 @@ namespace ElectronicParts.Views
         {
             var preferences = new Preferences();
             preferences.ShowDialog();
+            this.ViewModel.UpdateBoardSize.Execute(null);
         }
 
         private void Node_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -136,8 +137,7 @@ namespace ElectronicParts.Views
 
         private void ListViewItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var item = ItemsControl.ContainerFromElement(sender as ListBox, e.OriginalSource as DependencyObject) as ListBoxItem;
-            if (item != null)
+            if (ItemsControl.ContainerFromElement(sender as ListBox, e.OriginalSource as DependencyObject) is ListBoxItem item)
             {
                 var vm = item.DataContext as NodeViewModel;
                 if (!(vm is null) && this.ViewModel.AddNodeCommand.CanExecute(null))

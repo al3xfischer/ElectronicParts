@@ -38,6 +38,7 @@ namespace ElectronicParts.ViewModels
 
         private readonly IAssemblyNameExtractorService assemblyNameExtractorService;
 
+        private readonly IConfigurationService configurationService;
         private PinViewModel inputPin;
 
         private PinViewModel outputPin;
@@ -47,6 +48,7 @@ namespace ElectronicParts.ViewModels
 
 
         public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger, IAssemblyNameExtractorService assemblyNameExtractorService)
+        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger, IConfigurationService configurationService)
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
@@ -55,6 +57,7 @@ namespace ElectronicParts.ViewModels
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.assemblyNameExtractorService = assemblyNameExtractorService ?? throw new ArgumentNullException(nameof(assemblyNameExtractorService)); ;
+            this.configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
             this.updateMillisecondsPerLoopUpdateTimer.Elapsed += UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
             this.updateMillisecondsPerLoopUpdateTimer.Start();
@@ -79,6 +82,11 @@ namespace ElectronicParts.ViewModels
             {
                 SnapShot snapShot = SnapShotConverter.Convert(this.Nodes, this.connections);
                 this.nodeSerializerService.Serialize(snapShot);
+
+                foreach (NodeViewModel nodeVM in this.Nodes)
+                {
+                    nodeVM.AddDeleage();
+                }
             });
 
             this.LoadCommand = new RelayCommand(arg =>
@@ -277,6 +285,12 @@ namespace ElectronicParts.ViewModels
                 this.FirePropertyChanged(nameof(Nodes));
             }, arg => !this.executionService.IsEnabled);
 
+            this.UpdateBoardSize = new RelayCommand(arg =>
+            {
+                this.FirePropertyChanged(nameof(BoardHeight));
+                this.FirePropertyChanged(nameof(BoardWidth));
+            });
+
             this.Nodes = new ObservableCollection<NodeViewModel>();
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             this.Connections = new ObservableCollection<ConnectorViewModel>();
@@ -364,6 +378,16 @@ namespace ElectronicParts.ViewModels
             get => !this.executionService.IsEnabled;
         }
 
+        public int BoardWidth
+        {
+            get => this.configurationService.Configuration.BoardWidth;
+        }
+
+        public int BoardHeight
+        {
+            get => this.configurationService.Configuration.BoardHeight;
+        }
+
         public ICommand SaveCommand { get; }
         public ICommand ExecutionStepCommand { get; }
         public ICommand ExecutionStartLoopCommand { get; }
@@ -375,6 +399,7 @@ namespace ElectronicParts.ViewModels
         public ICommand ExitCommand { get; }
         public ICommand IncreaseGridSize { get; }
         public ICommand DecreaseGridSize { get; }
+        public ICommand UpdateBoardSize { get; }
 
         private async Task ResetAllConnections()
         {

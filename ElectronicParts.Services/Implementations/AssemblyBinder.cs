@@ -42,6 +42,7 @@ namespace ElectronicParts.Services.Implementations
                 this.logger.LogError(e, $"Unexpected error in {this}");
                 Debug.WriteLine(e.Message);
             }
+
             return wantedType;
         }
     }

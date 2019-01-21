@@ -39,7 +39,6 @@ namespace ElectronicParts.Components
         /// <summary>
         /// Event to be called when picture has changed.
         /// </summary>
-        [field: NonSerialized]
         public event EventHandler PictureChanged;
 
         /// <summary>

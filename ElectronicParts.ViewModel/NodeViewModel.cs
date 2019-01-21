@@ -29,10 +29,23 @@ namespace ElectronicParts.ViewModels
                 this.Node.Activate();
             });
 
-            this.Node.PictureChanged += (sender, e) =>
-            {
-                this.FirePropertyChanged(nameof(Picture));
-            };
+            this.Node.PictureChanged += NodePictureChanged;
+        }
+        
+        public void RemoveDelegate()
+        {
+            this.Node.PictureChanged -= NodePictureChanged;
+        }
+
+        public void AddDeleage()
+        {
+            this.Node.PictureChanged -= NodePictureChanged;
+            this.Node.PictureChanged += NodePictureChanged;
+        }
+
+        private void NodePictureChanged(object sender, EventArgs e)
+        {
+            this.FirePropertyChanged(nameof(Picture));
         }
 
         public int Top
@@ -151,7 +164,7 @@ namespace ElectronicParts.ViewModels
 
             foreach (var pin in pins)
             {
-                pin.Item1.Top = (pin.Item2 * 22) + value + 13;
+                pin.Item1.Top = (pin.Item2 * 20) + value + 11;
             }
         }
     }

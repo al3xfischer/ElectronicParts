@@ -98,7 +98,8 @@ namespace ElectronicParts.Services.Implementations
                 {
                     Assembly assembly;
                     var x = Path.Combine(file.DirectoryName, Path.GetFileNameWithoutExtension(file.Name) + ".pdb");
-                        // Loading file into mainmemory and loading assembly.
+
+                        // Loading file into mainmemory and loading assembly. If there is a pdb file load that too
                         if (File.Exists(Path.Combine(file.DirectoryName, Path.GetFileNameWithoutExtension(file.Name) + ".pdb")))
                         {
                             assembly = Assembly.Load(File.ReadAllBytes(file.FullName), File.ReadAllBytes(Path.Combine(file.DirectoryName, Path.GetFileNameWithoutExtension(file.Name) + ".pdb")));
@@ -112,7 +113,8 @@ namespace ElectronicParts.Services.Implementations
                         var types = assembly.GetTypes();
                         var availableNodes = types
                             .Where(type => type.GetInterfaces()
-                            .Contains(typeof(IDisplayableNode)));
+                            .Contains(typeof(IDisplayableNode)) &&
+                            type.IsDefined(typeof(SerializableAttribute)));
 
                         // Iterating over every type and adding an instance to the AvailableNodeslist.
                         foreach (var node in availableNodes)
