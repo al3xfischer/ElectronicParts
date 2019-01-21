@@ -11,6 +11,7 @@
 namespace ElectronicParts.ViewModels
 {
     using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Windows.Media;
     using System.Linq;
     using System.Windows;
@@ -206,5 +207,35 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <value>All boolean rule view models.</value>
         public ObservableCollection<RuleViewModel<bool>> BoolRules { get; }
+
+        public int BoardHeight
+        {
+            get => this.ConfigurationService.Configuration.BoardHeight;
+
+            set
+            {
+                if (value < 200)
+                {
+                    throw new ValidationException();
+                }
+
+                this.ConfigurationService.Configuration.BoardHeight = value;
+            }
+        }
+
+        public int BoardWidth
+        {
+            get => this.ConfigurationService.Configuration.BoardWidth;
+
+            set
+            {
+                if(value < 200)
+                {
+                    throw new ValidationException();
+                }
+
+                this.ConfigurationService.Configuration.BoardWidth = value;
+            }
+        }
     }
 }

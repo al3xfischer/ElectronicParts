@@ -33,6 +33,7 @@ namespace ElectronicParts.Views
         {
             var preferences = new Preferences();
             preferences.ShowDialog();
+            this.ViewModel.UpdateBoardSize.Execute(null);
         }
 
         private void Node_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
