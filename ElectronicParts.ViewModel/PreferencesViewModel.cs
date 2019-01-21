@@ -24,6 +24,8 @@ namespace ElectronicParts.ViewModels
     /// </summary>
     public class PreferencesViewModel : BaseViewModel
     {
+        private string integerRuleValueText;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PreferencesViewModel"/> class.
         /// </summary>
@@ -55,7 +57,7 @@ namespace ElectronicParts.ViewModels
                 this.BoolRules.Remove(ruleVM);
                 configurationService.Configuration.BoolRules.Remove(ruleVM.Rule);
             });
-            
+
             this.StringRules = new ObservableCollection<RuleViewModel<string>>();
 
             this.IntRules = new ObservableCollection<RuleViewModel<int>>();
@@ -64,7 +66,7 @@ namespace ElectronicParts.ViewModels
 
             foreach (var stringRule in configurationService.Configuration.StringRules)
             {
-                this.StringRules.Add(new RuleViewModel<string>(stringRule, stringDeletionCommand));                
+                this.StringRules.Add(new RuleViewModel<string>(stringRule, stringDeletionCommand));
             }
 
             foreach (var intRule in configurationService.Configuration.IntRules)
@@ -77,7 +79,7 @@ namespace ElectronicParts.ViewModels
                 this.BoolRules.Add(new RuleViewModel<bool>(boolRule, boolDeletionCommand));
             }
 
-            this.ApplyCommand = new RelayCommand(obj => 
+            this.ApplyCommand = new RelayCommand(obj =>
             {
                 this.ConfigurationService.SaveConfiguration();
                 MessageBox.Show("Changes were saved successfully.", "Saved", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
@@ -87,7 +89,7 @@ namespace ElectronicParts.ViewModels
             {
                 if (!this.ConfigurationService.Configuration.StringRules.Any(rule => rule.Value == this.TempStringRule.Rule.Value))
                 {
-                    Rule<string> newRule = new Rule<string>(this.TempStringRule.Rule.Value, this.TempStringRule.Rule.Color, (value) =>
+                    Rule<string> newRule = new Rule<string>(this.TempStringRule.Rule.Value, this.TempStringRule.Color.ToString(), (value) =>
                     {
                         return !this.ConfigurationService.Configuration.StringRules.Any(rule => rule.Value == value);
                     });
@@ -97,13 +99,17 @@ namespace ElectronicParts.ViewModels
                     this.TempStringRule.Rule.Value = string.Empty;
                     this.TempStringRule.Color = (Color)ColorConverter.ConvertFromString("Black");
                 }
+            }, arg =>
+            {
+                return !this.ConfigurationService.Configuration.StringRules.Any(rule => rule.Value == this.TempStringRule.Rule.Value);
             });
 
             this.AddIntRuleCommand = new RelayCommand(obj =>
             {
-                if (!this.ConfigurationService.Configuration.IntRules.Any(rule => rule.Value == this.TempIntRule.Rule.Value))
+                var ruleValue = int.Parse(this.IntegerRuleValueText);
+                if (!this.ConfigurationService.Configuration.IntRules.Any(rule => rule.Value == ruleValue))
                 {
-                    Rule<int> newRule = new Rule<int>(this.TempIntRule.Rule.Value, this.TempIntRule.Rule.Color, (value) =>
+                    Rule<int> newRule = new Rule<int>(ruleValue, this.TempIntRule.Color.ToString(), (value) =>
                     {
                         return !this.ConfigurationService.Configuration.IntRules.Any(rule => rule.Value == value);
                     });
@@ -113,6 +119,18 @@ namespace ElectronicParts.ViewModels
                     this.TempIntRule.Rule.Value = 0;
                     this.TempIntRule.Color = (Color)ColorConverter.ConvertFromString("Black");
                 }
+            }, arg =>
+            {
+                if (!int.TryParse(this.IntegerRuleValueText, out int result))
+                {
+                    return false;
+                }
+                if (this.ConfigurationService.Configuration.IntRules.Any(rule => rule.Value == result))
+                {
+                    return false;
+                }
+
+                return true;
             });
 
             Rule<string> tempStringRule = new Rule<string>(string.Empty, "Black", (value) =>
@@ -154,6 +172,16 @@ namespace ElectronicParts.ViewModels
         /// <value>The command which is used to add a integer rule.</value>
         public ICommand AddIntRuleCommand { get; }
 
+        public string IntegerRuleValueText
+        {
+            get => integerRuleValueText;
+            set
+            {
+                int.Parse(value);
+                this.integerRuleValueText = value;
+            }
+        }
+
         /// <summary>
         /// Gets all string rule view models.
         /// </summary>
@@ -161,7 +189,7 @@ namespace ElectronicParts.ViewModels
         public ObservableCollection<RuleViewModel<string>> StringRules { get; }
 
         public RuleViewModel<string> TempStringRule { get; }
-                     
+
         /// <summary>
         /// Gets all integer rule view models.
         /// </summary>
