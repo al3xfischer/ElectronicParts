@@ -79,26 +79,37 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+
         /// <summary>
         /// Snaps to grid.
         /// </summary>
         /// <param name="gridSize">Size of the grid.</param>
-        /// <param name="floor">if set to true will floor value else will ceil value.</param>
+        /// <param name="floor">If set to true will floor value else will ceil value.</param>
         public void SnapToNewGrid(int gridSize, bool floor)
         {
-            int leftOffset;
-            leftOffset = this.Inputs.Count > 0 ? 10 : 0;
+            int leftOffset = this.Inputs.Count > 0 ? 10 : 0;
 
             if (floor)
             {
-                this.Left = Math.Max(this.Left.FloorTo(gridSize) - leftOffset, 0);
-                this.Top = Math.Max(this.Top.FloorTo(gridSize) - 2, 0);
+                if ((this.Left + leftOffset) % gridSize != 0)
+                {
+                    this.Left = Math.Max(this.Left.FloorTo(gridSize) - leftOffset, 0);
+                }
+                if (this.Top % gridSize != 0)
+                {
+                    this.Top = Math.Max(this.Top.FloorTo(gridSize), 0);
+                }
             }
             else
             {
-                this.Left = Math.Max(this.Left.CeilingTo(gridSize) + (gridSize - leftOffset), 0);
-                this.Top = Math.Max(this.Top.CeilingTo(gridSize) - 2, 0);
-
+                if ((this.Left + leftOffset) % gridSize != 0)
+                {
+                    this.Left = Math.Max(this.Left.CeilingTo(gridSize) - leftOffset, 0);
+                }
+                if (this.Top % gridSize != 0)
+                {
+                    this.Top = Math.Max(this.Top.CeilingTo(gridSize) , 0);
+                }
             }
         }
 
@@ -113,8 +124,14 @@ namespace ElectronicParts.ViewModels
             leftOffset = this.Inputs.Count > 0 ? 10 : 0;
 
 
-            this.Left = Math.Max(this.Left.RoundTo(gridSize) - leftOffset, 0);
-            this.Top = Math.Max(this.Top.RoundTo(gridSize) - 2, 0);
+            if ((this.Left + leftOffset) % gridSize != 0)
+            {
+                this.Left = Math.Max(this.Left.RoundTo(gridSize) - leftOffset, 0);
+            }
+            if (this.Top % gridSize != 0)
+            {
+                this.Top = Math.Max(this.Top.RoundTo(gridSize), 0);
+            }
         }
 
         public ObservableCollection<PinViewModel> Inputs { get; }
@@ -126,6 +143,8 @@ namespace ElectronicParts.ViewModels
         public string Label { get => this.Node.Label; }
 
         public string Description { get => this.Node.Description; }
+
+        public NodeType Type { get => this.Node.Type; }
 
         public IDisplayableNode Node { get; }
         public ICommand DeleteCommand { get; }

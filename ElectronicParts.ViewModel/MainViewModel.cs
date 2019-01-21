@@ -36,6 +36,8 @@ namespace ElectronicParts.ViewModels
 
         private readonly ILogger<MainViewModel> logger;
 
+        private readonly IAssemblyNameExtractorService assemblyNameExtractorService;
+
         private readonly IConfigurationService configurationService;
         private PinViewModel inputPin;
 
@@ -43,9 +45,11 @@ namespace ElectronicParts.ViewModels
 
         private readonly Timer updateMillisecondsPerLoopUpdateTimer;
 
+        private readonly Timer reSnappingTimer;
 
 
-        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger, IConfigurationService configurationService)
+
+        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger, IConfigurationService configurationService, IAssemblyNameExtractorService assemblyNameExtractorService)
         {
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
@@ -53,25 +57,32 @@ namespace ElectronicParts.ViewModels
             this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.assemblyNameExtractorService = assemblyNameExtractorService ?? throw new ArgumentNullException(nameof(assemblyNameExtractorService)); ;
             this.configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
             this.updateMillisecondsPerLoopUpdateTimer.Elapsed += UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
             this.updateMillisecondsPerLoopUpdateTimer.Start();
+            this.reSnappingTimer = new Timer(500);
+            this.reSnappingTimer.Elapsed += ReSnappingTimer_Elapsed;
+            this.reSnappingTimer.AutoReset = false;
             this.FramesPerSecond = 50;
+            this.SelectedCategory = this.NodeCategories.First();
 
             this.GridSnappingEnabled = true;
             this.GridSize = 10;
 
-            this.IncreaseGridSize = new RelayCommand(async arg =>
+            this.IncreaseGridSize = new RelayCommand(arg =>
             {
                 this.GridSize++;
-                await this.SnapAllNodesToGrid(true);
+                this.reSnappingTimer.Stop();
+                this.reSnappingTimer.Start();
             }, arg => this.GridSize < 30);
 
-            this.DecreaseGridSize = new RelayCommand(async arg =>
+            this.DecreaseGridSize = new RelayCommand(arg =>
             {
                 this.GridSize--;
-                await this.SnapAllNodesToGrid(false);
+                this.reSnappingTimer.Stop();
+                this.reSnappingTimer.Start();
             }, arg => this.GridSize > 5);
 
             this.SaveCommand = new RelayCommand(arg =>
@@ -96,12 +107,13 @@ namespace ElectronicParts.ViewModels
                 }
                 catch (SerializationException e)
                 {
-                    // TODO proper exception Handeling
-                    Debug.WriteLine("Failed deserialiszation");
+                    this.logger.LogError(e, $"An error occurred while deserializing ({nameof(this.LoadCommand)}).");
+                    Debug.WriteLine("Failed deserialization");
 
-                    var missingAssembly = new AssemblyNameExtractorService().ExtractAssemblyNameFromErrorMessage(e);
+                    var missingAssembly = this.assemblyNameExtractorService.ExtractAssemblyNameFromErrorMessage(e);
                     var result = MessageBox.Show($"There are missing assemblies: {missingAssembly}\nDo you want to add new assemblies?", "Loading Failed", MessageBoxButton.YesNo, MessageBoxImage.Error);
 
+                    // TODO What happens after MessageBox?
                 }
 
                 if (snapShot is null)
@@ -293,6 +305,11 @@ namespace ElectronicParts.ViewModels
             this.logger.LogInformation("Ctor MainVM done");
         }
 
+        private async void ReSnappingTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            await this.SnapAllNodesToGrid();
+        }
+
         private void UpdateMillisecondsPerLoopUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (this.executionService.IsEnabled)
@@ -321,6 +338,8 @@ namespace ElectronicParts.ViewModels
                 if (value >= 5 && value <= 30)
                 {
                     Set(ref this.gridSize, value);
+                    this.reSnappingTimer.Stop();
+                    this.reSnappingTimer.Start();
                 }
             }
         }
@@ -344,6 +363,27 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        public IEnumerable<string> NodeCategories
+        {
+            get
+            {
+                return Enum.GetNames(typeof(Shared.NodeType)).Prepend("All");
+            }
+        }
+
+        public string SelectedCategory
+        {
+            get => selectedCategory;
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                {
+                    Set(ref this.selectedCategory, value);
+                    this.FirePropertyChanged(nameof(this.AvailableNodes));
+                }
+            }
+        }
+
         public ObservableCollection<ConnectorViewModel> Connections
         {
             get => this.connections;
@@ -356,8 +396,15 @@ namespace ElectronicParts.ViewModels
 
         public ObservableCollection<NodeViewModel> AvailableNodes
         {
-            get => this.availableNodes;
+            get
+            {
+                
+                return this.availableNodes.Where(nodeVM =>
+                
+                   (Enum.GetName(typeof(NodeType), nodeVM.Type) == this.SelectedCategory || this.SelectedCategory == this.NodeCategories.First())
 
+                ).ToObservableCollection();
+            }
             set
             {
                 Set(ref this.availableNodes, value);
@@ -420,11 +467,12 @@ namespace ElectronicParts.ViewModels
         public async Task ReloadAssemblies()
         {
             await this.assemblyService.LoadAssemblies();
-            this.AvailableNodes.Clear();
+            this.availableNodes.Clear();
             foreach (var assembly in this.assemblyService.AvailableNodes.Select(node => new NodeViewModel(node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand)))
             {
-                this.AvailableNodes.Add(assembly);
+                this.availableNodes.Add(assembly);
             }
+            this.FirePropertyChanged(nameof(this.AvailableNodes));
         }
 
         private async Task SnapAllNodesToGrid(bool floor)
@@ -439,9 +487,9 @@ namespace ElectronicParts.ViewModels
                         {
                             nodeVm.SnapToNewGrid(this.GridSize, floor);
                         }
-                        catch
+                        catch (Exception e)
                         {
-                            //TODO exception handeling
+                            this.logger.LogError(e, $"Unexpected error in {nameof(this.SnapAllNodesToGrid)}");
                         }
                     }
                 }
@@ -460,9 +508,9 @@ namespace ElectronicParts.ViewModels
                         {
                             nodeVm.SnapToNewGrid(this.GridSize);
                         }
-                        catch
+                        catch (Exception e)
                         {
-                            //TODO exception handeling
+                            this.logger.LogError(e, $"Unexpected error in {nameof(this.SnapAllNodesToGrid)}");
                         }
                     }
                 }
@@ -473,6 +521,7 @@ namespace ElectronicParts.ViewModels
         private long milisecondsPerLoop;
         private int gridSize;
         private bool gridSnappingEnabled;
+        private string selectedCategory;
 
         public int FramesPerSecond
         {

@@ -19,6 +19,7 @@ namespace ElectronicParts.Services.Implementations
     using System.Reflection;
     using System.Threading.Tasks;
     using ElectronicParts.Services.Interfaces;
+    using Microsoft.Extensions.Logging;
     using Shared;
 
     /// <summary>
@@ -34,6 +35,11 @@ namespace ElectronicParts.Services.Implementations
         private readonly string assemblyPath;
 
         /// <summary>
+        /// Contains the logger.
+        /// </summary>
+        private readonly ILogger<AssemblyService> logger;
+
+        /// <summary>
         /// The <list type="IDisplayableNode"/> 
         /// </summary>
         private List<IDisplayableNode> nodeList;
@@ -41,8 +47,10 @@ namespace ElectronicParts.Services.Implementations
         /// <summary>
         /// Initializes a new instance of the <see cref="AssemblyService"/> class.
         /// </summary>
-        public AssemblyService()
+        public AssemblyService(ILogger<AssemblyService> logger)
         {
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
             // Generating the assembly path in the same folder as the exe.
             // C:\Programme\ElectronicParts\electronicParts.exe
             // C:\Programme\ElectronicParts\assemblies\????.dll
@@ -78,7 +86,7 @@ namespace ElectronicParts.Services.Implementations
             }
             catch (Exception e)
             {
-                // TODO proper exception-handeling
+                this.logger.LogError(e, $"Error while getting files from {this.assemblyPath}");
                 Debug.WriteLine($"{e.Message}");
                 return;
             }
@@ -116,7 +124,7 @@ namespace ElectronicParts.Services.Implementations
                     }
                     catch (Exception e)
                     {
-                        // TODO proper exception-handeling
+                        this.logger.LogError(e, $"Error while retrieving {nameof(IDisplayableNode)} types of .dll files");
                         Debug.WriteLine($"{e.Message}");
                     }
                 }
