@@ -60,7 +60,7 @@
         </Menu>
         <DockPanel LastChildFill="True">
             <Border DockPanel.Dock="Top" BorderBrush="DarkGray" BorderThickness="0 0 0 1.4">
-                <ComboBox Height="41" BorderThickness="0" ItemsSource="{Binding ViewModel.NodeCategories}" SelectedItem="{Binding ViewModel.SelectedCategory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <ComboBox Height="41" Margin="0 0 1 0" BorderThickness="0" ItemsSource="{Binding ViewModel.NodeCategories}" SelectedItem="{Binding ViewModel.SelectedCategory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <ComboBox.Effect>
                             <DropShadowEffect Opacity="0.4" ShadowDepth="1" BlurRadius="1" Direction="270" />
                     </ComboBox.Effect>
@@ -71,52 +71,53 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </Border>
-            <ListView DockPanel.Dock="Top"
+                <ListView DockPanel.Dock="Top"
                       Height="Auto"
+                      BorderThickness="0 0 1 0"
                       ItemsSource="{Binding ViewModel.AvailableNodes}"
                       SelectedItem="{Binding ViewModel.SelectedNodeInformation}"
                       Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}"
                       Name="AvilableNodes"
                       PreviewMouseLeftButtonDown="ListViewItem_MouseLeftButtonDown">
-                <ListView.Style>
-                    <Style TargetType="ListView">
-                        <Style.Triggers>
-                            <DataTrigger Value="false">
-                                <DataTrigger.Binding>
-                                    <Binding Path="ViewModel.CanAddNode"/>
-                                </DataTrigger.Binding>
-                                <Setter Property="Background" Value="LightGray"/>
-                                <Setter Property="IsHitTestVisible" Value="False"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <Style.Setters>
-                            <Setter Property="Background" Value="WhiteSmoke"/>
-                        </Style.Setters>
-                    </Style>
-                </ListView.Style>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Style.Triggers>
-                            <DataTrigger Value="False">
-                                <DataTrigger.Binding>
-                                    <Binding Path="ViewModel.CanAddNode" ElementName="mainW"/>
-                                </DataTrigger.Binding>
-                                <Setter Property="Opacity" Value="0.4"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <Style.Setters>
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="Opacity" Value="1"/>
-                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseLeftButtonDown"/>
-                        </Style.Setters>
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
+                    <ListView.Style>
+                        <Style TargetType="ListView">
+                            <Style.Triggers>
+                                <DataTrigger Value="false">
+                                    <DataTrigger.Binding>
+                                        <Binding Path="ViewModel.CanAddNode"/>
+                                    </DataTrigger.Binding>
+                                    <Setter Property="Background" Value="LightGray"/>
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                            <Style.Setters>
+                                <Setter Property="Background" Value="WhiteSmoke"/>
+                            </Style.Setters>
+                        </Style>
+                    </ListView.Style>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Style.Triggers>
+                                <DataTrigger Value="False">
+                                    <DataTrigger.Binding>
+                                        <Binding Path="ViewModel.CanAddNode" ElementName="mainW"/>
+                                    </DataTrigger.Binding>
+                                    <Setter Property="Opacity" Value="0.4"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                            <Style.Setters>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Opacity" Value="1"/>
+                                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseLeftButtonDown"/>
+                            </Style.Setters>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
         </DockPanel>
         
 
         <!-- Controls and ItemsDisplay -->
-        <DockPanel Margin="0 1 0 0" Background="LightGray" DockPanel.Dock="Right">
+        <DockPanel Margin="-1 1 0 0" Background="LightGray" DockPanel.Dock="Right">
             <Border Margin="0" DockPanel.Dock="Top" BorderThickness="1 0 0 1" BorderBrush="DarkGray">
                 <!-- Controls -->
                 <DockPanel Background="WhiteSmoke" Height="40px" LastChildFill="False">
@@ -211,7 +212,7 @@
 
             <!-- Nodes Display -->
             <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <ItemsControl DockPanel.Dock="Bottom" ItemsSource="{StaticResource DisplayItems}" Background="White" >
+                <ItemsControl HorizontalAlignment="Stretch" BorderBrush="DarkGray" BorderThickness="1 0 0 0" DockPanel.Dock="Bottom" ItemsSource="{StaticResource DisplayItems}" Background="White" >
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type vm:NodeViewModel}">
                             <local:Node MouseLeftButtonDown="Node_MouseLeftButtonDown" MouseLeftButtonUp="Node_MouseLeftButtonUp" >
@@ -244,7 +245,7 @@
                     </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas IsItemsHost="True" Loaded="ItemsCanvas_Loaded" x:Name="ItemsCanvas" Width="{Binding ViewModel.BoardWidth}" Height="{Binding ViewModel.BoardHeight}" >
+                            <Canvas HorizontalAlignment="Center" IsItemsHost="True" Loaded="ItemsCanvas_Loaded" x:Name="ItemsCanvas" Width="{Binding ViewModel.BoardWidth}" Height="{Binding ViewModel.BoardHeight}" >
                                 <Canvas.Background>
                                     <DrawingBrush TileMode="Tile"
                                      ViewportUnits="Absolute">
