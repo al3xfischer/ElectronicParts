@@ -113,7 +113,10 @@ namespace ElectronicParts.ViewModels
                     var missingAssembly = this.assemblyNameExtractorService.ExtractAssemblyNameFromErrorMessage(e);
                     var result = MessageBox.Show($"There are missing assemblies: {missingAssembly}\nDo you want to add new assemblies?", "Loading Failed", MessageBoxButton.YesNo, MessageBoxImage.Error);
 
-                    // TODO What happens after MessageBox?
+                    if(result == MessageBoxResult.Yes)
+                    {
+                        this.AddAssembly?.Invoke();   
+                    }
                 }
 
                 if (snapShot is null)
@@ -383,6 +386,8 @@ namespace ElectronicParts.ViewModels
                 }
             }
         }
+
+        public Action AddAssembly { get; set; }
 
         public ObservableCollection<ConnectorViewModel> Connections
         {
