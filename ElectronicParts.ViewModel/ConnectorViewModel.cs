@@ -1,10 +1,6 @@
 ﻿using ElectronicParts.Models;
 using Shared;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ElectronicParts.ViewModels
@@ -17,6 +13,8 @@ namespace ElectronicParts.ViewModels
             this.Input = input ?? throw new ArgumentNullException(nameof(input));
             this.Output = output ?? throw new ArgumentNullException(nameof(output));
             this.DeleteCommand = deletionCommand ?? throw new ArgumentNullException(nameof(deletionCommand));
+            this.Input.OnValueChanged += this.RefreshPins;
+            this.Output.OnValueChanged += this.RefreshPins;
         }
 
         public Connector Connector { get; }
@@ -35,6 +33,12 @@ namespace ElectronicParts.ViewModels
         public void Update()
         {
             this.FirePropertyChanged(nameof(CurrentValue));
+        }
+
+        private void RefreshPins(object sender, EventArgs e)
+        {
+            this.Output?.Refresh();
+            this.Input?.Refresh();
         }
     }
 }

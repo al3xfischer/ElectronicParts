@@ -45,6 +45,15 @@ namespace ElectronicParts.ViewModels
             this.ActivateCommand = new RelayCommand(arg =>
             {
                 this.Node.Activate();
+                foreach (var input in this.Inputs)
+                {
+                    input.Update();
+                }
+
+                foreach (var output in this.Outputs)
+                {
+                    output.Update();
+                }
             });
 
             this.Node.PictureChanged += NodePictureChanged;

@@ -26,7 +26,7 @@
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="Black"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Executing}" Value="True">
+                                <DataTrigger Binding="{Binding Path=Executing}" Value="True">
                                     <Setter Property="Background" Value="{Binding CurrentValue, Converter={StaticResource valueToColor}}"/>
                                 </DataTrigger>
                             </Style.Triggers>

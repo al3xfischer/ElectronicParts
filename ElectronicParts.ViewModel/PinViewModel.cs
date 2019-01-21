@@ -18,7 +18,13 @@ namespace ElectronicParts.ViewModels
             this.Pin = pin ?? throw new ArgumentNullException(nameof(pin));
             this.ConnectCommand = connectCommand ?? throw new ArgumentNullException(nameof(connectCommand));
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
+            this.executionService.OnIsEnabledChanged += (sender, e) =>
+            {
+                this.Refresh();
+            };
         }
+
+        public event EventHandler OnValueChanged;
 
         public int Left { get => this.left; set { Set(ref this.left, value); } }
 
@@ -33,6 +39,17 @@ namespace ElectronicParts.ViewModels
         public bool Executing
         {
             get => this.executionService.IsEnabled;
+        }
+
+        public void Refresh()
+        {
+            // To update all bindings
+            this.FirePropertyChanged(string.Empty);
+        }
+
+        public void Update()
+        {
+            this.OnValueChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
