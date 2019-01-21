@@ -27,6 +27,18 @@ namespace ElectronicParts.ViewModels
             this.Color = (Color)ColorConverter.ConvertFromString(rule.Color);
         }
 
+        public T Value
+        {
+            get
+            {
+                return this.Rule.Value;
+            }
+            set
+            {
+                this.Rule.Value = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the color of the connection when the rule is active.
         /// </summary>
