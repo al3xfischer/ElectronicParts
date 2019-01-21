@@ -33,8 +33,7 @@ namespace ElectronicParts.Components
         public NodeType Type => NodeType.Logic;
 
         public Bitmap Picture => Properties.Resources.Converter;
-
-        [field: NonSerialized]
+        
         public event EventHandler PictureChanged;
 
         public void Activate()
