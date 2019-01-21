@@ -10,6 +10,7 @@
 
     <!-- Resources -->
     <UserControl.Resources>
+        <converter:ValueColorConverter x:Key="valueToColor"/>
 
         <!-- ListViewStyle -->
         <Style TargetType="ListView">
@@ -20,7 +21,17 @@
         <!-- Pin -->
         <DataTemplate x:Key="PinTemplate">
             <Button Width="10" Margin="-7 3 -7 3" Padding="0 4 0 4" BorderThickness="0" Background="Transparent" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
-                <Border Height="2" Width="11" Padding="0" Background="Black">
+                <Border Height="2" Width="11" Padding="0" >
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Black"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Executing}" Value="True">
+                                    <Setter Property="Background" Value="{Binding CurrentValue, Converter={StaticResource valueToColor}}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
                 </Border>
             </Button>
         </DataTemplate>
