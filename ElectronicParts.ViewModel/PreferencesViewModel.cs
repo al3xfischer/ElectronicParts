@@ -1,34 +1,31 @@
-﻿using ElectronicParts.ViewModels.Commands;
-using ElectronicParts.Models;
-using ElectronicParts.Services;
-using ElectronicParts.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows;
+﻿// ***********************************************************************
+// Assembly         : ElectronicParts.ViewModels
+// Author           : Peter Helf
+// ***********************************************************************
+// <copyright file="PreferencesViewModel.cs" company="FHWN">
+//     Copyright ©  2019
+// </copyright>
+// <summary>Represents the PreferencesViewModel class of the ElectronicParts programm</summary>
+// ***********************************************************************
 
 namespace ElectronicParts.ViewModels
 {
+    using System.Collections.ObjectModel;
+    using System.Windows;
+    using System.Windows.Input;
+    using ElectronicParts.Models;
+    using ElectronicParts.Services.Interfaces;
+    using ElectronicParts.ViewModels.Commands;
+
+    /// <summary>
+    /// The view model used for the preferences window.
+    /// </summary>
     public class PreferencesViewModel : BaseViewModel
     {
-        public IConfigurationService ConfigurationService { get; }
-
-        public ICommand ApplyCommand { get; }
-        public ICommand AddStringRuleCommand { get; }
-        public ICommand AddIntRuleCommand { get; }
-        public ICommand AddBoolRuleCommand { get; }
-
-        public ObservableCollection<RuleViewModel<string>> StringRules { get; }
-
-        public ObservableCollection<RuleViewModel<int>> IntRules { get; }
-
-        public ObservableCollection<RuleViewModel<bool>> BoolRules { get; }
-        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreferencesViewModel"/> class.
+        /// </summary>
+        /// <param name="configurationService">The configuration service of the ElectronicParts program.</param>
         public PreferencesViewModel(IConfigurationService configurationService)
         {
             this.ConfigurationService = configurationService;
@@ -86,7 +83,7 @@ namespace ElectronicParts.ViewModels
 
             this.AddStringRuleCommand = new RelayCommand(obj =>
             {
-                Rule<string> newRule = new Rule<string>("", "Black");
+                Rule<string> newRule = new Rule<string>(string.Empty, "Black");
                 this.StringRules.Add(new RuleViewModel<string>(newRule, stringDeletionCommand));
                 configurationService.Configuration.StringRules.Add(newRule);
             });
@@ -105,5 +102,53 @@ namespace ElectronicParts.ViewModels
                 configurationService.Configuration.BoolRules.Add(newRule);
             });
         }
+
+        /// <summary>
+        /// Gets the configuration service of the ElectronicParts program.
+        /// </summary>
+        /// <value>The configuration service of the ElectronicParts program.</value>
+        public IConfigurationService ConfigurationService { get; }
+
+        /// <summary>
+        /// Gets the command which is  used to save changes made to the preferences in a file.
+        /// </summary>
+        /// <value>The command which is  used to save changes made to the preferences in a file.</value>
+        public ICommand ApplyCommand { get; }
+
+        /// <summary>
+        /// Gets the command which is used to add a string rule.
+        /// </summary>
+        /// <value>The command which is used to add a string rule.</value>
+        public ICommand AddStringRuleCommand { get; }
+
+        /// <summary>
+        /// Gets the command which is used to add a integer rule.
+        /// </summary>
+        /// <value>The command which is used to add a integer rule.</value>
+        public ICommand AddIntRuleCommand { get; }
+
+        /// <summary>
+        /// Gets the command which is used to add a boolean rule.
+        /// </summary>
+        /// <value>The command which is used to add a boolean rule.</value>
+        public ICommand AddBoolRuleCommand { get; }
+
+        /// <summary>
+        /// Gets all string rule view models.
+        /// </summary>
+        /// <value>All string rule view models.</value>
+        public ObservableCollection<RuleViewModel<string>> StringRules { get; }
+
+        /// <summary>
+        /// Gets all integer rule view models.
+        /// </summary>
+        /// <value>All integer rule view models.</value>
+        public ObservableCollection<RuleViewModel<int>> IntRules { get; }
+
+        /// <summary>
+        /// Gets all boolean rule view models.
+        /// </summary>
+        /// <value>All boolean rule view models.</value>
+        public ObservableCollection<RuleViewModel<bool>> BoolRules { get; }
     }
 }
