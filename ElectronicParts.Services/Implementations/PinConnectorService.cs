@@ -102,16 +102,12 @@ namespace ElectronicParts.Services.Implementations
                 return false;
             }
 
-            // Counting the connections for the output pin (one outputpin can supply multiple inputpins)
-            // In case this is the only connection for this outputPin we set the pinvalue to null to prevent further influences between the two pins
-            // In case the output pin has multiple connections we only remove the common value from the one inputpin that is to be deleted
-            if (this.ExistingConnections.Count(conn => conn.OutputPin == connectorToDelete.OutputPin) == 1)
+            // Setting the inputPin of the connection to a new IValue instance.
+            if (!this.TryRefreshPinValue(connectorToDelete.InputPin))
             {
-                connectorToDelete.OutputPin.Value = null;
+                return false;
             }
 
-            // In every case we will remove the connection from our known connections. And return true.
-            connectorToDelete.InputPin.Value = null;
             this.ExistingConnections.Remove(connectorToDelete);
             return true;
         }

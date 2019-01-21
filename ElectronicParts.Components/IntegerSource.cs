@@ -39,8 +39,7 @@ namespace ElectronicParts.Components
         public NodeType Type => NodeType.Source;
 
         public Bitmap Picture => Properties.Resources.IntegerSource;
-
-        [field: NonSerialized]
+        
         public event EventHandler PictureChanged;
 
         /// <summary>

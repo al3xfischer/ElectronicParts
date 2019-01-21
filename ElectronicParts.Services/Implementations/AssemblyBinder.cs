@@ -34,6 +34,7 @@ namespace ElectronicParts.Services.Implementations
                 // TODO proper exception handeling
                 Debug.WriteLine(e.Message);
             }
+
             return wantedType;
         }
     }

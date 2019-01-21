@@ -61,8 +61,7 @@ namespace ElectronicParts.Components
                 }
             }
         }
-
-        [field: NonSerialized]
+        
         public event EventHandler PictureChanged;
 
         public void Activate()
