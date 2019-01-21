@@ -28,6 +28,7 @@ namespace ElectronicParts.Views
         {
             this.DataContext = this;
             this.ViewModel = Container.Resolve<MainViewModel>();
+            this.ViewModel.AddAssembly = () => this.AddAssembly_Click(this, new RoutedEventArgs());
             this.logger = Container.Resolve<ILogger<MainWindow>>();
         }
 

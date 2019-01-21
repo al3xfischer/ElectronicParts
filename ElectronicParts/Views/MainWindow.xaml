@@ -8,9 +8,10 @@
         xmlns:converters="clr-namespace:ElectronicParts.Converter"
         xmlns:shared="clr-namespace:Shared;assembly=Shared"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        x:Name="mainW"
         mc:Ignorable="d"
         d:DataContext="{Binding Source={d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}}"
-        Title="Electronic Parts" MinWidth="500" MinHeight="400" WindowState="Maximized" MouseMove="Window_MouseMove" d:DesignWidth="1028.2">
+        Title="Electronic Parts" MinWidth="1000" MinHeight="400" WindowState="Maximized" MouseMove="Window_MouseMove" d:DesignWidth="1028.2">
 
     <!-- Resources -->
     <Window.Resources>
@@ -57,17 +58,61 @@
                 <MenuItem Header="_Exit" Command="{Binding ViewModel.ExitCommand}" />
             </MenuItem>
         </Menu>
-        <StackPanel>
-            <ComboBox ItemsSource="{Binding ViewModel.NodeCategories}" SelectedItem="{Binding ViewModel.SelectedCategory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></ComboBox>
-            <ListView ItemsSource="{Binding ViewModel.AvailableNodes}" IsEnabled="{Binding ViewModel.CanAddNode}" SelectedItem="{Binding ViewModel.SelectedNodeInformation}" DockPanel.Dock="Left" Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}" Name="AvilableNodes" PreviewMouseLeftButtonDown="ListViewItem_MouseLeftButtonDown">
+        <DockPanel LastChildFill="True">
+            <Border DockPanel.Dock="Top" BorderBrush="DarkGray" BorderThickness="0 0 0 1.4">
+                <ComboBox Height="41" BorderThickness="0" ItemsSource="{Binding ViewModel.NodeCategories}" SelectedItem="{Binding ViewModel.SelectedCategory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <ComboBox.Effect>
+                            <DropShadowEffect Opacity="0.4" ShadowDepth="1" BlurRadius="1" Direction="270" />
+                    </ComboBox.Effect>
+                    <ComboBox.ItemTemplate>
+                        <ItemContainerTemplate>
+                            <ComboBoxItem Content="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"/>
+                        </ItemContainerTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Border>
+            <ListView DockPanel.Dock="Top"
+                      Height="Auto"
+                      ItemsSource="{Binding ViewModel.AvailableNodes}"
+                      SelectedItem="{Binding ViewModel.SelectedNodeInformation}"
+                      Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}"
+                      Name="AvilableNodes"
+                      PreviewMouseLeftButtonDown="ListViewItem_MouseLeftButtonDown">
+                <ListView.Style>
+                    <Style TargetType="ListView">
+                        <Style.Triggers>
+                            <DataTrigger Value="false">
+                                <DataTrigger.Binding>
+                                    <Binding Path="ViewModel.CanAddNode"/>
+                                </DataTrigger.Binding>
+                                <Setter Property="Background" Value="LightGray"/>
+                                <Setter Property="IsHitTestVisible" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                        <Style.Setters>
+                            <Setter Property="Background" Value="WhiteSmoke"/>
+                        </Style.Setters>
+                    </Style>
+                </ListView.Style>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseLeftButtonDown"/>
+                        <Style.Triggers>
+                            <DataTrigger Value="False">
+                                <DataTrigger.Binding>
+                                    <Binding Path="ViewModel.CanAddNode" ElementName="mainW"/>
+                                </DataTrigger.Binding>
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                        <Style.Setters>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Opacity" Value="1"/>
+                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseLeftButtonDown"/>
+                        </Style.Setters>
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-        </StackPanel>
+        </DockPanel>
         
 
         <!-- Controls and ItemsDisplay -->
@@ -76,7 +121,7 @@
                 <!-- Controls -->
                 <DockPanel Background="WhiteSmoke" Height="40px" LastChildFill="False">
                     <DockPanel.Effect>
-                        <DropShadowEffect Opacity="0.4" ShadowDepth="5" BlurRadius="5" Direction="270" />
+                        <DropShadowEffect Opacity="0.4" ShadowDepth="5" BlurRadius="2" Direction="270" />
                     </DockPanel.Effect>
                     <DockPanel.Resources>
                         <Style x:Name="ImageStyle" TargetType="{x:Type Image}">
@@ -124,6 +169,9 @@
                     <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ResetAllConnectionsCommand}">
                         <Image Source="/Resources/reset.png"/>
                     </Button>
+                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ClearAllNodesCommand}">
+                        <Image Source="/Resources/clear.png"/>
+                    </Button>
                     <Border BorderBrush="DarkGray" BorderThickness="1px" Margin="2px" Padding="3px">
                         <DockPanel DockPanel.Dock="Left" HorizontalAlignment="Left"  MaxWidth="300px" Margin="10 0 0 0">
                             <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center" Height="20px" TextAlignment="Center" Text="FPS"></TextBlock>
@@ -163,13 +211,15 @@
 
             <!-- Nodes Display -->
             <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <ItemsControl DockPanel.Dock="Right" ItemsSource="{StaticResource DisplayItems}" Background="White" >
+                <ItemsControl DockPanel.Dock="Bottom" ItemsSource="{StaticResource DisplayItems}" Background="White" >
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type vm:NodeViewModel}">
                             <local:Node MouseLeftButtonDown="Node_MouseLeftButtonDown" MouseLeftButtonUp="Node_MouseLeftButtonUp" >
                                 <local:Node.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
+                                        <MenuItem Header="Increase Width" Command="{Binding IncreaseWidthCommand}"/>
+                                        <MenuItem Header="Decrease Width" Command="{Binding DecreaseWidthCommand}"/>
                                     </ContextMenu>
                                 </local:Node.ContextMenu>
                             </local:Node>
