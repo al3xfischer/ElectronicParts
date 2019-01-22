@@ -11,6 +11,7 @@ using System.Linq;
 using System;
 using Microsoft.Extensions.Logging;
 using ElectronicParts.Services.Interfaces;
+using System.Windows.Media;
 
 namespace ElectronicParts.Views
 {
@@ -26,6 +27,10 @@ namespace ElectronicParts.Views
         private Canvas canvas;
 
         private NodeViewModel currentNode;
+
+        private Point ancorPoint;
+
+        private bool isDragging;
 
         public MainWindow()
         {
@@ -60,6 +65,17 @@ namespace ElectronicParts.Views
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
+            if (isDragging)
+            {
+                var rect = this.FindUid("selectRect") as FrameworkElement;
+                var currentPoint = e.GetPosition(this.canvas);
+                Canvas.SetLeft(rect, Math.Min(currentPoint.X, this.ancorPoint.X));
+                Canvas.SetLeft(rect, Math.Min(currentPoint.Y, this.ancorPoint.Y));
+
+               rect.Width = Math.Abs(currentPoint.X - ancorPoint.X);
+               rect.Height = Math.Abs(currentPoint.Y - ancorPoint.Y);
+            }
+
             if (e.LeftButton == MouseButtonState.Pressed && !(currentNode is null))
             {
                 var point = e.GetPosition(this.canvas);
@@ -204,6 +220,20 @@ namespace ElectronicParts.Views
         private void DockPanel_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.ViewModel.ResetPreviewLine();
+        }
+
+        private void ItemsCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if ((e.OriginalSource as FrameworkElement).DataContext as NodeViewModel is null && e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.isDragging = true;
+                this.ancorPoint = e.GetPosition(this.canvas);
+            }
+        }
+
+        private void ItemsCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.isDragging = false;
         }
     }
 }

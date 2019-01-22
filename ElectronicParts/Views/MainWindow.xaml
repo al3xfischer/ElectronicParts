@@ -35,6 +35,7 @@
             <CollectionContainer Collection="{Binding  Source={StaticResource Nodes}}"/>
             <CollectionContainer Collection="{Binding  Source={StaticResource Connections}}"/>
             <CollectionContainer Collection="{Binding  Source={StaticResource PreviewLines}}"/>
+            <Rectangle Name="selectionRectangle" Fill="LightBlue" Opacity="0.7" Width="40" Height="40" x:Uid="selectRect" />
         </CompositeCollection>
 
     </Window.Resources>
@@ -305,7 +306,7 @@
                     </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas HorizontalAlignment="Center" IsItemsHost="True" Loaded="ItemsCanvas_Loaded" x:Name="ItemsCanvas" Width="{Binding ViewModel.BoardWidth}" Height="{Binding ViewModel.BoardHeight}" >
+                            <Canvas HorizontalAlignment="Center" IsItemsHost="True" Loaded="ItemsCanvas_Loaded" MouseLeftButtonUp="ItemsCanvas_MouseLeftButtonUp" MouseLeftButtonDown="ItemsCanvas_MouseLeftButtonDown" x:Name="ItemsCanvas" Width="{Binding ViewModel.BoardWidth}" Height="{Binding ViewModel.BoardHeight}" >
                                 <Canvas.Background>
                                     <DrawingBrush TileMode="Tile"
                                      ViewportUnits="Absolute">
