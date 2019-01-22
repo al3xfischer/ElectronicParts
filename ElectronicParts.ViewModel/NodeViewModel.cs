@@ -113,7 +113,14 @@ namespace ElectronicParts.ViewModels
 
             set
             {
-                Set(ref this.top, value);
+                if (value < 0)
+                {
+                    Set(ref this.top, 0);
+                }
+                else
+                {
+                    Set(ref this.top, value);
+                }
                 this.UpdateTop(this.Inputs?.Select((p, i) => Tuple.Create(p, i)), this.Top);
                 this.UpdateTop(this.Outputs?.Select((p, i) => Tuple.Create(p, i)), this.Top);
             }
@@ -125,7 +132,14 @@ namespace ElectronicParts.ViewModels
 
             set
             {
-                Set(ref this.left, value);
+                if (value < 0)
+                {
+                    Set(ref this.left, 0);
+                }
+                else
+                {
+                    Set(ref this.left, value);
+                }
                 this.UpdateLeft(this.Inputs, this.left);
                 if (this.Inputs is null || this.Inputs.Count == 0)
                 {
