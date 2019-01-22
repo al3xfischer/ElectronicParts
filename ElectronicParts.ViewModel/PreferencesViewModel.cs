@@ -22,6 +22,7 @@ namespace ElectronicParts.ViewModels
     using System.ComponentModel;
     using System.Collections;
     using System.Collections.Generic;
+    using System;
 
     /// <summary>
     /// The view model used for the preferences window.
@@ -160,42 +161,16 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         public void SortByValue()
         {
-            List<RuleViewModel<string>> sortedStringRules = new List<RuleViewModel<string>>();
-            List<RuleViewModel<int>> sortedIntRules = new List<RuleViewModel<int>>();
-            List<RuleViewModel<bool>> sortedBoolRules = new List<RuleViewModel<bool>>();
+            this.StringRules.SortRuleCollection(this.sortDirection);
+            this.IntRules.SortRuleCollection(this.sortDirection);
 
             if (this.sortDirection == ListSortDirection.Ascending)
             {
-                sortedStringRules = this.StringRules.OrderBy(rule => rule.Value).ToList();
-                sortedIntRules = this.IntRules.OrderBy(rule => rule.Value).ToList();
-                sortedBoolRules = this.BoolRules.OrderBy(rule => rule.Value).ToList();
                 this.sortDirection = ListSortDirection.Descending;
             }
             else
             {
-                sortedStringRules = this.StringRules.OrderByDescending(rule => rule.Value).ToList();
-                sortedIntRules = this.IntRules.OrderByDescending(rule => rule.Value).ToList();
-                sortedBoolRules = this.BoolRules.OrderByDescending(rule => rule.Value).ToList();
                 this.sortDirection = ListSortDirection.Ascending;
-            }
-
-            this.StringRules.Clear();
-            this.IntRules.Clear();
-            this.BoolRules.Clear();
-
-            foreach (var rule in sortedStringRules)
-            {
-                this.StringRules.Add(rule);
-            }
-
-            foreach (var rule in sortedIntRules)
-            {
-                this.IntRules.Add(rule);
-            }
-
-            foreach (var rule in sortedBoolRules)
-            {
-                this.BoolRules.Add(rule);
             }
         }
 
