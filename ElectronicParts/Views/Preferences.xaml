@@ -47,7 +47,8 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}"/>
-                                <GridViewColumn Header="Value">
+                                <GridViewColumn>
+                                    <GridViewColumnHeader Content="Value" Click="GridViewValueColumnHeader_Click"/>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBox Width="90" Height="Auto" Text="{Binding Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/>
@@ -77,7 +78,8 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Color" CellTemplate="{StaticResource colorPicker}"/>
-                                <GridViewColumn Header="Value">
+                                <GridViewColumn>
+                                    <GridViewColumnHeader Content="Value" Click="GridViewValueColumnHeader_Click"/>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBox Width="90" Height="Auto" PreviewTextInput="PreviewNumberInput" Text="{Binding Value, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/>

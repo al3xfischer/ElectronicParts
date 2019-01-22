@@ -19,6 +19,9 @@ namespace ElectronicParts.ViewModels
     using ElectronicParts.Models;
     using ElectronicParts.Services.Interfaces;
     using ElectronicParts.ViewModels.Commands;
+    using System.ComponentModel;
+    using System.Collections;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The view model used for the preferences window.
@@ -26,6 +29,7 @@ namespace ElectronicParts.ViewModels
     public class PreferencesViewModel : BaseViewModel
     {
         private string integerRuleValueText;
+        private ListSortDirection sortDirection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreferencesViewModel"/> class.
@@ -149,6 +153,50 @@ namespace ElectronicParts.ViewModels
             });
 
             this.TempIntRule = new RuleViewModel<int>(tempIntRule, intDeletionCommand);
+        }
+
+        /// <summary>
+        /// Sorts the rule lists.
+        /// </summary>
+        public void SortByValue()
+        {
+            List<RuleViewModel<string>> sortedStringRules = new List<RuleViewModel<string>>();
+            List<RuleViewModel<int>> sortedIntRules = new List<RuleViewModel<int>>();
+            List<RuleViewModel<bool>> sortedBoolRules = new List<RuleViewModel<bool>>();
+
+            if (this.sortDirection == ListSortDirection.Ascending)
+            {
+                sortedStringRules = this.StringRules.OrderBy(rule => rule.Value).ToList();
+                sortedIntRules = this.IntRules.OrderBy(rule => rule.Value).ToList();
+                sortedBoolRules = this.BoolRules.OrderBy(rule => rule.Value).ToList();
+                this.sortDirection = ListSortDirection.Descending;
+            }
+            else
+            {
+                sortedStringRules = this.StringRules.OrderByDescending(rule => rule.Value).ToList();
+                sortedIntRules = this.IntRules.OrderByDescending(rule => rule.Value).ToList();
+                sortedBoolRules = this.BoolRules.OrderByDescending(rule => rule.Value).ToList();
+                this.sortDirection = ListSortDirection.Ascending;
+            }
+
+            this.StringRules.Clear();
+            this.IntRules.Clear();
+            this.BoolRules.Clear();
+
+            foreach (var rule in sortedStringRules)
+            {
+                this.StringRules.Add(rule);
+            }
+
+            foreach (var rule in sortedIntRules)
+            {
+                this.IntRules.Add(rule);
+            }
+
+            foreach (var rule in sortedBoolRules)
+            {
+                this.BoolRules.Add(rule);
+            }
         }
 
         /// <summary>
