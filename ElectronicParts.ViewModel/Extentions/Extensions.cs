@@ -44,6 +44,11 @@ namespace System
             return input.RoundTo(roundTo);
         }
 
+        public static double RoundTo(this double input, int roundTo)
+        {
+            return Math.Round(input / roundTo) * roundTo;
+        }
+
         public static int FloorTo(this int input, int floorTo)
         {
             return (int)Math.Floor((double)input / floorTo) * floorTo;
@@ -54,6 +59,11 @@ namespace System
             return input.FloorTo(floorTo);
         }
 
+        public static double FloorTo(this double input, int floorTo)
+        {
+            return Math.Floor(input / floorTo) * floorTo;
+        }
+
         public static int CeilingTo(this int input, int ceilingTo)
         {
             return (int)Math.Ceiling((double)input / ceilingTo) * ceilingTo;
@@ -62,6 +72,11 @@ namespace System
         public static long CeilingTo(this long input, int ceilingTo)
         {
             return input.CeilingTo(ceilingTo);
+        }
+
+        public static double CeilingTo(this double input, int ceilingTo)
+        {
+            return Math.Ceiling(input / ceilingTo) * ceilingTo;
         }
     }
 }

@@ -17,6 +17,7 @@ namespace ElectronicParts.ViewModels
         private int left;
 
         private int width;
+
         private readonly IExecutionService executionService;
 
         public NodeViewModel(IDisplayableNode node, ICommand deleteCommand, ICommand inputPinCommand, ICommand OutputPinCommand, IExecutionService executionService)
@@ -32,27 +33,35 @@ namespace ElectronicParts.ViewModels
 
             this.IncreaseWidthCommand = new RelayCommand(arg =>
             {
-                this.Width += 10;
-                this.FirePropertyChanged(nameof(Width));
+                this.Width += 20;
+                this.UpdatePosition();
+                this.FirePropertyChanged(string.Empty);
             });
 
             this.DecreaseWidthCommand = new RelayCommand(arg =>
             {
-                this.Width -= 10;
-                this.FirePropertyChanged(nameof(Width));
+                this.Width -= 20;
+                this.UpdatePosition();
+                this.FirePropertyChanged(string.Empty);
             });
 
             this.ActivateCommand = new RelayCommand(arg =>
             {
                 this.Node.Activate();
-                foreach (var input in this.Inputs)
+                if (!(this.Inputs is null))
                 {
-                    input.Update();
+                    foreach (var input in this.Inputs)
+                    {
+                        input.Update();
+                    }
                 }
 
-                foreach (var output in this.Outputs)
+                if (!(this.Outputs is null))
                 {
-                    output.Update();
+                    foreach (var output in this.Outputs)
+                    {
+                        output.Update();
+                    }
                 }
             });
 
@@ -104,7 +113,14 @@ namespace ElectronicParts.ViewModels
 
             set
             {
-                Set(ref this.top, value);
+                if (value < 0)
+                {
+                    Set(ref this.top, 0);
+                }
+                else
+                {
+                    Set(ref this.top, value);
+                }
                 this.UpdateTop(this.Inputs?.Select((p, i) => Tuple.Create(p, i)), this.Top);
                 this.UpdateTop(this.Outputs?.Select((p, i) => Tuple.Create(p, i)), this.Top);
             }
@@ -116,15 +132,22 @@ namespace ElectronicParts.ViewModels
 
             set
             {
-                Set(ref this.left, value);
-                this.UpdateLeft(this.Inputs, this.left);
-                if (this.Inputs is null || this.Inputs.Count == 0)
+                if (value < 0)
                 {
-                    this.UpdateLeft(this.Outputs, this.Left + 63);
+                    Set(ref this.left, 0);
                 }
                 else
                 {
-                    this.UpdateLeft(this.Outputs, this.Left + 73);
+                    Set(ref this.left, value);
+                }
+                this.UpdateLeft(this.Inputs, this.left + 16);
+                if (this.Inputs is null || this.Inputs.Count == 0)
+                {
+                    this.UpdateLeft(this.Outputs, this.Left + this.Width + 12);
+                }
+                else
+                {
+                    this.UpdateLeft(this.Outputs, this.Left + this.Width + 36);
                 }
             }
         }
@@ -137,7 +160,7 @@ namespace ElectronicParts.ViewModels
         /// <param name="floor">If set to true will floor value else will ceil value.</param>
         public void SnapToNewGrid(int gridSize, bool floor)
         {
-            int leftOffset = this.Inputs.Count > 0 ? 10 : 0;
+            int leftOffset = this.Inputs?.Count > 0 ? 10 : 0;
 
             if (floor)
             {
@@ -215,7 +238,7 @@ namespace ElectronicParts.ViewModels
         {
             get
             {
-                return this.Inputs.Count >= this.Outputs.Count ? this.Inputs.Count : this.Outputs.Count;
+                return (this.Inputs?.Count >= this.Outputs?.Count ? this.Inputs?.Count : this.Outputs?.Count) ?? 0;
             }
         }
 
@@ -241,7 +264,19 @@ namespace ElectronicParts.ViewModels
 
             foreach (var pin in pins)
             {
-                pin.Item1.Top = (pin.Item2 * 20) + value + 11;
+                pin.Item1.Top = (pin.Item2 * 19) + value + 16;
+            }
+        }
+
+        public void UpdatePosition()
+        {
+            if (this.Inputs is null || this.Inputs.Count == 0)
+            {
+                this.UpdateLeft(this.Outputs, this.Left + this.Width + 13);
+            }
+            else
+            {
+                this.UpdateLeft(this.Outputs, this.Left + this.Width + 23);
             }
         }
     }

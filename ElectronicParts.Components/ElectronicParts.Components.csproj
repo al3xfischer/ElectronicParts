@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BitToInteger.cs" />
     <Compile Include="BoolLed.cs" />
+    <Compile Include="EvilNull.cs" />
     <Compile Include="IntegerAdder.cs" />
     <Compile Include="IntegerDisplay.cs" />
     <Compile Include="IntegerSource.cs" />
@@ -63,6 +64,7 @@
     </Compile>
     <Compile Include="StringDisplay.cs" />
     <Compile Include="Switch.cs" />
+    <Compile Include="Throwing.cs" />
     <Compile Include="Timer.cs" />
   </ItemGroup>
   <ItemGroup>

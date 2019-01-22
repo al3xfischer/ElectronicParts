@@ -61,6 +61,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\BitmapToImageSourceConverter.cs" />
+    <Compile Include="Converter\BoolToColorConverter.cs" />
     <Compile Include="Converter\ConnectionToMarginConverter.cs" />
     <Compile Include="Converter\GridSizeConverter.cs" />
     <Compile Include="Converter\PinToHeightConverter.cs" />

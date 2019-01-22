@@ -14,11 +14,23 @@ namespace ElectronicParts.Converter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            PinViewModel outputPinVM = values[0] as PinViewModel;
+            int inputLeft = (int)values[0];
+            int inputTop = (int)values[1];
+            int outputLeft = (int)values[2];
+            int outputTop = (int)values[3];
 
-            PinViewModel inputPinVM = values[1] as PinViewModel;
+            int left = 0;
 
-            return new Thickness(outputPinVM.Left + (inputPinVM.Left - outputPinVM.Left) / 2 - 10, outputPinVM.Top + (inputPinVM.Top - outputPinVM.Top) / 2 - 20, 0, 0);
+            if (inputLeft - outputLeft < 0)
+            {
+                left = outputLeft + (inputLeft - outputLeft) - 10;
+            }
+            else
+            {
+                left = inputLeft + (outputLeft - inputLeft) - 10;
+            }
+
+            return new Thickness(left, outputTop + (inputTop - outputTop) / 2 - 20, 0, 0);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

@@ -38,7 +38,7 @@ namespace ElectronicParts.ViewModels
         private readonly ILogger<MainViewModel> logger;
 
         private readonly IAssemblyNameExtractorService assemblyNameExtractorService;
-
+        private readonly IGenericTypeComparerService genericTypeComparerService;
         private readonly IConfigurationService configurationService;
         private PinViewModel inputPin;
 
@@ -71,7 +71,9 @@ namespace ElectronicParts.ViewModels
             this.assemblyService = assemblyService ?? throw new ArgumentNullException(nameof(assemblyService));
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this.assemblyNameExtractorService = assemblyNameExtractorService ?? throw new ArgumentNullException(nameof(assemblyNameExtractorService)); ;
+            this.assemblyNameExtractorService = assemblyNameExtractorService ?? throw new ArgumentNullException(nameof(assemblyNameExtractorService));
+            this.genericTypeComparerService = genericTypeComparerService;
+            ;
             this.configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
             this.updateMillisecondsPerLoopUpdateTimer.Elapsed += UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
@@ -199,6 +201,8 @@ namespace ElectronicParts.ViewModels
                 {
                     this.connections.Add(connection);
                 }
+
+                this.RepositionNodes();
             });
 
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
@@ -290,6 +294,9 @@ namespace ElectronicParts.ViewModels
                     return;
                 }
 
+                this.inputPin = null;
+                this.outputPin = null;
+
                 var connectionsMarkedForDeletion = this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input) || nodeVm.Outputs.Contains(connection.Output)).ToList();
                 var nodeToRemove = nodeVm;
 
@@ -348,6 +355,8 @@ namespace ElectronicParts.ViewModels
 
             this.UpdateBoardSize = new RelayCommand(arg =>
             {
+                this.RepositionNodes();
+
                 this.FirePropertyChanged(nameof(BoardHeight));
                 this.FirePropertyChanged(nameof(BoardWidth));
             });
@@ -596,6 +605,22 @@ namespace ElectronicParts.ViewModels
             this.FirePropertyChanged(nameof(this.AvailableNodes));
         }
 
+        private void RepositionNodes()
+        {
+            foreach (var node in this.Nodes)
+            {
+                if (node.Left + 70 >= this.BoardWidth)
+                {
+                    node.Left = this.BoardWidth - 70;
+                }
+
+                if (node.Top + 20 * (node.MaxPins) >= this.BoardHeight)
+                {
+                    node.Top = this.BoardHeight - 20 * (node.MaxPins);
+                }
+            }
+        }
+
         private async Task SnapAllNodesToGrid(bool floor)
         {
             await Task.Run(() =>
@@ -668,6 +693,38 @@ namespace ElectronicParts.ViewModels
         public ICommand OutputPinCommand { get; }
 
 
+        private void CheckPossibleConnections(IEnumerable<IEnumerable<PinViewModel>> pinLists, IPin selectedPin)
+        {
+            foreach (var pinList in pinLists)
+            {
+                foreach (var pin in pinList)
+                {
+                    if (this.genericTypeComparerService.IsSameGenericType(pin.Pin, selectedPin))
+                    {
+                        pin.CanBeConnected = true;
+                    }
+                }
+            }
+        }
+
+        private void ResetPossibleConnections()
+        {
+            foreach (var pinList in this.nodes.Select(node => node.Outputs))
+            {
+                foreach (var pin in pinList)
+                {
+                    pin.CanBeConnected = false;
+                }
+            }
+            foreach (var pinList in this.nodes.Select(node => node.Inputs))
+            {
+                foreach (var pin in pinList)
+                {
+                    pin.CanBeConnected = false;
+                }
+            }
+        }
+
         private void Connect()
         {
             this.Connect(this.inputPin, this.outputPin);
@@ -703,6 +760,22 @@ namespace ElectronicParts.ViewModels
                 this.Connections.Add(connectionVM);
             }
 
+                this.inputPin = null;
+                this.outputPin = null;
+                this.ResetPossibleConnections();
+
+                return;
+            }
+
+            if (!(this.inputPin is null))
+            {
+                this.CheckPossibleConnections(this.nodes.Select(node => node.Outputs), this.inputPin.Pin);
+            }
+
+            if (!(this.outputPin is null))
+            {
+                this.CheckPossibleConnections(this.nodes.Select(node => node.Inputs), this.outputPin.Pin);
+            }
             this.inputPin = null;
             this.outputPin = null;
         }
