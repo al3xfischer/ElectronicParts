@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Runtime.Serialization;
 using Microsoft.Extensions.Logging;
 using System.Timers;
+using GuiLabs.Undo;
 
 namespace ElectronicParts.ViewModels
 {
@@ -47,10 +48,23 @@ namespace ElectronicParts.ViewModels
 
         private readonly Timer reSnappingTimer;
 
+        private readonly ActionManager actionManager;
 
 
-        public MainViewModel(IExecutionService executionService, IAssemblyService assemblyService, IPinConnectorService pinConnectorService, INodeSerializerService nodeSerializerService, ILogger<MainViewModel> logger, IConfigurationService configurationService, IAssemblyNameExtractorService assemblyNameExtractorService)
+
+        public MainViewModel(
+            IExecutionService executionService,
+            IAssemblyService assemblyService,
+            IPinConnectorService pinConnectorService,
+            INodeSerializerService nodeSerializerService,
+            ILogger<MainViewModel> logger,
+            IConfigurationService configurationService,
+            IAssemblyNameExtractorService assemblyNameExtractorService, 
+            ActionManager actionManager)
         {
+            this.clearedNodes = new Stack<IEnumerable<NodeViewModel>>();
+            this.clearedConnections = new Stack<IEnumerable<ConnectorViewModel>>();
+            this.actionManager = actionManager ?? throw new ArgumentNullException(nameof(actionManager));
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
             this.nodeSerializerService = nodeSerializerService ?? throw new ArgumentNullException(nameof(nodeSerializerService));
@@ -276,28 +290,59 @@ namespace ElectronicParts.ViewModels
                 }
 
                 var connectionsMarkedForDeletion = this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input) || nodeVm.Outputs.Contains(connection.Output)).ToList();
-                connectionsMarkedForDeletion.ForEach(c => this.connections.Remove(c));
-                this.Nodes.Remove(nodeVm);
+                var nodeToRemove = nodeVm;
+
+                this.actionManager.Execute(new CallMethodAction(
+                    () =>
+                    {
+                        connectionsMarkedForDeletion.ForEach(c =>
+                        {
+                            this.pinConnectorService.TryRemoveConnection(c.Connector);
+                            this.connections.Remove(c);
+                        });
+                        this.Nodes.Remove(nodeVm);
+                    },
+                    () =>
+                    {
+                        connectionsMarkedForDeletion.ForEach(c =>
+                        {
+                            this.pinConnectorService.TryConnectPins(c.Input.Pin, c.Output.Pin, out Connector newConnection, true);
+                            this.pinConnectorService.ManuallyAddConnectionToExistingConnections(c.Connector);
+                            this.Connections.Add(c);
+                        });
+                        this.Nodes.Add(nodeVm);
+                    }
+                    ));
+
+                
+                
             }, arg => !this.executionService.IsEnabled);
 
-            this.ClearAllNodesCommand = new RelayCommand(async arg =>
+            this.UndoCommand = new RelayCommand(arg =>
             {
-                await this.ClearCanvas();
-            }, arg => !this.executionService.IsEnabled);
+                this.actionManager.Undo();
+            }, arg => this.actionManager.CanUndo && !this.executionService.IsEnabled);
+
+            this.RedoCommand = new RelayCommand(arg =>
+            {
+                this.actionManager.Redo();
+            }, arg => this.actionManager.CanRedo && !this.executionService.IsEnabled);
+
+            this.ClearAllNodesCommand = new RelayCommand(arg =>
+            {
+                if (this.Nodes.Count > 0)
+                {
+                    this.actionManager.Execute(new CallMethodAction(
+                        async () => await this.ClearCanvas(),
+                        async () => await this.UndoClearCanvas()));
+                }
+                
+            }, arg => !this.executionService.IsEnabled && this.Nodes.Count > 0);
 
             this.AddNodeCommand = new RelayCommand(arg =>
             {
-                var node = arg as IDisplayableNode;
-                if (node is null)
-                {
-                    return;
-                }
+                this.AddNode(arg as IDisplayableNode);
 
-                var copy = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;
-                var vm = new NodeViewModel(copy, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService);
-                this.Nodes.Add(vm);
-                vm.SnapToNewGrid(this.GridSize, false);
-                this.FirePropertyChanged(nameof(Nodes));
             }, arg => !this.executionService.IsEnabled);
 
             this.UpdateBoardSize = new RelayCommand(arg =>
@@ -440,6 +485,8 @@ namespace ElectronicParts.ViewModels
             get => this.configurationService.Configuration.BoardHeight;
         }
 
+        public ICommand UndoCommand { get; }
+        public ICommand RedoCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand ExecutionStepCommand { get; }
         public ICommand ExecutionStartLoopCommand { get; }
@@ -453,6 +500,8 @@ namespace ElectronicParts.ViewModels
         public ICommand IncreaseGridSize { get; }
         public ICommand DecreaseGridSize { get; }
         public ICommand UpdateBoardSize { get; }
+        private Stack<IEnumerable<NodeViewModel>> clearedNodes { get; set; }
+        private Stack<IEnumerable<ConnectorViewModel>> clearedConnections { get; set; }
 
         private async Task ResetAllConnections()
         {
@@ -475,10 +524,27 @@ namespace ElectronicParts.ViewModels
             });
         }
 
+
+        private void AddNode(IDisplayableNode node)
+        {
+            if (node is null)
+            {
+                return;
+            }
+
+            var copy = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;
+            var vm = new NodeViewModel(copy, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService);
+            this.actionManager.Execute(new CallMethodAction(() => this.Nodes.Add(vm), () => this.Nodes.Remove(vm)));
+            vm.SnapToNewGrid(this.GridSize, false);
+        }
+
         private async Task ClearCanvas()
         {
             await Task.Run(() =>
             {
+                this.clearedConnections.Push(this.Connections.ToList());
+                this.clearedNodes.Push(this.Nodes.ToList());
+
                 foreach (var connectionVM in this.Connections)
                 {
                     this.pinConnectorService.TryRemoveConnection(connectionVM.Connector);
@@ -489,6 +555,32 @@ namespace ElectronicParts.ViewModels
                     this.Connections.Clear();
                     this.Nodes.Clear();
                 });
+            });
+        }
+
+        private async Task UndoClearCanvas()
+        {
+            await Task.Run(() =>
+            {
+                foreach(var nodeVM in this.clearedNodes.Pop())
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        this.Nodes.Add(nodeVM);
+                    });
+                }
+
+                foreach (var connector in this.clearedConnections.Pop())
+                {
+                    
+                    this.pinConnectorService.TryConnectPins(connector.Input.Pin, connector.Output.Pin, out Connector newConnection, true);
+
+                    this.pinConnectorService.ManuallyAddConnectionToExistingConnections(connector.Connector);
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        this.Connections.Add(connector);
+                    });
+                }
             });
         }
 
@@ -577,15 +669,51 @@ namespace ElectronicParts.ViewModels
 
         private void Connect()
         {
-            if (!(this.inputPin is null) && !(this.outputPin is null))
-            {
-                if (this.pinConnectorService.TryConnectPins(this.inputPin.Pin, this.outputPin.Pin, out var connection))
-                {
-                    this.Connections.Add(new ConnectorViewModel(connection, this.inputPin, this.outputPin, this.DeleteConnectionCommand));
-                }
+            this.Connect(this.inputPin, this.outputPin);
+        }
 
-                this.inputPin = null;
-                this.outputPin = null;
+        private void Connect(PinViewModel inputPin, PinViewModel outputPin)
+        {
+            if (!(inputPin is null) && !(outputPin is null) && this.pinConnectorService.IsConnectable(inputPin.Pin, outputPin.Pin))
+            {
+                Connector createdConnector = null;
+                ConnectorViewModel createdConnectorVM = null;
+                var inPin = inputPin;
+                var outPin = outputPin;
+                Action creationAction = () =>
+                {
+                    this.MakeConnection(inPin, outPin, out createdConnectorVM, out createdConnector);
+                };
+                Action deleteAction = () => this.RemoveConnection(createdConnectorVM, createdConnector);
+
+                this.actionManager.Execute(new CallMethodAction(creationAction, deleteAction));
+            }
+        }
+
+        private void MakeConnection(PinViewModel input, PinViewModel output, out ConnectorViewModel connectionVM, out Connector connection)
+        {
+            connectionVM = null;
+            connection = null;
+
+            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out var newConnection, false))
+            {
+                connection = newConnection;
+                connectionVM = new ConnectorViewModel(newConnection, input, output, this.DeleteConnectionCommand);
+                this.Connections.Add(connectionVM);
+            }
+
+            this.inputPin = null;
+            this.outputPin = null;
+        }
+
+        private void RemoveConnection(ConnectorViewModel connectionVM, Connector connection)
+        {
+            if (!(connectionVM is null) && !(connection is null))
+            {
+                if (this.pinConnectorService.TryRemoveConnection(connection))
+                {
+                    this.Connections.Remove(connectionVM);
+                }
             }
         }
     }

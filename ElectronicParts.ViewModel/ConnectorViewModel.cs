@@ -24,7 +24,7 @@ namespace ElectronicParts.ViewModels
             this.FirePropertyChanged(null);
         }
 
-        public Connector Connector { get; }
+        public Connector Connector { get; set; }
 
         public PinViewModel Input { get; }
 

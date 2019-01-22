@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using GuiLabs.Undo;
 
 namespace ElectronicParts.DI
 {
@@ -31,6 +32,7 @@ namespace ElectronicParts.DI
             services.AddSingleton<AssemblyBinder>();
             services.AddSingleton<IGenericTypeComparerService, GenericTypeComparerService>();
             services.AddSingleton<IAssemblyNameExtractorService, AssemblyNameExtractorService>();
+            services.AddSingleton<ActionManager>();
 
             // Logging
             services.AddLogging();

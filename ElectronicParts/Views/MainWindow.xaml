@@ -193,6 +193,60 @@
                         <TextBlock Text="{Binding ViewModel.MilisecondsPerLoop}"></TextBlock>
                         <TextBlock Margin="5 0 0 0">ms/cycle</TextBlock>
                     </StackPanel>
+                    <DockPanel>
+                        <DockPanel.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="border" CornerRadius="20" Margin="5" Padding="0" BorderThickness="0" Background="Transparent">
+                                                <ContentPresenter x:Name="button" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger  Property="Button.IsPressed" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="LightBlue"/>
+                                                </Trigger>
+                                                <Trigger  Property="Button.IsEnabled" Value="False">
+                                                    <Setter TargetName="border" Property="Opacity" Value="0.3"/>
+                                                    <Setter TargetName="button" Property="Opacity" Value="0.3"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DockPanel.Resources>
+                        <Button x:Name="undoButton" DockPanel.Dock="Left" Command="{Binding ViewModel.UndoCommand}">
+                            <Image>
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=undoButton, Path=IsMouseOver, UpdateSourceTrigger=PropertyChanged}" Value="true">
+                                                <Setter Property="Source" Value="/Resources/undoMouse.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                        <Setter Property="Source" Value="/Resources/undo.png"/>
+                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </Button>
+                        <Button x:Name="redoButton" DockPanel.Dock="Right" Command="{Binding ViewModel.RedoCommand}">
+                                <Image>
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=redoButton, Path=IsMouseOver, UpdateSourceTrigger=PropertyChanged}" Value="true">
+                                                    <Setter Property="Source" Value="/Resources/redoMouse.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                            <Setter Property="Source" Value="/Resources/redo.png"/>
+                                            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+                                        </Style>
+                                    </Image.Style>
+                            </Image>
+                        </Button>
+                    </DockPanel>
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Height="auto" Margin="0 0 10 0">
                         <TextBlock VerticalAlignment="Center" Text="GridSize: "/>
                         <TextBlock VerticalAlignment="Center" Text="{Binding ViewModel.GridSize, UpdateSourceTrigger=PropertyChanged}"/>

@@ -35,7 +35,7 @@ namespace ElectronicParts.Services.Implementations
         /// <param name="outputPin">The output pin.</param>
         /// <param name="newConnection">The new connection.</param>
         /// <returns>true if connecting was successfull, false otherwise.</returns>
-        public bool TryConnectPins(IPin inputPin, IPin outputPin, out Connector newConnection)
+        public bool TryConnectPins(IPin inputPin, IPin outputPin, out Connector newConnection, bool noConnectionInsertion)
         {
             newConnection = null;
 
@@ -78,7 +78,10 @@ namespace ElectronicParts.Services.Implementations
             {
                 inputPin.Value = outputPin.Value;
                 newConnection = new Connector(inputPin, outputPin, outputPin.Value);
-                this.ExistingConnections.Add(newConnection);
+                if (!noConnectionInsertion)
+                {
+                    this.ExistingConnections.Add(newConnection);
+                }
                 return true;
             }
             // If the types of pins are not compatible an InvalidCastException gets thrown by the pin instance
@@ -128,6 +131,19 @@ namespace ElectronicParts.Services.Implementations
             pin.Value = (IValue)instance;
 
             return true;
+        }
+
+        public bool IsConnectable(IPin output, IPin input)
+        {
+            return this.typeComparerService.IsSameGenericType(input, output);
+        }
+
+        public void ManuallyAddConnectionToExistingConnections(Connector connectionToAdd)
+        {
+            if (!this.ExistingConnections.Contains(connectionToAdd))
+            {
+                this.ExistingConnections.Add(connectionToAdd);
+            }
         }
     }
 }
