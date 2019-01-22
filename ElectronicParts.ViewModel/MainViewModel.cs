@@ -275,6 +275,9 @@ namespace ElectronicParts.ViewModels
                     return;
                 }
 
+                this.inputPin = null;
+                this.outputPin = null;
+
                 var connectionsMarkedForDeletion = this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input) || nodeVm.Outputs.Contains(connection.Output)).ToList();
                 connectionsMarkedForDeletion.ForEach(c => this.connections.Remove(c));
                 this.Nodes.Remove(nodeVm);
