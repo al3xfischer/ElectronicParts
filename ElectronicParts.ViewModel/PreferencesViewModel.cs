@@ -19,6 +19,10 @@ namespace ElectronicParts.ViewModels
     using ElectronicParts.Models;
     using ElectronicParts.Services.Interfaces;
     using ElectronicParts.ViewModels.Commands;
+    using System.ComponentModel;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System;
 
     /// <summary>
     /// The view model used for the preferences window.
@@ -26,6 +30,7 @@ namespace ElectronicParts.ViewModels
     public class PreferencesViewModel : BaseViewModel
     {
         private string integerRuleValueText;
+        private ListSortDirection sortDirection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreferencesViewModel"/> class.
@@ -149,6 +154,24 @@ namespace ElectronicParts.ViewModels
             });
 
             this.TempIntRule = new RuleViewModel<int>(tempIntRule, intDeletionCommand);
+        }
+
+        /// <summary>
+        /// Sorts the rule lists.
+        /// </summary>
+        public void SortByValue()
+        {
+            this.StringRules.SortRuleCollection(this.sortDirection);
+            this.IntRules.SortRuleCollection(this.sortDirection);
+
+            if (this.sortDirection == ListSortDirection.Ascending)
+            {
+                this.sortDirection = ListSortDirection.Descending;
+            }
+            else
+            {
+                this.sortDirection = ListSortDirection.Ascending;
+            }
         }
 
         /// <summary>

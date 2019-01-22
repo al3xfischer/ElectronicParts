@@ -715,7 +715,15 @@ namespace ElectronicParts.ViewModels
             }
         }
 
-        private void ResetPossibleConnections()
+        public void ResetPreviewLine()
+        {
+            this.PreviewLines[0].Visible = false;
+            this.OutputPin = null;
+            this.InputPin = null;
+            this.ResetPossibleConnections();
+        }
+
+        public void ResetPossibleConnections()
         {
             foreach (var pinList in this.nodes.Select(node => node.Outputs))
             {
