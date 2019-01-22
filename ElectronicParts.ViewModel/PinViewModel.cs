@@ -1,6 +1,7 @@
 ﻿using ElectronicParts.Services.Interfaces;
 using Shared;
 using System;
+using System.Timers;
 using System.Windows.Input;
 
 namespace ElectronicParts.ViewModels
@@ -13,13 +14,28 @@ namespace ElectronicParts.ViewModels
 
         private int top;
 
+        private Timer timer;
+
+
         public PinViewModel(IPin pin, ICommand connectCommand, IExecutionService executionService)
         {
+            this.timer = new Timer();
+            this.timer.Interval = 10;
+            this.timer.Elapsed += (sender, e) => this.Refresh();
             this.Pin = pin ?? throw new ArgumentNullException(nameof(pin));
             this.ConnectCommand = connectCommand ?? throw new ArgumentNullException(nameof(connectCommand));
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.executionService.OnIsEnabledChanged += (sender, e) =>
             {
+                if (this.Executing)
+                {
+                    this.timer.Start();
+                }
+                else
+                {
+                    this.timer.Stop();
+                }
+
                 this.Refresh();
             };
         }
