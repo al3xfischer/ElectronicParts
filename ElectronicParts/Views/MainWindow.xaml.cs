@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Linq;
 using System;
 using Microsoft.Extensions.Logging;
+using System.Windows.Shapes;
 
 namespace ElectronicParts.Views
 {
@@ -24,12 +25,15 @@ namespace ElectronicParts.Views
 
         private NodeViewModel currentNode;
 
+        private Line previewLine;
+
         public MainWindow()
         {
             this.DataContext = this;
             this.ViewModel = Container.Resolve<MainViewModel>();
             this.ViewModel.AddAssembly = () => this.AddAssembly_Click(this, new RoutedEventArgs());
             this.logger = Container.Resolve<ILogger<MainWindow>>();
+            this.previewLine = new Line();
         }
 
         public MainViewModel ViewModel { get; }
@@ -69,6 +73,37 @@ namespace ElectronicParts.Views
                     this.currentNode.SnapToNewGrid(this.ViewModel.GridSize, false);
                 }
             }
+            
+            var mousePoint = e.GetPosition(this.canvas);
+
+            PreviewLineViewModel previewLine = this.ViewModel.PreviewLines[0];
+
+            if ((ViewModel.InputPin is null) && (ViewModel.OutputPin is null))
+            {
+                previewLine.Visible = false;
+            }
+
+            if (!(ViewModel.InputPin is null))
+            {
+                previewLine.PointOneX = ViewModel.InputPin.Left;
+                previewLine.PointOneY = ViewModel.InputPin.Top;
+
+                previewLine.PointTwoX = mousePoint.X;
+                previewLine.PointTwoY = mousePoint.Y;
+
+                previewLine.Visible = true;
+            }
+
+            if (!(ViewModel.OutputPin is null))
+            {
+                previewLine.PointOneX = ViewModel.OutputPin.Left;
+                previewLine.PointOneY = ViewModel.OutputPin.Top;
+
+                previewLine.PointTwoX = mousePoint.X;
+                previewLine.PointTwoY = mousePoint.Y;
+
+                previewLine.Visible = true;
+            }
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -97,18 +132,18 @@ namespace ElectronicParts.Views
         {
             try
             {
-                Process.Start(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies"));
+                Process.Start(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies"));
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, $"Error while opening folder {Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies")}");
+                this.logger.LogError(ex, $"Error while opening folder {System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies")}");
                 Debug.WriteLine("Folder opening error");
             }
         }
 
         private void AddAssembly_Click(object sender, RoutedEventArgs e)
         {
-            var assemblyPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies");
+            var assemblyPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies");
             var fileDialog = new OpenFileDialog();
             fileDialog.CheckFileExists = true;
             fileDialog.CheckPathExists = true;
@@ -123,7 +158,7 @@ namespace ElectronicParts.Views
                 {
                     try
                     {
-                        file.CopyTo(Path.Combine(assemblyPath, file.Name), true);
+                        file.CopyTo(System.IO.Path.Combine(assemblyPath, file.Name), true);
                     }
                     catch (Exception ex)
                     {

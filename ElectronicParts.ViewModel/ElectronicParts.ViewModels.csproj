@@ -60,6 +60,7 @@
     <Compile Include="NodeViewModel.cs" />
     <Compile Include="PinViewModel.cs" />
     <Compile Include="PreferencesViewModel.cs" />
+    <Compile Include="PreviewLineViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RuleViewModel.cs" />
     <Compile Include="Converter\SnapShotConverter.cs" />

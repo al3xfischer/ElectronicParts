@@ -26,6 +26,8 @@ namespace ElectronicParts.ViewModels
 
         private ObservableCollection<NodeViewModel> availableNodes;
 
+        public ObservableCollection<PreviewLineViewModel> PreviewLines { get; set; }
+
         private readonly IExecutionService executionService;
 
         private readonly IAssemblyService assemblyService;
@@ -39,9 +41,9 @@ namespace ElectronicParts.ViewModels
         private readonly IAssemblyNameExtractorService assemblyNameExtractorService;
         private readonly IGenericTypeComparerService genericTypeComparerService;
         private readonly IConfigurationService configurationService;
-        private PinViewModel inputPin;
+        public PinViewModel InputPin { get; private set; }
 
-        private PinViewModel outputPin;
+        public PinViewModel OutputPin { get; private set; }
 
         private readonly Timer updateMillisecondsPerLoopUpdateTimer;
 
@@ -246,13 +248,13 @@ namespace ElectronicParts.ViewModels
 
             this.InputPinCommand = new RelayCommand(arg =>
             {
-                this.inputPin = arg as PinViewModel;
+                this.InputPin = arg as PinViewModel;
                 this.Connect();
             }, arg => !this.executionService.IsEnabled);
 
             this.OutputPinCommand = new RelayCommand(arg =>
             {
-                this.outputPin = arg as PinViewModel;
+                this.OutputPin = arg as PinViewModel;
                 this.Connect();
             }, arg => !this.executionService.IsEnabled);
 
@@ -279,8 +281,8 @@ namespace ElectronicParts.ViewModels
                     return;
                 }
 
-                this.inputPin = null;
-                this.outputPin = null;
+                this.InputPin = null;
+                this.OutputPin = null;
 
                 var connectionsMarkedForDeletion = this.Connections.Where(connection => nodeVm.Inputs.Contains(connection.Input) || nodeVm.Outputs.Contains(connection.Output)).ToList();
                 connectionsMarkedForDeletion.ForEach(c => this.connections.Remove(c));
@@ -316,6 +318,7 @@ namespace ElectronicParts.ViewModels
             });
 
             this.Nodes = new ObservableCollection<NodeViewModel>();
+            this.PreviewLines = new ObservableCollection<PreviewLineViewModel>() { new PreviewLineViewModel() };
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             this.Connections = new ObservableCollection<ConnectorViewModel>();
             var reloadingTask = this.ReloadAssemblies();
@@ -634,28 +637,29 @@ namespace ElectronicParts.ViewModels
 
         private void Connect()
         {
-            if (!(this.inputPin is null) && !(this.outputPin is null))
+            if (!(this.InputPin is null) && !(this.OutputPin is null))
             {
-                if (this.pinConnectorService.TryConnectPins(this.inputPin.Pin, this.outputPin.Pin, out var connection))
+                if (this.pinConnectorService.TryConnectPins(this.InputPin.Pin, this.OutputPin.Pin, out var connection))
                 {
-                    this.Connections.Add(new ConnectorViewModel(connection, this.inputPin, this.outputPin, this.DeleteConnectionCommand));
+                    this.Connections.Add(new ConnectorViewModel(connection, this.InputPin, this.OutputPin, this.DeleteConnectionCommand));
                 }
 
-                this.inputPin = null;
-                this.outputPin = null;
+                this.InputPin = null;
+                this.OutputPin = null;
                 this.ResetPossibleConnections();
+                this.PreviewLines[0].Visible = false;
 
                 return;
             }
 
-            if (!(this.inputPin is null))
+            if (!(this.InputPin is null))
             {
-                this.CheckPossibleConnections(this.nodes.Select(node => node.Outputs), this.inputPin.Pin);
+                this.CheckPossibleConnections(this.nodes.Select(node => node.Outputs), this.InputPin.Pin);
             }
 
-            if (!(this.outputPin is null))
+            if (!(this.OutputPin is null))
             {
-                this.CheckPossibleConnections(this.nodes.Select(node => node.Inputs), this.outputPin.Pin);
+                this.CheckPossibleConnections(this.nodes.Select(node => node.Inputs), this.OutputPin.Pin);
             }
         }
     }
