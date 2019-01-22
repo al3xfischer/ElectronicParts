@@ -17,14 +17,6 @@ namespace ElectronicParts.ViewModels
             this.Input = input ?? throw new ArgumentNullException(nameof(input));
             this.Output = output ?? throw new ArgumentNullException(nameof(output));
             this.DeleteCommand = deletionCommand ?? throw new ArgumentNullException(nameof(deletionCommand));
-
-            input.PropertyChanged += ThisPropertyChanged;
-            output.PropertyChanged += ThisPropertyChanged;
-        }
-
-        private void ThisPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            this.FirePropertyChanged(null);
         }
 
         public Connector Connector { get; }

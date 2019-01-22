@@ -16,8 +16,10 @@
                     <MultiBinding.Converter>
                         <converter:ConnectionToMarginConverter/>
                     </MultiBinding.Converter>
-                    <Binding Path="Input"></Binding>
-                    <Binding Path="Output"></Binding>
+                    <Binding Path="Input.Left"></Binding>
+                    <Binding Path="Input.Top"></Binding>
+                    <Binding Path="Output.Left"></Binding>
+                    <Binding Path="Output.Top"></Binding>
                 </MultiBinding>
             </TextBlock.Margin>
         </TextBlock>
