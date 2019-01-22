@@ -65,8 +65,8 @@ namespace ElectronicParts.ViewModels
             ActionManager actionManager,
             IGenericTypeComparerService genericTypeComparerService)
         {
-            this.clearedNodes = new Stack<IEnumerable<NodeViewModel>>();
-            this.clearedConnections = new Stack<IEnumerable<ConnectorViewModel>>();
+            this.ClearedNodes = new Stack<IEnumerable<NodeViewModel>>();
+            this.ClearedConnections = new Stack<IEnumerable<ConnectorViewModel>>();
             this.actionManager = actionManager ?? throw new ArgumentNullException(nameof(actionManager));
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
@@ -133,9 +133,9 @@ namespace ElectronicParts.ViewModels
                     var missingAssembly = this.assemblyNameExtractorService.ExtractAssemblyNameFromErrorMessage(e);
                     var result = MessageBox.Show($"There are missing assemblies: {missingAssembly}\nDo you want to add new assemblies?", "Loading Failed", MessageBoxButton.YesNo, MessageBoxImage.Error);
 
-                    if(result == MessageBoxResult.Yes)
+                    if (result == MessageBoxResult.Yes)
                     {
-                        this.AddAssembly?.Invoke();   
+                        this.AddAssembly?.Invoke();
                     }
                 }
 
@@ -149,7 +149,7 @@ namespace ElectronicParts.ViewModels
 
                 foreach (NodeSnapShot node in snapShot.Nodes)
                 {
-                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand,this.executionService);
+                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService);
                     nodeViewModel.Left = node.Position.X;
                     nodeViewModel.Top = node.Position.Y;
 
@@ -353,7 +353,6 @@ namespace ElectronicParts.ViewModels
             this.AddNodeCommand = new RelayCommand(arg =>
             {
                 this.AddNode(arg as IDisplayableNode);
-
             }, arg => !this.executionService.IsEnabled);
 
             this.UpdateBoardSize = new RelayCommand(arg =>
@@ -411,6 +410,9 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        public int VerticalScrollerOffset { get; set; }
+        public int HorizontalScrollerOffset { get; set; }
+
         public ObservableCollection<NodeViewModel> Nodes
         {
             get => this.nodes;
@@ -443,7 +445,7 @@ namespace ElectronicParts.ViewModels
             get => selectedCategory;
             set
             {
-                if (!String.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value))
                 {
                     Set(ref this.selectedCategory, value);
                     this.FirePropertyChanged(nameof(this.AvailableNodes));
@@ -467,9 +469,9 @@ namespace ElectronicParts.ViewModels
         {
             get
             {
-                
+
                 return this.availableNodes.Where(nodeVM =>
-                
+
                    (Enum.GetName(typeof(NodeType), nodeVM.Type) == this.SelectedCategory || this.SelectedCategory == this.NodeCategories.First())
 
                 ).ToObservableCollection();
@@ -514,8 +516,8 @@ namespace ElectronicParts.ViewModels
         public ICommand IncreaseGridSize { get; }
         public ICommand DecreaseGridSize { get; }
         public ICommand UpdateBoardSize { get; }
-        private Stack<IEnumerable<NodeViewModel>> clearedNodes { get; set; }
-        private Stack<IEnumerable<ConnectorViewModel>> clearedConnections { get; set; }
+        private Stack<IEnumerable<NodeViewModel>> ClearedNodes { get; set; }
+        private Stack<IEnumerable<ConnectorViewModel>> ClearedConnections { get; set; }
 
         private async Task ResetAllConnections()
         {
@@ -548,6 +550,8 @@ namespace ElectronicParts.ViewModels
 
             var copy = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;
             var vm = new NodeViewModel(copy, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService);
+            vm.Top = this.VerticalScrollerOffset + 20;
+            vm.Left = this.HorizontalScrollerOffset + 20;
             this.actionManager.Execute(new CallMethodAction(() => this.Nodes.Add(vm), () => this.Nodes.Remove(vm)));
             vm.SnapToNewGrid(this.GridSize, false);
         }
@@ -556,8 +560,8 @@ namespace ElectronicParts.ViewModels
         {
             await Task.Run(() =>
             {
-                this.clearedConnections.Push(this.Connections.ToList());
-                this.clearedNodes.Push(this.Nodes.ToList());
+                this.ClearedConnections.Push(this.Connections.ToList());
+                this.ClearedNodes.Push(this.Nodes.ToList());
 
                 foreach (var connectionVM in this.Connections)
                 {
@@ -576,7 +580,7 @@ namespace ElectronicParts.ViewModels
         {
             await Task.Run(() =>
             {
-                foreach(var nodeVM in this.clearedNodes.Pop())
+                foreach(var nodeVM in this.ClearedNodes.Pop())
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
@@ -584,7 +588,7 @@ namespace ElectronicParts.ViewModels
                     });
                 }
 
-                foreach (var connector in this.clearedConnections.Pop())
+                foreach (var connector in this.ClearedConnections.Pop())
                 {
                     
                     this.pinConnectorService.TryConnectPins(connector.Input.Pin, connector.Output.Pin, out Connector newConnection, true);
