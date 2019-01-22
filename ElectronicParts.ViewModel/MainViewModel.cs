@@ -516,9 +516,9 @@ namespace ElectronicParts.ViewModels
         {
             foreach (var node in this.Nodes)
             {
-                if (node.Left + 70 >= this.BoardWidth)
+                if (node.Left + node.Width + 20 >= this.BoardWidth)
                 {
-                    node.Left = this.BoardWidth - 70;
+                    node.Left = this.BoardWidth - node.Width - 20;
                 }
 
                 if (node.Top + 20 * (node.MaxPins) >= this.BoardHeight)
