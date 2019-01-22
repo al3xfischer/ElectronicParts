@@ -731,7 +731,7 @@ namespace ElectronicParts.ViewModels
 
         private void Connect()
         {
-            this.Connect(this.inputPin, this.outputPin);
+            this.Connect(this.InputPin, this.OutputPin);
         }
 
         private void Connect(PinViewModel inputPin, PinViewModel outputPin)
@@ -776,8 +776,8 @@ namespace ElectronicParts.ViewModels
                 this.Connections.Add(connectionVM);
             }
 
-                this.inputPin = null;
-                this.outputPin = null;
+                this.InputPin = null;
+                this.OutputPin = null;
                 return;
         }
 
