@@ -40,6 +40,11 @@ namespace ElectronicParts.Services.Implementations
         private readonly ILogger<AssemblyService> logger;
 
         /// <summary>
+        /// The validation service.
+        /// </summary>
+        private readonly INodeValidationService validationService;
+
+        /// <summary>
         /// The <list type="IDisplayableNode"/> 
         /// </summary>
         private List<IDisplayableNode> nodeList;
@@ -47,9 +52,10 @@ namespace ElectronicParts.Services.Implementations
         /// <summary>
         /// Initializes a new instance of the <see cref="AssemblyService"/> class.
         /// </summary>
-        public AssemblyService(ILogger<AssemblyService> logger)
+        public AssemblyService(ILogger<AssemblyService> logger, INodeValidationService validationService)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.validationService = validationService ?? throw new ArgumentNullException(nameof(validationService));
 
             // Generating the assembly path in the same folder as the exe.
             // C:\Programme\ElectronicParts\electronicParts.exe
@@ -119,7 +125,11 @@ namespace ElectronicParts.Services.Implementations
                         // Iterating over every type and adding an instance to the AvailableNodeslist.
                         foreach (var node in availableNodes)
                         {
-                            loadedNodes.Add(Activator.CreateInstance(node) as IDisplayableNode);
+                            var nodeInstance = Activator.CreateInstance(node) as IDisplayableNode;
+                            if (this.validationService.Validate(nodeInstance))
+                            {
+                                loadedNodes.Add(nodeInstance);
+                            }
                         }
                     }
                     catch (Exception e)

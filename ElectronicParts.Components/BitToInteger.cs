@@ -17,7 +17,7 @@ namespace ElectronicParts.Components
 
             for (int i = 0; i < 8; i++)
             {
-                this.Inputs.Add(new Pin<bool>());
+                this.Inputs.Add(new Pin<bool>() { Label = Math.Pow(2, 7 - i).ToString() });
             }
 
             this.Outputs = new List<IPin>() { new Pin<int>() };
