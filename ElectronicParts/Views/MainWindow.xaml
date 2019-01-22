@@ -45,7 +45,7 @@
         <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding ViewModel.LoadCommand}"/>
     </Window.InputBindings>
 
-    <DockPanel>
+    <DockPanel MouseRightButtonDown="DockPanel_MouseRightButtonDown">
         <!-- Menu -->
         <Menu Background="WhiteSmoke" BorderThickness="0,0,0,1" BorderBrush="DarkGray" DockPanel.Dock="Top" FontSize="14" >
             <MenuItem Header="_File">

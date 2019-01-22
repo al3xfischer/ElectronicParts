@@ -9,5 +9,5 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </UserControl.Resources>
-    <Line Visibility="{Binding Visible, Converter={StaticResource BoolToVis}}" IsHitTestVisible="False" X1="{Binding PointOneX}" Y1="{Binding PointOneY}" X2="{Binding PointTwoX}" Y2="{Binding PointTwoY}" Stroke="Black" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+    <Line Visibility="{Binding Visible, Converter={StaticResource BoolToVis}}" IsHitTestVisible="False" X1="{Binding PointOneX}" Y1="{Binding PointOneY}" X2="{Binding PointTwoX}" Y2="{Binding PointTwoY}" Stroke="Black" StrokeDashArray="4, 2" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
 </UserControl>

@@ -42,9 +42,9 @@ namespace ElectronicParts.ViewModels
         private readonly IAssemblyNameExtractorService assemblyNameExtractorService;
         private readonly IGenericTypeComparerService genericTypeComparerService;
         private readonly IConfigurationService configurationService;
-        public PinViewModel InputPin { get; private set; }
+        public PinViewModel InputPin { get; set; }
 
-        public PinViewModel OutputPin { get; private set; }
+        public PinViewModel OutputPin { get; set; }
 
         private readonly Timer updateMillisecondsPerLoopUpdateTimer;
 
@@ -756,11 +756,17 @@ namespace ElectronicParts.ViewModels
             if (!(this.InputPin is null))
             {
                 this.CheckPossibleConnections(this.nodes.Select(node => node.Outputs), this.InputPin.Pin);
+                PreviewLineViewModel previewLineViewModel = this.PreviewLines[0];
+                previewLineViewModel.PointOneX = this.InputPin.Left;
+                previewLineViewModel.PointOneY = this.InputPin.Top;
             }
 
             if (!(this.OutputPin is null))
             {
                 this.CheckPossibleConnections(this.nodes.Select(node => node.Inputs), this.OutputPin.Pin);
+                PreviewLineViewModel previewLineViewModel = this.PreviewLines[0];
+                previewLineViewModel.PointOneX = this.OutputPin.Left;
+                previewLineViewModel.PointOneY = this.OutputPin.Top;
             }
         }
 

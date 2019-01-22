@@ -25,15 +25,12 @@ namespace ElectronicParts.Views
 
         private NodeViewModel currentNode;
 
-        private Line previewLine;
-
         public MainWindow()
         {
             this.DataContext = this;
             this.ViewModel = Container.Resolve<MainViewModel>();
             this.ViewModel.AddAssembly = () => this.AddAssembly_Click(this, new RoutedEventArgs());
             this.logger = Container.Resolve<ILogger<MainWindow>>();
-            this.previewLine = new Line();
         }
 
         public MainViewModel ViewModel { get; }
@@ -101,7 +98,7 @@ namespace ElectronicParts.Views
 
                 previewLine.PointTwoX = mousePoint.X;
                 previewLine.PointTwoY = mousePoint.Y;
-
+                
                 previewLine.Visible = true;
             }
         }
@@ -181,6 +178,13 @@ namespace ElectronicParts.Views
                     this.ViewModel.AddNodeCommand.Execute(vm.Node);
                 }
             }
+        }
+
+        private void DockPanel_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.ViewModel.PreviewLines[0].Visible = false;
+            this.ViewModel.OutputPin = null;
+            this.ViewModel.InputPin = null;
         }
     }
 }
