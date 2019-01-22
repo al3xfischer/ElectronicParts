@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Linq;
 using System;
 using Microsoft.Extensions.Logging;
-using System.Windows.Shapes;
+using ElectronicParts.Services.Interfaces;
 
 namespace ElectronicParts.Views
 {
@@ -20,6 +20,8 @@ namespace ElectronicParts.Views
     public partial class MainWindow : Window
     {
         private readonly ILogger<MainWindow> logger;
+
+        private readonly IExecutionService executionService;
 
         private Canvas canvas;
 
@@ -31,6 +33,7 @@ namespace ElectronicParts.Views
             this.ViewModel = Container.Resolve<MainViewModel>();
             this.ViewModel.AddAssembly = () => this.AddAssembly_Click(this, new RoutedEventArgs());
             this.logger = Container.Resolve<ILogger<MainWindow>>();
+            this.executionService = Container.Resolve<IExecutionService>();
         }
 
         public MainViewModel ViewModel { get; }
@@ -44,7 +47,10 @@ namespace ElectronicParts.Views
 
         private void Node_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.currentNode = (e.OriginalSource as FrameworkElement).DataContext as NodeViewModel;
+            if (!this.executionService.IsEnabled)
+            {
+                this.currentNode = (e.OriginalSource as FrameworkElement).DataContext as NodeViewModel;
+            }
         }
 
         private void ItemsCanvas_Loaded(object sender, RoutedEventArgs e)
@@ -98,7 +104,7 @@ namespace ElectronicParts.Views
 
                 previewLine.PointTwoX = mousePoint.X;
                 previewLine.PointTwoY = mousePoint.Y;
-                
+
                 previewLine.Visible = true;
             }
 
