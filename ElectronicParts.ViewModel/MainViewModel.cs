@@ -60,7 +60,8 @@ namespace ElectronicParts.ViewModels
             ILogger<MainViewModel> logger,
             IConfigurationService configurationService,
             IAssemblyNameExtractorService assemblyNameExtractorService, 
-            ActionManager actionManager)
+            ActionManager actionManager,
+            IGenericTypeComparerService genericTypeComparerService)
         {
             this.clearedNodes = new Stack<IEnumerable<NodeViewModel>>();
             this.clearedConnections = new Stack<IEnumerable<ConnectorViewModel>>();
@@ -73,7 +74,7 @@ namespace ElectronicParts.ViewModels
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.assemblyNameExtractorService = assemblyNameExtractorService ?? throw new ArgumentNullException(nameof(assemblyNameExtractorService));
             this.genericTypeComparerService = genericTypeComparerService;
-            ;
+            
             this.configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
             this.updateMillisecondsPerLoopUpdateTimer.Elapsed += UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
@@ -745,6 +746,18 @@ namespace ElectronicParts.ViewModels
                 Action deleteAction = () => this.RemoveConnection(createdConnectorVM, createdConnector);
 
                 this.actionManager.Execute(new CallMethodAction(creationAction, deleteAction));
+                this.ResetPossibleConnections();
+                return;
+            }
+
+            if (!(this.inputPin is null))
+            {
+                this.CheckPossibleConnections(this.nodes.Select(node => node.Outputs), this.inputPin.Pin);
+            }
+
+            if (!(this.outputPin is null))
+            {
+                this.CheckPossibleConnections(this.nodes.Select(node => node.Inputs), this.outputPin.Pin);
             }
         }
 
@@ -762,22 +775,7 @@ namespace ElectronicParts.ViewModels
 
                 this.inputPin = null;
                 this.outputPin = null;
-                this.ResetPossibleConnections();
-
                 return;
-            }
-
-            if (!(this.inputPin is null))
-            {
-                this.CheckPossibleConnections(this.nodes.Select(node => node.Outputs), this.inputPin.Pin);
-            }
-
-            if (!(this.outputPin is null))
-            {
-                this.CheckPossibleConnections(this.nodes.Select(node => node.Inputs), this.outputPin.Pin);
-            }
-            this.inputPin = null;
-            this.outputPin = null;
         }
 
         private void RemoveConnection(ConnectorViewModel connectionVM, Connector connection)
