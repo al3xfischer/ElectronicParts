@@ -115,9 +115,9 @@ namespace ElectronicParts.ViewModels
                     var missingAssembly = this.assemblyNameExtractorService.ExtractAssemblyNameFromErrorMessage(e);
                     var result = MessageBox.Show($"There are missing assemblies: {missingAssembly}\nDo you want to add new assemblies?", "Loading Failed", MessageBoxButton.YesNo, MessageBoxImage.Error);
 
-                    if(result == MessageBoxResult.Yes)
+                    if (result == MessageBoxResult.Yes)
                     {
-                        this.AddAssembly?.Invoke();   
+                        this.AddAssembly?.Invoke();
                     }
                 }
 
@@ -131,7 +131,7 @@ namespace ElectronicParts.ViewModels
 
                 foreach (NodeSnapShot node in snapShot.Nodes)
                 {
-                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand,this.executionService);
+                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService);
                     nodeViewModel.Left = node.Position.X;
                     nodeViewModel.Top = node.Position.Y;
 
@@ -302,6 +302,7 @@ namespace ElectronicParts.ViewModels
 
                 var copy = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;
                 var vm = new NodeViewModel(copy, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService);
+                vm.Top = this.VerticalScrollerOffset + 20;
                 this.Nodes.Add(vm);
                 vm.SnapToNewGrid(this.GridSize, false);
                 this.FirePropertyChanged(nameof(Nodes));
@@ -361,6 +362,8 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        public int VerticalScrollerOffset { get; set; }
+
         public ObservableCollection<NodeViewModel> Nodes
         {
             get => this.nodes;
@@ -393,7 +396,7 @@ namespace ElectronicParts.ViewModels
             get => selectedCategory;
             set
             {
-                if (!String.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value))
                 {
                     Set(ref this.selectedCategory, value);
                     this.FirePropertyChanged(nameof(this.AvailableNodes));
@@ -417,9 +420,9 @@ namespace ElectronicParts.ViewModels
         {
             get
             {
-                
+
                 return this.availableNodes.Where(nodeVM =>
-                
+
                    (Enum.GetName(typeof(NodeType), nodeVM.Type) == this.SelectedCategory || this.SelectedCategory == this.NodeCategories.First())
 
                 ).ToObservableCollection();

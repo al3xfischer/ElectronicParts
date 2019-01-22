@@ -69,23 +69,31 @@ namespace ElectronicParts.Views
                     this.currentNode.SnapToNewGrid(this.ViewModel.GridSize, false);
                 }
             }
-        }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count == 0)
+            var mousePosition = e.GetPosition(this.boardScroller);
+            if (mousePosition.X > 0 && mousePosition.X < this.boardScroller.ActualWidth)
             {
-                return;
+                if (mousePosition.Y <= 20 && mousePosition.Y > 0)
+                {
+                    boardScroller.ScrollToVerticalOffset(boardScroller.ContentVerticalOffset - 0.1);
+                }
+                else if (mousePosition.Y > this.boardScroller.ActualHeight - 40 && mousePosition.Y < this.boardScroller.ActualHeight)
+                {
+                    boardScroller.ScrollToVerticalOffset(boardScroller.ContentVerticalOffset + 0.1);
+                }
             }
 
-            var vm = e.AddedItems[0] as NodeViewModel;
-            if (vm is null)
+            if (mousePosition.Y > 0 && mousePosition.Y < this.ActualHeight)
             {
-                return;
+                if (mousePosition.X <= 20 && mousePosition.X > 0)
+                {
+                    boardScroller.ScrollToHorizontalOffset(boardScroller.ContentHorizontalOffset - 0.1);
+                }
+                else if (mousePosition.X > this.boardScroller.ActualWidth - 40 && mousePosition.X < this.boardScroller.ActualWidth)
+                {
+                    boardScroller.ScrollToHorizontalOffset(boardScroller.ContentHorizontalOffset + 0.1);
+                }
             }
-
-            this.ViewModel.AddNodeCommand.Execute(vm.Node);
-            (sender as ListView).SelectedItems.Clear();
         }
 
         private void Node_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -146,6 +154,11 @@ namespace ElectronicParts.Views
                     this.ViewModel.AddNodeCommand.Execute(vm.Node);
                 }
             }
+        }
+
+        private void BoardScroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            this.ViewModel.VerticalScrollerOffset = (int)boardScroller.ContentVerticalOffset;
         }
     }
 }

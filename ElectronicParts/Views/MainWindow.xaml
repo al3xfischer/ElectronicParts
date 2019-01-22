@@ -211,8 +211,8 @@
             </Border>
 
             <!-- Nodes Display -->
-            <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <ItemsControl HorizontalAlignment="Stretch" BorderBrush="DarkGray" BorderThickness="1 0 0 0" DockPanel.Dock="Bottom" ItemsSource="{StaticResource DisplayItems}" Background="White" >
+            <ScrollViewer Name="boardScroller" ScrollChanged="BoardScroller_ScrollChanged" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ItemsControl HorizontalAlignment="Stretch" BorderBrush="DarkGray" BorderThickness="1 0 0 0" DockPanel.Dock="Bottom" ItemsSource="{StaticResource DisplayItems}" Background="White"  >
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type vm:NodeViewModel}">
                             <local:Node MouseLeftButtonDown="Node_MouseLeftButtonDown" MouseLeftButtonUp="Node_MouseLeftButtonUp" >
