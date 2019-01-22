@@ -6,7 +6,7 @@
 //     Copyright ©  2019
 // </copyright>
 
-// <summary>Represents the ExecutionService class of the ElectronicParts.Services programm</summary>
+// <summary>Represents the ExecutionService class of the ElectronicParts programm</summary>
 // ***********************************************************************
 namespace ElectronicParts.Services.Implementations
 {

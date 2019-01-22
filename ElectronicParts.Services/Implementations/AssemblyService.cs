@@ -2,11 +2,11 @@
 // Assembly         : ElectronicParts.Services
 // Author           : Kevin Janisch
 // ***********************************************************************
-// <copyright file="PinConnectorService.cs" company="FHWN">
+// <copyright file="AssemblyService.cs" company="FHWN">
 //     Copyright ©  2019
 // </copyright>
 
-// <summary>Represents the PinConnectorService class of the ElectronicParts programm</summary>
+// <summary>Represents the AssemblyService class of the ElectronicParts programm</summary>
 // ***********************************************************************
 namespace ElectronicParts.Services.Implementations
 {
@@ -23,10 +23,10 @@ namespace ElectronicParts.Services.Implementations
     using Shared;
 
     /// <summary>
-    /// Represents the <see cref="AssemblyService"/> class of the ElectronicParts application.
-    /// Implements the <see cref="ElectronicParts.Services.Assemblies.IAssemblyService" />
+    /// Represents the <see cref="AssemblyService" /> class of the ElectronicParts application.
+    /// Implements the <see cref="ElectronicParts.Services.Interfaces.IAssemblyService" />
     /// </summary>
-    /// <seealso cref="ElectronicParts.Services.Assemblies.IAssemblyService" />
+    /// <seealso cref="ElectronicParts.Services.Interfaces.IAssemblyService" />
     public class AssemblyService : IAssemblyService
     {
         /// <summary>
