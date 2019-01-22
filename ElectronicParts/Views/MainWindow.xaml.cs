@@ -203,10 +203,7 @@ namespace ElectronicParts.Views
 
         private void DockPanel_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.ViewModel.PreviewLines[0].Visible = false;
-            this.ViewModel.OutputPin = null;
-            this.ViewModel.InputPin = null;
-            this.ViewModel.ResetPossibleConnections();
+            this.ViewModel.ResetPreviewLine();
         }
     }
 }
