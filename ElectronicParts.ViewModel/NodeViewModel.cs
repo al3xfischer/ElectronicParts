@@ -186,7 +186,7 @@ namespace ElectronicParts.ViewModels
 
             foreach (var pin in pins)
             {
-                pin.Item1.Top = (pin.Item2 * 20) + value + 11;
+                pin.Item1.Top = (pin.Item2 * 19) + value + 17;
             }
         }
     }
