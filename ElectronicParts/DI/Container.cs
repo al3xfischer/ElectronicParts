@@ -31,6 +31,7 @@ namespace ElectronicParts.DI
             services.AddSingleton<AssemblyBinder>();
             services.AddSingleton<IGenericTypeComparerService, GenericTypeComparerService>();
             services.AddSingleton<IAssemblyNameExtractorService, AssemblyNameExtractorService>();
+            services.AddTransient<INodeValidationService, NodeValidationService>();
 
             // Logging
             services.AddLogging();

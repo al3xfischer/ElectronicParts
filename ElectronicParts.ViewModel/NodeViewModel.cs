@@ -17,6 +17,7 @@ namespace ElectronicParts.ViewModels
         private int left;
 
         private int width;
+
         private readonly IExecutionService executionService;
 
         public NodeViewModel(IDisplayableNode node, ICommand deleteCommand, ICommand inputPinCommand, ICommand OutputPinCommand, IExecutionService executionService)
@@ -47,14 +48,20 @@ namespace ElectronicParts.ViewModels
             this.ActivateCommand = new RelayCommand(arg =>
             {
                 this.Node.Activate();
-                foreach (var input in this.Inputs)
+                if (!(this.Inputs is null))
                 {
-                    input.Update();
+                    foreach (var input in this.Inputs)
+                    {
+                        input.Update();
+                    }
                 }
 
-                foreach (var output in this.Outputs)
+                if (!(this.Outputs is null))
                 {
-                    output.Update();
+                    foreach (var output in this.Outputs)
+                    {
+                        output.Update();
+                    }
                 }
             });
 
@@ -139,7 +146,7 @@ namespace ElectronicParts.ViewModels
         /// <param name="floor">If set to true will floor value else will ceil value.</param>
         public void SnapToNewGrid(int gridSize, bool floor)
         {
-            int leftOffset = this.Inputs.Count > 0 ? 10 : 0;
+            int leftOffset = this.Inputs?.Count > 0 ? 10 : 0;
 
             if (floor)
             {
@@ -217,7 +224,7 @@ namespace ElectronicParts.ViewModels
         {
             get
             {
-                return this.Inputs.Count >= this.Outputs.Count ? this.Inputs.Count : this.Outputs.Count;
+                return (this.Inputs?.Count >= this.Outputs?.Count ? this.Inputs?.Count : this.Outputs?.Count) ?? 0;
             }
         }
 
