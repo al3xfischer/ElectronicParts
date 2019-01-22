@@ -1,25 +1,57 @@
-﻿using ElectronicParts.Services.Interfaces;
-using ElectronicParts.ViewModels.Commands;
-using Shared;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Input;
+﻿// ***********************************************************************
+// Author           : Alexander Fischer
+// ***********************************************************************
+// <copyright file="NodeViewModel.cs" company="FHWN">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary>Represents the NodeViewModel class of the ElectronicParts Programm</summary>
+// ***********************************************************************
 
 namespace ElectronicParts.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Drawing;
+    using System.Linq;
+    using System.Windows.Input;
+    using ElectronicParts.Services.Interfaces;
+    using ElectronicParts.ViewModels.Commands;
+    using Shared;
+
+    /// <summary>
+    /// Represents the <see cref="ConnectorViewModel"/> class.
+    /// </summary>
     public class NodeViewModel : BaseViewModel
     {
+        /// <summary>
+        /// Contains the top value of the node.
+        /// </summary>
         private int top;
 
+        /// <summary>
+        /// Contains the left value of the node.
+        /// </summary>
         private int left;
 
+        /// <summary>
+        /// Contains the width value of the node.
+        /// </summary>
         private int width;
 
+        /// <summary>
+        /// Contains the execution service.
+        /// </summary>
         private readonly IExecutionService executionService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NodeViewModel"/> class.
+        /// </summary>
+        /// <param name="node">The node of this view model.</param>
+        /// <param name="deleteCommand">The command to delete this view model.</param>
+        /// <param name="inputPinCommand">The command to be invoked connecting an input pin.</param>
+        /// <param name="OutputPinCommand">The command to be invoked connecting an output pin.</param>
+        /// <param name="executionService">The execution service.</param>
         public NodeViewModel(IDisplayableNode node, ICommand deleteCommand, ICommand inputPinCommand, ICommand OutputPinCommand, IExecutionService executionService)
         {
             this.Node = node ?? throw new ArgumentNullException(nameof(node));
@@ -68,22 +100,37 @@ namespace ElectronicParts.ViewModels
             this.Node.PictureChanged += NodePictureChanged;
         }
 
+        /// <summary>
+        /// Removes the delegate NodePictureChanged from the PictureChanged event of the node.
+        /// </summary>
         public void RemoveDelegate()
         {
             this.Node.PictureChanged -= NodePictureChanged;
         }
 
-        public void AddDeleage()
+        /// <summary>
+        /// Adds the delegate NodePictureChanged to the PictureChanged event of the node.
+        /// </summary>
+        public void AddDelegate()
         {
             this.Node.PictureChanged -= NodePictureChanged;
             this.Node.PictureChanged += NodePictureChanged;
         }
 
+        /// <summary>
+        /// Invokes the INotifyPropertyChanged event of the <see cref="BaseViewModel"/>
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> for this event.</param>
         private void NodePictureChanged(object sender, EventArgs e)
         {
             this.FirePropertyChanged(nameof(Picture));
         }
 
+        /// <summary>
+        /// Gets the width of the node.
+        /// </summary>
+        /// <value >The width of the node.</value>
         public int Width
         {
             get => this.width;
@@ -107,6 +154,10 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets the top of the node.
+        /// </summary>
+        /// <value >The top of the node.</value>
         public int Top
         {
             get => this.top;
@@ -126,6 +177,10 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets the left of the node.
+        /// </summary>
+        /// <value >The left of the node.</value>
         public int Left
         {
             get => this.left;
@@ -207,28 +262,75 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets the input pins of the node.
+        /// </summary>
+        /// <value>The input pins of the node.</value>
         public ObservableCollection<PinViewModel> Inputs { get; }
 
+        /// <summary>
+        /// Gets the output pins of the node.
+        /// </summary>
+        /// <value>The output pins of the node.</value>
         public ObservableCollection<PinViewModel> Outputs { get; }
 
+        /// <summary>
+        /// Gets the picture of the node.
+        /// </summary>
+        /// <value>The picture of the node.</value>
         public Bitmap Picture { get => this.Node.Picture; }
 
+        /// <summary>
+        /// Gets the label of the node.
+        /// </summary>
+        /// <value>The label of the node.</value>
         public string Label { get => this.Node.Label; }
 
+        /// <summary>
+        /// Gets the description of the node.
+        /// </summary>
+        /// <value>The description of the node.</value>
         public string Description { get => this.Node.Description; }
 
+        /// <summary>
+        /// Gets the type of the node.
+        /// </summary>
+        /// <value>The type of the node.</value>
         public NodeType Type { get => this.Node.Type; }
 
+        /// <summary>
+        /// Gets the node.
+        /// </summary>
+        /// <value>The node.</value>
         public IDisplayableNode Node { get; }
 
+        /// <summary>
+        /// Gets the command to delete the node.
+        /// </summary>
+        /// <value>The command to delete the node.</value>
         public ICommand DeleteCommand { get; }
 
+        /// <summary>
+        /// Gets the command to activate the node.
+        /// </summary>
+        /// <value>The command to activate the node.</value>
         public ICommand ActivateCommand { get; }
 
+        /// <summary>
+        /// Gets the command to increase the width of the node.
+        /// </summary>
+        /// <value>The command to increase the width of the node.</value>
         public ICommand IncreaseWidthCommand { get; }
 
+        /// <summary>
+        /// Gets the command to decrease the width of the node.
+        /// </summary>
+        /// <value>The command to decrease the width of the node.</value>
         public ICommand DecreaseWidthCommand { get; }
 
+        /// <summary>
+        /// Updates the node.
+        /// </summary>
         public void Update()
         {
             this.FirePropertyChanged(nameof(Picture));
