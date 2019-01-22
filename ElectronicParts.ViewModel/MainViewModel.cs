@@ -184,6 +184,8 @@ namespace ElectronicParts.ViewModels
                 {
                     this.connections.Add(connection);
                 }
+
+                this.RepositionNodes();
             });
 
             this.ExitCommand = new RelayCommand(arg => Environment.Exit(0));
@@ -305,6 +307,8 @@ namespace ElectronicParts.ViewModels
 
             this.UpdateBoardSize = new RelayCommand(arg =>
             {
+                this.RepositionNodes();
+
                 this.FirePropertyChanged(nameof(BoardHeight));
                 this.FirePropertyChanged(nameof(BoardWidth));
             });
@@ -504,6 +508,22 @@ namespace ElectronicParts.ViewModels
                 this.availableNodes.Add(assembly);
             }
             this.FirePropertyChanged(nameof(this.AvailableNodes));
+        }
+
+        private void RepositionNodes()
+        {
+            foreach (var node in this.Nodes)
+            {
+                if (node.Left + 70 >= this.BoardWidth)
+                {
+                    node.Left = this.BoardWidth - 70;
+                }
+
+                if (node.Top + 20 * (node.MaxPins) >= this.BoardHeight)
+                {
+                    node.Top = this.BoardHeight - 20 * (node.MaxPins);
+                }
+            }
         }
 
         private async Task SnapAllNodesToGrid(bool floor)
