@@ -85,7 +85,7 @@ namespace ElectronicParts.Components
                 System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
                 new Typeface("Verdana"), 50, System.Windows.Media.Brushes.White), new System.Windows.Point(0, 0));
             context.Close();
-            RenderTargetBitmap newBmp = new RenderTargetBitmap(bitmap.Width, bitmap.Height, 500, 800, PixelFormats.Default);
+            RenderTargetBitmap newBmp = new RenderTargetBitmap(value.Length * 200, bitmap.Height, 500, 800, PixelFormats.Default);
             newBmp.Render(visual);
             MemoryStream stream = new MemoryStream();
             BitmapEncoder encoder = new BmpBitmapEncoder();

@@ -28,6 +28,7 @@ namespace ElectronicParts.Views
         {
             this.DataContext = this;
             this.ViewModel = Container.Resolve<MainViewModel>();
+            this.ViewModel.AddAssembly = () => this.AddAssembly_Click(this, new RoutedEventArgs());
             this.logger = Container.Resolve<ILogger<MainWindow>>();
         }
 
@@ -56,7 +57,7 @@ namespace ElectronicParts.Views
             {
                 var point = e.GetPosition(this.canvas);
 
-                if (this.currentNode is null || point.X <= 0 || point.Y <= 0 || point.X >= this.canvas.ActualWidth || point.Y >= this.canvas.ActualHeight)
+                if (this.currentNode is null || point.X <= 0 || point.Y <= 0 || point.X + 20 >= this.canvas.ActualWidth || point.Y + (this.currentNode.MaxPins - 1) * 20 >= this.canvas.ActualHeight)
                 {
                     return;
                 }

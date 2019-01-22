@@ -26,6 +26,8 @@ namespace ElectronicParts.Services.Interfaces
         /// <value>true if this instance is enabled; otherwise, false.</value>
         bool IsEnabled { get; }
 
+        event EventHandler OnIsEnabledChanged;
+
         int FramesPerSecond { get; set; }
         long MillisecondsPerLoop { get; }
 
