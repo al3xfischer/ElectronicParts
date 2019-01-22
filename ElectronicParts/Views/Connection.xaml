@@ -7,7 +7,22 @@
              xmlns:converter="clr-namespace:ElectronicParts.Converter">
     <UserControl.Resources>
         <converter:ValueColorConverter x:Key="valueToColor"/>
+        <converter:ConnectionToMarginConverter x:Key="ConnectionMarginConverter"/>
     </UserControl.Resources>
-
-    <Line X1="{Binding Input.Left}" Y1="{Binding Input.Top}" X2="{Binding Output.Left}" Y2="{Binding Output.Top}" Stroke="{Binding CurrentValue, Converter={StaticResource valueToColor} }" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+    <Grid>
+        <TextBlock x:Name="ValueText" Text="{Binding CurrentValue.Current}" MaxWidth="40">
+            <TextBlock.Margin>
+                <MultiBinding>
+                    <MultiBinding.Converter>
+                        <converter:ConnectionToMarginConverter/>
+                    </MultiBinding.Converter>
+                    <Binding Path="Input.Left"></Binding>
+                    <Binding Path="Input.Top"></Binding>
+                    <Binding Path="Output.Left"></Binding>
+                    <Binding Path="Output.Top"></Binding>
+                </MultiBinding>
+            </TextBlock.Margin>
+        </TextBlock>
+        <Line X1="{Binding Input.Left}" Y1="{Binding Input.Top}" X2="{Binding Output.Left}" Y2="{Binding Output.Top}" Stroke="{Binding CurrentValue, Converter={StaticResource valueToColor} }" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+    </Grid>
 </UserControl>

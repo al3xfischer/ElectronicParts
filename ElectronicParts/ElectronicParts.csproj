@@ -61,6 +61,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\BitmapToImageSourceConverter.cs" />
+    <Compile Include="Converter\ConnectionToMarginConverter.cs" />
     <Compile Include="Converter\GridSizeConverter.cs" />
     <Compile Include="Converter\PinToHeightConverter.cs" />
     <Compile Include="Converter\ValueColorConverter.cs" />
@@ -205,6 +206,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\step.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\clear.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
