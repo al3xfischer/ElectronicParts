@@ -140,14 +140,14 @@ namespace ElectronicParts.ViewModels
                 {
                     Set(ref this.left, value);
                 }
-                this.UpdateLeft(this.Inputs, this.left);
+                this.UpdateLeft(this.Inputs, this.left + 16);
                 if (this.Inputs is null || this.Inputs.Count == 0)
                 {
-                    this.UpdateLeft(this.Outputs, this.Left + this.Width + 13);
+                    this.UpdateLeft(this.Outputs, this.Left + this.Width + 12);
                 }
                 else
                 {
-                    this.UpdateLeft(this.Outputs, this.Left + this.Width + 23);
+                    this.UpdateLeft(this.Outputs, this.Left + this.Width + 36);
                 }
             }
         }
@@ -264,7 +264,7 @@ namespace ElectronicParts.ViewModels
 
             foreach (var pin in pins)
             {
-                pin.Item1.Top = (pin.Item2 * 19) + value + 17;
+                pin.Item1.Top = (pin.Item2 * 19) + value + 16;
             }
         }
 
