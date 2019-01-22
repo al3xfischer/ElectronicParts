@@ -17,11 +17,22 @@
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
 
-        <!-- Pin -->
-        <DataTemplate x:Key="PinTemplate">
-            <StackPanel Margin="0 0 0 0">
-                <TextBox FontSize="8" Margin="0" Height="13" Text="{Binding Pin.Label}"/>
-                <Button Width="10" Margin="-7 0 -7 0" Padding="0 0 0 0" BorderThickness="0" Background="Transparent" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
+        <!-- Input Pin -->
+        <DataTemplate x:Key="InputPinTemplate">
+            <StackPanel Margin="0">
+                <TextBox MaxLength="10" FontSize="8" Margin="0" Height="13" Text="{Binding Pin.Label}"/>
+                <Button HorizontalAlignment="Right" HorizontalContentAlignment="Right" Width="10" Margin="0 1 0 1" Padding="0 0 0 0" BorderThickness="0" Background="Transparent" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
+                    <Border Height="2" Width="11" Padding="0" Background="Black">
+                    </Border>
+                </Button>
+            </StackPanel>
+        </DataTemplate>
+
+        <!-- Output Pin -->
+        <DataTemplate x:Key="OutputPinTemplate">
+            <StackPanel Margin="0">
+                <TextBox MaxLength="10" FontSize="8" Margin="0" Height="13" Text="{Binding Pin.Label}"/>
+                <Button HorizontalAlignment="Left" HorizontalContentAlignment="Left" Width="10" Margin="0 1 0 1" Padding="0 0 0 0" BorderThickness="0" Background="Transparent" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
                     <Border Height="2" Width="11" Padding="0" Background="Black">
                     </Border>
                 </Button>
@@ -49,14 +60,14 @@
         </Grid.ToolTip>
 
         <!-- Inputs -->
-        <ListView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Inputs}" ItemTemplate="{StaticResource PinTemplate}" >
+        <ListView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Inputs}" ItemTemplate="{StaticResource InputPinTemplate}" Margin="0" Padding="0">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}" >
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
-                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" Margin="0 0 -1 0" BorderThickness="0" Background="{TemplateBinding Background}" Padding="0" SnapsToDevicePixels="true">
+                                    <ContentPresenter HorizontalAlignment="Right"  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsEnabled" Value="false">
@@ -66,8 +77,6 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="Margin" Value="0"/>
-                    <Setter Property="Padding" Value="0"/>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
@@ -107,14 +116,14 @@
 
 
         <!-- Outputs -->
-        <ListView Grid.Column="2" Grid.Row="1" ItemsSource="{Binding  Outputs}" ItemTemplate="{StaticResource PinTemplate}" >
+        <ListView Grid.Column="2" Grid.Row="1" ItemsSource="{Binding  Outputs}" ItemTemplate="{StaticResource OutputPinTemplate}" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}" >
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
-                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Background="{TemplateBinding Background}" Padding="0" Margin="-1 0 0 0" SnapsToDevicePixels="true">
+                                    <ContentPresenter HorizontalAlignment="Left"  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsEnabled" Value="false">
