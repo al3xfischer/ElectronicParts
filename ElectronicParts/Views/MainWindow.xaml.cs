@@ -200,6 +200,7 @@ namespace ElectronicParts.Views
             this.ViewModel.PreviewLines[0].Visible = false;
             this.ViewModel.OutputPin = null;
             this.ViewModel.InputPin = null;
+            this.ViewModel.ResetPossibleConnections();
         }
     }
 }

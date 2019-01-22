@@ -715,7 +715,7 @@ namespace ElectronicParts.ViewModels
             }
         }
 
-        private void ResetPossibleConnections()
+        public void ResetPossibleConnections()
         {
             foreach (var pinList in this.nodes.Select(node => node.Outputs))
             {
