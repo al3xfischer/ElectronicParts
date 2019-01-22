@@ -112,6 +112,7 @@ namespace ElectronicParts.ViewModels
 
             this.LoadCommand = new RelayCommand(arg =>
             {
+                this.actionManager.Clear();
                 SnapShot snapShot = default(SnapShot);
 
                 try
