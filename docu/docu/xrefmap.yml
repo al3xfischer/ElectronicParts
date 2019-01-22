@@ -1949,6 +1949,135 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.Components.Timer.Type
   nameWithType: Timer.Type
+- uid: ElectronicParts.Components.XOrGate
+  name: XOrGate
+  href: api/ElectronicParts.Components.XOrGate.html
+  commentId: T:ElectronicParts.Components.XOrGate
+  fullName: ElectronicParts.Components.XOrGate
+  nameWithType: XOrGate
+- uid: ElectronicParts.Components.XOrGate.#ctor
+  name: XOrGate()
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate__ctor
+  commentId: M:ElectronicParts.Components.XOrGate.#ctor
+  fullName: ElectronicParts.Components.XOrGate.XOrGate()
+  nameWithType: XOrGate.XOrGate()
+- uid: ElectronicParts.Components.XOrGate.#ctor*
+  name: XOrGate
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate__ctor_
+  commentId: Overload:ElectronicParts.Components.XOrGate.#ctor
+  isSpec: "True"
+  fullName: ElectronicParts.Components.XOrGate.XOrGate
+  nameWithType: XOrGate.XOrGate
+- uid: ElectronicParts.Components.XOrGate.Activate
+  name: Activate()
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Activate
+  commentId: M:ElectronicParts.Components.XOrGate.Activate
+  fullName: ElectronicParts.Components.XOrGate.Activate()
+  nameWithType: XOrGate.Activate()
+- uid: ElectronicParts.Components.XOrGate.Activate*
+  name: Activate
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Activate_
+  commentId: Overload:ElectronicParts.Components.XOrGate.Activate
+  isSpec: "True"
+  fullName: ElectronicParts.Components.XOrGate.Activate
+  nameWithType: XOrGate.Activate
+- uid: ElectronicParts.Components.XOrGate.Description
+  name: Description
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Description
+  commentId: P:ElectronicParts.Components.XOrGate.Description
+  fullName: ElectronicParts.Components.XOrGate.Description
+  nameWithType: XOrGate.Description
+- uid: ElectronicParts.Components.XOrGate.Description*
+  name: Description
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Description_
+  commentId: Overload:ElectronicParts.Components.XOrGate.Description
+  isSpec: "True"
+  fullName: ElectronicParts.Components.XOrGate.Description
+  nameWithType: XOrGate.Description
+- uid: ElectronicParts.Components.XOrGate.Execute
+  name: Execute()
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Execute
+  commentId: M:ElectronicParts.Components.XOrGate.Execute
+  fullName: ElectronicParts.Components.XOrGate.Execute()
+  nameWithType: XOrGate.Execute()
+- uid: ElectronicParts.Components.XOrGate.Execute*
+  name: Execute
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Execute_
+  commentId: Overload:ElectronicParts.Components.XOrGate.Execute
+  isSpec: "True"
+  fullName: ElectronicParts.Components.XOrGate.Execute
+  nameWithType: XOrGate.Execute
+- uid: ElectronicParts.Components.XOrGate.Inputs
+  name: Inputs
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Inputs
+  commentId: P:ElectronicParts.Components.XOrGate.Inputs
+  fullName: ElectronicParts.Components.XOrGate.Inputs
+  nameWithType: XOrGate.Inputs
+- uid: ElectronicParts.Components.XOrGate.Inputs*
+  name: Inputs
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Inputs_
+  commentId: Overload:ElectronicParts.Components.XOrGate.Inputs
+  isSpec: "True"
+  fullName: ElectronicParts.Components.XOrGate.Inputs
+  nameWithType: XOrGate.Inputs
+- uid: ElectronicParts.Components.XOrGate.Label
+  name: Label
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Label
+  commentId: P:ElectronicParts.Components.XOrGate.Label
+  fullName: ElectronicParts.Components.XOrGate.Label
+  nameWithType: XOrGate.Label
+- uid: ElectronicParts.Components.XOrGate.Label*
+  name: Label
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Label_
+  commentId: Overload:ElectronicParts.Components.XOrGate.Label
+  isSpec: "True"
+  fullName: ElectronicParts.Components.XOrGate.Label
+  nameWithType: XOrGate.Label
+- uid: ElectronicParts.Components.XOrGate.Outputs
+  name: Outputs
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Outputs
+  commentId: P:ElectronicParts.Components.XOrGate.Outputs
+  fullName: ElectronicParts.Components.XOrGate.Outputs
+  nameWithType: XOrGate.Outputs
+- uid: ElectronicParts.Components.XOrGate.Outputs*
+  name: Outputs
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Outputs_
+  commentId: Overload:ElectronicParts.Components.XOrGate.Outputs
+  isSpec: "True"
+  fullName: ElectronicParts.Components.XOrGate.Outputs
+  nameWithType: XOrGate.Outputs
+- uid: ElectronicParts.Components.XOrGate.Picture
+  name: Picture
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Picture
+  commentId: P:ElectronicParts.Components.XOrGate.Picture
+  fullName: ElectronicParts.Components.XOrGate.Picture
+  nameWithType: XOrGate.Picture
+- uid: ElectronicParts.Components.XOrGate.Picture*
+  name: Picture
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Picture_
+  commentId: Overload:ElectronicParts.Components.XOrGate.Picture
+  isSpec: "True"
+  fullName: ElectronicParts.Components.XOrGate.Picture
+  nameWithType: XOrGate.Picture
+- uid: ElectronicParts.Components.XOrGate.PictureChanged
+  name: PictureChanged
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_PictureChanged
+  commentId: E:ElectronicParts.Components.XOrGate.PictureChanged
+  fullName: ElectronicParts.Components.XOrGate.PictureChanged
+  nameWithType: XOrGate.PictureChanged
+- uid: ElectronicParts.Components.XOrGate.Type
+  name: Type
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Type
+  commentId: P:ElectronicParts.Components.XOrGate.Type
+  fullName: ElectronicParts.Components.XOrGate.Type
+  nameWithType: XOrGate.Type
+- uid: ElectronicParts.Components.XOrGate.Type*
+  name: Type
+  href: api/ElectronicParts.Components.XOrGate.html#ElectronicParts_Components_XOrGate_Type_
+  commentId: Overload:ElectronicParts.Components.XOrGate.Type
+  isSpec: "True"
+  fullName: ElectronicParts.Components.XOrGate.Type
+  nameWithType: XOrGate.Type
 - uid: ElectronicParts.Converter
   name: ElectronicParts.Converter
   href: api/ElectronicParts.Converter.html
@@ -4411,6 +4540,32 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.ViewModels.MainViewModel.ResetAllConnectionsCommand
   nameWithType: MainViewModel.ResetAllConnectionsCommand
+- uid: ElectronicParts.ViewModels.MainViewModel.ResetPossibleConnections
+  name: ResetPossibleConnections()
+  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_ResetPossibleConnections
+  commentId: M:ElectronicParts.ViewModels.MainViewModel.ResetPossibleConnections
+  fullName: ElectronicParts.ViewModels.MainViewModel.ResetPossibleConnections()
+  nameWithType: MainViewModel.ResetPossibleConnections()
+- uid: ElectronicParts.ViewModels.MainViewModel.ResetPossibleConnections*
+  name: ResetPossibleConnections
+  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_ResetPossibleConnections_
+  commentId: Overload:ElectronicParts.ViewModels.MainViewModel.ResetPossibleConnections
+  isSpec: "True"
+  fullName: ElectronicParts.ViewModels.MainViewModel.ResetPossibleConnections
+  nameWithType: MainViewModel.ResetPossibleConnections
+- uid: ElectronicParts.ViewModels.MainViewModel.ResetPreviewLine
+  name: ResetPreviewLine()
+  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_ResetPreviewLine
+  commentId: M:ElectronicParts.ViewModels.MainViewModel.ResetPreviewLine
+  fullName: ElectronicParts.ViewModels.MainViewModel.ResetPreviewLine()
+  nameWithType: MainViewModel.ResetPreviewLine()
+- uid: ElectronicParts.ViewModels.MainViewModel.ResetPreviewLine*
+  name: ResetPreviewLine
+  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_ResetPreviewLine_
+  commentId: Overload:ElectronicParts.ViewModels.MainViewModel.ResetPreviewLine
+  isSpec: "True"
+  fullName: ElectronicParts.ViewModels.MainViewModel.ResetPreviewLine
+  nameWithType: MainViewModel.ResetPreviewLine
 - uid: ElectronicParts.ViewModels.MainViewModel.SaveCommand
   name: SaveCommand
   href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_SaveCommand
@@ -5065,6 +5220,19 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.ViewModels.PreferencesViewModel.IntRules
   nameWithType: PreferencesViewModel.IntRules
+- uid: ElectronicParts.ViewModels.PreferencesViewModel.SortByValue
+  name: SortByValue()
+  href: api/ElectronicParts.ViewModels.PreferencesViewModel.html#ElectronicParts_ViewModels_PreferencesViewModel_SortByValue
+  commentId: M:ElectronicParts.ViewModels.PreferencesViewModel.SortByValue
+  fullName: ElectronicParts.ViewModels.PreferencesViewModel.SortByValue()
+  nameWithType: PreferencesViewModel.SortByValue()
+- uid: ElectronicParts.ViewModels.PreferencesViewModel.SortByValue*
+  name: SortByValue
+  href: api/ElectronicParts.ViewModels.PreferencesViewModel.html#ElectronicParts_ViewModels_PreferencesViewModel_SortByValue_
+  commentId: Overload:ElectronicParts.ViewModels.PreferencesViewModel.SortByValue
+  isSpec: "True"
+  fullName: ElectronicParts.ViewModels.PreferencesViewModel.SortByValue
+  nameWithType: PreferencesViewModel.SortByValue
 - uid: ElectronicParts.ViewModels.PreferencesViewModel.StringRules
   name: StringRules
   href: api/ElectronicParts.ViewModels.PreferencesViewModel.html#ElectronicParts_ViewModels_PreferencesViewModel_StringRules
@@ -6041,6 +6209,22 @@ references:
   isSpec: "True"
   fullName: System.Extensions.RoundTo
   nameWithType: Extensions.RoundTo
+- uid: System.Extensions.SortRuleCollection*
+  name: SortRuleCollection
+  href: api/System.Extensions.html#System_Extensions_SortRuleCollection_
+  commentId: Overload:System.Extensions.SortRuleCollection
+  isSpec: "True"
+  fullName: System.Extensions.SortRuleCollection
+  nameWithType: Extensions.SortRuleCollection
+- uid: System.Extensions.SortRuleCollection``1(System.Collections.ObjectModel.ObservableCollection{ElectronicParts.ViewModels.RuleViewModel{``0}},System.ComponentModel.ListSortDirection)
+  name: SortRuleCollection<T>(ObservableCollection<RuleViewModel<T>>, ListSortDirection)
+  href: api/System.Extensions.html#System_Extensions_SortRuleCollection__1_System_Collections_ObjectModel_ObservableCollection_ElectronicParts_ViewModels_RuleViewModel___0___System_ComponentModel_ListSortDirection_
+  commentId: M:System.Extensions.SortRuleCollection``1(System.Collections.ObjectModel.ObservableCollection{ElectronicParts.ViewModels.RuleViewModel{``0}},System.ComponentModel.ListSortDirection)
+  name.vb: SortRuleCollection(Of T)(ObservableCollection(Of RuleViewModel(Of T)), ListSortDirection)
+  fullName: System.Extensions.SortRuleCollection<T>(System.Collections.ObjectModel.ObservableCollection<ElectronicParts.ViewModels.RuleViewModel<T>>, System.ComponentModel.ListSortDirection)
+  fullName.vb: System.Extensions.SortRuleCollection(Of T)(System.Collections.ObjectModel.ObservableCollection(Of ElectronicParts.ViewModels.RuleViewModel(Of T)), System.ComponentModel.ListSortDirection)
+  nameWithType: Extensions.SortRuleCollection<T>(ObservableCollection<RuleViewModel<T>>, ListSortDirection)
+  nameWithType.vb: Extensions.SortRuleCollection(Of T)(ObservableCollection(Of RuleViewModel(Of T)), ListSortDirection)
 - uid: System.Extensions.ToObservableCollection*
   name: ToObservableCollection
   href: api/System.Extensions.html#System_Extensions_ToObservableCollection_
