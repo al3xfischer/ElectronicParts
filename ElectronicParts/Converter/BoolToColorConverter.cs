@@ -15,11 +15,11 @@ namespace ElectronicParts.Converter
         {
             bool boolValue = (bool)value;
 
-            SolidColorBrush color = Brushes.Transparent;
+            SolidColorBrush color = Brushes.Black;
 
             if (boolValue)
             {
-                color = Brushes.Green;
+                color = Brushes.LightGreen;
             }
 
             return color;

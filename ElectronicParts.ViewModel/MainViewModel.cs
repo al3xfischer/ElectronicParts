@@ -600,13 +600,13 @@ namespace ElectronicParts.ViewModels
         public ICommand OutputPinCommand { get; }
 
 
-        private void CheckPossibleConnections(IEnumerable<IEnumerable<PinViewModel>> pinLists)
+        private void CheckPossibleConnections(IEnumerable<IEnumerable<PinViewModel>> pinLists, IPin selectedPin)
         {
             foreach (var pinList in pinLists)
             {
                 foreach (var pin in pinList)
                 {
-                    if (this.genericTypeComparerService.IsSameGenericType(pin.Pin, this.outputPin.Pin))
+                    if (this.genericTypeComparerService.IsSameGenericType(pin.Pin, selectedPin))
                     {
                         pin.CanBeConnected = true;
                     }
@@ -650,12 +650,12 @@ namespace ElectronicParts.ViewModels
 
             if (!(this.inputPin is null))
             {
-                this.CheckPossibleConnections(this.nodes.Select(node => node.Outputs));
+                this.CheckPossibleConnections(this.nodes.Select(node => node.Outputs), this.inputPin.Pin);
             }
 
             if (!(this.outputPin is null))
             {
-                this.CheckPossibleConnections(this.nodes.Select(node => node.Inputs));
+                this.CheckPossibleConnections(this.nodes.Select(node => node.Inputs), this.outputPin.Pin);
             }
         }
     }

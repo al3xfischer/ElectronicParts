@@ -11,6 +11,7 @@
     <!-- Resources -->
     <UserControl.Resources>
         <converter:ValueColorConverter x:Key="valueToColor"/>
+        <converter:BoolToColorConverter x:Key="boolToColor"/>
 
         <!-- ListViewStyle -->
         <Style TargetType="ListView">
@@ -22,8 +23,8 @@
         <DataTemplate x:Key="InputPinTemplate">
             <StackPanel Margin="0">
                 <TextBox MaxLength="10" FontSize="8" Margin="0" Height="13" Text="{Binding Pin.Label}"/>
-                <Button HorizontalAlignment="Right" HorizontalContentAlignment="Right" Width="10" Margin="0 1 0 1" Padding="0 0 0 0" BorderThickness="0" Background="Transparent" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
-                    <Border Height="2" Width="11" Padding="0" Background="Black">
+                <Button HorizontalAlignment="Right" HorizontalContentAlignment="Right" Width="10" Margin="0 1 0 1" Padding="0 0 0 0" BorderThickness="0" Background="{Binding CanBeConnected, Converter={StaticResource boolToColor}}" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
+                    <Border Height="2" Width="11" Padding="0" Background="{Binding CanBeConnected, Converter={StaticResource boolToColor}}" >
                     </Border>
                 </Button>
             </StackPanel>
@@ -33,8 +34,8 @@
         <DataTemplate x:Key="OutputPinTemplate">
             <StackPanel Margin="0">
                 <TextBox MaxLength="10" FontSize="8" Margin="0" Height="13" Text="{Binding Pin.Label}"/>
-                <Button HorizontalAlignment="Left" HorizontalContentAlignment="Left" Width="10" Margin="0 1 0 1" Padding="0 0 0 0" BorderThickness="0" Background="Transparent" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
-                    <Border Height="2" Width="11" Padding="0" Background="Black">
+                <Button HorizontalAlignment="Left" HorizontalContentAlignment="Left" Width="10" Margin="0 1 0 1" Padding="0 0 0 0" BorderThickness="0" Background="{Binding CanBeConnected, Converter={StaticResource boolToColor}}" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
+                    <Border Height="2" Width="11" Padding="0" Background="{Binding CanBeConnected, Converter={StaticResource boolToColor}}">
                     </Border>
                 </Button>
             </StackPanel>

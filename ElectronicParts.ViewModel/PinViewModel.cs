@@ -15,7 +15,7 @@ namespace ElectronicParts.ViewModels
         private int top;
 
         private Timer timer;
-
+        private bool canBeConnected;
 
         public PinViewModel(IPin pin, ICommand connectCommand, IExecutionService executionService)
         {
@@ -52,7 +52,15 @@ namespace ElectronicParts.ViewModels
 
         public ICommand ConnectCommand { get; }
 
-        public bool CanBeConnected { get; set; }
+        public bool CanBeConnected
+        {
+            get { return canBeConnected; }
+            set
+            {
+                canBeConnected = value;
+                this.FirePropertyChanged(nameof(CanBeConnected));
+            }
+        }
 
         public bool Executing
         {
