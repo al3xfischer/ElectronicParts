@@ -10,7 +10,7 @@
         <converter:ConnectionToMarginConverter x:Key="ConnectionMarginConverter"/>
     </UserControl.Resources>
     <Grid>
-        <TextBlock x:Name="ValueText" FontSize="10" Text="{Binding CurrentValue.Current}" MaxWidth="40">
+        <TextBlock x:Name="ValueText" FontSize="10" Text="{Binding CurrentValue.Current}" MaxWidth="40" Height="15">
             <TextBlock.Margin>
                 <MultiBinding>
                     <MultiBinding.Converter>

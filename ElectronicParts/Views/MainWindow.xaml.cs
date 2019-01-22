@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Linq;
 using System;
 using Microsoft.Extensions.Logging;
+using System.Windows.Shapes;
 
 namespace ElectronicParts.Views
 {
@@ -57,7 +58,7 @@ namespace ElectronicParts.Views
             {
                 var point = e.GetPosition(this.canvas);
 
-                if (this.currentNode is null || point.X <= 0 || point.Y <= 0 || point.X + 20 >= this.canvas.ActualWidth || point.Y + (this.currentNode.MaxPins - 1) * 20 >= this.canvas.ActualHeight)
+                if (this.currentNode is null || point.X <= 0 || point.Y <= 0 || point.X + this.currentNode.Width - 30 >= this.canvas.ActualWidth || point.Y + (this.currentNode.MaxPins - 1) * 20 >= this.canvas.ActualHeight)
                 {
                     return;
                 }
@@ -69,23 +70,63 @@ namespace ElectronicParts.Views
                     this.currentNode.SnapToNewGrid(this.ViewModel.GridSize, false);
                 }
             }
-        }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count == 0)
+            var mousePoint = e.GetPosition(this.canvas);
+
+            PreviewLineViewModel previewLine = this.ViewModel.PreviewLines[0];
+
+            if ((ViewModel.InputPin is null) && (ViewModel.OutputPin is null))
             {
-                return;
+                previewLine.Visible = false;
             }
 
-            var vm = e.AddedItems[0] as NodeViewModel;
-            if (vm is null)
+            if (!(ViewModel.InputPin is null))
             {
-                return;
+                previewLine.PointOneX = ViewModel.InputPin.Left;
+                previewLine.PointOneY = ViewModel.InputPin.Top;
+
+                previewLine.PointTwoX = mousePoint.X;
+                previewLine.PointTwoY = mousePoint.Y;
+
+                previewLine.Visible = true;
             }
 
-            this.ViewModel.AddNodeCommand.Execute(vm.Node);
-            (sender as ListView).SelectedItems.Clear();
+            if (!(ViewModel.OutputPin is null))
+            {
+                previewLine.PointOneX = ViewModel.OutputPin.Left;
+                previewLine.PointOneY = ViewModel.OutputPin.Top;
+
+                previewLine.PointTwoX = mousePoint.X;
+                previewLine.PointTwoY = mousePoint.Y;
+                
+                previewLine.Visible = true;
+            }
+
+
+            var mousePosition = e.GetPosition(this.boardScroller);
+            if (mousePosition.X > 0 && mousePosition.X < this.boardScroller.ActualWidth)
+            {
+                if (mousePosition.Y <= 20 && mousePosition.Y > 0)
+                {
+                    boardScroller.ScrollToVerticalOffset(boardScroller.ContentVerticalOffset - 0.1);
+                }
+                else if (mousePosition.Y > this.boardScroller.ActualHeight - 40 && mousePosition.Y < this.boardScroller.ActualHeight)
+                {
+                    boardScroller.ScrollToVerticalOffset(boardScroller.ContentVerticalOffset + 0.1);
+                }
+            }
+
+            if (mousePosition.Y > 0 && mousePosition.Y < this.ActualHeight)
+            {
+                if (mousePosition.X <= 20 && mousePosition.X > 0)
+                {
+                    boardScroller.ScrollToHorizontalOffset(boardScroller.ContentHorizontalOffset - 0.1);
+                }
+                else if (mousePosition.X > this.boardScroller.ActualWidth - 40 && mousePosition.X < this.boardScroller.ActualWidth)
+                {
+                    boardScroller.ScrollToHorizontalOffset(boardScroller.ContentHorizontalOffset + 0.1);
+                }
+            }
         }
 
         private void Node_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -97,18 +138,18 @@ namespace ElectronicParts.Views
         {
             try
             {
-                Process.Start(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies"));
+                Process.Start(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies"));
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, $"Error while opening folder {Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies")}");
+                this.logger.LogError(ex, $"Error while opening folder {System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies")}");
                 Debug.WriteLine("Folder opening error");
             }
         }
 
         private void AddAssembly_Click(object sender, RoutedEventArgs e)
         {
-            var assemblyPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies");
+            var assemblyPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies");
             var fileDialog = new OpenFileDialog();
             fileDialog.CheckFileExists = true;
             fileDialog.CheckPathExists = true;
@@ -123,7 +164,7 @@ namespace ElectronicParts.Views
                 {
                     try
                     {
-                        file.CopyTo(Path.Combine(assemblyPath, file.Name), true);
+                        file.CopyTo(System.IO.Path.Combine(assemblyPath, file.Name), true);
                     }
                     catch (Exception ex)
                     {
@@ -146,6 +187,19 @@ namespace ElectronicParts.Views
                     this.ViewModel.AddNodeCommand.Execute(vm.Node);
                 }
             }
+        }
+
+        private void BoardScroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            this.ViewModel.VerticalScrollerOffset = (int)this.boardScroller.ContentVerticalOffset;
+            this.ViewModel.HorizontalScrollerOffset = (int)this.boardScroller.ContentHorizontalOffset;
+        }
+
+        private void DockPanel_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.ViewModel.PreviewLines[0].Visible = false;
+            this.ViewModel.OutputPin = null;
+            this.ViewModel.InputPin = null;
         }
     }
 }

@@ -30,9 +30,11 @@
         <!-- Display Items-->
         <CollectionViewSource Source="{Binding ViewModel.Nodes}" x:Key="Nodes"/>
         <CollectionViewSource Source="{Binding ViewModel.Connections}" x:Key="Connections"/>
+        <CollectionViewSource Source="{Binding ViewModel.PreviewLines}" x:Key="PreviewLines"/>
         <CompositeCollection x:Key="DisplayItems">
             <CollectionContainer Collection="{Binding  Source={StaticResource Nodes}}"/>
             <CollectionContainer Collection="{Binding  Source={StaticResource Connections}}"/>
+            <CollectionContainer Collection="{Binding  Source={StaticResource PreviewLines}}"/>
         </CompositeCollection>
 
     </Window.Resources>
@@ -43,7 +45,7 @@
         <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding ViewModel.LoadCommand}"/>
     </Window.InputBindings>
 
-    <DockPanel>
+    <DockPanel MouseRightButtonDown="DockPanel_MouseRightButtonDown">
         <!-- Menu -->
         <Menu Background="WhiteSmoke" BorderThickness="0,0,0,1" BorderBrush="DarkGray" DockPanel.Dock="Top" FontSize="14" >
             <MenuItem Header="_File">
@@ -265,8 +267,8 @@
             </Border>
 
             <!-- Nodes Display -->
-            <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <ItemsControl HorizontalAlignment="Stretch" BorderBrush="DarkGray" BorderThickness="1 0 0 0" DockPanel.Dock="Bottom" ItemsSource="{StaticResource DisplayItems}" Background="White" >
+            <ScrollViewer Name="boardScroller" ScrollChanged="BoardScroller_ScrollChanged" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ItemsControl HorizontalAlignment="Stretch" BorderBrush="DarkGray" BorderThickness="1 0 0 0" DockPanel.Dock="Bottom" ItemsSource="{StaticResource DisplayItems}" Background="White"  >
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type vm:NodeViewModel}">
                             <local:Node MouseLeftButtonDown="Node_MouseLeftButtonDown" MouseLeftButtonUp="Node_MouseLeftButtonUp" >
@@ -287,6 +289,10 @@
                                     </ContextMenu>
                                 </local:Connection.ContextMenu>
                             </local:Connection>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:PreviewLineViewModel}">
+                            <local:PreviewLine>
+                            </local:PreviewLine>
                         </DataTemplate>
                     </ItemsControl.Resources>
                     <ItemsControl.ItemContainerStyle>
