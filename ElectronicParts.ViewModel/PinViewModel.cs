@@ -52,6 +52,8 @@ namespace ElectronicParts.ViewModels
 
         public ICommand ConnectCommand { get; }
 
+        public bool CanBeConnected { get; set; }
+
         public bool Executing
         {
             get => this.executionService.IsEnabled;
