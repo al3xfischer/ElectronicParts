@@ -30,9 +30,11 @@
         <!-- Display Items-->
         <CollectionViewSource Source="{Binding ViewModel.Nodes}" x:Key="Nodes"/>
         <CollectionViewSource Source="{Binding ViewModel.Connections}" x:Key="Connections"/>
+        <CollectionViewSource Source="{Binding ViewModel.PreviewLines}" x:Key="PreviewLines"/>
         <CompositeCollection x:Key="DisplayItems">
             <CollectionContainer Collection="{Binding  Source={StaticResource Nodes}}"/>
             <CollectionContainer Collection="{Binding  Source={StaticResource Connections}}"/>
+            <CollectionContainer Collection="{Binding  Source={StaticResource PreviewLines}}"/>
         </CompositeCollection>
 
     </Window.Resources>
@@ -287,6 +289,10 @@
                                     </ContextMenu>
                                 </local:Connection.ContextMenu>
                             </local:Connection>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:PreviewLineViewModel}">
+                            <local:PreviewLine>
+                            </local:PreviewLine>
                         </DataTemplate>
                     </ItemsControl.Resources>
                     <ItemsControl.ItemContainerStyle>
