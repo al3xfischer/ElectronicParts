@@ -72,7 +72,6 @@ namespace ElectronicParts.Components
         public void Execute()
         {
             this.SetNewPicture(this.Inputs.ElementAt(0).Value.Current.ToString());
-            this.Label = this.Inputs.ElementAt(0).Value.Current.ToString();
         }
 
         private void SetNewPicture(string value)
@@ -81,7 +80,7 @@ namespace ElectronicParts.Components
             DrawingVisual visual = new DrawingVisual();
             DrawingContext context = visual.RenderOpen();
             context.DrawText(
-                new FormattedText(this.Inputs.ElementAt(0).Value.Current.ToString(),
+                new FormattedText(value,
                 System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
                 new Typeface("Verdana"), 50, System.Windows.Media.Brushes.White), new System.Windows.Point(0, 0));
             context.Close();
