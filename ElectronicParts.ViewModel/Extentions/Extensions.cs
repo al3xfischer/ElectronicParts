@@ -10,8 +10,11 @@
 
 namespace System
 {
+    using ElectronicParts.ViewModels;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Linq;
 
     /// <summary>
     /// Includes extensions for the ElectronicParts program.
@@ -32,6 +35,29 @@ namespace System
             }
 
             return new ObservableCollection<TValue>(values);
+        }
+
+        public static void SortRuleCollection<T>(this ObservableCollection<RuleViewModel<T>> values, ListSortDirection sortDirection)
+        {
+            if (values is null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
+
+            var sortedList = new List<RuleViewModel<T>>();
+            if(sortDirection == ListSortDirection.Ascending)
+            {
+                sortedList = values.OrderBy(rule => rule.Value).ToList();
+            }
+            else
+            {
+                sortedList = values.OrderByDescending(rule => rule.Value).ToList();
+            }
+
+            for (int i = 0; i < sortedList.Count; i++)
+            {
+                values.Move(values.IndexOf(sortedList[i]), i);
+            }
         }
 
         public static int RoundTo(this int input, int roundTo)

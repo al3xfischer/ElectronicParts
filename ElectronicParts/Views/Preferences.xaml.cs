@@ -28,5 +28,10 @@ namespace ElectronicParts.Views
             Regex regex = new Regex("^[^\\d-]+$");
             e.Handled = regex.IsMatch(e.Text);            
         }
+
+        private void GridViewValueColumnHeader_Click(object sender, RoutedEventArgs e)
+        {
+            this.ViewModel.SortByValue();
+        }
     }
 }
