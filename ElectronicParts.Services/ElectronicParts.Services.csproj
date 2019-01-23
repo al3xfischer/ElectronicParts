@@ -113,6 +113,7 @@
     <Compile Include="Implementations\ConfigurationService.cs" />
     <Compile Include="Implementations\ExecutionService.cs" />
     <Compile Include="Implementations\GenericTypeComparerService.cs" />
+    <Compile Include="Implementations\PinCreatorService.cs" />
     <Compile Include="Interfaces\INodeCopyService.cs" />
     <Compile Include="Implementations\NodeCopyService.cs" />
     <Compile Include="Interfaces\INodeValidationService.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Implementations\AssemblyService.cs" />
     <Compile Include="Implementations\PinConnectorService.cs" />
     <Compile Include="Interfaces\IAssemblyService.cs" />
+    <Compile Include="Interfaces\IPinCreatorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,16 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ElectronicParts.Views
 {
@@ -19,11 +11,17 @@ namespace ElectronicParts.Views
     /// </summary>
     public partial class AddPins : Window
     {
+        /// <summary>
+        /// The amount of pins to add.
+        /// </summary>
+        private int amount;
+
         public AddPins()
         {
             InitializeComponent();
             this.DataContext = this;
             this.Types = new List<Type> { typeof(string), typeof(int), typeof(bool) };
+            this.SelectedType = this.Types[2];
         }
 
         /// <summary>
@@ -42,7 +40,20 @@ namespace ElectronicParts.Views
         /// Gets or sets the amount.
         /// </summary>
         /// <value>The amount.</value>
-        public int Amount { get; set; }
+        public int Amount
+        {
+            get => this.amount;
+
+            set
+            {
+                if(value <= 0)
+                {
+                    throw new ValidationException();
+                }
+
+                this.amount = value;
+            }
+        }
 
         /// <summary>
         /// Handles the Click event of the Ok control.
@@ -51,6 +62,11 @@ namespace ElectronicParts.Views
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
+            if (Validation.GetHasError(this.amoutTextBox))
+            {
+                return;
+            }
+
             this.DialogResult = true;
             this.Close();
         }

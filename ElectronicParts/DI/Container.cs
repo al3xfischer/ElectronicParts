@@ -52,6 +52,7 @@ namespace ElectronicParts.DI
             services.AddSingleton<INodeCopyService, NodeCopyService>();
             services.AddSingleton<ActionManager>();
             services.AddSingleton<IConfigurationService, ConfigurationService>();
+            services.AddTransient<IPinCreatorService, PinCreatorService>();
 
             // Logging
             services.AddLogging();

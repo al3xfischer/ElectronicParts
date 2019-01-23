@@ -20,10 +20,20 @@ namespace ElectronicParts.ViewModels
     using Shared;
 
     /// <summary>
-    /// Represents the <see cref="ConnectorViewModel"/> class.
+    /// Represents the <see cref="NodeViewModel"/> class.
     /// </summary>
     public class NodeViewModel : BaseViewModel
     {
+        /// <summary>
+        /// The input pin  connection command.
+        /// </summary>
+        private readonly ICommand inputPinCommand;
+
+        /// <summary>
+        /// The output pin connection command.
+        /// </summary>
+        private readonly ICommand outputPinCommand;
+
         /// <summary>
         /// Contains the execution service.
         /// </summary>
@@ -56,6 +66,8 @@ namespace ElectronicParts.ViewModels
         {
             this.Node = node ?? throw new ArgumentNullException(nameof(node));
             this.DeleteCommand = deleteCommand ?? throw new ArgumentNullException(nameof(deleteCommand));
+            this.inputPinCommand = inputPinCommand ?? throw new ArgumentNullException(nameof(inputPinCommand));
+            this.outputPinCommand = outputPinCommand ?? throw new ArgumentNullException(nameof(outputPinCommand));
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.Inputs = node.Inputs?.Select(n => new PinViewModel(n, inputPinCommand, this.executionService)).ToObservableCollection();
             this.Outputs = node.Outputs?.Select(n => new PinViewModel(n, outputPinCommand, this.executionService)).ToObservableCollection();
@@ -401,6 +413,40 @@ namespace ElectronicParts.ViewModels
         private void NodePictureChanged(object sender, EventArgs e)
         {
             this.FirePropertyChanged(nameof(this.Picture));
+        }
+
+        /// <summary>
+        /// Adds the input pins.
+        /// </summary>
+        /// <param name="pins">The pins.</param>
+        public void AddInputPins(IEnumerable<IPin> pins)
+        {
+            foreach (var pin in pins)
+            {
+                this.Inputs.Add(new PinViewModel(pin, this.inputPinCommand, this.executionService));
+                this.Node.Inputs.Add(pin);
+            }
+
+            this.Top = this.Top;
+            this.Left = this.Left;
+            this.FirePropertyChanged(string.Empty);
+        }
+
+        /// <summary>
+        /// Adds the output pins.
+        /// </summary>
+        /// <param name="pins">The pins.</param>
+        public void AddOutputPins(IEnumerable<IPin> pins)
+        {
+            foreach (var pin in pins)
+            {
+                this.Outputs.Add(new PinViewModel(pin, this.outputPinCommand, this.executionService));
+                this.Node.Outputs.Add(pin);
+            }
+
+            this.Top = this.Top;
+            this.Left = this.Left;
+            this.FirePropertyChanged(string.Empty);
         }
     }
 }

@@ -75,6 +75,11 @@ namespace ElectronicParts.ViewModels
         private readonly INodeCopyService nodeCopyService;
 
         /// <summary>
+        /// The pin creator service.
+        /// </summary>
+        private readonly IPinCreatorService pinCreatorService;
+
+        /// <summary>
         /// A service which is used for configurations.
         /// </summary>
         private readonly IConfigurationService configurationService;
@@ -147,7 +152,7 @@ namespace ElectronicParts.ViewModels
         private Stack<IEnumerable<ConnectorViewModel>> ClearedConnections;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainViewModel"/> class.
+        /// Initializes a new instance of the <see cref="MainViewModel" /> class.
         /// </summary>
         /// <param name="executionService">A service used for the execution of nodes.</param>
         /// <param name="assemblyService">A service used for extracting types out of assemblies.</param>
@@ -158,6 +163,29 @@ namespace ElectronicParts.ViewModels
         /// <param name="assemblyNameExtractorService">A service which extracts the names of assemblies.</param>
         /// <param name="actionManager">The Action manager which is used for redo/undo functionality.</param>
         /// <param name="genericTypeComparerService">A service which checks if two classes implement the same generic types.</param>
+        /// <param name="nodeCopyService">The node copy service.</param>
+        /// <param name="pinCreatorService">The pin creator service.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// actionManager
+        /// or
+        /// executionService
+        /// or
+        /// pinConnectorService
+        /// or
+        /// nodeSerializerService
+        /// or
+        /// assemblyService
+        /// or
+        /// logger
+        /// or
+        /// assemblyNameExtractorService
+        /// or
+        /// nodeCopyService
+        /// or
+        /// pinCreatorService
+        /// or
+        /// configurationService
+        /// </exception>
         public MainViewModel(
             IExecutionService executionService,
             IAssemblyService assemblyService,
@@ -168,7 +196,8 @@ namespace ElectronicParts.ViewModels
             IAssemblyNameExtractorService assemblyNameExtractorService,
             ActionManager actionManager,
             IGenericTypeComparerService genericTypeComparerService,
-            INodeCopyService nodeCopyService)
+            INodeCopyService nodeCopyService,
+            IPinCreatorService pinCreatorService)
         {
             this.ClearedNodes = new Stack<IEnumerable<NodeViewModel>>();
             this.ClearedConnections = new Stack<IEnumerable<ConnectorViewModel>>();
@@ -182,6 +211,7 @@ namespace ElectronicParts.ViewModels
             this.assemblyNameExtractorService = assemblyNameExtractorService ?? throw new ArgumentNullException(nameof(assemblyNameExtractorService));
             this.genericTypeComparerService = genericTypeComparerService;
             this.nodeCopyService = nodeCopyService ?? throw new ArgumentNullException(nameof(nodeCopyService));
+            this.pinCreatorService = pinCreatorService ?? throw new ArgumentNullException(nameof(pinCreatorService));
             this.configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
             this.updateMillisecondsPerLoopUpdateTimer.Elapsed += this.UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
@@ -225,7 +255,7 @@ namespace ElectronicParts.ViewModels
                 {
                     this.logger.LogError(e, $"An error occurred while serializing ({nameof(this.SaveCommand)}).");
                     Debug.WriteLine("Failed serialization");
-                    
+
                     var faultyAssembly = this.assemblyNameExtractorService.ExtractAssemblyNameFromErrorMessage(e);
 
                     var faultyComponent = string.Empty;
@@ -588,6 +618,20 @@ namespace ElectronicParts.ViewModels
                 
             });
 
+            this.AddInputPinsCommand = new RelayCommand(arg =>
+            {
+                var information = arg as Tuple<Type, int,NodeViewModel>;
+                var pins = this.pinCreatorService.CreatePins(information.Item1, information.Item2);
+                information.Item3.AddInputPins(pins);
+            }, arg => !this.executionService.IsEnabled);
+
+            this.AddOutputPinsCommand = new RelayCommand(arg =>
+            {
+                var information = arg as Tuple<Type, int, NodeViewModel>;
+                var pins = this.pinCreatorService.CreatePins(information.Item1, information.Item2);
+                information.Item3.AddOutputPins(pins);
+            }, arg => !this.executionService.IsEnabled);
+
             this.Nodes = new ObservableCollection<NodeViewModel>();
             this.PreviewLines = new ObservableCollection<PreviewLineViewModel>() { new PreviewLineViewModel() };
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
@@ -947,6 +991,18 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <value>The cut command.</value>
         public ICommand CutCommand { get; }
+
+        /// <summary>
+        /// Gets the add input pins command.
+        /// </summary>
+        /// <value>The add input pins command.</value>
+        public ICommand AddInputPinsCommand { get; }
+
+        /// <summary>
+        /// Gets the add output pins command.
+        /// </summary>
+        /// <value>The add output pins command.</value>
+        public ICommand AddOutputPinsCommand { get; }
 
         /// <summary>
         /// Gets or sets the amount of executions per second. 

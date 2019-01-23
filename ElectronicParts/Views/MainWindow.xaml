@@ -291,6 +291,8 @@
                                         <MenuItem Header="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
                                         <MenuItem Header="Increase Width" Command="{Binding IncreaseWidthCommand}"/>
                                         <MenuItem Header="Decrease Width" Command="{Binding DecreaseWidthCommand}"/>
+                                        <MenuItem Header="Add Input Pins" Click="AddInputPins_Click"/>
+                                        <MenuItem Header="Add Output Pins" Click="AddOuputPins_Click"/>
                                     </ContextMenu>
                                 </local:Node.ContextMenu>
                             </local:Node>
