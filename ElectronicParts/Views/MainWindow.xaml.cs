@@ -279,7 +279,9 @@ namespace ElectronicParts.Views
         public void SelectedItems()
         {
             System.Windows.Point currentMousePosition = Mouse.GetPosition(this.canvas);
-            var rect = new Rect(this.ancorPoint, new Size(this.selectionRectangle.Width, this.selectionRectangle.Height));
+            var left = Math.Min(currentMousePosition.X, this.ancorPoint.X);
+            var top = Math.Min(currentMousePosition.Y, this.ancorPoint.Y);
+            var rect = new Rect(new Point(left, top), new Size(this.selectionRectangle.Width, this.selectionRectangle.Height));
             var geometry = new RectangleGeometry(rect);
             VisualTreeHelper.HitTest(this.canvas, new HitTestFilterCallback(this.HitTestFilter), new HitTestResultCallback(this.HitTestTesultHandler), new GeometryHitTestParameters(geometry));
         }

@@ -17,9 +17,6 @@ namespace ElectronicParts.DI
         {
             IServiceCollection services = new ServiceCollection();
 
-            /// Configuration
-            services.AddSingleton<IConfigurationService, ConfigurationService>();
-
             /// ViewModels
             services.AddTransient<MainViewModel>();
             services.AddTransient<PreferencesViewModel>();
@@ -33,7 +30,9 @@ namespace ElectronicParts.DI
             services.AddSingleton<IGenericTypeComparerService, GenericTypeComparerService>();
             services.AddSingleton<IAssemblyNameExtractorService, AssemblyNameExtractorService>();
             services.AddTransient<INodeValidationService, NodeValidationService>();
+            services.AddSingleton<INodeCopyService, NodeCopyService>();
             services.AddSingleton<ActionManager>();
+            services.AddSingleton<IConfigurationService, ConfigurationService>();
 
             // Logging
             services.AddLogging();
