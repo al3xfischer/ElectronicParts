@@ -9,6 +9,7 @@
 namespace ElectronicParts.ViewModels
 {
     using System;
+    using System.Windows;
     using System.Windows.Input;
     using ElectronicParts.Models;
     using Shared;
@@ -33,6 +34,24 @@ namespace ElectronicParts.ViewModels
             this.DeleteCommand = deletionCommand ?? throw new ArgumentNullException(nameof(deletionCommand));
             this.Input.OnValueChanged += this.RefreshPins;
             this.Output.OnValueChanged += this.RefreshPins;
+            this.Input.PropertyChanged += Input_PropertyChanged;
+            this.Output.PropertyChanged += Output_PropertyChanged;
+        }
+
+        private void Output_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.Output.Left) || e.PropertyName == nameof(this.Output.Top))
+            {
+                this.FirePropertyChanged(string.Empty);
+            }
+        }
+
+        private void Input_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.Input.Left) || e.PropertyName == nameof(this.Input.Top))
+            {
+                this.FirePropertyChanged(string.Empty);
+            }
         }
 
         /// <summary>
@@ -40,6 +59,30 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <value>The connector object.</value>
         public Connector Connector { get; set; }
+
+        public Point CenterBottomPoint
+        {
+            get
+            {
+                if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
+                {
+                    return new Point((this.Input.Left), (this.Input.Top + this.Output.Top) / 2);
+                }
+                return new Point((this.Input.Left + this.Output.Left) / 2, this.Input.Top);
+            }
+        }
+
+        public Point CenterTopPoint
+        {
+            get
+            {
+                if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
+                {
+                    return new Point((this.Output.Left), (this.Input.Top + this.Output.Top) / 2);
+                }
+                return new Point((this.Input.Left + this.Output.Left) / 2, this.Output.Top);
+            }
+        }
 
         /// <summary>
         /// Gets the input pin view model.
@@ -85,6 +128,7 @@ namespace ElectronicParts.ViewModels
         {
             this.Output?.Refresh();
             this.Input?.Refresh();
+            this.FirePropertyChanged(string.Empty);
         }
     }
 }

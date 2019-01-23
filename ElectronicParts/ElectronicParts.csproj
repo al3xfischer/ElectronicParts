@@ -65,6 +65,7 @@
     <Compile Include="Converter\BoolToColorConverter.cs" />
     <Compile Include="Converter\ConnectionToMarginConverter.cs" />
     <Compile Include="Converter\GridSizeConverter.cs" />
+    <Compile Include="Converter\IntToPointMulitConverter.cs" />
     <Compile Include="Converter\PinToHeightConverter.cs" />
     <Compile Include="Converter\ValueColorConverter.cs" />
     <Compile Include="Converter\NameObserver.cs" />
