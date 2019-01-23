@@ -121,7 +121,7 @@ namespace ElectronicParts.Services.Implementations
         {
             this.nodesToCopy = nodes?.ToList() ?? throw new ArgumentNullException(nameof(nodes));
             this.connectorsToCopy = connectors?.ToList() ?? throw new ArgumentNullException(nameof(connectors));
-            this.TryBeginCopyTask();
+            this.copyTask = this.MakeCopyAsync();
         }
 
         /// <summary>
