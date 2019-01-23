@@ -1316,7 +1316,7 @@ namespace ElectronicParts.ViewModels
         /// <param name="checkExistingConnections">A value indicating if it should be checked if the pin already has other connections.</param>
         private void CheckPossibleConnections(IEnumerable<PinViewModel> pinList, IPin selectedPin, bool checkExistingConnections)
         {
-            if (!(pinList is null))
+            if (!(pinList is null) && !(pinList.GetEnumerator() is null))
             {
                 foreach (var pin in pinList)
                 {
