@@ -10,11 +10,14 @@
 
 namespace System
 {
+    using ElectronicParts.ViewModels;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
+    using System.ComponentModel;
+    using System.Linq;
 
     /// <summary>
     /// Includes extensions for the ElectronicParts program.
@@ -35,7 +38,7 @@ namespace System
             }
 
             return new ObservableCollection<TValue>(values);
-        }
+        }        
 
         public static int RoundTo(this int input, int roundTo)
         {

@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +49,7 @@
     <Compile Include="BitToInteger.cs" />
     <Compile Include="BoolLed.cs" />
     <Compile Include="EvilNull.cs" />
+    <Compile Include="XOrGate.cs" />
     <Compile Include="IntegerAdder.cs" />
     <Compile Include="IntegerDisplay.cs" />
     <Compile Include="IntegerSource.cs" />
