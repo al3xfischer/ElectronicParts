@@ -44,6 +44,9 @@
     <Window.InputBindings>
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding ViewModel.SaveCommand}"/>
         <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding ViewModel.LoadCommand}"/>
+        <KeyBinding Key="C" Modifiers="Ctrl" Command="{Binding ViewModel.CopyCommand}"/>
+        <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding ViewModel.CutCommand}"/>
+        <KeyBinding Key="V" Modifiers="Ctrl" Command="{Binding ViewModel.PasteCommand}"/>
     </Window.InputBindings>
 
     <DockPanel MouseRightButtonDown="DockPanel_MouseRightButtonDown">
@@ -306,7 +309,7 @@
                     </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas HorizontalAlignment="Center" IsItemsHost="True" Loaded="ItemsCanvas_Loaded" MouseLeave="ItemsCanvas_MouseLeave" MouseLeftButtonUp="ItemsCanvas_MouseLeftButtonUp" MouseLeftButtonDown="ItemsCanvas_MouseLeftButtonDown" x:Name="ItemsCanvas" Width="{Binding ViewModel.BoardWidth}" Height="{Binding ViewModel.BoardHeight}" >
+                            <Canvas HorizontalAlignment="Center" IsItemsHost="True" Loaded="ItemsCanvas_Loaded" MouseLeave="ItemsCanvas_MouseLeave" MouseLeftButtonUp="ItemsCanvas_MouseLeftButtonUp" MouseLeftButtonDown="ItemsCanvas_MouseLeftButtonDown" x:Name="itemsCanvas" Width="{Binding ViewModel.BoardWidth}" Height="{Binding ViewModel.BoardHeight}" >
                                 <Canvas.Background>
                                     <DrawingBrush TileMode="Tile"
                                      ViewportUnits="Absolute">

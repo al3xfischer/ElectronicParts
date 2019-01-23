@@ -35,7 +35,7 @@ namespace ElectronicParts.Views
 
         private FrameworkElement selectionRectangle;
 
-        private List<NodeViewModel> items;
+        private List<object> items;
 
         public MainWindow()
         {
@@ -44,7 +44,8 @@ namespace ElectronicParts.Views
             this.ViewModel.AddAssembly = () => this.AddAssembly_Click(this, new RoutedEventArgs());
             this.logger = Container.Resolve<ILogger<MainWindow>>();
             this.executionService = Container.Resolve<IExecutionService>();
-            this.items = new List<NodeViewModel>();
+            this.items = new List<object>();
+            this.ViewModel.GetMousePosition = () => Mouse.GetPosition(this.canvas);
         }
 
         public MainViewModel ViewModel { get; }
@@ -162,6 +163,7 @@ namespace ElectronicParts.Views
             {
                 this.selectionRectangle.Visibility = Visibility.Visible;
             }
+            this.SelectedItems();
         }
 
         private void Node_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -245,7 +247,7 @@ namespace ElectronicParts.Views
             if (this.selectionRectangle.Visibility == Visibility.Collapsed && e.LeftButton == MouseButtonState.Pressed)
             {
                 this.isDragging = true;
-                this.ancorPoint = e.GetPosition(this.canvas);
+                this.ancorPoint = Mouse.GetPosition(this.canvas);
             }
             else
             {
@@ -260,9 +262,6 @@ namespace ElectronicParts.Views
 
         private void ResetSelection()
         {
-            this.GetSelectedItems();
-            var i = this.items;
-            this.items.Clear();
             this.isDragging = false;
             this.selectionRectangle.Visibility = Visibility.Collapsed;
         }
@@ -275,29 +274,36 @@ namespace ElectronicParts.Views
         private void ItemsCanvas_MouseLeave(object sender, MouseEventArgs e)
         {
             this.isDragging = false;
-            this.GetSelectedItems();
         }
 
-        public void GetSelectedItems()
+        public void SelectedItems()
         {
             System.Windows.Point currentMousePosition = Mouse.GetPosition(this.canvas);
-            var rect = new Rect(this.ancorPoint, currentMousePosition);
+            var rect = new Rect(this.ancorPoint, new Size(this.selectionRectangle.Width, this.selectionRectangle.Height));
             var geometry = new RectangleGeometry(rect);
             VisualTreeHelper.HitTest(this.canvas, new HitTestFilterCallback(this.HitTestFilter), new HitTestResultCallback(this.HitTestTesultHandler), new GeometryHitTestParameters(geometry));
         }
 
         private HitTestResultBehavior HitTestTesultHandler(HitTestResult result)
         {
-            if ((result.VisualHit as FrameworkElement).DataContext is NodeViewModel viewModel && !this.items.Contains(viewModel))
+            var dataContext = (result.VisualHit as FrameworkElement).DataContext;
+
+            if (dataContext is NodeViewModel nodeViewModel && !this.ViewModel.SelectedNodes.Contains(nodeViewModel))
             {
-                this.items.Add((result.VisualHit as FrameworkElement).DataContext as NodeViewModel);
+                this.ViewModel.SelectedNodes.Add(nodeViewModel);
             }
+            else if (dataContext is ConnectorViewModel connectorViewModel && !this.ViewModel.SelectedConntectors.Contains(connectorViewModel))
+            {
+                this.ViewModel.SelectedConntectors.Add(connectorViewModel);
+            }
+
             return HitTestResultBehavior.Continue;
         }
 
         private HitTestFilterBehavior HitTestFilter(DependencyObject dependencyObject)
         {
-            if ((dependencyObject as FrameworkElement).DataContext is NodeViewModel)
+            var element = dependencyObject as FrameworkElement;
+            if (element?.DataContext is NodeViewModel || element?.DataContext is ConnectorViewModel)
             {
                 return HitTestFilterBehavior.Continue;
             }
