@@ -43,6 +43,11 @@
     <Window.InputBindings>
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding ViewModel.SaveCommand}"/>
         <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding ViewModel.LoadCommand}"/>
+        <KeyBinding Key="Z" Modifiers="Ctrl" Command="{Binding ViewModel.UndoCommand}"/>
+        <KeyBinding Key="Y" Modifiers="Ctrl" Command="{Binding ViewModel.RedoCommand}"/>
+        <KeyBinding Key="C" Modifiers="Ctrl" Command="{Binding ViewModel.CopyCommand}"/>
+        <KeyBinding Key="V" Modifiers="Ctrl" Command="{Binding ViewModel.PasteCommand}"/>
+        <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding ViewModel.CutCommand}"/>
     </Window.InputBindings>
 
     <DockPanel MouseRightButtonDown="DockPanel_MouseRightButtonDown">
@@ -58,6 +63,14 @@
                 <Separator/>
                 <MenuItem Header="_Preferences" Name="preferences" Click="Preferences_Click"/>
                 <MenuItem Header="_Exit" Command="{Binding ViewModel.ExitCommand}" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Undo" Command="{Binding ViewModel.UndoCommand}" InputGestureText="Ctrl+Z"/>
+                <MenuItem Header="_Redo" Command="{Binding ViewModel.RedoCommand}" InputGestureText="Ctrl+Y"/>
+                <Separator/>
+                <MenuItem Header="_Copy" Command="{Binding ViewModel.CopyCommand}" InputGestureText="Ctrl+C"/>
+                <MenuItem Header="_Paste" Command="{Binding ViewModel.PasteCommand}" InputGestureText="Ctrl+V"/>
+                <MenuItem Header="_Cut" Command="{Binding ViewModel.CutCommand}" InputGestureText="Ctrl+X"/>
             </MenuItem>
         </Menu>
         <DockPanel LastChildFill="True">
