@@ -108,10 +108,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Implementations\AssemblyNameExtractorService.cs" />
     <Compile Include="Implementations\ConfigurationService.cs" />
     <Compile Include="Implementations\ExecutionService.cs" />
     <Compile Include="Implementations\GenericTypeComparerService.cs" />
+    <Compile Include="Interfaces\INodeCopyService.cs" />
+    <Compile Include="Implementations\NodeCopyService.cs" />
     <Compile Include="Interfaces\INodeValidationService.cs" />
     <Compile Include="Implementations\NodeValidationService.cs" />
     <Compile Include="Interfaces\IGenericTypeComparerService.cs" />
