@@ -87,7 +87,7 @@ namespace ElectronicParts.Components
         {
             bool output = false;
 
-            foreach (var input in this.Inputs)
+            foreach (var input in this.Inputs.Where(pin => pin.Value.Current.GetType() == typeof(bool)))
             {
                 if ((bool)input.Value.Current)
                 {
