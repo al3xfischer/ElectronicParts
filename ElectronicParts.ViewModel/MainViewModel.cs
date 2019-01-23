@@ -29,56 +29,107 @@ namespace ElectronicParts.ViewModels
     using Microsoft.Extensions.Logging;
     using Shared;
 
+    /// <summary>
+    /// The main view model of the application.
+    /// </summary>
     public class MainViewModel : BaseViewModel
     {
+        /// <summary>
+        /// A service used for the execution of nodes.
+        /// </summary>
         private readonly IExecutionService executionService;
 
+        /// <summary>
+        /// A service used for extracting types out of assemblies.
+        /// </summary>
         private readonly IAssemblyService assemblyService;
 
+        /// <summary>
+        /// A service used to connect two pins.
+        /// </summary>
         private readonly IPinConnectorService pinConnectorService;
 
+        /// <summary>
+        /// A service used to serialize the current nodes and connections.
+        /// </summary>
         private readonly INodeSerializerService nodeSerializerService;
 
+        /// <summary>
+        /// The logger of the <see cref="MainViewModel"/> class.
+        /// </summary>
         private readonly ILogger<MainViewModel> logger;
 
+        /// <summary>
+        /// A service which extracts the names of assemblies.
+        /// </summary>
         private readonly IAssemblyNameExtractorService assemblyNameExtractorService;
 
+        /// <summary>
+        /// A service used for comparing the types of two objects.
+        /// </summary>
         private readonly IGenericTypeComparerService genericTypeComparerService;
 
+        /// <summary>
+        /// A service which is used for configurations.
+        /// </summary>
         private readonly IConfigurationService configurationService;
-
+        
         private readonly Timer updateMillisecondsPerLoopUpdateTimer;
 
         private readonly Timer reSnappingTimer;
 
         private readonly ActionManager actionManager;
 
+        /// <summary>
+        /// A collection of all nodes on the board.
+        /// </summary>
         private ObservableCollection<NodeViewModel> nodes;
 
+        /// <summary>
+        /// A collection of all connections on the board.
+        /// </summary>
         private ObservableCollection<ConnectorViewModel> connections;
 
+        /// <summary>
+        /// A collection of all nodes on the board.
+        /// </summary>
         private ObservableCollection<NodeViewModel> availableNodes;
 
+        /// <summary>
+        /// The amount of executions per second. 
+        /// </summary>
         private int framesPerSecond;
 
+        /// <summary>
+        /// The time it took to complete one loop.
+        /// </summary>
         private long milisecondsPerLoop;
 
+        /// <summary>
+        /// The size of cells in the visible grid.
+        /// </summary>
         private int gridSize;
 
+        /// <summary>
+        /// A value indicating whether grid snapping is enabled or not.
+        /// </summary>
         private bool gridSnappingEnabled;
 
+        /// <summary>
+        /// The currently selected category.
+        /// </summary>
         private string selectedCategory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
-        /// <param name="executionService"></param>
-        /// <param name="assemblyService"></param>
+        /// <param name="executionService">A service used for the execution of nodes.</param>
+        /// <param name="assemblyService">A service used for extracting types out of assemblies.</param>
         /// <param name="pinConnectorService">A service for the connection of pins.</param>
         /// <param name="nodeSerializerService">A service which serializes all given nodes.</param>
         /// <param name="logger">The logger for the main view model.</param>
         /// <param name="configurationService">A service including all configurations for the application.</param>
-        /// <param name="assemblyNameExtractorService"></param>
+        /// <param name="assemblyNameExtractorService">A service which extracts the names of assemblies.</param>
         /// <param name="actionManager"></param>
         /// <param name="genericTypeComparerService">A service which checks if two classes implement the same generic types.</param>
         public MainViewModel(
@@ -168,6 +219,8 @@ namespace ElectronicParts.ViewModels
                         this.AddAssembly?.Invoke();
                     }
                 }
+
+                this.ResetPreviewLine();
 
                 if (snapShot is null)
                 {
@@ -301,7 +354,6 @@ namespace ElectronicParts.ViewModels
                 this.executionService.StopExecutionLoop();
                 await this.ResetAllConnections();
                 this.FirePropertyChanged(nameof(CanAddNode));
-
             }, 
             arg => this.executionService.IsEnabled);
 
@@ -309,7 +361,7 @@ namespace ElectronicParts.ViewModels
                 arg =>
             {
                 this.InputPin = arg as PinViewModel;
-                this.Connect();
+                this.Connect(this.InputPin, this.OutputPin);
             }, 
             arg => !this.executionService.IsEnabled);
 
@@ -317,7 +369,7 @@ namespace ElectronicParts.ViewModels
                 arg =>
             {
                 this.OutputPin = arg as PinViewModel;
-                this.Connect();
+                this.Connect(this.InputPin, this.OutputPin);
             }, 
             arg => !this.executionService.IsEnabled);
 
@@ -425,13 +477,29 @@ namespace ElectronicParts.ViewModels
             var reloadingTask = this.ReloadAssemblies();
             this.logger.LogInformation("Ctor MainVM done");
         }
-        
+
+        /// <summary>
+        /// Gets or sets the currently selected input pin.
+        /// </summary>
+        /// <value>The currently selected input pin.</value>
         public PinViewModel InputPin { get; set; }
 
+        /// <summary>
+        /// Gets or sets the currently selected output pin.
+        /// </summary>
+        /// <value>The currently selected output pin.</value>
         public PinViewModel OutputPin { get; set; }
 
-        public ObservableCollection<PreviewLineViewModel> PreviewLines { get; set; }
-        
+        /// <summary>
+        /// Gets a collection of lines showing the preview of a connection. 
+        /// </summary>
+        /// <value>A collection of lines showing the preview of a connection. </value>
+        public ObservableCollection<PreviewLineViewModel> PreviewLines { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether grid snapping is enabled or not.
+        /// </summary>
+        /// <value>A value indicating whether grid snapping is enabled or not.</value>
         public bool GridSnappingEnabled
         {
             get => this.gridSnappingEnabled;
@@ -445,6 +513,10 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the cell size of the visible grid.
+        /// </summary>
+        /// <value>The cell size of the visible grid.</value>
         public int GridSize
         {
             get => this.gridSize;
@@ -459,10 +531,22 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the offset of the vertical scroll bar.
+        /// </summary>
+        /// <value>The offset of the vertical scroll bar.</value>
         public int VerticalScrollerOffset { get; set; }
 
+        /// <summary>
+        /// Gets or sets the offset of the horizontal scroll bar.
+        /// </summary>
+        /// <value>The offset of the horizontal scroll bar.</value>
         public int HorizontalScrollerOffset { get; set; }
 
+        /// <summary>
+        /// Gets or sets a collection of all current nodes.
+        /// </summary>
+        /// <value>A collection of all current nodes.</value>
         public ObservableCollection<NodeViewModel> Nodes
         {
             get => this.nodes;
@@ -473,6 +557,10 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the time it took to complete one loop.
+        /// </summary>
+        /// <value>The time it took to complete one loop.</value>
         public long MilisecondsPerLoop
         {
             get => this.milisecondsPerLoop;
@@ -482,6 +570,10 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets all possible categories.
+        /// </summary>
+        /// <value>All possible categories.</value>
         public IEnumerable<string> NodeCategories
         {
             get
@@ -490,6 +582,10 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the currently selected category.
+        /// </summary>
+        /// <value>The currently selected category.</value>
         public string SelectedCategory
         {
             get => this.selectedCategory;
@@ -503,8 +599,16 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets a action which adds assemblies to the application.
+        /// </summary>
+        /// <value>A action which adds assemblies to the application.</value>
         public Action AddAssembly { get; set; }
 
+        /// <summary>
+        /// Gets or sets a collection of all current connections.
+        /// </summary>
+        /// <value>A collection of all current connections.</value>
         public ObservableCollection<ConnectorViewModel> Connections
         {
             get => this.connections;
@@ -515,6 +619,10 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets a collection of all nodes which can be used on the board.
+        /// </summary>
+        /// <value>All nodes which have loaded correctly.</value>
         public ObservableCollection<NodeViewModel> AvailableNodes
         {
             get
@@ -531,65 +639,169 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the currently selected node.
+        /// </summary>
+        /// <value>The currently selected node.</value>
         public NodeViewModel SelectedNode { get; set; }
 
+        /// <summary>
+        /// Gets or sets the information of the currently selected node.
+        /// </summary>
+        /// <value>The information of the currently selected node.</value>
         public NodeViewModel SelectedNodeInformation { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating whether a node can be added right now.
+        /// </summary>
+        /// <value>A value indicating whether a node can be added right now.</value>
         public bool CanAddNode
         {
             get => !this.executionService.IsEnabled;
         }
 
+        /// <summary>
+        /// Gets the current board width.
+        /// </summary>
+        /// <value>The width of the board.</value>
         public int BoardWidth
         {
             get => this.configurationService.Configuration.BoardWidth;
         }
 
+        /// <summary>
+        /// Gets the current board height.
+        /// </summary>
+        /// <value>The height of the board.</value>
         public int BoardHeight
         {
             get => this.configurationService.Configuration.BoardHeight;
         }
 
+        /// <summary>
+        /// Gets a command which undo's the last action.
+        /// </summary>
+        /// <value>A command which undo's the last action.</value>
         public ICommand UndoCommand { get; }
 
+        /// <summary>
+        /// Gets a command which redo's the last action.
+        /// </summary>
+        /// <value>A command which redo's the last action.</value>
         public ICommand RedoCommand { get; }
 
+        /// <summary>
+        /// Gets a command which saves the current nodes and connections to a file.
+        /// </summary>
+        /// <value>A command which saves the current nodes and connections to a file.</value>
         public ICommand SaveCommand { get; }
 
+        /// <summary>
+        /// Gets a command which invokes the Execution method of every node once.
+        /// </summary>
+        /// <value>A command which invokes the Execution method of every node once.</value>
         public ICommand ExecutionStepCommand { get; }
 
+        /// <summary>
+        /// Gets a command which starts the execution loop.
+        /// </summary>
+        /// <value>A command which starts the execution loop.</value>
         public ICommand ExecutionStartLoopCommand { get; }
 
+        /// <summary>
+        /// Gets a command which stops the execution loop.
+        /// </summary>
+        /// <value>A command which stops the execution loop.</value>
         public ICommand ExecutionStopLoopCommand { get; }
 
+        /// <summary>
+        /// Gets a command which stops the execution loop and resets all node values to their default.
+        /// </summary>
+        /// <value>A command which stops the execution loop and resets all node values to their default.</value>
         public ICommand ExecutionStopLoopAndResetCommand { get; }
 
+        /// <summary>
+        /// Gets a command which resets the values of all connection.
+        /// </summary>
+        /// <value>A command which resets the values of all connection.</value>
         public ICommand ResetAllConnectionsCommand { get; }
 
+        /// <summary>
+        /// Gets a command which clears all nodes from the board.
+        /// </summary>
+        /// <value>A command which clears all nodes from the board.</value>
         public ICommand ClearAllNodesCommand { get; }
 
+        /// <summary>
+        /// Gets a command which loads a previously saved board from a file.
+        /// </summary>
+        /// <value>A command which loads a previously saved board from a file.</value>
         public ICommand LoadCommand { get; }
 
+        /// <summary>
+        /// Gets a command which reloads all assemblies from the assembly folder.
+        /// </summary>
+        /// <value>A command which reloads all assemblies from the assembly folder.</value>
         public ICommand ReloadAssembliesCommand { get; }
 
+        /// <summary>
+        /// Gets a command which exits the application.
+        /// </summary>
+        /// <value>A command which exits the application.</value>
         public ICommand ExitCommand { get; }
 
+        /// <summary>
+        /// Gets a command which increases the cell size of the visible grid.
+        /// </summary>
+        /// <value>A command which increases the cell size of the visible grid.</value>
         public ICommand IncreaseGridSize { get; }
 
+        /// <summary>
+        /// Gets a command which decreases the cell size of the visible grid.
+        /// </summary>
+        /// <value>A command which decreases the cell size of the visible grid.</value>
         public ICommand DecreaseGridSize { get; }
 
+        /// <summary>
+        /// Gets a command which updates the board size.
+        /// </summary>
+        /// <value>A command which updates the board size.</value>
         public ICommand UpdateBoardSize { get; }
 
+        /// <summary>
+        /// Gets a command which adds a node to the board.
+        /// </summary>
+        /// <value>A command which adds a node to the board.</value>
         public ICommand AddNodeCommand { get; }
 
+        /// <summary>
+        /// Gets a command which removes a node from the board.
+        /// </summary>
+        /// <value>A command which removes a node from the board.</value>
         public ICommand DeleteNodeCommand { get; }
 
+        /// <summary>
+        /// Gets a command which removes a connection between two pins.
+        /// </summary>
+        /// <value>A command which removes a node from the board.</value>
         public ICommand DeleteConnectionCommand { get; }
 
+        /// <summary>
+        /// Gets a command used in the <see cref="InputPin"/> property.
+        /// </summary>
+        /// <value>A command used in the <see cref="InputPin"/> property.</value>
         public ICommand InputPinCommand { get; }
 
+        /// <summary>
+        /// Gets a command used in the <see cref="OutputPin"/> property.
+        /// </summary>
+        /// <value>A command used in the <see cref="OutputPin"/> property.</value>
         public ICommand OutputPinCommand { get; }
 
+        /// <summary>
+        /// Gets or sets the amount of executions per second. 
+        /// </summary>
+        /// <value>The amount of executions per second. </value>
         public int FramesPerSecond
         {
             get => this.framesPerSecond;
@@ -603,10 +815,22 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets a stack of previously cleared nodes.
+        /// </summary>
+        /// <value>A stack of previously cleared nodes.</value>
         private Stack<IEnumerable<NodeViewModel>> ClearedNodes { get; set; }
 
+        /// <summary>
+        /// Gets or sets a stack of previously cleared connections.
+        /// </summary>
+        /// <value>A stack of previously cleared connections.</value>
         private Stack<IEnumerable<ConnectorViewModel>> ClearedConnections { get; set; }
 
+        /// <summary>
+        /// Reloads all assemblies from the assembly folder.
+        /// </summary>
+        /// <returns>A await able task.</returns>
         public async Task ReloadAssemblies()
         {
             await this.assemblyService.LoadAssemblies();
@@ -619,6 +843,9 @@ namespace ElectronicParts.ViewModels
             this.FirePropertyChanged(nameof(this.AvailableNodes));
         }
 
+        /// <summary>
+        /// Resets the preview line from the selected pin to the mouse.
+        /// </summary>
         public void ResetPreviewLine()
         {
             this.PreviewLines[0].Visible = false;
@@ -627,7 +854,10 @@ namespace ElectronicParts.ViewModels
             this.ResetPossibleConnections();
         }
 
-        public void ResetPossibleConnections()
+        /// <summary>
+        /// Resets the marked possible connections.
+        /// </summary>
+        private void ResetPossibleConnections()
         {
             foreach (var pinList in this.nodes.Select(node => node.Outputs))
             {
@@ -646,11 +876,21 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Is invoked when the nodes should be snapped to the grid cells.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
         private async void ReSnappingTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             await this.SnapAllNodesToGrid();
         }
 
+        /// <summary>
+        /// Updates the amount of time it took to complete a loop.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void UpdateMillisecondsPerLoopUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (this.executionService.IsEnabled)
@@ -659,6 +899,10 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Resets the values of all connection.
+        /// </summary>
+        /// <returns>A await able task.</returns>
         private async Task ResetAllConnections()
         {
             await Task.Run(() =>
@@ -680,6 +924,10 @@ namespace ElectronicParts.ViewModels
             });
         }
 
+        /// <summary>
+        /// Adds a node to the board.
+        /// </summary>
+        /// <param name="node">The node which will be added.</param>
         private void AddNode(IDisplayableNode node)
         {
             if (node is null)
@@ -695,6 +943,10 @@ namespace ElectronicParts.ViewModels
             vm.SnapToNewGrid(this.GridSize, false);
         }
 
+        /// <summary>
+        /// Deletes on all nodes on the board.
+        /// </summary>
+        /// <returns>A await able task.</returns>
         private async Task ClearCanvas()
         {
             await Task.Run(() =>
@@ -715,6 +967,10 @@ namespace ElectronicParts.ViewModels
             });
         }
 
+        /// <summary>
+        /// Undo's the <see cref="ClearCanvas"/> method.
+        /// </summary>
+        /// <returns>A await able task.</returns>
         private async Task UndoClearCanvas()
         {
             await Task.Run(() =>
@@ -740,6 +996,9 @@ namespace ElectronicParts.ViewModels
             });
         }
 
+        /// <summary>
+        /// Repositions nodes when the board size changed.
+        /// </summary>
         private void RepositionNodes()
         {
             foreach (var node in this.Nodes)
@@ -756,6 +1015,11 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Snaps the nodes to the grid cells.
+        /// </summary>
+        /// <param name="floor">A value indicating whether the node snaps to the ceiling or floor of the cell.</param>
+        /// <returns>A await able task.</returns>
         private async Task SnapAllNodesToGrid(bool floor)
         {
             await Task.Run(() =>
@@ -777,6 +1041,10 @@ namespace ElectronicParts.ViewModels
             });
         }
 
+        /// <summary>
+        /// Snaps the nodes to the grid cells.
+        /// </summary>
+        /// <returns>A await able task.</returns>
         private async Task SnapAllNodesToGrid()
         {
             await Task.Run(() =>
@@ -797,26 +1065,28 @@ namespace ElectronicParts.ViewModels
                 }
             });
         }
-
-        private void Connect()
-        {
-            this.Connect(this.InputPin, this.OutputPin);
-        }
         
-        private void CheckPossibleConnections(IEnumerable<IEnumerable<PinViewModel>> pinLists, IPin selectedPin)
+        /// <summary>
+        /// Checks all possible connection and marks them.
+        /// </summary>
+        /// <param name="pinList">The list of pins which are checked for possible connections.</param>
+        /// <param name="selectedPin">The pin which was chosen for connection.</param>
+        private void CheckPossibleConnections(IEnumerable<PinViewModel> pinList, IPin selectedPin)
         {
-            foreach (var pinList in pinLists)
+            foreach (var pin in pinList)
             {
-                foreach (var pin in pinList)
+                if (this.genericTypeComparerService.IsSameGenericType(pin.Pin, selectedPin))
                 {
-                    if (this.genericTypeComparerService.IsSameGenericType(pin.Pin, selectedPin))
-                    {
-                        pin.CanBeConnected = true;
-                    }
+                    pin.CanBeConnected = true;
                 }
             }
         }
 
+        /// <summary>
+        /// Connects two pins.
+        /// </summary>
+        /// <param name="inputPin">The input pin of the connection.</param>
+        /// <param name="outputPin">The output pin of the connection.</param>
         private void Connect(PinViewModel inputPin, PinViewModel outputPin)
         {
             if (!(inputPin is null) && !(outputPin is null) && this.pinConnectorService.IsConnectable(inputPin.Pin, outputPin.Pin))
@@ -832,13 +1102,15 @@ namespace ElectronicParts.ViewModels
                 Action deleteAction = () => this.RemoveConnection(createdConnectorVM, createdConnector);
 
                 this.actionManager.Execute(new CallMethodAction(creationAction, deleteAction));
+
+                this.PreviewLines[0].Visible = false;
                 this.ResetPossibleConnections();
                 return;
             }
 
             if (!(this.InputPin is null))
             {
-                this.CheckPossibleConnections(this.nodes.Select(node => node.Outputs), this.InputPin.Pin);
+                this.CheckPossibleConnections(this.nodes.SelectMany(node => node.Outputs), this.InputPin.Pin);
                 PreviewLineViewModel previewLineViewModel = this.PreviewLines[0];
                 previewLineViewModel.PointOneX = this.InputPin.Left;
                 previewLineViewModel.PointOneY = this.InputPin.Top;
@@ -846,13 +1118,20 @@ namespace ElectronicParts.ViewModels
 
             if (!(this.OutputPin is null))
             {
-                this.CheckPossibleConnections(this.nodes.Select(node => node.Inputs), this.OutputPin.Pin);
+                this.CheckPossibleConnections(this.nodes.SelectMany(node => node.Inputs), this.OutputPin.Pin);
                 PreviewLineViewModel previewLineViewModel = this.PreviewLines[0];
                 previewLineViewModel.PointOneX = this.OutputPin.Left;
                 previewLineViewModel.PointOneY = this.OutputPin.Top;
             }
         }
 
+        /// <summary>
+        /// Creates a connection between two pins.
+        /// </summary>
+        /// <param name="input">The input pin of the connection.</param>
+        /// <param name="output">The output pin of the connection.</param>
+        /// <param name="connectionVM">The created view model of the connection.</param>
+        /// <param name="connection">The created connection.</param>
         private void MakeConnection(PinViewModel input, PinViewModel output, out ConnectorViewModel connectionVM, out Connector connection)
         {
             connectionVM = null;
@@ -872,6 +1151,11 @@ namespace ElectronicParts.ViewModels
             return;
         }
 
+        /// <summary>
+        /// Removes the connection between two pins.
+        /// </summary>
+        /// <param name="connectionVM">The view model of the connection.</param>
+        /// <param name="connection">The instance of the connection.</param>
         private void RemoveConnection(ConnectorViewModel connectionVM, Connector connection)
         {
             if (!(connectionVM is null) && !(connection is null))
