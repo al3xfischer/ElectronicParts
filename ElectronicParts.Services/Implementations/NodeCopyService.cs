@@ -78,7 +78,7 @@ namespace ElectronicParts.Services.Implementations
                     return Enumerable.Empty<Connector>();
                 }
 
-                return this.copiedNodes;
+                return this.copiedConnectors;
             }
         }
 
@@ -95,7 +95,7 @@ namespace ElectronicParts.Services.Implementations
                     return Enumerable.Empty<IDisplayableNode>();
                 }
 
-                return this.copiedConnectors;
+                return this.copiedNodes;
             }
         }
 
