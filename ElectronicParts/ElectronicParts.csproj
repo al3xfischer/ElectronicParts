@@ -68,6 +68,9 @@
     <Compile Include="Converter\ValueColorConverter.cs" />
     <Compile Include="EventArgs\StoppedEventArgs.cs" />
     <Compile Include="Converter\NameObserver.cs" />
+    <Compile Include="Views\AddPins.xaml.cs">
+      <DependentUpon>AddPins.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Connection.xaml.cs">
       <DependentUpon>Connection.xaml</DependentUpon>
     </Compile>
@@ -83,6 +86,10 @@
     <Compile Include="Views\PreviewLine.xaml.cs">
       <DependentUpon>PreviewLine.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AddPins.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Connection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
