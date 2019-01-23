@@ -19,10 +19,10 @@ namespace ElectronicParts.Services.Implementations
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Represents the <see cref="ExecutionService"/> class of the ElectronicParts.Services application.
-    /// Implements the <see cref="ElectronicParts.Services.Implementations.IExecutionService" />
+    /// Represents the <see cref="ExecutionService"/> class of the ElectronicParts application.
+    /// Implements the <see cref="ElectronicParts.Services.Interfaces.IExecutionService" />
     /// </summary>
-    /// <seealso cref="ElectronicParts.Services.Implementations.IExecutionService" />
+    /// <seealso cref="ElectronicParts.Services.Interfaces.IExecutionService" />
     public class ExecutionService : IExecutionService
     {
         private int framesPerSecond;

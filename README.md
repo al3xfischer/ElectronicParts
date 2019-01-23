@@ -1,3 +1,3 @@
 # ElectronicParts
 ### Documentation:
-https://bleialf.synology.me/documentation
+https://bleialf.synology.me/docu

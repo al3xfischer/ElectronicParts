@@ -10,26 +10,32 @@
 
 namespace ElectronicParts.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    using System.Windows.Media;
     using System.Linq;
     using System.Windows;
     using System.Windows.Input;
+    using System.Windows.Media;
     using ElectronicParts.Models;
     using ElectronicParts.Services.Interfaces;
     using ElectronicParts.ViewModels.Commands;
-    using System.ComponentModel;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System;
 
     /// <summary>
     /// The view model used for the preferences window.
     /// </summary>
     public class PreferencesViewModel : BaseViewModel
     {
+        /// <summary>
+        /// The value the user inputs when creating a new integer rule.
+        /// </summary>
         private string integerRuleValueText;
+
+        /// <summary>
+        /// The direction in which the rule lists will be sorted next.
+        /// </summary>
         private ListSortDirection sortDirection;
 
         /// <summary>
@@ -92,11 +98,15 @@ namespace ElectronicParts.ViewModels
                 MessageBox.Show("Changes were saved successfully.", "Saved", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
             });
 
-            this.AddStringRuleCommand = new RelayCommand(obj =>
+            this.AddStringRuleCommand = new RelayCommand(
+                obj =>
             {
                 if (!this.ConfigurationService.Configuration.StringRules.Any(rule => rule.Value == this.TempStringRule.Rule.Value))
                 {
-                    Rule<string> newRule = new Rule<string>(this.TempStringRule.Rule.Value, this.TempStringRule.Color.ToString(), (value) =>
+                    Rule<string> newRule = new Rule<string>(
+                        this.TempStringRule.Rule.Value, 
+                        this.TempStringRule.Color.ToString(),
+                        (value) =>
                     {
                         return !this.ConfigurationService.Configuration.StringRules.Any(rule => rule.Value == value);
                     });
@@ -106,17 +116,22 @@ namespace ElectronicParts.ViewModels
                     this.TempStringRule.Value = string.Empty;
                     this.TempStringRule.Color = (Color)ColorConverter.ConvertFromString("Black");
                 }
-            }, arg =>
+            }, 
+            arg =>
             {
                 return !this.ConfigurationService.Configuration.StringRules.Any(rule => rule.Value == this.TempStringRule.Rule.Value);
             });
 
-            this.AddIntRuleCommand = new RelayCommand(obj =>
+            this.AddIntRuleCommand = new RelayCommand(
+                obj =>
             {
                 var ruleValue = int.Parse(this.IntegerRuleValueText);
                 if (!this.ConfigurationService.Configuration.IntRules.Any(rule => rule.Value == ruleValue))
                 {
-                    Rule<int> newRule = new Rule<int>(ruleValue, this.TempIntRule.Color.ToString(), (value) =>
+                    Rule<int> newRule = new Rule<int>(
+                        ruleValue,
+                        this.TempIntRule.Color.ToString(), 
+                        (value) =>
                     {
                         return !this.ConfigurationService.Configuration.IntRules.Any(rule => rule.Value == value);
                     });
@@ -127,12 +142,14 @@ namespace ElectronicParts.ViewModels
                     this.TempIntRule.Value = 0;
                     this.TempIntRule.Color = (Color)ColorConverter.ConvertFromString("Black");
                 }
-            }, arg =>
+            }, 
+            arg =>
             {
                 if (!int.TryParse(this.IntegerRuleValueText, out int result))
                 {
                     return false;
                 }
+
                 if (this.ConfigurationService.Configuration.IntRules.Any(rule => rule.Value == result))
                 {
                     return false;
@@ -141,38 +158,26 @@ namespace ElectronicParts.ViewModels
                 return true;
             });
 
-            Rule<string> tempStringRule = new Rule<string>(string.Empty, "Black", (value) =>
+            Rule<string> tempStringRule = new Rule<string>(
+                string.Empty, 
+                "Black", 
+                (value) =>
             {
                 return true;
             });
 
             this.TempStringRule = new RuleViewModel<string>(tempStringRule, stringDeletionCommand);
 
-            Rule<int> tempIntRule = new Rule<int>(0, "Black", (value) =>
+            Rule<int> tempIntRule = new Rule<int>(
+                0, 
+                "Black", 
+                (value) =>
             {
                 return true;
             });
 
             this.TempIntRule = new RuleViewModel<int>(tempIntRule, intDeletionCommand);
-        }
-
-        /// <summary>
-        /// Sorts the rule lists.
-        /// </summary>
-        public void SortByValue()
-        {
-            this.StringRules.SortRuleCollection(this.sortDirection);
-            this.IntRules.SortRuleCollection(this.sortDirection);
-
-            if (this.sortDirection == ListSortDirection.Ascending)
-            {
-                this.sortDirection = ListSortDirection.Descending;
-            }
-            else
-            {
-                this.sortDirection = ListSortDirection.Ascending;
-            }
-        }
+        }        
 
         /// <summary>
         /// Gets the configuration service of the ElectronicParts program.
@@ -198,14 +203,18 @@ namespace ElectronicParts.ViewModels
         /// <value>The command which is used to add a integer rule.</value>
         public ICommand AddIntRuleCommand { get; }
 
+        /// <summary>
+        /// Gets or sets the value the user inputs when creating a new integer rule.
+        /// </summary>
+        /// <value>The value the user inputs when creating a new integer rule.</value>
         public string IntegerRuleValueText
         {
-            get => integerRuleValueText;
+            get => this.integerRuleValueText;
             set
             {
                 int.Parse(value);
                 this.integerRuleValueText = value;
-                FirePropertyChanged(nameof(IntegerRuleValueText));
+                this.FirePropertyChanged(nameof(this.IntegerRuleValueText));
             }
         }
 
@@ -215,6 +224,10 @@ namespace ElectronicParts.ViewModels
         /// <value>All string rule view models.</value>
         public ObservableCollection<RuleViewModel<string>> StringRules { get; }
 
+        /// <summary>
+        /// Gets a temporary string rule which is used to let the user create a new rule.
+        /// </summary>
+        /// <value>A string rule.</value>
         public RuleViewModel<string> TempStringRule { get; }
 
         /// <summary>
@@ -223,6 +236,10 @@ namespace ElectronicParts.ViewModels
         /// <value>All integer rule view models.</value>
         public ObservableCollection<RuleViewModel<int>> IntRules { get; }
 
+        /// <summary>
+        /// Gets a temporary integer rule which is used to let the user create a new rule.
+        /// </summary>
+        /// <value>A integer rule.</value>
         public RuleViewModel<int> TempIntRule { get; }
 
         /// <summary>
@@ -231,6 +248,10 @@ namespace ElectronicParts.ViewModels
         /// <value>All boolean rule view models.</value>
         public ObservableCollection<RuleViewModel<bool>> BoolRules { get; }
 
+        /// <summary>
+        /// Gets or sets the height of the board in which nodes are placed.
+        /// </summary>
+        /// <value>The height of the board.</value>
         public int BoardHeight
         {
             get => this.ConfigurationService.Configuration.BoardHeight;
@@ -246,18 +267,69 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the width of the board in which nodes are placed.
+        /// </summary>
+        /// <value>The width of the board.</value>
         public int BoardWidth
         {
             get => this.ConfigurationService.Configuration.BoardWidth;
 
             set
             {
-                if(value < 200)
+                if (value < 200)
                 {
                     throw new ValidationException();
                 }
 
                 this.ConfigurationService.Configuration.BoardWidth = value;
+            }
+        }
+
+        /// <summary>
+        /// Sorts the rule lists.
+        /// </summary>
+        public void SortByValue()
+        {
+            this.SortRuleCollection(this.StringRules, this.sortDirection);
+            this.SortRuleCollection(this.IntRules, this.sortDirection);
+
+            if (this.sortDirection == ListSortDirection.Ascending)
+            {
+                this.sortDirection = ListSortDirection.Descending;
+            }
+            else
+            {
+                this.sortDirection = ListSortDirection.Ascending;
+            }
+        }
+
+        /// <summary>
+        /// Sorts a observable collection of the type <see cref="RuleViewModel{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the rule.</typeparam>
+        /// <param name="values">The collection which will be sorted.</param>
+        /// <param name="sortDirection">A value indicating whether the sorting is ascending or descending.</param>
+        private void SortRuleCollection<T>(ObservableCollection<RuleViewModel<T>> values, ListSortDirection sortDirection)
+        {
+            if (values is null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
+
+            var sortedList = new List<RuleViewModel<T>>();
+            if (sortDirection == ListSortDirection.Ascending)
+            {
+                sortedList = values.OrderBy(rule => rule.Value).ToList();
+            }
+            else
+            {
+                sortedList = values.OrderByDescending(rule => rule.Value).ToList();
+            }
+
+            for (int i = 0; i < sortedList.Count; i++)
+            {
+                values.Move(values.IndexOf(sortedList[i]), i);
             }
         }
     }
