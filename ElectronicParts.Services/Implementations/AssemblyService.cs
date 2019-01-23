@@ -5,8 +5,7 @@
 // <copyright file="AssemblyService.cs" company="FHWN">
 //     Copyright ©  2019
 // </copyright>
-
-// <summary>Represents the AssemblyService class of the ElectronicParts programm</summary>
+// <summary>Represents the AssemblyService class of the ElectronicParts.Services project</summary>
 // ***********************************************************************
 namespace ElectronicParts.Services.Implementations
 {
@@ -45,13 +44,18 @@ namespace ElectronicParts.Services.Implementations
         private readonly INodeValidationService validationService;
 
         /// <summary>
-        /// The <list type="IDisplayableNode"/> 
+        /// Represents the list of available nodes.
         /// </summary>
         private List<IDisplayableNode> nodeList;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AssemblyService"/> class.
+        /// Initializes a new instance of the <see cref="AssemblyService" /> class.
         /// </summary>
+        /// <param name="logger">The logger instance.</param>
+        /// <param name="validationService">The validation service used for validating a given assembly is loadable.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if either the injected logger or the <see cref="NodeValidationService"/> is null.
+        /// </exception>
         public AssemblyService(ILogger<AssemblyService> logger, INodeValidationService validationService)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -139,7 +143,7 @@ namespace ElectronicParts.Services.Implementations
                     }
                 }
 
-                // writing loadedNodes into availableNodes immutableList.
+                // Writing loadedNodes into availableNodes immutableList.
                 this.nodeList = loadedNodes;
             });
         }

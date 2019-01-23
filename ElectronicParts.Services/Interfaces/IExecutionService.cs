@@ -46,7 +46,7 @@ namespace ElectronicParts.Services.Interfaces
         /// Executes one step.
         /// </summary>
         /// <param name="nodes">The nodes.</param>
-        /// <returns>A await able task.</returns>
+        /// <returns>A task which can be awaited.</returns>
         Task ExecuteOnce(IEnumerable<INode> nodes);
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace ElectronicParts.Services.Interfaces
         /// </summary>
         /// <param name="nodes">The nodes to simulate.</param>
         /// <param name="callback">A callback method.</param>
-        /// <returns>A await able task.</returns>
+        /// <returns>A task which can be awaited.</returns>
         Task StartExecutionLoop(IEnumerable<INode> nodes, Action callback);
 
         /// <summary>

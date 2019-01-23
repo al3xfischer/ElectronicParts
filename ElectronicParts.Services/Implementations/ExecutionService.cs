@@ -5,18 +5,17 @@
 // <copyright file="ExecutionService.cs" company="FHWN">
 //     Copyright ©  2019
 // </copyright>
-
 // <summary>Represents the ExecutionService class of the ElectronicParts programm</summary>
 // ***********************************************************************
 namespace ElectronicParts.Services.Implementations
 {
-    using ElectronicParts.Services.Interfaces;
-    using Microsoft.Extensions.Logging;
-    using Shared;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
+    using ElectronicParts.Services.Interfaces;
+    using Microsoft.Extensions.Logging;
+    using Shared;
 
     /// <summary>
     /// Represents the <see cref="ExecutionService"/> class of the ElectronicParts application.
@@ -25,26 +24,42 @@ namespace ElectronicParts.Services.Implementations
     /// <seealso cref="ElectronicParts.Services.Interfaces.IExecutionService" />
     public class ExecutionService : IExecutionService
     {
+        /// <summary>
+        /// Represents the Logger.
+        /// </summary>
+        private readonly ILogger<ExecutionService> logger;
+
+        /// <summary>
+        /// Represents the Frames per second currently requested.
+        /// </summary>
         private int framesPerSecond;
-        private long passedMiliseconds;
 
-        private ILogger<ExecutionService> logger;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExecutionService"/> class.
+        /// </summary>
+        public ExecutionService()
+        {
+            this.FramesPerSecond = 60;
+        }
 
-        public event EventHandler OnIsEnabledChanged;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExecutionService"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
         public ExecutionService(ILogger<ExecutionService> logger)
         {
             this.logger = logger;
         }
 
         /// <summary>
-        /// Gets a value indicating whether this instance is enabled.
+        /// Is invoked when the <see cref="IsEnabled" /> value changes.
         /// </summary>
-        /// <value>true if this instance is enabled; otherwise, false.</value>
-        public bool IsEnabled { get; private set; }
+        public event EventHandler OnIsEnabledChanged;
 
-        public long MillisecondsPerLoop { get => this.passedMiliseconds; }
-
+        /// <summary>
+        /// Gets or sets the amount of executions per second.
+        /// </summary>
+        /// <value>The amount of executions per second.</value>
         public int FramesPerSecond
         {
             get => this.framesPerSecond;
@@ -57,17 +72,49 @@ namespace ElectronicParts.Services.Implementations
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is enabled.
+        /// </summary>
+        /// <value>True if this instance is enabled; otherwise, false.</value>
+        public bool IsEnabled { get; private set; }
 
-        public ExecutionService()
+        /// <summary>
+        /// Gets the amount of time it took to complete a loop.
+        /// </summary>
+        /// <value>The amount of time it took to complete a loop.</value>
+        public long MillisecondsPerLoop { get; private set; }
+
+        /// <summary>
+        /// Executes one step.
+        /// </summary>
+        /// <param name="nodes">The nodes.</param>
+        /// <returns>A task which can be awaited.</returns>
+        public async Task ExecuteOnce(IEnumerable<INode> nodes)
         {
-            this.FramesPerSecond = 60;
+            await Task.Run(() =>
+            {
+                Parallel.ForEach(
+                    nodes,
+                    node =>
+                    {
+                        try
+                        {
+                            node.Execute();
+                        }
+                        catch (Exception e)
+                        {
+                            this.logger.LogError(e, $"An error occurred in an execution method of a node ({node.ToString()})!");
+                        }
+                    });
+            });
         }
 
         /// <summary>
         /// Starts the execution loop.
         /// </summary>
         /// <param name="nodes">The nodes to simulate.</param>
-        /// <returns>Task.</returns>
+        /// <param name="callback">A callback method.</param>
+        /// <returns>A task which can be awaited.</returns>
         public async Task StartExecutionLoop(IEnumerable<INode> nodes, Action callback)
         {
             if (!this.IsEnabled)
@@ -90,14 +137,11 @@ namespace ElectronicParts.Services.Implementations
                         this.logger.LogError(e, $"Unexpected error in {nameof(callback)} ({nameof(this.StartExecutionLoop)}).");
                         Debug.WriteLine(e.Message);
                     }
+
                     watch.Stop();
                     var waitingTime = (1000 / this.FramesPerSecond) - watch.ElapsedMilliseconds;
-                    this.passedMiliseconds = watch.ElapsedMilliseconds;
-                    try
-                    {
-                        await Task.Delay(Math.Max((int)waitingTime, 1));
-                    }
-                    catch { }
+                    this.MillisecondsPerLoop = watch.ElapsedMilliseconds;
+                    await Task.Delay(Math.Max((int)waitingTime, 1));
                 }
             }
         }
@@ -115,28 +159,8 @@ namespace ElectronicParts.Services.Implementations
         }
 
         /// <summary>
-        /// Executes one step.
+        /// Fires the on is enabled changed event.
         /// </summary>
-        /// <param name="nodes">The nodes.</param>
-        /// <returns>Task.</returns>
-        public async Task ExecuteOnce(IEnumerable<INode> nodes)
-        {
-            await Task.Run(() =>
-            {
-                Parallel.ForEach(nodes, node =>
-                {
-                    try
-                    {
-                        node.Execute();
-                    }
-                    catch (Exception e)
-                    {
-                        this.logger.LogError(e, $"An error occurred in an execution method of a node ({node.ToString()})!");
-                    }
-                });
-            });
-        }
-
         private void FireOnIsEnabledChanged()
         {
             this.OnIsEnabledChanged?.Invoke(this, EventArgs.Empty);

@@ -10,11 +10,10 @@
 
 namespace System
 {
-    using ElectronicParts.ViewModels;
+
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System.Linq;
+
 
     /// <summary>
     /// Includes extensions for the ElectronicParts program.
