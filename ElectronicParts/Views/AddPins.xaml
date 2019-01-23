@@ -4,15 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElectronicParts.Views"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:converter="clr-namespace:ElectronicParts.Converter"
         mc:Ignorable="d"
-        Title="AddPins" Height="126" Width="278">
+        Title="AddPins" Height="131" Width="278">
 
     <Window.Resources>
+        
         <Style TargetType="Button">
             <Setter Property="Width" Value="70"/>
             <Setter Property="Height" Value="25"/>
         </Style>
-        
+
+        <converter:BooleanInvertConverter x:Key="inverter" />
+
     </Window.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
@@ -26,12 +31,17 @@
             <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Type:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"/>
-        <TextBlock Text="Amount:" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"/>
-        <ComboBox  ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch"/>
-        <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Text="{Binding Amount, ValidatesOnExceptions=True}"/>
-
-        <Button x:Name="ok" Content="Ok" Grid.Column="0" Grid.Row="4" Click="Ok_Click" />
-        <Button x:Name="cancel" Content="cancel" Grid.Column="1" Grid.Row="4" Click="Cancel_Click"/>
+        <TextBlock Text="Type:" Grid.Row="1" Grid.Column="0" />
+        <TextBlock Text="Amount:" Grid.Row="1" Grid.Column="1" />
+        <ComboBox  ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBox Name="amoutTextBox" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged, Delay=50,ValidatesOnExceptions=True}" VerticalContentAlignment="Center" />
+        <Button IsEnabled="{Binding Path=(Validation.HasError), ElementName=amoutTextBox, Converter={StaticResource inverter}}" x:Name="ok" Content="Ok" Grid.Column="0" Grid.Row="4" Click="Ok_Click" HorizontalAlignment="Right" Margin="0 0 2 0"/>
+        <Button x:Name="cancel" Content="cancel" Grid.Column="1" Grid.Row="4" Click="Cancel_Click" HorizontalAlignment="Left" Margin="2 0 0 0"/>
     </Grid>
 </Window>

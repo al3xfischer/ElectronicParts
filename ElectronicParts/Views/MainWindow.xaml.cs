@@ -314,5 +314,47 @@ namespace ElectronicParts.Views
                 return HitTestFilterBehavior.ContinueSkipSelf;
             }
         }
+
+        private void AddOuputPins_Click(object sender, RoutedEventArgs e)
+        {
+            if ((e.OriginalSource as FrameworkElement)?.DataContext is NodeViewModel node)
+            {
+                var pinsInformation = this.GetPinInformation(node);
+
+                if (pinsInformation is null)
+                {
+                    return;
+                }
+
+                this.ViewModel.AddOutputPinsCommand.Execute(pinsInformation);
+            }
+        }
+
+        private void AddInputPins_Click(object sender, RoutedEventArgs e)
+        {
+            if ((e.OriginalSource as FrameworkElement)?.DataContext is NodeViewModel node)
+            {
+                var pinsInformation = this.GetPinInformation(node);
+
+                if (pinsInformation is null)
+                {
+                    return;
+                }
+
+                this.ViewModel.AddInputPinsCommand.Execute(pinsInformation);
+            }
+        }
+
+        public Tuple<Type, int, NodeViewModel> GetPinInformation(NodeViewModel node)
+        {
+            var addPins = new AddPins();
+
+            if (addPins.ShowDialog() == true)
+            {
+                return Tuple.Create(addPins.SelectedType, addPins.Amount, node);
+            }
+
+            return null;
+        }
     }
 }
