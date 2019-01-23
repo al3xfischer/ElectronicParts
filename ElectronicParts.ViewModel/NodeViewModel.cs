@@ -25,6 +25,11 @@ namespace ElectronicParts.ViewModels
     public class NodeViewModel : BaseViewModel
     {
         /// <summary>
+        /// Contains the execution service.
+        /// </summary>
+        private readonly IExecutionService executionService;
+
+        /// <summary>
         /// The input pin  connection command.
         /// </summary>
         private readonly ICommand inputPinCommand;
@@ -35,19 +40,14 @@ namespace ElectronicParts.ViewModels
         private readonly ICommand outputPinCommand;
 
         /// <summary>
-        /// Contains the execution service.
+        /// Contains the left value of the node.
         /// </summary>
-        private readonly IExecutionService executionService;
+        private int left;
 
         /// <summary>
         /// Contains the top value of the node.
         /// </summary>
         private int top;
-
-        /// <summary>
-        /// Contains the left value of the node.
-        /// </summary>
-        private int left;
 
         /// <summary>
         /// Contains the width value of the node.
@@ -113,54 +113,46 @@ namespace ElectronicParts.ViewModels
         }
 
         /// <summary>
-        /// Gets the width of the node.
+        /// Gets the command to activate the node.
         /// </summary>
-        /// <value >The width of the node.</value>
-        public int Width
-        {
-            get => this.width;
-
-            private set
-            {
-                if (value < 50)
-                {
-                    this.width = 50;
-                    return;
-                }
-
-                if (value > 200)
-                {
-                    this.width = 200;
-                    return;
-                }
-
-                this.width = value;
-            }
-        }
+        /// <value>The command to activate the node.</value>
+        public ICommand ActivateCommand { get; }
 
         /// <summary>
-        /// Gets or sets the top of the node.
+        /// Gets the command to decrease the width of the node.
         /// </summary>
-        /// <value >The top of the node.</value>
-        public int Top
-        {
-            get => this.top;
+        /// <value>The command to decrease the width of the node.</value>
+        public ICommand DecreaseWidthCommand { get; }
 
-            set
-            {
-                if (value < 0)
-                {
-                    this.Set(ref this.top, 0);
-                }
-                else
-                {
-                    this.Set(ref this.top, value);
-                }
+        /// <summary>
+        /// Gets the command to delete the node.
+        /// </summary>
+        /// <value>The command to delete the node.</value>
+        public ICommand DeleteCommand { get; }
 
-                this.UpdateTop(this.Inputs?.Select((p, i) => Tuple.Create(p, i)), this.Top);
-                this.UpdateTop(this.Outputs?.Select((p, i) => Tuple.Create(p, i)), this.Top);
-            }
-        }
+        /// <summary>
+        /// Gets the description of the node.
+        /// </summary>
+        /// <value>The description of the node.</value>
+        public string Description { get => this.Node.Description; }
+
+        /// <summary>
+        /// Gets the command to increase the width of the node.
+        /// </summary>
+        /// <value>The command to increase the width of the node.</value>
+        public ICommand IncreaseWidthCommand { get; }
+
+        /// <summary>
+        /// Gets the input pins of the node.
+        /// </summary>
+        /// <value>The input pins of the node.</value>
+        public ObservableCollection<PinViewModel> Inputs { get; }
+
+        /// <summary>
+        /// Gets the label of the node.
+        /// </summary>
+        /// <value>The label of the node.</value>
+        public string Label { get => this.Node.Label; }
 
         /// <summary>
         /// Gets or sets the left of the node.
@@ -195,10 +187,23 @@ namespace ElectronicParts.ViewModels
         }
 
         /// <summary>
-        /// Gets the input pins of the node.
+        /// Gets the maximum number of input or output pins.
+        /// Returns number of input pins if greater than output pins, otherwise returns number of output pins. 
         /// </summary>
-        /// <value>The input pins of the node.</value>
-        public ObservableCollection<PinViewModel> Inputs { get; }
+        /// <value>The maximum number of input or output pins.</value>
+        public int MaxPins
+        {
+            get
+            {
+                return (this.Inputs?.Count >= this.Outputs?.Count ? this.Inputs?.Count : this.Outputs?.Count) ?? 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the node.
+        /// </summary>
+        /// <value>The node of this view model.</value>
+        public IDisplayableNode Node { get; }
 
         /// <summary>
         /// Gets the output pins of the node.
@@ -213,16 +218,28 @@ namespace ElectronicParts.ViewModels
         public Bitmap Picture { get => this.Node.Picture; }
 
         /// <summary>
-        /// Gets the label of the node.
+        /// Gets or sets the top of the node.
         /// </summary>
-        /// <value>The label of the node.</value>
-        public string Label { get => this.Node.Label; }
+        /// <value >The top of the node.</value>
+        public int Top
+        {
+            get => this.top;
 
-        /// <summary>
-        /// Gets the description of the node.
-        /// </summary>
-        /// <value>The description of the node.</value>
-        public string Description { get => this.Node.Description; }
+            set
+            {
+                if (value < 0)
+                {
+                    this.Set(ref this.top, 0);
+                }
+                else
+                {
+                    this.Set(ref this.top, value);
+                }
+
+                this.UpdateTop(this.Inputs?.Select((p, i) => Tuple.Create(p, i)), this.Top);
+                this.UpdateTop(this.Outputs?.Select((p, i) => Tuple.Create(p, i)), this.Top);
+            }
+        }
 
         /// <summary>
         /// Gets the type of the node.
@@ -231,54 +248,72 @@ namespace ElectronicParts.ViewModels
         public NodeType Type { get => this.Node.Type; }
 
         /// <summary>
-        /// Gets the node.
+        /// Gets the width of the node.
         /// </summary>
-        /// <value>The node of this view model.</value>
-        public IDisplayableNode Node { get; }
-
-        /// <summary>
-        /// Gets the command to delete the node.
-        /// </summary>
-        /// <value>The command to delete the node.</value>
-        public ICommand DeleteCommand { get; }
-
-        /// <summary>
-        /// Gets the command to activate the node.
-        /// </summary>
-        /// <value>The command to activate the node.</value>
-        public ICommand ActivateCommand { get; }
-
-        /// <summary>
-        /// Gets the command to increase the width of the node.
-        /// </summary>
-        /// <value>The command to increase the width of the node.</value>
-        public ICommand IncreaseWidthCommand { get; }
-
-        /// <summary>
-        /// Gets the command to decrease the width of the node.
-        /// </summary>
-        /// <value>The command to decrease the width of the node.</value>
-        public ICommand DecreaseWidthCommand { get; }
-
-        /// <summary>
-        /// Gets the maximum number of input or output pins.
-        /// Returns number of input pins if greater than output pins, otherwise returns number of output pins. 
-        /// </summary>
-        /// <value>The maximum number of input or output pins.</value>
-        public int MaxPins
+        /// <value >The width of the node.</value>
+        public int Width
         {
-            get
+            get => this.width;
+
+            private set
             {
-                return (this.Inputs?.Count >= this.Outputs?.Count ? this.Inputs?.Count : this.Outputs?.Count) ?? 0;
+                if (value < 50)
+                {
+                    this.width = 50;
+                    return;
+                }
+
+                if (value > 200)
+                {
+                    this.width = 200;
+                    return;
+                }
+
+                this.width = value;
             }
         }
 
         /// <summary>
-        /// Updates the (picture of the) node.
+        /// Adds the delegate NodePictureChanged to the PictureChanged event of the node.
         /// </summary>
-        public void Update()
+        public void AddDelegate()
         {
-            this.FirePropertyChanged(nameof(this.Picture));
+            this.Node.PictureChanged -= this.NodePictureChanged;
+            this.Node.PictureChanged += this.NodePictureChanged;
+        }
+
+        /// <summary>
+        /// Adds the input pins.
+        /// </summary>
+        /// <param name="pins">The input pins.</param>
+        public void AddInputPins(IEnumerable<IPin> pins)
+        {
+            foreach (var pin in pins)
+            {
+                this.Inputs.Add(new PinViewModel(pin, this.inputPinCommand, this.executionService));
+                this.Node.Inputs.Add(pin);
+            }
+
+            this.Top = this.Top;
+            this.Left = this.Left;
+            this.FirePropertyChanged(string.Empty);
+        }
+
+        /// <summary>
+        /// Adds the output pins.
+        /// </summary>
+        /// <param name="pins">The output pins.</param>
+        public void AddOutputPins(IEnumerable<IPin> pins)
+        {
+            foreach (var pin in pins)
+            {
+                this.Outputs.Add(new PinViewModel(pin, this.outputPinCommand, this.executionService));
+                this.Node.Outputs.Add(pin);
+            }
+
+            this.Top = this.Top;
+            this.Left = this.Left;
+            this.FirePropertyChanged(string.Empty);
         }
 
         /// <summary>
@@ -290,12 +325,24 @@ namespace ElectronicParts.ViewModels
         }
 
         /// <summary>
-        /// Adds the delegate NodePictureChanged to the PictureChanged event of the node.
+        /// Snaps to grid.
+        /// Will round to the next possible value.
         /// </summary>
-        public void AddDelegate()
+        /// <param name="gridSize">Size of the grid.</param>
+        public void SnapToNewGrid(int gridSize)
         {
-            this.Node.PictureChanged -= this.NodePictureChanged;
-            this.Node.PictureChanged += this.NodePictureChanged;
+            int leftOffset;
+            leftOffset = this.Inputs.Count > 0 ? 10 : 0;
+
+            if ((this.Left + leftOffset) % gridSize != 0)
+            {
+                this.Left = Math.Max(this.Left.RoundTo(gridSize) - leftOffset, 0);
+            }
+
+            if (this.Top % gridSize != 0)
+            {
+                this.Top = Math.Max(this.Top.RoundTo(gridSize), 0);
+            }
         }
 
         /// <summary>
@@ -334,24 +381,11 @@ namespace ElectronicParts.ViewModels
         }
 
         /// <summary>
-        /// Snaps to grid.
-        /// Will round to the next possible value.
+        /// Updates the (picture of the) node.
         /// </summary>
-        /// <param name="gridSize">Size of the grid.</param>
-        public void SnapToNewGrid(int gridSize)
+        public void Update()
         {
-            int leftOffset;
-            leftOffset = this.Inputs.Count > 0 ? 10 : 0;
-
-            if ((this.Left + leftOffset) % gridSize != 0)
-            {
-                this.Left = Math.Max(this.Left.RoundTo(gridSize) - leftOffset, 0);
-            }
-
-            if (this.Top % gridSize != 0)
-            {
-                this.Top = Math.Max(this.Top.RoundTo(gridSize), 0);
-            }
+            this.FirePropertyChanged(nameof(this.Picture));
         }
 
         /// <summary>
@@ -367,6 +401,16 @@ namespace ElectronicParts.ViewModels
             {
                 this.UpdateLeft(this.Outputs, this.Left + this.Width + 23);
             }
+        }
+
+        /// <summary>
+        /// Invokes the INotifyPropertyChanged event of the <see cref="BaseViewModel"/>
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> for this event.</param>
+        private void NodePictureChanged(object sender, EventArgs e)
+        {
+            this.FirePropertyChanged(nameof(this.Picture));
         }
 
         /// <summary>
@@ -403,50 +447,6 @@ namespace ElectronicParts.ViewModels
             {
                 pin.Item1.Top = (pin.Item2 * 19) + value + 16;
             }
-        }
-
-        /// <summary>
-        /// Invokes the INotifyPropertyChanged event of the <see cref="BaseViewModel"/>
-        /// </summary>
-        /// <param name="sender">The sender of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> for this event.</param>
-        private void NodePictureChanged(object sender, EventArgs e)
-        {
-            this.FirePropertyChanged(nameof(this.Picture));
-        }
-
-        /// <summary>
-        /// Adds the input pins.
-        /// </summary>
-        /// <param name="pins">The pins.</param>
-        public void AddInputPins(IEnumerable<IPin> pins)
-        {
-            foreach (var pin in pins)
-            {
-                this.Inputs.Add(new PinViewModel(pin, this.inputPinCommand, this.executionService));
-                this.Node.Inputs.Add(pin);
-            }
-
-            this.Top = this.Top;
-            this.Left = this.Left;
-            this.FirePropertyChanged(string.Empty);
-        }
-
-        /// <summary>
-        /// Adds the output pins.
-        /// </summary>
-        /// <param name="pins">The pins.</param>
-        public void AddOutputPins(IEnumerable<IPin> pins)
-        {
-            foreach (var pin in pins)
-            {
-                this.Outputs.Add(new PinViewModel(pin, this.outputPinCommand, this.executionService));
-                this.Node.Outputs.Add(pin);
-            }
-
-            this.Top = this.Top;
-            this.Left = this.Left;
-            this.FirePropertyChanged(string.Empty);
         }
     }
 }

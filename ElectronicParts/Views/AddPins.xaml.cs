@@ -1,13 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Windows;
-using System.Windows.Controls;
+﻿// ***********************************************************************
+// Assembly         : ElectronicParts
+// Author           : Alexander Fischer
+// ***********************************************************************
+// <copyright file="AddPins.xaml.cs" company="FHWN">
+//     Copyright ©  2019
+// </copyright>
+// <summary>Represents the AddPins class of the ElectronicParts programm</summary>
+// ***********************************************************************
 
 namespace ElectronicParts.Views
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Windows;
+    using System.Windows.Controls;
+
     /// <summary>
-    /// Interaction logic for AddPins.xaml
+    /// Interaction logic for AddPins.
     /// </summary>
     public partial class AddPins : Window
     {
@@ -16,43 +26,57 @@ namespace ElectronicParts.Views
         /// </summary>
         private int amount;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AddPins"/> class.
+        /// </summary>
         public AddPins()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.DataContext = this;
             this.Types = new List<Type> { typeof(string), typeof(int), typeof(bool) };
             this.SelectedType = this.Types[2];
         }
 
         /// <summary>
-        /// Gets or sets the available types.
-        /// </summary>
-        /// <value>The types.</value>
-        public List<Type> Types { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of the selected.
-        /// </summary>
-        /// <value>The type of the selected.</value>
-        public Type SelectedType { get; set; }
-
-        /// <summary>
         /// Gets or sets the amount.
         /// </summary>
-        /// <value>The amount.</value>
+        /// <value>The amount of pins to be added.</value>
         public int Amount
         {
             get => this.amount;
 
             set
             {
-                if(value <= 0)
+                if (value <= 0)
                 {
                     throw new ValidationException();
                 }
 
                 this.amount = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected type.
+        /// </summary>
+        /// <value>The elected type.</value>
+        public Type SelectedType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the available types.
+        /// </summary>
+        /// <value>The available types.</value>
+        public List<Type> Types { get; set; }
+
+        /// <summary>
+        /// Handles the Click event of the Cancel control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            this.Close();
         }
 
         /// <summary>
@@ -68,17 +92,6 @@ namespace ElectronicParts.Views
             }
 
             this.DialogResult = true;
-            this.Close();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the Cancel control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = false;
             this.Close();
         }
     }

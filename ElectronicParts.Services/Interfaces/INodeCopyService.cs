@@ -33,6 +33,12 @@ namespace ElectronicParts.Services.Interfaces
         IEnumerable<IDisplayableNode> CopiedNodes { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the service has been initialized or not.
+        /// </summary>
+        /// <value>A value indicating whether the service has been initialized or not.</value>
+        bool IsInitialized { get; }
+
+        /// <summary>
         /// Exposes a Task which can be used to await the currently running copyProcess.
         /// </summary>
         /// <returns>A task which can be awaited.</returns>
@@ -51,7 +57,5 @@ namespace ElectronicParts.Services.Interfaces
         /// </summary>
         /// <returns>true if there is no copyProcess running at the moment and a new one has been successfully created, false otherwise.</returns>
         bool TryBeginCopyTask();
-
-        bool IsInitialized { get; }
     }
 }

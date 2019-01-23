@@ -136,6 +136,12 @@ namespace System
             return ((long)input).CeilingTo(ceilingTo);
         }
 
+        /// <summary>
+        /// Finds the elements with the given unique identifier.
+        /// </summary>
+        /// <param name="parent">The parent element.</param>
+        /// <param name="uid">The unique identifier being searched for.</param>
+        /// <returns>The element with the given unique identifier.</returns>
         public static UIElement FindUid(this DependencyObject parent, string uid)
         {
             var count = VisualTreeHelper.GetChildrenCount(parent);
@@ -143,12 +149,21 @@ namespace System
             for (int i = 0; i < count; i++)
             {
                 var el = VisualTreeHelper.GetChild(parent, i) as UIElement;
-                if (el == null) continue;
+                if (el == null)
+                {
+                    continue;
+                }
 
-                if (el.Uid == uid) return el;
+                if (el.Uid == uid)
+                {
+                    return el;
+                }
 
                 el = el.FindUid(uid);
-                if (el != null) return el;
+                if (el != null)
+                {
+                    return el;
+                }
             }
 
             if (parent is ContentControl)
@@ -156,10 +171,16 @@ namespace System
                 UIElement content = (parent as ContentControl).Content as UIElement;
                 if (content != null)
                 {
-                    if (content.Uid == uid) return content;
+                    if (content.Uid == uid)
+                    {
+                        return content;
+                    }
 
                     var el = content.FindUid(uid);
-                    if (el != null) return el;
+                    if (el != null)
+                    {
+                        return el;
+                    }
                 }
             }
 

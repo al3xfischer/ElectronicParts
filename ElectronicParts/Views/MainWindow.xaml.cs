@@ -25,28 +25,55 @@ namespace ElectronicParts.Views
     using ElectronicParts.ViewModels;
     using Microsoft.Extensions.Logging;
     using Microsoft.Win32;
-    
+
     /// <summary>
     /// Interaction logic for MainWindow.
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// The service used for the execution of nodes.
+        /// </summary>
         private readonly IExecutionService executionService;
 
+        /// <summary>
+        /// The logger of the <see cref="MainWindow"/> class.
+        /// </summary>
         private readonly ILogger<MainWindow> logger;
 
-        private System.Windows.Point ancorPoint;
+        /// <summary>
+        /// The anchor point of the <see cref="selectionRectangle"/>.
+        /// </summary>
+        private System.Windows.Point anchorPoint;
 
+        /// <summary>
+        /// The canvas of the window.
+        /// </summary>
         private Canvas canvas;
 
+        /// <summary>
+        /// The currently selected node.
+        /// </summary>
         private NodeViewModel currentNode;
 
+        /// <summary>
+        /// A value indicating whether the rectangle is being dragged or not.
+        /// </summary>
         private bool isDragging;
 
+        /// <summary>
+        /// A list of objects.
+        /// </summary>
         private List<object> items;
 
+        /// <summary>
+        /// The rectangle for selections.
+        /// </summary>
         private FrameworkElement selectionRectangle;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
         public MainWindow()
         {
             this.DataContext = this;
@@ -64,16 +91,41 @@ namespace ElectronicParts.Views
         /// <value>The view model of the main window.</value>
         public MainViewModel ViewModel { get; }
 
+        /// <summary>
+        /// Gets the information of a pin.
+        /// </summary>
+        /// <param name="node">The node of the pin.</param>
+        /// <returns>A tuple with type <see cref="Type"/>, <see cref="int"/>, <see cref="NodeViewModel"/>.</returns>
+        public Tuple<Type, int, NodeViewModel> GetPinInformation(NodeViewModel node)
+        {
+            var addPins = new AddPins();
+
+            if (addPins.ShowDialog() == true)
+            {
+                return Tuple.Create(addPins.SelectedType, addPins.Amount, node);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Selects the items.
+        /// </summary>
         public void SelectedItems()
         {
             System.Windows.Point currentMousePosition = Mouse.GetPosition(this.canvas);
-            var left = Math.Min(currentMousePosition.X, this.ancorPoint.X);
-            var top = Math.Min(currentMousePosition.Y, this.ancorPoint.Y);
+            var left = Math.Min(currentMousePosition.X, this.anchorPoint.X);
+            var top = Math.Min(currentMousePosition.Y, this.anchorPoint.Y);
             var rect = new Rect(new Point(left, top), new Size(this.selectionRectangle.Width, this.selectionRectangle.Height));
             var geometry = new RectangleGeometry(rect);
             VisualTreeHelper.HitTest(this.canvas, new HitTestFilterCallback(this.HitTestFilter), new HitTestResultCallback(this.HitTestTesultHandler), new GeometryHitTestParameters(geometry));
         }
 
+        /// <summary>
+        /// This method is called when the Add Assembly menu option is clicked.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void AddAssembly_Click(object sender, RoutedEventArgs e)
         {
             var assemblyPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies");
@@ -104,31 +156,90 @@ namespace ElectronicParts.Views
             var reloadTask = this.ViewModel.ReloadAssemblies();
         }
 
+        /// <summary>
+        /// This method is called when the Add Input Pins menu option is clicked.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
+        private void AddInputPins_Click(object sender, RoutedEventArgs e)
+        {
+            if ((e.OriginalSource as FrameworkElement)?.DataContext is NodeViewModel node)
+            {
+                var pinsInformation = this.GetPinInformation(node);
+
+                if (pinsInformation is null)
+                {
+                    return;
+                }
+
+                this.ViewModel.AddInputPinsCommand.Execute(pinsInformation);
+            }
+        }
+
+        /// <summary>
+        /// This method is called when the Add Output Pins menu option is clicked.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
+        private void AddOuputPins_Click(object sender, RoutedEventArgs e)
+        {
+            if ((e.OriginalSource as FrameworkElement)?.DataContext is NodeViewModel node)
+            {
+                var pinsInformation = this.GetPinInformation(node);
+
+                if (pinsInformation is null)
+                {
+                    return;
+                }
+
+                this.ViewModel.AddOutputPinsCommand.Execute(pinsInformation);
+            }
+        }
+
+        /// <summary>
+        /// This method is called when the scrolls bar of the canvas is changed.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void BoardScroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             this.ViewModel.VerticalScrollerOffset = (int)this.boardScroller.ContentVerticalOffset;
             this.ViewModel.HorizontalScrollerOffset = (int)this.boardScroller.ContentHorizontalOffset;
         }
 
+        /// <summary>
+        /// This method is called when the right mouse button is clicked above the dock panel.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void DockPanel_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.ViewModel.ResetPreviewLine();
         }
 
+        /// <summary>
+        /// Drags the selection rectangle.
+        /// </summary>
         private void DragSelection()
         {
             var currentPoint = Mouse.GetPosition(this.canvas);
-            this.selectionRectangle.SetValue(Canvas.LeftProperty, Math.Min(currentPoint.X, this.ancorPoint.X));
-            this.selectionRectangle.SetValue(Canvas.TopProperty, Math.Min(currentPoint.Y, this.ancorPoint.Y));
-            this.selectionRectangle.Width = Math.Abs(currentPoint.X - ancorPoint.X);
-            this.selectionRectangle.Height = Math.Abs(currentPoint.Y - ancorPoint.Y);
+            this.selectionRectangle.SetValue(Canvas.LeftProperty, Math.Min(currentPoint.X, this.anchorPoint.X));
+            this.selectionRectangle.SetValue(Canvas.TopProperty, Math.Min(currentPoint.Y, this.anchorPoint.Y));
+            this.selectionRectangle.Width = Math.Abs(currentPoint.X - this.anchorPoint.X);
+            this.selectionRectangle.Height = Math.Abs(currentPoint.Y - this.anchorPoint.Y);
             if (this.selectionRectangle.Visibility == Visibility.Collapsed)
             {
                 this.selectionRectangle.Visibility = Visibility.Visible;
             }
+
             this.SelectedItems();
         }
 
+        /// <summary>
+        /// Filters the hit test.
+        /// </summary>
+        /// <param name="dependencyObject">The dependency object.</param>
+        /// <returns><see cref="HitTestFilterBehavior"/>.</returns>
         private HitTestFilterBehavior HitTestFilter(DependencyObject dependencyObject)
         {
             var element = dependencyObject as FrameworkElement;
@@ -141,7 +252,12 @@ namespace ElectronicParts.Views
                 return HitTestFilterBehavior.ContinueSkipSelf;
             }
         }
-
+        
+        /// <summary>
+        /// Handles the hit test.
+        /// </summary>
+        /// <param name="result">The result of the hit test.</param>
+        /// <returns><see cref="HitTestResultBehavior.Continue"/>.</returns>
         private HitTestResultBehavior HitTestTesultHandler(HitTestResult result)
         {
             var dataContext = (result.VisualHit as FrameworkElement).DataContext;
@@ -158,16 +274,31 @@ namespace ElectronicParts.Views
             return HitTestResultBehavior.Continue;
         }
 
+        /// <summary>
+        /// This method is called when the canvas is loaded.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void ItemsCanvas_Loaded(object sender, RoutedEventArgs e)
         {
             this.canvas = sender as Canvas;
         }
 
+        /// <summary>
+        /// This method is called when the mouse leaves the canvas area.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void ItemsCanvas_MouseLeave(object sender, MouseEventArgs e)
         {
             this.isDragging = false;
         }
 
+        /// <summary>
+        /// This method is called when the left mouse button is clicked above the canvas.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void ItemsCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if ((e.OriginalSource as FrameworkElement).DataContext is NodeViewModel)
@@ -178,7 +309,7 @@ namespace ElectronicParts.Views
             if (this.selectionRectangle.Visibility == Visibility.Collapsed && e.LeftButton == MouseButtonState.Pressed)
             {
                 this.isDragging = true;
-                this.ancorPoint = Mouse.GetPosition(this.canvas);
+                this.anchorPoint = Mouse.GetPosition(this.canvas);
             }
             else
             {
@@ -186,11 +317,21 @@ namespace ElectronicParts.Views
             }
         }
 
+        /// <summary>
+        /// This method is called when the left mouse button is released above the canvas.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void ItemsCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             this.isDragging = false;
         }
 
+        /// <summary>
+        /// This method is called when the left mouse button is clicked above a list view item.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void ListViewItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (ItemsControl.ContainerFromElement(sender as ListBox, e.OriginalSource as DependencyObject) is ListBoxItem item)
@@ -203,11 +344,21 @@ namespace ElectronicParts.Views
             }
         }
 
+        /// <summary>
+        /// This method is called when the main window is loaded.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void MainW_Loaded(object sender, RoutedEventArgs e)
         {
             this.selectionRectangle = this.FindUid("selectRect") as FrameworkElement;
         }
 
+        /// <summary>
+        /// This method is called when the left mouse button is clicked above a node.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void Node_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!this.executionService.IsEnabled)
@@ -216,11 +367,21 @@ namespace ElectronicParts.Views
             }
         }
 
+        /// <summary>
+        /// This method is called when the left mouse button is released above a node.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void Node_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             this.currentNode = null;
         }
 
+        /// <summary>
+        /// This method is called when the Open Assembly Folder menu option is clicked.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void OpenAssemblyFolder_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -234,6 +395,11 @@ namespace ElectronicParts.Views
             }
         }
 
+        /// <summary>
+        /// This method is called when the Preferences menu option is clicked.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void Preferences_Click(object sender, RoutedEventArgs e)
         {
             var preferences = new Preferences();
@@ -241,24 +407,50 @@ namespace ElectronicParts.Views
             this.ViewModel.UpdateBoardSize.Execute(null);
         }
 
+        /// <summary>
+        /// Resets the selection.
+        /// </summary>
         private void ResetSelection()
         {
             this.isDragging = false;
             this.selectionRectangle.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Sets the start position of the preview line.
+        /// </summary>
+        /// <param name="pin">The pin at which the preview line starts.</param>
+        /// <param name="mousePoint">The point at which the preview line ends.</param>
+        private void SetPreviewLineStartPosition(PinViewModel pin, Point mousePoint)
+        {
+            PreviewLineViewModel previewLine = this.ViewModel.PreviewLines[0];
+
+            previewLine.PointOneX = this.ViewModel.InputPin.Left;
+            previewLine.PointOneY = this.ViewModel.InputPin.Top;
+
+            previewLine.PointTwoX = mousePoint.X;
+            previewLine.PointTwoY = mousePoint.Y;
+
+            previewLine.Visible = true;
+        }
+
+        /// <summary>
+        /// This method is called when the mouse is moved.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isDragging)
+            if (this.isDragging)
             {
                 this.DragSelection();
             }
 
-            if (e.LeftButton == MouseButtonState.Pressed && !(currentNode is null))
+            if (e.LeftButton == MouseButtonState.Pressed && !(this.currentNode is null))
             {
                 var point = e.GetPosition(this.canvas);
 
-                if (this.currentNode is null || point.X <= 0 || point.Y <= 0 || point.X + this.currentNode.Width - 30 >= this.canvas.ActualWidth || point.Y + (this.currentNode.MaxPins - 1) * 20 >= this.canvas.ActualHeight)
+                if (this.currentNode is null || point.X <= 0 || point.Y <= 0 || point.X + this.currentNode.Width - 30 >= this.canvas.ActualWidth || point.Y + ((this.currentNode.MaxPins - 1) * 20) >= this.canvas.ActualHeight)
                 {
                     return;
                 }
@@ -273,35 +465,21 @@ namespace ElectronicParts.Views
 
             var mousePoint = e.GetPosition(this.canvas);
 
-            PreviewLineViewModel previewLine = this.ViewModel.PreviewLines[0];
-
-            if ((ViewModel.InputPin is null) && (ViewModel.OutputPin is null))
+            if (this.ViewModel.InputPin is null && this.ViewModel.OutputPin is null)
             {
+                PreviewLineViewModel previewLine = this.ViewModel.PreviewLines[0];
                 previewLine.Visible = false;
             }
 
-            if (!(ViewModel.InputPin is null))
+            if (!(this.ViewModel.InputPin is null))
             {
-                previewLine.PointOneX = ViewModel.InputPin.Left;
-                previewLine.PointOneY = ViewModel.InputPin.Top;
-
-                previewLine.PointTwoX = mousePoint.X;
-                previewLine.PointTwoY = mousePoint.Y;
-
-                previewLine.Visible = true;
+                this.SetPreviewLineStartPosition(this.ViewModel.InputPin, mousePoint);
             }
 
-            if (!(ViewModel.OutputPin is null))
+            if (!(this.ViewModel.OutputPin is null))
             {
-                previewLine.PointOneX = ViewModel.OutputPin.Left;
-                previewLine.PointOneY = ViewModel.OutputPin.Top;
-
-                previewLine.PointTwoX = mousePoint.X;
-                previewLine.PointTwoY = mousePoint.Y;
-
-                previewLine.Visible = true;
+                this.SetPreviewLineStartPosition(this.ViewModel.OutputPin, mousePoint);
             }
-
 
             var mousePosition = e.GetPosition(this.boardScroller);
             if (mousePosition.X > 0 && mousePosition.X < this.boardScroller.ActualWidth)
@@ -327,48 +505,6 @@ namespace ElectronicParts.Views
                     boardScroller.ScrollToHorizontalOffset(boardScroller.ContentHorizontalOffset + 0.1);
                 }
             }
-        }
-
-        private void AddOuputPins_Click(object sender, RoutedEventArgs e)
-        {
-            if ((e.OriginalSource as FrameworkElement)?.DataContext is NodeViewModel node)
-            {
-                var pinsInformation = this.GetPinInformation(node);
-
-                if (pinsInformation is null)
-                {
-                    return;
-                }
-
-                this.ViewModel.AddOutputPinsCommand.Execute(pinsInformation);
-            }
-        }
-
-        private void AddInputPins_Click(object sender, RoutedEventArgs e)
-        {
-            if ((e.OriginalSource as FrameworkElement)?.DataContext is NodeViewModel node)
-            {
-                var pinsInformation = this.GetPinInformation(node);
-
-                if (pinsInformation is null)
-                {
-                    return;
-                }
-
-                this.ViewModel.AddInputPinsCommand.Execute(pinsInformation);
-            }
-        }
-
-        public Tuple<Type, int, NodeViewModel> GetPinInformation(NodeViewModel node)
-        {
-            var addPins = new AddPins();
-
-            if (addPins.ShowDialog() == true)
-            {
-                return Tuple.Create(addPins.SelectedType, addPins.Amount, node);
-            }
-
-            return null;
         }
     }
 }

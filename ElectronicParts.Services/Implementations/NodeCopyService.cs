@@ -99,6 +99,10 @@ namespace ElectronicParts.Services.Implementations
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the service has been initialized or not.
+        /// </summary>
+        /// <value>A value indicating whether the service has been initialized or not.</value>
         public bool IsInitialized
         {
             get; private set;
