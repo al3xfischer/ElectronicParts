@@ -80,7 +80,7 @@ namespace ElectronicParts.ViewModels
         private readonly Timer updateMillisecondsPerLoopUpdateTimer;
 
         /// <summary>
-        /// Represents timer which starts resnapping of the nodes 500 milliseconds after the latest gridsize change.
+        /// Represents timer which starts re-snapping of the nodes 500 milliseconds after the latest grid size change.
         /// </summary>
         private readonly Timer reSnappingTimer;
 
@@ -139,7 +139,7 @@ namespace ElectronicParts.ViewModels
         /// <param name="logger">The logger for the main view model.</param>
         /// <param name="configurationService">A service including all configurations for the application.</param>
         /// <param name="assemblyNameExtractorService">A service which extracts the names of assemblies.</param>
-        /// <param name="actionManager"></param>
+        /// <param name="actionManager">The Action manager which is used for redo/undo functionality.</param>
         /// <param name="genericTypeComparerService">A service which checks if two classes implement the same generic types.</param>
         public MainViewModel(
             IExecutionService executionService,
@@ -1108,7 +1108,7 @@ namespace ElectronicParts.ViewModels
         {
             foreach (var pin in pinList)
             {
-                if (this.genericTypeComparerService.IsSameGenericType(pin.Pin, selectedPin))
+                if (this.pinConnectorService.IsConnectable(pin.Pin, selectedPin))
                 {
                     pin.CanBeConnected = true;
                 }
