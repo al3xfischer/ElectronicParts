@@ -11,6 +11,8 @@ using System.Linq;
 using System;
 using Microsoft.Extensions.Logging;
 using ElectronicParts.Services.Interfaces;
+using System.Windows.Media;
+using System.Collections.Generic;
 
 namespace ElectronicParts.Views
 {
@@ -27,6 +29,14 @@ namespace ElectronicParts.Views
 
         private NodeViewModel currentNode;
 
+        private System.Windows.Point ancorPoint;
+
+        private bool isDragging;
+
+        private FrameworkElement selectionRectangle;
+
+        private List<object> items;
+
         public MainWindow()
         {
             this.DataContext = this;
@@ -34,6 +44,8 @@ namespace ElectronicParts.Views
             this.ViewModel.AddAssembly = () => this.AddAssembly_Click(this, new RoutedEventArgs());
             this.logger = Container.Resolve<ILogger<MainWindow>>();
             this.executionService = Container.Resolve<IExecutionService>();
+            this.items = new List<object>();
+            this.ViewModel.GetMousePosition = () => Mouse.GetPosition(this.canvas);
         }
 
         public MainViewModel ViewModel { get; }
@@ -60,6 +72,11 @@ namespace ElectronicParts.Views
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
+            if (isDragging)
+            {
+                this.DragSelection();
+            }
+
             if (e.LeftButton == MouseButtonState.Pressed && !(currentNode is null))
             {
                 var point = e.GetPosition(this.canvas);
@@ -135,6 +152,20 @@ namespace ElectronicParts.Views
             }
         }
 
+        private void DragSelection()
+        {
+            var currentPoint = Mouse.GetPosition(this.canvas);
+            this.selectionRectangle.SetValue(Canvas.LeftProperty, Math.Min(currentPoint.X, this.ancorPoint.X));
+            this.selectionRectangle.SetValue(Canvas.TopProperty, Math.Min(currentPoint.Y, this.ancorPoint.Y));
+            this.selectionRectangle.Width = Math.Abs(currentPoint.X - ancorPoint.X);
+            this.selectionRectangle.Height = Math.Abs(currentPoint.Y - ancorPoint.Y);
+            if (this.selectionRectangle.Visibility == Visibility.Collapsed)
+            {
+                this.selectionRectangle.Visibility = Visibility.Visible;
+            }
+            this.SelectedItems();
+        }
+
         private void Node_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             this.currentNode = null;
@@ -204,6 +235,84 @@ namespace ElectronicParts.Views
         private void DockPanel_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.ViewModel.ResetPreviewLine();
+        }
+
+        private void ItemsCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if ((e.OriginalSource as FrameworkElement).DataContext is NodeViewModel)
+            {
+                return;
+            }
+
+            if (this.selectionRectangle.Visibility == Visibility.Collapsed && e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.isDragging = true;
+                this.ancorPoint = Mouse.GetPosition(this.canvas);
+            }
+            else
+            {
+                this.ResetSelection();
+            }
+        }
+
+        private void ItemsCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.isDragging = false;
+        }
+
+        private void ResetSelection()
+        {
+            this.isDragging = false;
+            this.selectionRectangle.Visibility = Visibility.Collapsed;
+        }
+
+        private void MainW_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.selectionRectangle = this.FindUid("selectRect") as FrameworkElement;
+        }
+
+        private void ItemsCanvas_MouseLeave(object sender, MouseEventArgs e)
+        {
+            this.isDragging = false;
+        }
+
+        public void SelectedItems()
+        {
+            System.Windows.Point currentMousePosition = Mouse.GetPosition(this.canvas);
+            var left = Math.Min(currentMousePosition.X, this.ancorPoint.X);
+            var top = Math.Min(currentMousePosition.Y, this.ancorPoint.Y);
+            var rect = new Rect(new Point(left, top), new Size(this.selectionRectangle.Width, this.selectionRectangle.Height));
+            var geometry = new RectangleGeometry(rect);
+            VisualTreeHelper.HitTest(this.canvas, new HitTestFilterCallback(this.HitTestFilter), new HitTestResultCallback(this.HitTestTesultHandler), new GeometryHitTestParameters(geometry));
+        }
+
+        private HitTestResultBehavior HitTestTesultHandler(HitTestResult result)
+        {
+            var dataContext = (result.VisualHit as FrameworkElement).DataContext;
+
+            if (dataContext is NodeViewModel nodeViewModel && !this.ViewModel.SelectedNodes.Contains(nodeViewModel))
+            {
+                this.ViewModel.SelectedNodes.Add(nodeViewModel);
+            }
+            else if (dataContext is ConnectorViewModel connectorViewModel && !this.ViewModel.SelectedConntectors.Contains(connectorViewModel))
+            {
+                this.ViewModel.SelectedConntectors.Add(connectorViewModel);
+            }
+
+            return HitTestResultBehavior.Continue;
+        }
+
+        private HitTestFilterBehavior HitTestFilter(DependencyObject dependencyObject)
+        {
+            var element = dependencyObject as FrameworkElement;
+            if (element?.DataContext is NodeViewModel || element?.DataContext is ConnectorViewModel)
+            {
+                return HitTestFilterBehavior.Continue;
+            }
+            else
+            {
+                return HitTestFilterBehavior.ContinueSkipSelf;
+            }
         }
     }
 }

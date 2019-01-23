@@ -73,12 +73,12 @@ namespace ElectronicParts.Services.Implementations
         {
             get
             {
-                if (!this.copyTask.IsCompleted || this.copyTask is null)
+                if (!this.copyTask?.IsCompleted == true)
                 {
                     return Enumerable.Empty<Connector>();
                 }
 
-                return this.CopiedConnectors;
+                return this.copiedNodes;
             }
         }
 
@@ -90,12 +90,12 @@ namespace ElectronicParts.Services.Implementations
         {
             get
             {
-                if (!this.copyTask.IsCompleted || this.copyTask is null)
+                if (!this.copyTask?.IsCompleted == true)
                 {
                     return Enumerable.Empty<IDisplayableNode>();
                 }
 
-                return this.CopiedNodes;
+                return this.copiedConnectors;
             }
         }
 
@@ -119,8 +119,8 @@ namespace ElectronicParts.Services.Implementations
         /// <param name="connectors">The connectors.</param>
         public void InitializeCopyProcess(IEnumerable<IDisplayableNode> nodes, IEnumerable<Connector> connectors)
         {
-            this.nodesToCopy = nodes ?? throw new ArgumentNullException(nameof(nodes));
-            this.connectorsToCopy = connectors ?? throw new ArgumentNullException(nameof(connectors));
+            this.nodesToCopy = nodes?.ToList() ?? throw new ArgumentNullException(nameof(nodes));
+            this.connectorsToCopy = connectors?.ToList() ?? throw new ArgumentNullException(nameof(connectors));
             this.TryBeginCopyTask();
         }
 
@@ -130,7 +130,7 @@ namespace ElectronicParts.Services.Implementations
         /// <returns>true if there is no copyProcess running at the moment and a new one has been successfully created, false otherwise.</returns>
         public bool TryBeginCopyTask()
         {
-            if (this.copyTask.IsCompleted || this.copyTask is null)
+            if (this.copyTask?.IsCompleted == true)
             {
                 this.copyTask = this.MakeCopyAsync();
                 return true;
@@ -164,9 +164,9 @@ namespace ElectronicParts.Services.Implementations
                 foreach (var connS in this.connectorsToCopy)
                 {
                     var inputSourceIndex = inputPinsSource.IndexOf(connS.InputPin);
-                    var outputSourceIndex = inputPinsSource.IndexOf(connS.InputPin);
+                    var outputSourceIndex = outputPinsSource.IndexOf(connS.OutputPin);
 
-                    this.connectorService.TryConnectPins(inputPinsDest.ElementAt(inputSourceIndex), outputPinsSource.ElementAt(outputSourceIndex), out Connector newConn, false);
+                    this.connectorService.TryConnectPins(inputPinsDest.ElementAt(inputSourceIndex), outputPinsDest.ElementAt(outputSourceIndex), out Connector newConn, false);
                     copiedConnectors.Add(newConn);
                 }
 
