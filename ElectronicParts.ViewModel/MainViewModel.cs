@@ -1048,10 +1048,13 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         public void ResetPreviewLine()
         {
-            this.PreviewLines[0].Visible = false;
-            this.OutputPin = null;
-            this.InputPin = null;
-            this.ResetPossibleConnections();
+            if (this.PreviewLines[0].Visible)
+            {
+                this.PreviewLines[0].Visible = false;
+                this.OutputPin = null;
+                this.InputPin = null;
+                this.ResetPossibleConnections();
+            }
         }
 
         /// <summary>
@@ -1061,6 +1064,11 @@ namespace ElectronicParts.ViewModels
         {
             foreach (var pinList in this.nodes.Select(node => node.Outputs))
             {
+                if (pinList == null)
+                {
+                    continue;
+                }
+
                 foreach (var pin in pinList)
                 {
                     pin.CanBeConnected = false;
@@ -1069,6 +1077,11 @@ namespace ElectronicParts.ViewModels
 
             foreach (var pinList in this.nodes.Select(node => node.Inputs))
             {
+                if (pinList == null)
+                {
+                    continue;
+                }
+
                 foreach (var pin in pinList)
                 {
                     pin.CanBeConnected = false;
