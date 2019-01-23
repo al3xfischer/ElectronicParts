@@ -1,28 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿// ***********************************************************************
+// Assembly         : ElectronicParts
+// Author           : Roman Jahn, Peter Helf
+// ***********************************************************************
+// <copyright file="PreviewLine.xaml.cs" company="FHWN">
+//     Copyright ©  2019
+// </copyright>
+// <summary>Represents the PreviewLine.xaml.cs class of the ElectronicParts programm</summary>
+// ***********************************************************************
 
 namespace ElectronicParts.Views
 {
+    using System.Windows.Controls;
+
     /// <summary>
-    /// Interaction logic for PreviewLine.xaml
+    /// Interaction logic for PreviewLine.
     /// </summary>
     public partial class PreviewLine : UserControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreviewLine"/> class.
+        /// </summary>
         public PreviewLine()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

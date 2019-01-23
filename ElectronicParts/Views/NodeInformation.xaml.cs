@@ -1,28 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿// ***********************************************************************
+// Assembly         : ElectronicParts
+// Author           : 
+// ***********************************************************************
+// <copyright file="NodeInformation.xaml.cs" company="FHWN">
+//     Copyright ©  2019
+// </copyright>
+// <summary>Represents the NodeInformation class of the ElectronicParts programm</summary>
+// ***********************************************************************
 
 namespace ElectronicParts.Views
 {
+    using System.Windows.Controls;
+
     /// <summary>
-    /// Interaction logic for NodeInformation.xaml
+    /// Interaction logic for NodeInformation.
     /// </summary>
     public partial class NodeInformation : UserControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NodeInformation"/> class.
+        /// </summary>
         public NodeInformation()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }
