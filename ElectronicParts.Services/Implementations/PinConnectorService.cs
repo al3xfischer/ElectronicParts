@@ -8,10 +8,12 @@
 
 // <summary>Represents the PinConnectorService class of the ElectronicParts programm</summary>
 // ***********************************************************************
+
 namespace ElectronicParts.Services.Implementations
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using ElectronicParts.Models;
     using ElectronicParts.Services.Interfaces;
     using Shared;
