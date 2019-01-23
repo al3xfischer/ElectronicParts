@@ -1,65 +1,131 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿// ***********************************************************************
+// Author           : Peter Helf, Roman Jahn
+// ***********************************************************************
+// <copyright file="PreviewLineViewModel.cs" company="FHWN">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary>Represents the PreviewLineViewModel class of the ElectronicParts Programm</summary>
+// ***********************************************************************
 
 namespace ElectronicParts.ViewModels
 {
+    /// <summary>
+    /// Represents the <see cref="PreviewLineViewModel"/> class.
+    /// </summary>
     public class PreviewLineViewModel : BaseViewModel
     {
-        private double pointTwoY;
-        private double pointTwoX;
-        private double pointOneY;
+        /// <summary>
+        /// Contains the x value of the first point.
+        /// </summary>
         private double pointOneX;
+
+        /// <summary>
+        /// Contains the y value of the first point.
+        /// </summary>
+        private double pointOneY;
+
+        /// <summary>
+        /// Contains the x value of the second point.
+        /// </summary>
+        private double pointTwoX;
+
+        /// <summary>
+        /// Contains the y value of the second point.
+        /// </summary>
+        private double pointTwoY;
+
+        /// <summary>
+        /// Contains the value indicating whether the line is visible or not.
+        /// </summary>
         private bool visible;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the line is visible or not.
+        /// </summary>
+        /// <value>The value indicating whether the line is visible or not.</value>
         public bool Visible
         {
-            get { return visible; }
+            get
+            {
+                return this.visible;
+            }
+
             set
             {
-                visible = value;
-                this.FirePropertyChanged(nameof(Visible));
+                this.visible = value;
+                this.FirePropertyChanged(nameof(this.Visible));
             }
         }
 
+        /// <summary>
+        /// Gets or sets the x value of the first point.
+        /// </summary>
+        /// <value>The x value of the first point.</value>
         public double PointOneX
         {
-            get { return pointOneX; }
-            set
+            get
             {
-                pointOneX = value;
-                FirePropertyChanged(nameof(this.PointOneX));
+                return this.pointOneX;
             }
-        }
-        public double PointOneY
-        {
-            get { return pointOneY; }
+
             set
             {
-                pointOneY = value;
-                FirePropertyChanged(nameof(this.PointOneY));
+                this.pointOneX = value;
+                this.FirePropertyChanged(nameof(this.PointOneX));
             }
         }
 
-        public double PointTwoX
+        /// <summary>
+        /// Gets or sets the y value of the first point.
+        /// </summary>
+        /// <value>The y value of the first point.</value>
+        public double PointOneY
         {
-            get { return pointTwoX; }
+            get
+            {
+                return this.pointOneY;
+            }
+
             set
             {
-                pointTwoX = value;
-                FirePropertyChanged(nameof(this.PointTwoX));
+                this.pointOneY = value;
+                this.FirePropertyChanged(nameof(this.PointOneY));
             }
         }
-        public double PointTwoY
+
+        /// <summary>
+        /// Gets or sets the x value of the second point.
+        /// </summary>
+        /// <value>The x value of the second point.</value>
+        public double PointTwoX
         {
-            get { return pointTwoY; }
+            get
+            {
+                return this.pointTwoX;
+            }
+
             set
             {
-                pointTwoY = value;
-                FirePropertyChanged(nameof(this.PointTwoY));
+                this.pointTwoX = value;
+                this.FirePropertyChanged(nameof(this.PointTwoX));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the y value of the second point.
+        /// </summary>
+        /// <value>The y value of the second point.</value>
+        public double PointTwoY
+        {
+            get
+            {
+                return this.pointTwoY;
+            }
+
+            set
+            {
+                this.pointTwoY = value;
+                this.FirePropertyChanged(nameof(this.PointTwoY));
             }
         }
     }

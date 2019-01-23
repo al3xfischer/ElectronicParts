@@ -202,7 +202,7 @@ namespace ElectronicParts.ViewModels
 
                 foreach (NodeViewModel nodeVM in this.Nodes)
                 {
-                    nodeVM.AddDeleage();
+                    nodeVM.AddDelegate();
                 }
             });
 
