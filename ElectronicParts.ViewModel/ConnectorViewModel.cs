@@ -21,7 +21,7 @@ namespace ElectronicParts.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectorViewModel"/> class.
         /// </summary>
-        /// <param name="connector">The connector object.</param>
+        /// <param name="connector">The connector represented by this view model.</param>
         /// <param name="input">The input pin as <see cref="PinViewModel"/>.</param>
         /// <param name="output">The output pin as <see cref="PinViewModel"/>.</param>
         /// <param name="deletionCommand">The <see cref="ICommand"/> to delete the connection.</param>
