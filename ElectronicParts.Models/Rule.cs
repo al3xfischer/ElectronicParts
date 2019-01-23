@@ -21,11 +21,22 @@ namespace ElectronicParts.Models
     public class Rule<T>
     {
         /// <summary>
+        /// Contains the function to validate the value.
+        /// </summary>
+        private readonly Func<T, bool> valueValidation;
+
+        /// <summary>
+        /// Contains the value.
+        /// </summary>
+        private T value;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Rule{T}"/> class.
         /// </summary>
         /// <param name="value">The value which decides whether the rule is active or not.</param>
         /// <param name="color">The color of the connection when the rule is active.</param>
-        public Rule(T value, string color, Func<T,bool> valueValidation)
+        /// <param name="valueValidation">A function to validate the value.</param>
+        public Rule(T value, string color, Func<T, bool> valueValidation)
         {
             this.valueValidation = valueValidation;
             this.Value = value;
@@ -43,6 +54,7 @@ namespace ElectronicParts.Models
             {
                 return this.value;
             }
+
             set
             {
                 if (this.valueValidation(value))
@@ -62,8 +74,5 @@ namespace ElectronicParts.Models
         /// <value>The color of the connection when the rule is active.</value>
         [DataMember]
         public string Color { get; set; }
-
-        private readonly Func<T,bool> valueValidation;
-        private T value;
     }
 }
