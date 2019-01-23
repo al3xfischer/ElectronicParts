@@ -29,7 +29,7 @@ namespace ElectronicParts.Components
         {
             get
             {
-                var current = this.Inputs.FirstOrDefault()?.Value?.Current as bool?;
+                var current = this.Inputs.Where(pin => pin.Value.Current.GetType() == typeof(bool)).Any(pin => (bool)pin.Value.Current == true);
 
                 if (current == true)
                 {

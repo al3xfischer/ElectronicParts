@@ -51,8 +51,9 @@ namespace ElectronicParts.Services.Implementations
         /// <param name="output">The output pin.</param>
         /// <param name="input">The input pin.</param>
         /// <returns>True if the specified output is connectable and otherwise, False.</returns>
-        public bool IsConnectable(IPin output, IPin input)
+        public bool IsConnectable(IPin input, IPin output)
         {
+            var  x = this.typeComparerService.IsSameGenericType(input, output) && !this.existingConnections.Any(connection => connection.InputPin == input);
             return this.typeComparerService.IsSameGenericType(input, output) && !this.existingConnections.Any(connection => connection.InputPin == input);
         }
 

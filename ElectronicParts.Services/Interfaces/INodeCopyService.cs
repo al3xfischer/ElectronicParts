@@ -51,5 +51,7 @@ namespace ElectronicParts.Services.Interfaces
         /// </summary>
         /// <returns>true if there is no copyProcess running at the moment and a new one has been successfully created, false otherwise.</returns>
         bool TryBeginCopyTask();
+
+        bool IsInitialized { get; }
     }
 }

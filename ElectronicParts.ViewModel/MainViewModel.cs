@@ -535,33 +535,57 @@ namespace ElectronicParts.ViewModels
             this.PasteCommand = new RelayCommand(async arg =>
             {
                 await this.nodeCopyService.CopyTaskAwaiter();
-                this.AddItems(this.nodeCopyService.CopiedNodes, this.nodeCopyService.CopiedConnectors);
+                var copiedNodes = this.nodeCopyService.CopiedNodes;
+                var copiedConnectors = this.nodeCopyService.CopiedConnectors;
+                var mousePosition = this.GetMousePosition();
+                this.actionManager.Execute(new CallMethodAction(() => { this.AddItems(copiedNodes, copiedConnectors, mousePosition); }, () =>
+                {
+                    foreach (var node in copiedNodes)
+                    {
+                        var x = this.Nodes.FirstOrDefault(nodeVM => nodeVM.Node == node);
+                        this.Nodes.Remove(this.Nodes.FirstOrDefault(nodeVM => nodeVM.Node == node));
+                    }
+                }));
                 this.nodeCopyService.TryBeginCopyTask();
-            });
+            }, arg => this.nodeCopyService.IsInitialized && this.nodeCopyService.CopiedNodes?.Count() > 0);
 
             this.CutCommand = new RelayCommand(arg =>
             {
-                // remove all connectors from UI
-                foreach (var connectorVm in this.SelectedConntectors)
-                {
-                    this.Connections.Remove(connectorVm);
-                }
+                var selectedConns = this.SelectedConntectors.ToList();
+                var selectedNodeVms = this.SelectedNodes.ToList();
 
-                // connections to be cut
-                var connectors = this.GetFullSelectedConnectors(this.SelectedConntectors, this.SelectedNodes.SelectMany(n => n.Inputs.Concat(n.Outputs)));
-                this.CopyItems(this.SelectedNodes, connectors);
-                foreach (var connectorVm in connectors)
+                this.actionManager.Execute(new CallMethodAction(() =>
                 {
-                    this.Connections.Remove(connectorVm);
-                }
+                    // remove all connectors from UI
+                    foreach (var connectorVm in selectedConns)
+                    {
+                        this.Connections.Remove(connectorVm);
+                    }
 
-                foreach (var nodeVm in this.SelectedNodes)
+                    // connections to be cut
+                    var connectors = this.GetFullSelectedConnectors(selectedConns, selectedNodeVms.SelectMany(n => n.Inputs.Concat(n.Outputs)));
+                    this.CopyItems(selectedNodeVms, connectors);
+
+                    foreach (var nodeVm in selectedNodeVms)
+                    {
+                        this.Nodes.Remove(nodeVm);
+                    }
+
+                    this.SelectedNodes.Clear();
+                    this.SelectedConntectors.Clear();
+                }, () =>
                 {
-                    this.Nodes.Remove(nodeVm);
-                }
+                    foreach(var nodeVM in selectedNodeVms)
+                    {
+                        this.Nodes.Add(nodeVM);
+                    }
 
-                this.SelectedNodes.Clear();
-                this.SelectedConntectors.Clear();
+                    foreach (var connVM in selectedConns)
+                    {
+                        this.Connections.Add(connVM);
+                    }
+                }));
+                
             });
 
             this.Nodes = new ObservableCollection<NodeViewModel>();
@@ -1093,25 +1117,33 @@ namespace ElectronicParts.ViewModels
         /// <returns>A await able task.</returns>
         private async Task UndoClearCanvas()
         {
-            await Task.Run(() =>
+            await Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 foreach (var nodeVM in this.ClearedNodes.Pop())
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        this.Nodes.Add(nodeVM);
-                    });
+                    this.Nodes.Add(nodeVM);
                 }
+            });
 
+            var connectionsList = new List<ConnectorViewModel>();
+
+            await Task.Run(() =>
+            {
                 foreach (var connector in this.ClearedConnections.Pop())
                 {
                     this.pinConnectorService.TryConnectPins(connector.Input.Pin, connector.Output.Pin, out Connector newConnection, true);
 
                     this.pinConnectorService.ManuallyAddConnectionToExistingConnections(connector.Connector);
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        this.Connections.Add(connector);
-                    });
+
+                    connectionsList.Add(connector);
+                }
+            });
+
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                foreach (var connectorVM in connectionsList)
+                {
+                    this.Connections.Add(connectorVM);
                 }
             });
         }
@@ -1191,13 +1223,24 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <param name="pinList">The list of pins which are checked for possible connections.</param>
         /// <param name="selectedPin">The pin which was chosen for connection.</param>
-        private void CheckPossibleConnections(IEnumerable<PinViewModel> pinList, IPin selectedPin)
+        private void CheckPossibleConnections(IEnumerable<PinViewModel> pinList, IPin selectedPin, bool checkExistingConnections)
         {
             foreach (var pin in pinList)
             {
-                if (this.pinConnectorService.IsConnectable(pin.Pin, selectedPin))
+                if (checkExistingConnections)
                 {
-                    pin.CanBeConnected = true;
+                    if (this.pinConnectorService.IsConnectable(pin.Pin, selectedPin))
+                    {
+                        pin.CanBeConnected = true;
+                        continue;
+                    }
+                }
+                else
+                {
+                    if (this.genericTypeComparerService.IsSameGenericType(pin.Pin, selectedPin))
+                    {
+                        pin.CanBeConnected = true;
+                    }
                 }
             }
         }
@@ -1230,7 +1273,7 @@ namespace ElectronicParts.ViewModels
 
             if (!(this.InputPin is null))
             {
-                this.CheckPossibleConnections(this.nodes.SelectMany(node => node.Outputs), this.InputPin.Pin);
+                this.CheckPossibleConnections(this.nodes.SelectMany(node => node.Outputs), this.InputPin.Pin, false);
                 PreviewLineViewModel previewLineViewModel = this.PreviewLines[0];
                 previewLineViewModel.PointOneX = this.InputPin.Left;
                 previewLineViewModel.PointOneY = this.InputPin.Top;
@@ -1238,7 +1281,7 @@ namespace ElectronicParts.ViewModels
 
             if (!(this.OutputPin is null))
             {
-                this.CheckPossibleConnections(this.nodes.SelectMany(node => node.Inputs), this.OutputPin.Pin);
+                this.CheckPossibleConnections(this.nodes.SelectMany(node => node.Inputs), this.OutputPin.Pin, true);
                 PreviewLineViewModel previewLineViewModel = this.PreviewLines[0];
                 previewLineViewModel.PointOneX = this.OutputPin.Left;
                 previewLineViewModel.PointOneY = this.OutputPin.Top;
@@ -1293,13 +1336,16 @@ namespace ElectronicParts.ViewModels
 
         private void AddItems(IEnumerable<IDisplayableNode> nodes, IEnumerable<Connector> connectors)
         {
-            var mousePosition = this.GetMousePosition?.Invoke();
-
-            if (mousePosition is null)
+            if (this.GetMousePosition is null)
             {
                 return;
             }
 
+            this.AddItems(nodes, connectors, this.GetMousePosition());
+        }
+
+        private void AddItems(IEnumerable<IDisplayableNode> nodes, IEnumerable<Connector> connectors, Point mousePosition)
+        {
             var mostLeft = nodesToCopy.FirstOrDefault(n => n.Left == nodesToCopy.Min(nd => nd.Left));
             var minLeft = mostLeft?.Left ?? 0;
             var minTop = mostLeft?.Top ?? 0;
@@ -1309,8 +1355,8 @@ namespace ElectronicParts.ViewModels
             {
                 var nodeVm = nodeVms[i];
                 var originalVm = this.nodesToCopy.ElementAt(i);
-                nodeVm.Left = originalVm.Left - minLeft + (int)mousePosition.Value.X;
-                nodeVm.Top += originalVm.Top - minTop + (int)mousePosition.Value.Y;
+                nodeVm.Left = originalVm.Left - minLeft + (int)mousePosition.X;
+                nodeVm.Top += originalVm.Top - minTop + (int)mousePosition.Y;
                 this.Nodes.Add(nodeVm);
             }
 

@@ -99,6 +99,11 @@ namespace ElectronicParts.Services.Implementations
             }
         }
 
+        public bool IsInitialized
+        {
+            get; private set;
+        }
+
         /// <summary>
         /// This asynchronous method returns a Task which can be used to await the currently running copy process.
         /// </summary>
@@ -122,6 +127,7 @@ namespace ElectronicParts.Services.Implementations
             this.nodesToCopy = nodes?.ToList() ?? throw new ArgumentNullException(nameof(nodes));
             this.connectorsToCopy = connectors?.ToList() ?? throw new ArgumentNullException(nameof(connectors));
             this.copyTask = this.MakeCopyAsync();
+            this.IsInitialized = true;
         }
 
         /// <summary>
