@@ -198,7 +198,31 @@ namespace ElectronicParts.ViewModels
             this.SaveCommand = new RelayCommand(arg =>
             {
                 SnapShot snapShot = SnapShotConverter.Convert(this.Nodes, this.connections);
-                this.nodeSerializerService.Serialize(snapShot);
+
+                try
+                {
+                    this.nodeSerializerService.Serialize(snapShot);
+                }
+                catch (SerializationException e)
+                {
+                    this.logger.LogError(e, $"An error occurred while serializing ({nameof(this.SaveCommand)}).");
+                    Debug.WriteLine("Failed serialization");
+                    
+                    var faultyAssembly = this.assemblyNameExtractorService.ExtractAssemblyNameFromErrorMessage(e);
+
+                    var faultyComponent = string.Empty;
+
+                    try
+                    {
+                        faultyComponent = e.Message.Split('"')[1].Split('`')[0];
+                    }
+                    catch
+                    {
+                        faultyComponent = "Unknown";
+                    }
+
+                    var result = MessageBox.Show($"At least one component in the assembly {faultyAssembly} is faulty and can not be saved.\nThe type that caused the problem: {faultyComponent}", "Saving Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
 
                 foreach (NodeViewModel nodeVM in this.Nodes)
                 {
@@ -688,15 +712,15 @@ namespace ElectronicParts.ViewModels
         }
 
         /// <summary>
-        /// Gets a command which undo's the last action.
+        /// Gets a command which undoes the last action.
         /// </summary>
-        /// <value>A command which undo's the last action.</value>
+        /// <value>A command which undoes the last action.</value>
         public ICommand UndoCommand { get; }
 
         /// <summary>
-        /// Gets a command which redo's the last action.
+        /// Gets a command which redoes the last action.
         /// </summary>
-        /// <value>A command which redo's the last action.</value>
+        /// <value>A command which redoes the last action.</value>
         public ICommand RedoCommand { get; }
 
         /// <summary>
@@ -977,7 +1001,7 @@ namespace ElectronicParts.ViewModels
         }
 
         /// <summary>
-        /// Undo's the <see cref="ClearCanvas"/> method.
+        /// Undoes the <see cref="ClearCanvas"/> method.
         /// </summary>
         /// <returns>A await able task.</returns>
         private async Task UndoClearCanvas()

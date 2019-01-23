@@ -157,22 +157,22 @@
                         </Style>
                     </DockPanel.Resources>
 
-                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStartLoopCommand}">
+                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStartLoopCommand}" ToolTip="Play">
                         <Image Source="/Resources/play.png"/>
                     </Button>
-                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStepCommand}">
+                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStepCommand}" ToolTip="Step">
                         <Image Source="/Resources/step.png"/>
                     </Button>
-                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStopLoopCommand}">
+                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStopLoopCommand}" ToolTip="Pause">
                         <Image Source="/Resources/pause.png"/>
                     </Button>
-                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStopLoopAndResetCommand}">
+                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ExecutionStopLoopAndResetCommand}" ToolTip="Stop">
                         <Image Source="/Resources/stop.png"/>
                     </Button>
-                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ResetAllConnectionsCommand}">
+                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ResetAllConnectionsCommand}" ToolTip="Reset">
                         <Image Source="/Resources/reset.png"/>
                     </Button>
-                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ClearAllNodesCommand}">
+                    <Button DockPanel.Dock="Left" Command="{Binding ViewModel.ClearAllNodesCommand}" ToolTip="Clear">
                         <Image Source="/Resources/clear.png"/>
                     </Button>
                     <Border BorderBrush="DarkGray" BorderThickness="1px" Margin="2px" Padding="3px">
@@ -218,7 +218,7 @@
                                 </Setter>
                             </Style>
                         </DockPanel.Resources>
-                        <Button x:Name="undoButton" DockPanel.Dock="Left" Command="{Binding ViewModel.UndoCommand}">
+                        <Button x:Name="undoButton" DockPanel.Dock="Left" Command="{Binding ViewModel.UndoCommand}" ToolTip="Undo">
                             <Image>
                                 <Image.Style>
                                     <Style TargetType="{x:Type Image}">
@@ -233,7 +233,7 @@
                                 </Image.Style>
                             </Image>
                         </Button>
-                        <Button x:Name="redoButton" DockPanel.Dock="Right" Command="{Binding ViewModel.RedoCommand}">
+                        <Button x:Name="redoButton" DockPanel.Dock="Right" Command="{Binding ViewModel.RedoCommand}" ToolTip="Redo">
                                 <Image>
                                     <Image.Style>
                                         <Style TargetType="{x:Type Image}">
