@@ -44,6 +44,13 @@ namespace ElectronicParts.Services.Implementations
         bool IsConnectable(IPin inputPin, IPin outputPin);
 
         /// <summary>
+        /// Determines whether the specified pin is involved in a connection.
+        /// </summary>
+        /// <param name="pin">The pin.</param>
+        /// <returns>True if the specified pin has a connection and otherwise, False.</returns>
+        bool HasConnection(IPin pin);
+
+        /// <summary>
         /// Manually adds a connection to the service.
         /// </summary>
         /// <param name="connectionToAdd">The connection which will be added.</param>

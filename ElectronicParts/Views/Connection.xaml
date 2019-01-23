@@ -48,12 +48,22 @@
                                 <PathSegmentCollection>
                                     <LineSegment>
                                         <LineSegment.Point>
+                                            <Binding Path="SelfConnectionInputPoint"/>
+                                        </LineSegment.Point>
+                                    </LineSegment>
+                                    <LineSegment>
+                                        <LineSegment.Point>
                                             <Binding Path="CenterBottomPoint"/>
                                         </LineSegment.Point>
                                     </LineSegment>
                                     <LineSegment>
                                         <LineSegment.Point>
                                             <Binding Path="CenterTopPoint"/>
+                                        </LineSegment.Point>
+                                    </LineSegment>
+                                    <LineSegment>
+                                        <LineSegment.Point>
+                                            <Binding Path="SelfConnectionOutputPoint"/>
                                         </LineSegment.Point>
                                     </LineSegment>
                                     <LineSegment>

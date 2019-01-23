@@ -86,6 +86,8 @@ namespace ElectronicParts.ViewModels
 
         private readonly Timer updateMillisecondsPerLoopUpdateTimer;
 
+        private readonly IConnectorHelperService connectorHelperService;
+
         /// <summary>
         /// Represents timer which starts re-snapping of the nodes 500 milliseconds after the latest grid size change.
         /// </summary>
@@ -151,6 +153,7 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         private Stack<IEnumerable<ConnectorViewModel>> ClearedConnections;
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel" /> class.
         /// </summary>
@@ -197,7 +200,8 @@ namespace ElectronicParts.ViewModels
             ActionManager actionManager,
             IGenericTypeComparerService genericTypeComparerService,
             INodeCopyService nodeCopyService,
-            IPinCreatorService pinCreatorService)
+            IPinCreatorService pinCreatorService,
+            IConnectorHelperService connectorHelperService)
         {
             this.ClearedNodes = new Stack<IEnumerable<NodeViewModel>>();
             this.ClearedConnections = new Stack<IEnumerable<ConnectorViewModel>>();
@@ -212,6 +216,8 @@ namespace ElectronicParts.ViewModels
             this.genericTypeComparerService = genericTypeComparerService;
             this.nodeCopyService = nodeCopyService ?? throw new ArgumentNullException(nameof(nodeCopyService));
             this.pinCreatorService = pinCreatorService ?? throw new ArgumentNullException(nameof(pinCreatorService));
+            this.connectorHelperService = connectorHelperService ?? throw new ArgumentNullException(nameof(connectorHelperService));
+            
             this.configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
             this.updateMillisecondsPerLoopUpdateTimer.Elapsed += this.UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
@@ -352,7 +358,7 @@ namespace ElectronicParts.ViewModels
                     inputPinViewModel.Left = connection.InputPin.Position.X;
                     inputPinViewModel.Top = connection.InputPin.Position.Y;
 
-                    ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel, this.DeleteConnectionCommand);
+                    ConnectorViewModel connectorViewModel = new ConnectorViewModel(connection.Connector, inputPinViewModel, outputPinViewModel, this.DeleteConnectionCommand, this.connectorHelperService);
 
                     connections.Add(connectorViewModel);
                 }
@@ -639,6 +645,7 @@ namespace ElectronicParts.ViewModels
             this.SelectedNodes = new List<NodeViewModel>();
             this.SelectedConntectors = new List<ConnectorViewModel>();
             var reloadingTask = this.ReloadAssemblies();
+            this.connectorHelperService.ExistingNodes = this.Nodes.Select(nodeVM => nodeVM.Node);
             this.logger.LogInformation("Ctor MainVM done");
         }
 
@@ -1294,21 +1301,24 @@ namespace ElectronicParts.ViewModels
         /// <param name="selectedPin">The pin which was chosen for connection.</param>
         private void CheckPossibleConnections(IEnumerable<PinViewModel> pinList, IPin selectedPin, bool checkExistingConnections)
         {
-            foreach (var pin in pinList)
+            if (!(pinList is null))
             {
-                if (checkExistingConnections)
+                foreach (var pin in pinList)
                 {
-                    if (this.pinConnectorService.IsConnectable(pin.Pin, selectedPin))
+                    if (checkExistingConnections)
                     {
-                        pin.CanBeConnected = true;
-                        continue;
+                        if (this.pinConnectorService.IsConnectable(pin.Pin, selectedPin))
+                        {
+                            pin.CanBeConnected = true;
+                            continue;
+                        }
                     }
-                }
-                else
-                {
-                    if (this.genericTypeComparerService.IsSameGenericType(pin.Pin, selectedPin))
+                    else
                     {
-                        pin.CanBeConnected = true;
+                        if (this.genericTypeComparerService.IsSameGenericType(pin.Pin, selectedPin) && !this.pinConnectorService.HasConnection(selectedPin))
+                        {
+                            pin.CanBeConnected = true;
+                        }
                     }
                 }
             }
@@ -1342,10 +1352,17 @@ namespace ElectronicParts.ViewModels
 
             if (!(this.InputPin is null))
             {
-                this.CheckPossibleConnections(this.nodes.SelectMany(node => node.Outputs), this.InputPin.Pin, false);
-                PreviewLineViewModel previewLineViewModel = this.PreviewLines[0];
-                previewLineViewModel.PointOneX = this.InputPin.Left;
-                previewLineViewModel.PointOneY = this.InputPin.Top;
+                if (this.pinConnectorService.HasConnection(this.InputPin.Pin))
+                {
+                    this.InputPin = null;
+                }
+                else
+                {
+                    this.CheckPossibleConnections(this.nodes.SelectMany(node => node.Outputs), this.InputPin.Pin, false);
+                    PreviewLineViewModel previewLineViewModel = this.PreviewLines[0];
+                    previewLineViewModel.PointOneX = this.InputPin.Left;
+                    previewLineViewModel.PointOneY = this.InputPin.Top;
+                }
             }
 
             if (!(this.OutputPin is null))
@@ -1373,7 +1390,7 @@ namespace ElectronicParts.ViewModels
             if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out Connector newConnection, false))
             {
                 connection = newConnection;
-                connectionVM = new ConnectorViewModel(newConnection, input, output, this.DeleteConnectionCommand);
+                connectionVM = new ConnectorViewModel(newConnection, input, output, this.DeleteConnectionCommand, this.connectorHelperService);
                 this.Connections.Add(connectionVM);
             }
 
@@ -1429,7 +1446,7 @@ namespace ElectronicParts.ViewModels
                 this.Nodes.Add(nodeVm);
             }
 
-            var connectorVms = connectors.Select(c => new ConnectorViewModel(c, this.GetPinViewModel(nodeVms, c.InputPin), this.GetPinViewModel(nodeVms, c.OutputPin), this.DeleteConnectionCommand));
+            var connectorVms = connectors.Select(c => new ConnectorViewModel(c, this.GetPinViewModel(nodeVms, c.InputPin), this.GetPinViewModel(nodeVms, c.OutputPin), this.DeleteConnectionCommand, this.connectorHelperService));
 
             foreach (var connectorVm in connectorVms)
             {

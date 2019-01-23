@@ -53,8 +53,17 @@ namespace ElectronicParts.Services.Implementations
         /// <returns>True if the specified output is connectable and otherwise, False.</returns>
         public bool IsConnectable(IPin input, IPin output)
         {
-            var  x = this.typeComparerService.IsSameGenericType(input, output) && !this.existingConnections.Any(connection => connection.InputPin == input);
             return this.typeComparerService.IsSameGenericType(input, output) && !this.existingConnections.Any(connection => connection.InputPin == input);
+        }
+
+        /// <summary>
+        /// Determines whether the specified pin is involved in a connection.
+        /// </summary>
+        /// <param name="pin">The pin.</param>
+        /// <returns>True if the specified pin has a connection and otherwise, False.</returns>
+        public bool HasConnection(IPin pin)
+        {
+            return this.existingConnections.Any(conn => conn.InputPin == pin || conn.OutputPin == pin);
         }
 
         /// <summary>

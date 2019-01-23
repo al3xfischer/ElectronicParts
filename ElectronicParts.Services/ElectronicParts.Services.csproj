@@ -111,8 +111,10 @@
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Implementations\AssemblyNameExtractorService.cs" />
     <Compile Include="Implementations\ConfigurationService.cs" />
+    <Compile Include="Implementations\ConnectorHelperService.cs" />
     <Compile Include="Implementations\ExecutionService.cs" />
     <Compile Include="Implementations\GenericTypeComparerService.cs" />
+    <Compile Include="Interfaces\IConnectorHelperService.cs" />
     <Compile Include="Implementations\PinCreatorService.cs" />
     <Compile Include="Interfaces\INodeCopyService.cs" />
     <Compile Include="Implementations\NodeCopyService.cs" />

@@ -53,6 +53,7 @@ namespace ElectronicParts.DI
             services.AddSingleton<ActionManager>();
             services.AddSingleton<IConfigurationService, ConfigurationService>();
             services.AddTransient<IPinCreatorService, PinCreatorService>();
+            services.AddSingleton<IConnectorHelperService, ConnectorHelperService>();
 
             // Logging
             services.AddLogging();

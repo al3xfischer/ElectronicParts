@@ -11,6 +11,7 @@ namespace ElectronicParts.ViewModels
     using System;
     using System.Windows;
     using System.Windows.Input;
+    using ElectronicParts.Services.Interfaces;
     using ElectronicParts.Models;
     using Shared;
 
@@ -19,6 +20,7 @@ namespace ElectronicParts.ViewModels
     /// </summary>
     public class ConnectorViewModel : BaseViewModel
     {
+        private IConnectorHelperService helperService;
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectorViewModel"/> class.
         /// </summary>
@@ -26,12 +28,14 @@ namespace ElectronicParts.ViewModels
         /// <param name="input">The input pin as <see cref="PinViewModel"/>.</param>
         /// <param name="output">The output pin as <see cref="PinViewModel"/>.</param>
         /// <param name="deletionCommand">The <see cref="ICommand"/> to delete the connection.</param>
-        public ConnectorViewModel(Connector connector, PinViewModel input, PinViewModel output, ICommand deletionCommand)
+        public ConnectorViewModel(Connector connector, PinViewModel input, PinViewModel output, ICommand deletionCommand, IConnectorHelperService helperService)
         {
+
             this.Connector = connector ?? throw new ArgumentNullException(nameof(connector));
             this.Input = input ?? throw new ArgumentNullException(nameof(input));
             this.Output = output ?? throw new ArgumentNullException(nameof(output));
             this.DeleteCommand = deletionCommand ?? throw new ArgumentNullException(nameof(deletionCommand));
+            this.helperService = helperService ?? throw new ArgumentNullException(nameof(helperService));
             this.Input.OnValueChanged += this.RefreshPins;
             this.Output.OnValueChanged += this.RefreshPins;
             this.Input.PropertyChanged += Input_PropertyChanged;
@@ -66,7 +70,12 @@ namespace ElectronicParts.ViewModels
             {
                 if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
                 {
-                    return new Point((this.Input.Left), (this.Input.Top + this.Output.Top) / 2);
+                    if (this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
+                    {
+                        var offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin);
+                        return new Point(this.Input.Left - Math.Abs(offset) * 10, this.Input.Top + offset * 35);
+                    }
+                    return new Point(this.Input.Left, ((this.Input.Top + this.Output.Top)) / 2);
                 }
                 return new Point((this.Input.Left + this.Output.Left) / 2, this.Input.Top);
             }
@@ -78,9 +87,42 @@ namespace ElectronicParts.ViewModels
             {
                 if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
                 {
+                    if (this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
+                    {
+                        var offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin);
+                        return new Point(this.Output.Left + Math.Abs(offset) * 10, this.Input.Top + offset * 35);
+                    }
                     return new Point((this.Output.Left), (this.Input.Top + this.Output.Top) / 2);
                 }
                 return new Point((this.Input.Left + this.Output.Left) / 2, this.Output.Top);
+            }
+        }
+
+        public Point SelfConnectionInputPoint
+        {
+            get
+            {
+                if (!this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
+                {
+                    return new Point(this.Input.Left, this.Input.Top);
+                }
+
+                var offset = Math.Abs(this.helperService.GetOffset(this.Input.Pin, this.Output.Pin));
+                return new Point(this.Input.Left - offset * 10, this.Input.Top);
+            }
+        }
+
+        public Point SelfConnectionOutputPoint
+        {
+            get
+            {
+                if (!this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
+                {
+                    return new Point(this.Output.Left, this.Output.Top);
+                }
+
+                var offset = Math.Abs(this.helperService.GetOffset(this.Input.Pin, this.Output.Pin));
+                return new Point(this.Output.Left + offset * 10, this.Output.Top);
             }
         }
 
