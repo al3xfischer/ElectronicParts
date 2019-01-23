@@ -161,8 +161,8 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         public void SortByValue()
         {
-            this.StringRules.SortRuleCollection(this.sortDirection);
-            this.IntRules.SortRuleCollection(this.sortDirection);
+            this.SortRuleCollection(this.StringRules, this.sortDirection);
+            this.SortRuleCollection(this.IntRules, this.sortDirection);
 
             if (this.sortDirection == ListSortDirection.Ascending)
             {
@@ -171,6 +171,29 @@ namespace ElectronicParts.ViewModels
             else
             {
                 this.sortDirection = ListSortDirection.Ascending;
+            }
+        }
+
+        private void SortRuleCollection<T>(ObservableCollection<RuleViewModel<T>> values, ListSortDirection sortDirection)
+        {
+            if (values is null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
+
+            var sortedList = new List<RuleViewModel<T>>();
+            if (sortDirection == ListSortDirection.Ascending)
+            {
+                sortedList = values.OrderBy(rule => rule.Value).ToList();
+            }
+            else
+            {
+                sortedList = values.OrderByDescending(rule => rule.Value).ToList();
+            }
+
+            for (int i = 0; i < sortedList.Count; i++)
+            {
+                values.Move(values.IndexOf(sortedList[i]), i);
             }
         }
 
