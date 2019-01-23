@@ -73,11 +73,20 @@ namespace ElectronicParts.ViewModels
         /// A service which is used for configurations.
         /// </summary>
         private readonly IConfigurationService configurationService;
-        
+
+        /// <summary>
+        /// Represents the timer which is used to update the milliseconds per loop once every 2 seconds.
+        /// </summary>
         private readonly Timer updateMillisecondsPerLoopUpdateTimer;
 
+        /// <summary>
+        /// Represents timer which starts resnapping of the nodes 500 milliseconds after the latest gridsize change.
+        /// </summary>
         private readonly Timer reSnappingTimer;
 
+        /// <summary>
+        /// Represents the Action manager which is used for redo/undo functionality.
+        /// </summary>
         private readonly ActionManager actionManager;
 
         /// <summary>
@@ -193,7 +202,7 @@ namespace ElectronicParts.ViewModels
 
                 foreach (NodeViewModel nodeVM in this.Nodes)
                 {
-                    nodeVM.AddDeleage();
+                    nodeVM.AddDelegate();
                 }
             });
 
