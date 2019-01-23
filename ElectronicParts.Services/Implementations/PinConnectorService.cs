@@ -48,8 +48,8 @@ namespace ElectronicParts.Services.Implementations
         /// <summary>
         /// Determines whether the specified output is connectable.
         /// </summary>
-        /// <param name="output">The output pin.</param>
         /// <param name="input">The input pin.</param>
+        /// <param name="output">The output pin.</param>
         /// <returns>True if the specified output is connectable and otherwise, False.</returns>
         public bool IsConnectable(IPin input, IPin output)
         {

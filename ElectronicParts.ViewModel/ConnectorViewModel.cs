@@ -38,32 +38,14 @@ namespace ElectronicParts.ViewModels
             this.helperService = helperService ?? throw new ArgumentNullException(nameof(helperService));
             this.Input.OnValueChanged += this.RefreshPins;
             this.Output.OnValueChanged += this.RefreshPins;
-            this.Input.PropertyChanged += Input_PropertyChanged;
-            this.Output.PropertyChanged += Output_PropertyChanged;
-        }
-
-        private void Output_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(this.Output.Left) || e.PropertyName == nameof(this.Output.Top))
-            {
-                this.FirePropertyChanged(string.Empty);
-            }
-        }
-
-        private void Input_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(this.Input.Left) || e.PropertyName == nameof(this.Input.Top))
-            {
-                this.FirePropertyChanged(string.Empty);
-            }
+            this.Input.PropertyChanged += this.Input_PropertyChanged;
+            this.Output.PropertyChanged += this.Output_PropertyChanged;
         }
 
         /// <summary>
-        /// Gets or sets the connector object.
+        /// Gets the center bottom point.
         /// </summary>
-        /// <value>The connector object.</value>
-        public Connector Connector { get; set; }
-
+        /// <value>The center bottom point.</value>
         public Point CenterBottomPoint
         {
             get
@@ -81,6 +63,10 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets the center top point.
+        /// </summary>
+        /// <value>The center top point.</value>
         public Point CenterTopPoint
         {
             get
@@ -94,6 +80,7 @@ namespace ElectronicParts.ViewModels
                     }
                     return new Point((this.Output.Left), (this.Input.Top + this.Output.Top) / 2);
                 }
+
                 return new Point((this.Input.Left + this.Output.Left) / 2, this.Output.Top);
             }
         }
@@ -127,6 +114,24 @@ namespace ElectronicParts.ViewModels
         }
 
         /// <summary>
+        /// Gets or sets the connector object.
+        /// </summary>
+        /// <value>The connector object.</value>
+        public Connector Connector { get; set; }
+
+        /// <summary>
+        /// Gets the common value of the connection.
+        /// </summary>
+        /// <value>The the common value of the connection.</value>
+        public IValue CurrentValue { get => this.Connector.CommonValue; }
+
+        /// <summary>
+        /// Gets the delete command.
+        /// </summary>
+        /// <value>The delete command.</value>
+        public ICommand DeleteCommand { get; }
+
+        /// <summary>
         /// Gets the input pin view model.
         /// </summary>
         /// <value>The input pin view model.</value>
@@ -139,26 +144,37 @@ namespace ElectronicParts.ViewModels
         public PinViewModel Output { get; }
 
         /// <summary>
-        /// Gets the delete command.
-        /// </summary>
-        /// <value>The delete command.</value>
-        public ICommand DeleteCommand { get; }
-
-        /// <summary>
-        /// Gets the common value of the connection.
-        /// </summary>
-        /// <value>The the common value of the connection.</value>
-        public IValue CurrentValue
-        {
-            get => this.Connector.CommonValue;
-        }
-
-        /// <summary>
         /// Updates the view by calling the INotifyPropertyChanged event of the base view model.
         /// </summary>
         public void Update()
         {
             this.FirePropertyChanged(nameof(this.CurrentValue));
+        }
+
+        /// <summary>
+        /// This method is called when the input changes.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
+        private void Input_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.Input.Left) || e.PropertyName == nameof(this.Input.Top))
+            {
+                this.FirePropertyChanged(string.Empty);
+            }
+        }
+
+        /// <summary>
+        /// This method is called when the output changes.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
+        private void Output_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.Output.Left) || e.PropertyName == nameof(this.Output.Top))
+            {
+                this.FirePropertyChanged(string.Empty);
+            }
         }
 
         /// <summary>

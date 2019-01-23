@@ -84,6 +84,9 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         private readonly IConfigurationService configurationService;
 
+        /// <summary>
+        /// A timer which updates the <see cref="MilisecondsPerLoop"/> property.
+        /// </summary>
         private readonly Timer updateMillisecondsPerLoopUpdateTimer;
 
         private readonly IConnectorHelperService connectorHelperService;
@@ -146,12 +149,12 @@ namespace ElectronicParts.ViewModels
         /// <summary>
         /// The cleared nodes.
         /// </summary>
-        private Stack<IEnumerable<NodeViewModel>> ClearedNodes;
+        private Stack<IEnumerable<NodeViewModel>> clearedNodes;
 
         /// <summary>
         /// The cleared connections.
         /// </summary>
-        private Stack<IEnumerable<ConnectorViewModel>> ClearedConnections;
+        private Stack<IEnumerable<ConnectorViewModel>> clearedConnections;
 
 
         /// <summary>
@@ -169,7 +172,7 @@ namespace ElectronicParts.ViewModels
         /// <param name="nodeCopyService">The node copy service.</param>
         /// <param name="pinCreatorService">The pin creator service.</param>
         /// <exception cref="System.ArgumentNullException">
-        /// actionManager
+        /// ActionManager
         /// or
         /// executionService
         /// or
@@ -187,7 +190,7 @@ namespace ElectronicParts.ViewModels
         /// or
         /// pinCreatorService
         /// or
-        /// configurationService
+        /// configurationService.
         /// </exception>
         public MainViewModel(
             IExecutionService executionService,
@@ -203,8 +206,8 @@ namespace ElectronicParts.ViewModels
             IPinCreatorService pinCreatorService,
             IConnectorHelperService connectorHelperService)
         {
-            this.ClearedNodes = new Stack<IEnumerable<NodeViewModel>>();
-            this.ClearedConnections = new Stack<IEnumerable<ConnectorViewModel>>();
+            this.clearedNodes = new Stack<IEnumerable<NodeViewModel>>();
+            this.clearedConnections = new Stack<IEnumerable<ConnectorViewModel>>();
             this.actionManager = actionManager ?? throw new ArgumentNullException(nameof(actionManager));
             this.executionService = executionService ?? throw new ArgumentNullException(nameof(executionService));
             this.pinConnectorService = pinConnectorService ?? throw new ArgumentNullException(nameof(pinConnectorService));
@@ -287,8 +290,8 @@ namespace ElectronicParts.ViewModels
             this.LoadCommand = new RelayCommand(arg =>
             {
                 this.actionManager?.Clear();
-                this.ClearedNodes?.Clear();
-                this.ClearedConnections?.Clear();
+                this.clearedNodes?.Clear();
+                this.clearedConnections?.Clear();
                 SnapShot snapShot = default(SnapShot);
 
                 try
@@ -559,7 +562,8 @@ namespace ElectronicParts.ViewModels
                 this.FirePropertyChanged(nameof(BoardWidth));
             });
 
-            this.CopyCommand = new RelayCommand(arg =>
+            this.CopyCommand = new RelayCommand(
+                arg =>
             {
                 var connectors = this.GetFullSelectedConnectors(this.SelectedConntectors, this.SelectedNodes.SelectMany(n => n.Inputs.Concat(n.Outputs)));
                 this.CopyItems(this.SelectedNodes, connectors);
@@ -568,13 +572,16 @@ namespace ElectronicParts.ViewModels
                 this.SelectedConntectors.Clear();
             });
 
-            this.PasteCommand = new RelayCommand(async arg =>
+            this.PasteCommand = new RelayCommand(
+                async arg =>
             {
                 await this.nodeCopyService.CopyTaskAwaiter();
                 var copiedNodes = this.nodeCopyService.CopiedNodes;
                 var copiedConnectors = this.nodeCopyService.CopiedConnectors;
                 var mousePosition = this.GetMousePosition();
-                this.actionManager.Execute(new CallMethodAction(() => { this.AddItems(copiedNodes, copiedConnectors, mousePosition); }, () =>
+                this.actionManager.Execute(new CallMethodAction(
+                    () => { this.AddItems(copiedNodes, copiedConnectors, mousePosition); }, 
+                    () =>
                 {
                     foreach (var node in copiedNodes)
                     {
@@ -583,14 +590,17 @@ namespace ElectronicParts.ViewModels
                     }
                 }));
                 this.nodeCopyService.TryBeginCopyTask();
-            }, arg => this.nodeCopyService.IsInitialized && this.nodeCopyService.CopiedNodes?.Count() > 0);
+            }, 
+            arg => this.nodeCopyService.IsInitialized && this.nodeCopyService.CopiedNodes?.Count() > 0);
 
-            this.CutCommand = new RelayCommand(arg =>
+            this.CutCommand = new RelayCommand(
+                arg =>
             {
                 var selectedConns = this.SelectedConntectors.ToList();
                 var selectedNodeVms = this.SelectedNodes.ToList();
 
-                this.actionManager.Execute(new CallMethodAction(() =>
+                this.actionManager.Execute(new CallMethodAction(
+                    () =>
                 {
                     // remove all connectors from UI
                     foreach (var connectorVm in selectedConns)
@@ -609,9 +619,10 @@ namespace ElectronicParts.ViewModels
 
                     this.SelectedNodes.Clear();
                     this.SelectedConntectors.Clear();
-                }, () =>
+                }, 
+                () =>
                 {
-                    foreach(var nodeVM in selectedNodeVms)
+                    foreach (var nodeVM in selectedNodeVms)
                     {
                         this.Nodes.Add(nodeVM);
                     }
@@ -620,23 +631,26 @@ namespace ElectronicParts.ViewModels
                     {
                         this.Connections.Add(connVM);
                     }
-                }));
-                
+                }));                
             });
 
-            this.AddInputPinsCommand = new RelayCommand(arg =>
+            this.AddInputPinsCommand = new RelayCommand(
+                arg =>
             {
-                var information = arg as Tuple<Type, int,NodeViewModel>;
+                var information = arg as Tuple<Type, int, NodeViewModel>;
                 var pins = this.pinCreatorService.CreatePins(information.Item1, information.Item2);
                 information.Item3.AddInputPins(pins);
-            }, arg => !this.executionService.IsEnabled);
+            }, 
+            arg => !this.executionService.IsEnabled);
 
-            this.AddOutputPinsCommand = new RelayCommand(arg =>
+            this.AddOutputPinsCommand = new RelayCommand(
+                arg =>
             {
                 var information = arg as Tuple<Type, int, NodeViewModel>;
                 var pins = this.pinCreatorService.CreatePins(information.Item1, information.Item2);
                 information.Item3.AddOutputPins(pins);
-            }, arg => !this.executionService.IsEnabled);
+            }, 
+            arg => !this.executionService.IsEnabled);
 
             this.Nodes = new ObservableCollection<NodeViewModel>();
             this.PreviewLines = new ObservableCollection<PreviewLineViewModel>() { new PreviewLineViewModel() };
@@ -674,9 +688,9 @@ namespace ElectronicParts.ViewModels
         public ICollection<NodeViewModel> SelectedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the selected conntectors.
+        /// Gets or sets the selected connectors.
         /// </summary>
-        /// <value>The selected conntectors.</value>
+        /// <value>The selected connectors.</value>
         public ICollection<ConnectorViewModel> SelectedConntectors { get; set; }
 
         /// <summary>
@@ -1171,8 +1185,8 @@ namespace ElectronicParts.ViewModels
         {
             await Task.Run(() =>
             {
-                this.ClearedConnections.Push(this.Connections.ToList());
-                this.ClearedNodes.Push(this.Nodes.ToList());
+                this.clearedConnections.Push(this.Connections.ToList());
+                this.clearedNodes.Push(this.Nodes.ToList());
 
                 foreach (var connectionVM in this.Connections)
                 {
@@ -1195,7 +1209,7 @@ namespace ElectronicParts.ViewModels
         {
             await Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                foreach (var nodeVM in this.ClearedNodes.Pop())
+                foreach (var nodeVM in this.clearedNodes.Pop())
                 {
                     this.Nodes.Add(nodeVM);
                 }
@@ -1205,7 +1219,7 @@ namespace ElectronicParts.ViewModels
 
             await Task.Run(() =>
             {
-                foreach (var connector in this.ClearedConnections.Pop())
+                foreach (var connector in this.clearedConnections.Pop())
                 {
                     this.pinConnectorService.TryConnectPins(connector.Input.Pin, connector.Output.Pin, out Connector newConnection, true);
 
@@ -1299,6 +1313,7 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <param name="pinList">The list of pins which are checked for possible connections.</param>
         /// <param name="selectedPin">The pin which was chosen for connection.</param>
+        /// <param name="checkExistingConnections">A value indicating if it should be checked if the pin already has other connections.</param>
         private void CheckPossibleConnections(IEnumerable<PinViewModel> pinList, IPin selectedPin, bool checkExistingConnections)
         {
             if (!(pinList is null))
@@ -1386,8 +1401,9 @@ namespace ElectronicParts.ViewModels
             connectionVM = null;
             connection = null;
 
+            Connector newConnection = default(Connector);
 
-            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out Connector newConnection, false))
+            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out newConnection, false))
             {
                 connection = newConnection;
                 connectionVM = new ConnectorViewModel(newConnection, input, output, this.DeleteConnectionCommand, this.connectorHelperService);
@@ -1415,11 +1431,22 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets all connectors which are fully included in the selected area.
+        /// </summary>
+        /// <param name="connectors">All current connections.</param>
+        /// <param name="pins">The pins of the selected area.</param>
+        /// <returns>All connectors which are fully included in the selected area.</returns>
         private IEnumerable<ConnectorViewModel> GetFullSelectedConnectors(IEnumerable<ConnectorViewModel> connectors, IEnumerable<PinViewModel> pins)
         {
             return connectors.Where(c => pins.Contains(c.Input) && pins.Contains(c.Output));
         }
 
+        /// <summary>
+        /// Adds <see cref="IDisplayableNode"/> and <see cref="Connector"/> instances to the view model.
+        /// </summary>
+        /// <param name="nodes">The nodes being added.</param>
+        /// <param name="connectors">The connectors being added.</param>
         private void AddItems(IEnumerable<IDisplayableNode> nodes, IEnumerable<Connector> connectors)
         {
             if (this.GetMousePosition is null)
@@ -1430,9 +1457,15 @@ namespace ElectronicParts.ViewModels
             this.AddItems(nodes, connectors, this.GetMousePosition());
         }
 
+        /// <summary>
+        /// Adds <see cref="IDisplayableNode"/> and <see cref="Connector"/> instances to the view model.
+        /// </summary>
+        /// <param name="nodes">The nodes being added.</param>
+        /// <param name="connectors">The connectors being added.</param>
+        /// <param name="mousePosition">The current mouse position.</param>
         private void AddItems(IEnumerable<IDisplayableNode> nodes, IEnumerable<Connector> connectors, Point mousePosition)
         {
-            var mostLeft = nodesToCopy.FirstOrDefault(n => n.Left == nodesToCopy.Min(nd => nd.Left));
+            var mostLeft = this.nodesToCopy.FirstOrDefault(n => n.Left == this.nodesToCopy.Min(nd => nd.Left));
             var minLeft = mostLeft?.Left ?? 0;
             var minTop = mostLeft?.Top ?? 0;
 
@@ -1454,12 +1487,23 @@ namespace ElectronicParts.ViewModels
             }
         }
 
+        /// <summary>
+        /// Creates a copy of <see cref="NodeViewModel"/> and <see cref="ConnectorViewModel"/> instances.
+        /// </summary>
+        /// <param name="nodes">The nodes being copied.</param>
+        /// <param name="connectors">The connectors being copied.</param>
         private void CopyItems(IEnumerable<NodeViewModel> nodes, IEnumerable<ConnectorViewModel> connectors)
         {
             this.nodesToCopy = nodes.ToList();
             this.nodeCopyService.InitializeCopyProcess(nodes.Select(vm => vm.Node), connectors.Select(vm => vm.Connector));
         }
 
+        /// <summary>
+        /// Gets the pin view model of a pin.
+        /// </summary>
+        /// <param name="nodes">The IEnumerable in which the pin view models are stored.</param>
+        /// <param name="pin">The pin being searched for.</param>
+        /// <returns>Either the view model of the pin being searched for or null.</returns>
         private PinViewModel GetPinViewModel(IEnumerable<NodeViewModel> nodes, IPin pin)
         {
             return nodes.SelectMany(n => n.Inputs.Concat(n.Outputs)).FirstOrDefault(p => p.Pin.Equals(pin));

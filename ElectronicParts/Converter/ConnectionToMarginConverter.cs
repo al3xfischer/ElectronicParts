@@ -23,8 +23,8 @@ namespace ElectronicParts.Converter
         /// <summary>
         /// Converts connection value to margins.
         /// </summary>
-        /// <param name="value">The value which is converted.</param>
-        /// <param name="targetTypes">The type of the value that is required.</param>
+        /// <param name="values">The value which is converted.</param>
+        /// <param name="targetType">The type of the value that is required.</param>
         /// <param name="parameter">A optional parameter used during the conversion.</param>
         /// <param name="culture">The culture info.</param>
         /// <returns>The converted margins.</returns>
