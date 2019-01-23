@@ -46,7 +46,7 @@ namespace ElectronicParts.Converter
                 left = inputLeft + (outputLeft - inputLeft) - 10;
             }
 
-            return new Thickness(left, outputTop + (inputTop - outputTop) / 2 - 20, 0, 0);
+            return new Thickness(left, outputTop + ((inputTop - outputTop) / 2) - 20, 0, 0);
         }
 
         /// <summary>

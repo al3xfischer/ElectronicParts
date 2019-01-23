@@ -66,13 +66,13 @@
     <Compile Include="Converter\GridSizeConverter.cs" />
     <Compile Include="Converter\PinToHeightConverter.cs" />
     <Compile Include="Converter\ValueColorConverter.cs" />
-    <Compile Include="EventArgs\StoppedEventArgs.cs" />
     <Compile Include="Converter\NameObserver.cs" />
     <Compile Include="Views\AddPins.xaml.cs">
       <DependentUpon>AddPins.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Connection.xaml.cs">
       <DependentUpon>Connection.xaml</DependentUpon>
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Views\Node.xaml.cs">
       <DependentUpon>Node.xaml</DependentUpon>
@@ -239,6 +239,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EventArgs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

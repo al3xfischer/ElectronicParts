@@ -1,23 +1,42 @@
-﻿using ElectronicParts.Services.Interfaces;
-using ElectronicParts.Services.Implementations;
-using ElectronicParts.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
-using GuiLabs.Undo;
+﻿// ***********************************************************************
+// Assembly         : ElectronicParts
+// Author           : 
+// ***********************************************************************
+// <copyright file="Container.cs" company="FHWN">
+//     Copyright ©  2019
+// </copyright>
+// <summary>Represents the Container class of the ElectronicParts programm</summary>
+// ***********************************************************************
 
 namespace ElectronicParts.DI
 {
+    using System;
+    using System.IO;
+    using ElectronicParts.Services.Implementations;
+    using ElectronicParts.Services.Interfaces;
+    using ElectronicParts.ViewModels;
+    using GuiLabs.Undo;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+
+    /// <summary>
+    /// Includes all services used in the application.
+    /// </summary>
     public static class Container
     {
+        /// <summary>
+        /// The provider for all services.
+        /// </summary>
         private static IServiceProvider provider;
 
+        /// <summary>
+        /// Initializes static members of the <see cref="Container"/> class.
+        /// </summary>
         static Container()
         {
             IServiceCollection services = new ServiceCollection();
 
-            /// ViewModels
+            // ViewModels
             services.AddTransient<MainViewModel>();
             services.AddTransient<PreferencesViewModel>();
 
@@ -43,7 +62,11 @@ namespace ElectronicParts.DI
             provider.GetService<ILoggerFactory>().AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logs/electronicparts.log"), minimumLevel: LogLevel.Trace, fileSizeLimitBytes: 1024 * 1024 * 3);
         }
 
-
+        /// <summary>
+        /// Gets an item out of the service provider.
+        /// </summary>
+        /// <typeparam name="TItem">The type of the wanted item.</typeparam>
+        /// <returns>The wanted item.</returns>
         public static TItem Resolve<TItem>()
         {
             return provider.GetService<TItem>();

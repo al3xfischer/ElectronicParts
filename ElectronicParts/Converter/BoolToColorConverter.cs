@@ -16,7 +16,7 @@ namespace ElectronicParts.Converter
     using System.Windows.Media;
 
     /// <summary>
-    /// Represents the BoolToColorConverter class of the ElectronicParts program.
+    /// Represents the <see cref="BoolToColorConverter"/> class of the ElectronicParts program.
     /// </summary>
     public class BoolToColorConverter : IValueConverter
     {
@@ -49,7 +49,7 @@ namespace ElectronicParts.Converter
         /// <param name="targetType">The type of the value that is required.</param>
         /// <param name="parameter">A optional parameter used during the conversion.</param>
         /// <param name="culture">The culture info.</param>
-        /// <returns>The converted bool.</returns>
+        /// <returns>The converted boolean.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

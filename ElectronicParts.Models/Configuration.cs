@@ -45,6 +45,9 @@ namespace ElectronicParts.Models
                     {
                         return !this.BoolRules.Any(rule => rule.Value == value);
                     }));
+
+            this.BoardHeight = 500;
+            this.BoardWidth = 500;
         }
 
         /// <summary>
