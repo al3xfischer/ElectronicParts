@@ -1,4 +1,13 @@
-﻿using System.Reflection;
+﻿// ***********************************************************************
+// Assembly         : ElectronicParts.Services
+// Author           : 
+// ***********************************************************************
+// <copyright file="AssemblyInfo.cs" company="FHWN">
+//     Copyright ©  2019
+// </copyright>
+// <summary>Represents the AssemblyInfo class of the ElectronicParts.Services project</summary>
+// ***********************************************************************
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 

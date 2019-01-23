@@ -36,7 +36,7 @@ namespace ElectronicParts.Services.Implementations
         bool TryRemoveConnection(Connector connectorToDelete);
 
         /// <summary>
-        /// Checks if the tow given pins could be connected to each other.
+        /// Checks if the two given pins can be connected to each other.
         /// </summary>
         /// <param name="inputPin">The input pin.</param>
         /// <param name="outputPin">The output pin.</param>
@@ -44,7 +44,7 @@ namespace ElectronicParts.Services.Implementations
         bool IsConnectable(IPin inputPin, IPin outputPin);
 
         /// <summary>
-        /// Adds a connection to the service.
+        /// Manually adds a connection to the service.
         /// </summary>
         /// <param name="connectionToAdd">The connection which will be added.</param>
         void ManuallyAddConnectionToExistingConnections(Connector connectionToAdd);

@@ -70,13 +70,15 @@ namespace ElectronicParts.ViewModels
         private readonly IGenericTypeComparerService genericTypeComparerService;
 
         /// <summary>
+        /// A service used to create copies of nodes and connectors.
+        /// </summary>
+        private readonly INodeCopyService nodeCopyService;
+
+        /// <summary>
         /// A service which is used for configurations.
         /// </summary>
         private readonly IConfigurationService configurationService;
 
-        /// <summary>
-        /// Represents the timer which is used to update the milliseconds per loop once every 2 seconds.
-        /// </summary>
         private readonly Timer updateMillisecondsPerLoopUpdateTimer;
 
         /// <summary>
@@ -88,6 +90,11 @@ namespace ElectronicParts.ViewModels
         /// Represents the Action manager which is used for redo/undo functionality.
         /// </summary>
         private readonly ActionManager actionManager;
+
+        /// <summary>
+        /// The copied node view models.
+        /// </summary>
+        private IEnumerable<NodeViewModel> nodesToCopy;
 
         /// <summary>
         /// A collection of all nodes on the board.
@@ -130,6 +137,16 @@ namespace ElectronicParts.ViewModels
         private string selectedCategory;
 
         /// <summary>
+        /// The cleared nodes.
+        /// </summary>
+        private Stack<IEnumerable<NodeViewModel>> ClearedNodes;
+
+        /// <summary>
+        /// The cleared connections.
+        /// </summary>
+        private Stack<IEnumerable<ConnectorViewModel>> ClearedConnections;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
         /// <param name="executionService">A service used for the execution of nodes.</param>
@@ -148,9 +165,10 @@ namespace ElectronicParts.ViewModels
             INodeSerializerService nodeSerializerService,
             ILogger<MainViewModel> logger,
             IConfigurationService configurationService,
-            IAssemblyNameExtractorService assemblyNameExtractorService, 
+            IAssemblyNameExtractorService assemblyNameExtractorService,
             ActionManager actionManager,
-            IGenericTypeComparerService genericTypeComparerService)
+            IGenericTypeComparerService genericTypeComparerService,
+            INodeCopyService nodeCopyService)
         {
             this.ClearedNodes = new Stack<IEnumerable<NodeViewModel>>();
             this.ClearedConnections = new Stack<IEnumerable<ConnectorViewModel>>();
@@ -163,7 +181,7 @@ namespace ElectronicParts.ViewModels
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.assemblyNameExtractorService = assemblyNameExtractorService ?? throw new ArgumentNullException(nameof(assemblyNameExtractorService));
             this.genericTypeComparerService = genericTypeComparerService;
-            
+            this.nodeCopyService = nodeCopyService ?? throw new ArgumentNullException(nameof(nodeCopyService));
             this.configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             this.updateMillisecondsPerLoopUpdateTimer = new Timer(2000);
             this.updateMillisecondsPerLoopUpdateTimer.Elapsed += this.UpdateMillisecondsPerLoopUpdateTimer_Elapsed;
@@ -183,7 +201,7 @@ namespace ElectronicParts.ViewModels
                 this.GridSize++;
                 this.reSnappingTimer.Stop();
                 this.reSnappingTimer.Start();
-            }, 
+            },
             arg => this.GridSize < 30);
 
             this.DecreaseGridSize = new RelayCommand(
@@ -192,7 +210,7 @@ namespace ElectronicParts.ViewModels
                 this.GridSize--;
                 this.reSnappingTimer.Stop();
                 this.reSnappingTimer.Start();
-            }, 
+            },
             arg => this.GridSize > 5);
 
             this.SaveCommand = new RelayCommand(arg =>
@@ -232,7 +250,9 @@ namespace ElectronicParts.ViewModels
 
             this.LoadCommand = new RelayCommand(arg =>
             {
-                this.actionManager.Clear();
+                this.actionManager?.Clear();
+                this.ClearedNodes?.Clear();
+                this.ClearedConnections?.Clear();
                 SnapShot snapShot = default(SnapShot);
 
                 try
@@ -337,7 +357,7 @@ namespace ElectronicParts.ViewModels
                 }
 
                 this.FirePropertyChanged(nameof(CanAddNode));
-            }, 
+            },
             arg => !this.executionService.IsEnabled);
 
             this.ExecutionStartLoopCommand = new RelayCommand(
@@ -345,7 +365,7 @@ namespace ElectronicParts.ViewModels
             {
                 var nodeList = this.Nodes.Select(nodeVM => nodeVM.Node);
                 await this.executionService.StartExecutionLoop(
-                    nodeList, 
+                    nodeList,
                     () =>
                 {
                     this.FirePropertyChanged(nameof(CanAddNode));
@@ -357,7 +377,7 @@ namespace ElectronicParts.ViewModels
                         }
                     });
                 });
-            }, 
+            },
             arg => !this.executionService.IsEnabled);
 
             this.ExecutionStopLoopCommand = new RelayCommand(
@@ -365,7 +385,7 @@ namespace ElectronicParts.ViewModels
             {
                 this.executionService.StopExecutionLoop();
                 this.FirePropertyChanged(nameof(CanAddNode));
-            }, 
+            },
             arg => this.executionService.IsEnabled);
 
             this.ResetAllConnectionsCommand = new RelayCommand(
@@ -387,7 +407,7 @@ namespace ElectronicParts.ViewModels
                 this.executionService.StopExecutionLoop();
                 await this.ResetAllConnections();
                 this.FirePropertyChanged(nameof(CanAddNode));
-            }, 
+            },
             arg => this.executionService.IsEnabled);
 
             this.InputPinCommand = new RelayCommand(
@@ -395,7 +415,7 @@ namespace ElectronicParts.ViewModels
             {
                 this.InputPin = arg as PinViewModel;
                 this.Connect(this.InputPin, this.OutputPin);
-            }, 
+            },
             arg => !this.executionService.IsEnabled);
 
             this.OutputPinCommand = new RelayCommand(
@@ -403,7 +423,7 @@ namespace ElectronicParts.ViewModels
             {
                 this.OutputPin = arg as PinViewModel;
                 this.Connect(this.InputPin, this.OutputPin);
-            }, 
+            },
             arg => !this.executionService.IsEnabled);
 
             this.DeleteConnectionCommand = new RelayCommand(
@@ -419,7 +439,7 @@ namespace ElectronicParts.ViewModels
                 this.pinConnectorService.TryRemoveConnection(connectionVm.Connector);
 
                 this.connections.Remove(connectionVm);
-            }, 
+            },
             arg => !this.executionService.IsEnabled);
 
             this.DeleteNodeCommand = new RelayCommand(
@@ -457,22 +477,22 @@ namespace ElectronicParts.ViewModels
                             this.Connections.Add(c);
                         });
                         this.Nodes.Add(nodeVm);
-                    })); 
-            }, 
+                    }));
+            },
             arg => !this.executionService.IsEnabled);
 
             this.UndoCommand = new RelayCommand(
                 arg =>
             {
                 this.actionManager.Undo();
-            }, 
+            },
             arg => this.actionManager.CanUndo && !this.executionService.IsEnabled);
 
             this.RedoCommand = new RelayCommand(
                 arg =>
             {
                 this.actionManager.Redo();
-            }, 
+            },
             arg => this.actionManager.CanRedo && !this.executionService.IsEnabled);
 
             this.ClearAllNodesCommand = new RelayCommand(
@@ -484,14 +504,14 @@ namespace ElectronicParts.ViewModels
                         async () => await this.ClearCanvas(),
                         async () => await this.UndoClearCanvas()));
                 }
-            }, 
+            },
             arg => !this.executionService.IsEnabled && this.Nodes.Count > 0);
 
             this.AddNodeCommand = new RelayCommand(
                 arg =>
             {
                 this.AddNode(arg as IDisplayableNode);
-            }, 
+            },
             arg => !this.executionService.IsEnabled);
 
             this.UpdateBoardSize = new RelayCommand(
@@ -503,10 +523,53 @@ namespace ElectronicParts.ViewModels
                 this.FirePropertyChanged(nameof(BoardWidth));
             });
 
+            this.CopyCommand = new RelayCommand(arg =>
+            {
+                var connectors = this.GetFullSelectedConnectors(this.SelectedConntectors, this.SelectedNodes.SelectMany(n => n.Inputs.Concat(n.Outputs)));
+                this.CopyItems(this.SelectedNodes, connectors);
+
+                this.SelectedNodes.Clear();
+                this.SelectedConntectors.Clear();
+            });
+
+            this.PasteCommand = new RelayCommand(async arg =>
+            {
+                await this.nodeCopyService.CopyTaskAwaiter();
+                this.AddItems(this.nodeCopyService.CopiedNodes, this.nodeCopyService.CopiedConnectors);
+                this.nodeCopyService.TryBeginCopyTask();
+            });
+
+            this.CutCommand = new RelayCommand(arg =>
+            {
+                // remove all connectors from UI
+                foreach (var connectorVm in this.SelectedConntectors)
+                {
+                    this.Connections.Remove(connectorVm);
+                }
+
+                // connections to be cut
+                var connectors = this.GetFullSelectedConnectors(this.SelectedConntectors, this.SelectedNodes.SelectMany(n => n.Inputs.Concat(n.Outputs)));
+                this.CopyItems(this.SelectedNodes, connectors);
+                foreach (var connectorVm in connectors)
+                {
+                    this.Connections.Remove(connectorVm);
+                }
+
+                foreach (var nodeVm in this.SelectedNodes)
+                {
+                    this.Nodes.Remove(nodeVm);
+                }
+
+                this.SelectedNodes.Clear();
+                this.SelectedConntectors.Clear();
+            });
+
             this.Nodes = new ObservableCollection<NodeViewModel>();
             this.PreviewLines = new ObservableCollection<PreviewLineViewModel>() { new PreviewLineViewModel() };
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
             this.Connections = new ObservableCollection<ConnectorViewModel>();
+            this.SelectedNodes = new List<NodeViewModel>();
+            this.SelectedConntectors = new List<ConnectorViewModel>();
             var reloadingTask = this.ReloadAssemblies();
             this.logger.LogInformation("Ctor MainVM done");
         }
@@ -528,6 +591,18 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <value>A collection of lines showing the preview of a connection. </value>
         public ObservableCollection<PreviewLineViewModel> PreviewLines { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the selected nodes.
+        /// </summary>
+        /// <value>The selected nodes.</value>
+        public ICollection<NodeViewModel> SelectedNodes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the selected conntectors.
+        /// </summary>
+        /// <value>The selected conntectors.</value>
+        public ICollection<ConnectorViewModel> SelectedConntectors { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether grid snapping is enabled or not.
@@ -832,6 +907,24 @@ namespace ElectronicParts.ViewModels
         public ICommand OutputPinCommand { get; }
 
         /// <summary>
+        /// Gets the copy command.
+        /// </summary>
+        /// <value>The copy command.</value>
+        public ICommand CopyCommand { get; }
+
+        /// <summary>
+        /// Gets the paste command.
+        /// </summary>
+        /// <value>The paste command.</value>
+        public ICommand PasteCommand { get; }
+
+        /// <summary>
+        /// Gets the cut command.
+        /// </summary>
+        /// <value>The cut command.</value>
+        public ICommand CutCommand { get; }
+
+        /// <summary>
         /// Gets or sets the amount of executions per second. 
         /// </summary>
         /// <value>The amount of executions per second. </value>
@@ -849,16 +942,10 @@ namespace ElectronicParts.ViewModels
         }
 
         /// <summary>
-        /// Gets or sets a stack of previously cleared nodes.
+        /// Gets or sets the get mouse position function.
         /// </summary>
-        /// <value>A stack of previously cleared nodes.</value>
-        private Stack<IEnumerable<NodeViewModel>> ClearedNodes { get; set; }
-
-        /// <summary>
-        /// Gets or sets a stack of previously cleared connections.
-        /// </summary>
-        /// <value>A stack of previously cleared connections.</value>
-        private Stack<IEnumerable<ConnectorViewModel>> ClearedConnections { get; set; }
+        /// <value>The get mouse position.</value>
+        public Func<Point> GetMousePosition { get; set; }
 
         /// <summary>
         /// Reloads all assemblies from the assembly folder.
@@ -1098,7 +1185,7 @@ namespace ElectronicParts.ViewModels
                 }
             });
         }
-        
+
         /// <summary>
         /// Checks all possible connection and marks them.
         /// </summary>
@@ -1170,9 +1257,8 @@ namespace ElectronicParts.ViewModels
             connectionVM = null;
             connection = null;
 
-            Connector newConnection;
 
-            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out newConnection, false))
+            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out Connector newConnection, false))
             {
                 connection = newConnection;
                 connectionVM = new ConnectorViewModel(newConnection, input, output, this.DeleteConnectionCommand);
@@ -1198,6 +1284,53 @@ namespace ElectronicParts.ViewModels
                     this.Connections.Remove(connectionVM);
                 }
             }
+        }
+
+        private IEnumerable<ConnectorViewModel> GetFullSelectedConnectors(IEnumerable<ConnectorViewModel> connectors, IEnumerable<PinViewModel> pins)
+        {
+            return connectors.Where(c => pins.Contains(c.Input) && pins.Contains(c.Output));
+        }
+
+        private void AddItems(IEnumerable<IDisplayableNode> nodes, IEnumerable<Connector> connectors)
+        {
+            var mousePosition = this.GetMousePosition?.Invoke();
+
+            if (mousePosition is null)
+            {
+                return;
+            }
+
+            var mostLeft = nodesToCopy.FirstOrDefault(n => n.Left == nodesToCopy.Min(nd => nd.Left));
+            var minLeft = mostLeft?.Left ?? 0;
+            var minTop = mostLeft?.Top ?? 0;
+
+            var nodeVms = nodes.Select(n => new NodeViewModel(n, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService)).ToArray();
+            for (int i = 0; i < nodeVms.Length; i++)
+            {
+                var nodeVm = nodeVms[i];
+                var originalVm = this.nodesToCopy.ElementAt(i);
+                nodeVm.Left = originalVm.Left - minLeft + (int)mousePosition.Value.X;
+                nodeVm.Top += originalVm.Top - minTop + (int)mousePosition.Value.Y;
+                this.Nodes.Add(nodeVm);
+            }
+
+            var connectorVms = connectors.Select(c => new ConnectorViewModel(c, this.GetPinViewModel(nodeVms, c.InputPin), this.GetPinViewModel(nodeVms, c.OutputPin), this.DeleteConnectionCommand));
+
+            foreach (var connectorVm in connectorVms)
+            {
+                this.Connections.Add(connectorVm);
+            }
+        }
+
+        private void CopyItems(IEnumerable<NodeViewModel> nodes, IEnumerable<ConnectorViewModel> connectors)
+        {
+            this.nodesToCopy = nodes.ToList();
+            this.nodeCopyService.InitializeCopyProcess(nodes.Select(vm => vm.Node), connectors.Select(vm => vm.Connector));
+        }
+
+        private PinViewModel GetPinViewModel(IEnumerable<NodeViewModel> nodes, IPin pin)
+        {
+            return nodes.SelectMany(n => n.Inputs.Concat(n.Outputs)).FirstOrDefault(p => p.Pin.Equals(pin));
         }
     }
 }

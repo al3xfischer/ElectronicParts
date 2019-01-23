@@ -7,7 +7,6 @@
 // </copyright>
 // <summary>Represents the IConfigurationService interface of the ElectronicParts programm</summary>
 // ***********************************************************************
-
 namespace ElectronicParts.Services.Interfaces
 {
     using ElectronicParts.Models;

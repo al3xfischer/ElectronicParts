@@ -1,42 +1,69 @@
-﻿using ElectronicParts.Models;
-using Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ElectronicParts.Services.Extensions;
-using ElectronicParts.Services.Interfaces;
-
+﻿// ***********************************************************************
+// Assembly         : ElectronicParts.Services
+// Author           : Kevin Janisch
+// ***********************************************************************
+// <copyright file="NodeCopyService.cs" company="FHWN">
+//     Copyright ©  2019
+// </copyright>
+// <summary>Represents the NodeCopyService class of the ElectronicParts.Services project</summary>
+// ***********************************************************************
 namespace ElectronicParts.Services.Implementations
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using ElectronicParts.Models;
+    using ElectronicParts.Services.Extensions;
+    using ElectronicParts.Services.Interfaces;
+    using Shared;
+
+    /// <summary>
+    /// Represents the <see cref="NodeCopyService"/> class of the ElectronicParts.Services application.
+    /// Implements the <see cref="ElectronicParts.Services.Interfaces.INodeCopyService" />
+    /// </summary>
+    /// <seealso cref="ElectronicParts.Services.Interfaces.INodeCopyService" />
     public class NodeCopyService : INodeCopyService
     {
-        private IEnumerable<IDisplayableNode> nodesToCopy;
-        private IEnumerable<Connector> connectorsToCopy;
-        private IEnumerable<IDisplayableNode> copiedNodes;
-        private IEnumerable<Connector> copiedConnectors;
+        /// <summary>
+        /// Represents the pin connector service.
+        /// </summary>
         private readonly IPinConnectorService connectorService;
-        private Task copyTask;
-
 
         /// <summary>
-        /// Gets the copied nodes.
+        /// Represents the connectors which are to be copied.
         /// </summary>
-        /// <value>The copied nodes.</value>
-        public IEnumerable<IDisplayableNode> CopiedNodes
+        private IEnumerable<Connector> connectorsToCopy;
+
+        /// <summary>
+        /// Represents the nodes which are to be copied.
+        /// </summary>
+        private IEnumerable<IDisplayableNode> nodesToCopy;
+
+        /// <summary>
+        /// Represents the connectors which were copied last.
+        /// </summary>
+        private IEnumerable<Connector> copiedConnectors;
+
+        /// <summary>
+        /// Represents the nodes which were copied last.
+        /// </summary>
+        private IEnumerable<IDisplayableNode> copiedNodes;
+
+        /// <summary>
+        /// Represents the currently running copy task.
+        /// </summary>
+        private Task copyTask;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NodeCopyService"/> class.
+        /// </summary>
+        /// <param name="connectorService">The connector service.</param>
+        /// <exception cref="ArgumentNullException">Gets throws if the injected <see cref="PinConnectorService"/> is null.</exception>
+        public NodeCopyService(IPinConnectorService connectorService)
         {
-            get
-            {
-                if (!this.copyTask.IsCompleted || this.copyTask is null)
-                {
-                    return Enumerable.Empty<IDisplayableNode>();
-                }
-
-                return this.CopiedNodes;
-            }
+            this.connectorService = connectorService ?? throw new ArgumentNullException(nameof(connectorService));
         }
-
 
         /// <summary>
         /// Gets the copied connectors.
@@ -46,24 +73,42 @@ namespace ElectronicParts.Services.Implementations
         {
             get
             {
-                if (!this.copyTask.IsCompleted || this.copyTask is null)
+                if (!this.copyTask?.IsCompleted == true)
                 {
                     return Enumerable.Empty<Connector>();
                 }
 
-                return this.CopiedConnectors;
+                return this.copiedConnectors;
             }
         }
 
+        /// <summary>
+        /// Gets the copied nodes.
+        /// </summary>
+        /// <value>The copied nodes.</value>
+        public IEnumerable<IDisplayableNode> CopiedNodes
+        {
+            get
+            {
+                if (!this.copyTask?.IsCompleted == true)
+                {
+                    return Enumerable.Empty<IDisplayableNode>();
+                }
+
+                return this.copiedNodes;
+            }
+        }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NodeCopyService"/> class.
+        /// This asynchronous method returns a Task which can be used to await the currently running copy process.
         /// </summary>
-        /// <param name="connectorService">The connector service.</param>
-        /// <exception cref="System.ArgumentNullException">connectorService</exception>
-        public NodeCopyService(IPinConnectorService connectorService)
+        /// <returns>Returns a task used for waiting for the copy process to finish without exposing the actual task.</returns>
+        public async Task CopyTaskAwaiter()
         {
-            this.connectorService = connectorService ?? throw new ArgumentNullException(nameof(connectorService));
+            if (!this.copyTask.IsCompleted && !(this.copyTask is null))
+            {
+                await this.copyTask;
+            }
         }
 
         /// <summary>
@@ -74,19 +119,18 @@ namespace ElectronicParts.Services.Implementations
         /// <param name="connectors">The connectors.</param>
         public void InitializeCopyProcess(IEnumerable<IDisplayableNode> nodes, IEnumerable<Connector> connectors)
         {
-            this.nodesToCopy = nodes;
-            this.connectorsToCopy = connectors;
-            this.TryBeginCopyTask();
+            this.nodesToCopy = nodes?.ToList() ?? throw new ArgumentNullException(nameof(nodes));
+            this.connectorsToCopy = connectors?.ToList() ?? throw new ArgumentNullException(nameof(connectors));
+            this.copyTask = this.MakeCopyAsync();
         }
-
 
         /// <summary>
         /// This Method tries to start a new CopyProcess.
         /// </summary>
-        /// <returns>true if there is no copyProces running at the moment and a new one has been successfully created, false otherwise.</returns>
+        /// <returns>true if there is no copyProcess running at the moment and a new one has been successfully created, false otherwise.</returns>
         public bool TryBeginCopyTask()
         {
-            if (this.copyTask.IsCompleted || this.copyTask is null)
+            if (this.copyTask?.IsCompleted == true)
             {
                 this.copyTask = this.MakeCopyAsync();
                 return true;
@@ -95,12 +139,11 @@ namespace ElectronicParts.Services.Implementations
             return false;
         }
 
-
         /// <summary>
-        /// This is a private task which contains the logic to create a full deep copy of all nodes suplied during initialization phase.
-        /// This task will also make all the necessary connection via the pinconnectorservice.
+        /// This is a private task which contains the logic to create a full deep copy of all nodes supplied during initialization phase.
+        /// This task will also make all the necessary connection via the <see cref="PinConnectorService"/>.
         /// </summary>
-        /// <returns>An awaitable Task.</returns>
+        /// <returns>An Task used to wait for the copy process to finish.</returns>
         private async Task MakeCopyAsync()
         {
             await Task.Run(() =>
@@ -121,26 +164,14 @@ namespace ElectronicParts.Services.Implementations
                 foreach (var connS in this.connectorsToCopy)
                 {
                     var inputSourceIndex = inputPinsSource.IndexOf(connS.InputPin);
-                    var outputSourceIndex = inputPinsSource.IndexOf(connS.InputPin);
+                    var outputSourceIndex = outputPinsSource.IndexOf(connS.OutputPin);
 
-                    this.connectorService.TryConnectPins(inputPinsDest.ElementAt(inputSourceIndex), outputPinsSource.ElementAt(outputSourceIndex), out Connector newConn, false);
+                    this.connectorService.TryConnectPins(inputPinsDest.ElementAt(inputSourceIndex), outputPinsDest.ElementAt(outputSourceIndex), out Connector newConn, false);
                     copiedConnectors.Add(newConn);
                 }
 
                 this.copiedConnectors = copiedConnectors;
             });
-        }
-
-        /// <summary>
-        /// This asynchronous method returns a Task which can be used to await the currently running copy process.
-        /// </summary>
-        /// <returns>Task.</returns>
-        public async Task CopyTaskAwaiter()
-        {
-            if (!this.copyTask.IsCompleted && !(this.copyTask is null))
-            {
-                await this.copyTask;
-            }
         }
     }
 }

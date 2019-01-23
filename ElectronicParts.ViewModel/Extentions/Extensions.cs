@@ -10,9 +10,11 @@
 
 namespace System
 {
-    using ElectronicParts.ViewModels;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
     using System.ComponentModel;
     using System.Linq;
 
@@ -35,51 +37,134 @@ namespace System
             }
 
             return new ObservableCollection<TValue>(values);
-        }        
+        }
 
+        /// <summary>
+        /// Rounds an <see cref="int"/> to the next given <see cref="int"/>.
+        /// </summary>
+        /// <param name="input">The <see cref="int"/> to be rounded.</param>
+        /// <param name="roundTo">The <see cref="int"/> the input gets rounded to.</param>
+        /// <returns>A rounded <see cref="int"/>.</returns>
         public static int RoundTo(this int input, int roundTo)
         {
-            return (int)Math.Round((double)input / roundTo) * roundTo;
+            return (int)((long)input).RoundTo(roundTo);
         }
 
+        /// <summary>
+        /// Rounds a <see cref="long"/> to the next given <see cref="int"/>.
+        /// </summary>
+        /// <param name="input">The <see cref="long"/> to be rounded.</param>
+        /// <param name="roundTo">The <see cref="int"/> the input gets rounded to.</param>
+        /// <returns>A rounded <see cref="long"/>.</returns>
         public static long RoundTo(this long input, int roundTo)
         {
-            return input.RoundTo(roundTo);
+            return (long)Math.Round((double)input / roundTo) * roundTo;
         }
 
+        /// <summary>
+        /// Rounds a <see cref="double"/> to the next given <see cref="int"/>.
+        /// </summary>
+        /// <param name="input">The <see cref="double"/> to be rounded.</param>
+        /// <param name="roundTo">The <see cref="int"/> the input gets rounded to.</param>
+        /// <returns>A rounded <see cref="double"/>.</returns>
         public static double RoundTo(this double input, int roundTo)
         {
-            return Math.Round(input / roundTo) * roundTo;
+            return ((long)input).RoundTo(roundTo);
         }
 
+        /// <summary>
+        /// Floors an <see cref="int"/> to the next given <see cref="int"/>.
+        /// </summary>
+        /// <param name="input">The <see cref="int"/> to be floored.</param>
+        /// <param name="floorTo">The <see cref="int"/> the input gets floored to.</param>
+        /// <returns>A floored <see cref="int"/>.</returns>
         public static int FloorTo(this int input, int floorTo)
         {
-            return (int)Math.Floor((double)input / floorTo) * floorTo;
+            return (int)((long)input).FloorTo(floorTo);
         }
 
+        /// <summary>
+        /// Floors a <see cref="long"/> to the next given <see cref="int"/>.
+        /// </summary>
+        /// <param name="input">The <see cref="long"/> to be floored.</param>
+        /// <param name="floorTo">The <see cref="int"/> the input gets floored to.</param>
+        /// <returns>A floored <see cref="long"/>.</returns>
         public static long FloorTo(this long input, int floorTo)
         {
-            return input.FloorTo(floorTo);
+            return (long)Math.Floor((double)input / floorTo) * floorTo;
         }
 
+        /// <summary>
+        /// Floors a <see cref="double"/> to the next given <see cref="int"/>.
+        /// </summary>
+        /// <param name="input">The <see cref="double"/> to be floored.</param>
+        /// <param name="floorTo">The <see cref="int"/> the input gets floored to.</param>
+        /// <returns>A floored <see cref="double"/>.</returns>
         public static double FloorTo(this double input, int floorTo)
         {
-            return Math.Floor(input / floorTo) * floorTo;
+            return ((long)input).FloorTo(floorTo);
         }
 
+        /// <summary>
+        /// Ceils an <see cref="int"/> to the next given <see cref="int"/>.
+        /// </summary>
+        /// <param name="input">The <see cref="int"/> to be ceiled.</param>
+        /// <param name="ceilingTo">The <see cref="int"/> the input gets ceiled to.</param>
+        /// <returns>A ceiled <see cref="int"/>.</returns>
         public static int CeilingTo(this int input, int ceilingTo)
         {
-            return (int)Math.Ceiling((double)input / ceilingTo) * ceilingTo;
+            return (int)((long)input).CeilingTo(ceilingTo);
         }
 
+        /// <summary>
+        /// Ceils a <see cref="long"/> to the next given <see cref="int"/>.
+        /// </summary>
+        /// <param name="input">The <see cref="long"/> to be ceiled.</param>
+        /// <param name="ceilingTo">The <see cref="int"/> the input gets ceiled to.</param>
+        /// <returns>A ceiled <see cref="long"/>.</returns>
         public static long CeilingTo(this long input, int ceilingTo)
         {
-            return input.CeilingTo(ceilingTo);
+            return (long)Math.Ceiling((double)input / ceilingTo) * ceilingTo;
         }
 
+        /// <summary>
+        /// Ceils a <see cref="double"/> to the next given <see cref="int"/>.
+        /// </summary>
+        /// <param name="input">The <see cref="double"/> to be ceiled.</param>
+        /// <param name="ceilingTo">The <see cref="int"/> the input gets ceiled to.</param>
+        /// <returns>A ceiled <see cref="double"/>.</returns>
         public static double CeilingTo(this double input, int ceilingTo)
         {
-            return Math.Ceiling(input / ceilingTo) * ceilingTo;
+            return ((long)input).CeilingTo(ceilingTo);
+        }
+
+        public static UIElement FindUid(this DependencyObject parent, string uid)
+        {
+            var count = VisualTreeHelper.GetChildrenCount(parent);
+
+            for (int i = 0; i < count; i++)
+            {
+                var el = VisualTreeHelper.GetChild(parent, i) as UIElement;
+                if (el == null) continue;
+
+                if (el.Uid == uid) return el;
+
+                el = el.FindUid(uid);
+                if (el != null) return el;
+            }
+
+            if (parent is ContentControl)
+            {
+                UIElement content = (parent as ContentControl).Content as UIElement;
+                if (content != null)
+                {
+                    if (content.Uid == uid) return content;
+
+                    var el = content.FindUid(uid);
+                    if (el != null) return el;
+                }
+            }
+            return null;
         }
     }
 }

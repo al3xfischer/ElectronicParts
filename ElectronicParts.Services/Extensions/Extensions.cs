@@ -1,22 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿// ***********************************************************************
+// Assembly         : ElectronicParts.Services
+// Author           : Kevin Janisch
+// ***********************************************************************
+// <copyright file="Extensions.cs" company="FHWN">
+//     Copyright ©  2019
+// </copyright>
+// <summary>Represents the Extensions class of the ElectronicParts.Services project</summary>
+// ***********************************************************************
 namespace ElectronicParts.Services.Extensions
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    /// <summary>
+    /// Represents the <see cref="Extensions"/> class of the ElectronicParts.Services application.
+    /// </summary>
     public static class Extensions
     {
-        public static int IndexOf<T>(this IEnumerable<T> obj, T value)
+        /// <summary>
+        /// Returns the index of a given object within an IEnumerable. Using the default EqualityComparer.
+        /// </summary>
+        /// <typeparam name="T">Represents the type of the value.</typeparam>
+        /// <param name="input">The input enumerable.</param>
+        /// <param name="value">The value to get the index of.</param>
+        /// <returns>The index of the value within the enumerable.</returns>
+        public static int IndexOf<T>(this IEnumerable<T> input, T value)
         {
-            return obj.IndexOf(value, null);
+            return input.IndexOf(value, null);
         }
 
-        public static int IndexOf<T>(this IEnumerable<T> obj, T value, IEqualityComparer<T> comparer)
+        /// <summary>
+        /// Returns the index of a given object within an IEnumerable. Using the default EqualityComparer.
+        /// </summary>
+        /// <typeparam name="T">Represents the type of the value.</typeparam>
+        /// <param name="input">The input enumerable.</param>
+        /// <param name="value">The value to get the index of.</param>
+        /// <param name="comparer">The comparer used for searching the value in the enumerable.</param>
+        /// <returns>The index of the value within the enumerable.</returns>
+        public static int IndexOf<T>(this IEnumerable<T> input, T value, IEqualityComparer<T> comparer)
         {
             comparer = comparer ?? EqualityComparer<T>.Default;
-            var found = obj
+            var found = input
                 .Select((a, i) => new { a, i })
                 .FirstOrDefault(x => comparer.Equals(x.a, value));
             return found == null ? -1 : found.i;

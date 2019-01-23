@@ -5,16 +5,16 @@
 // <copyright file="INodeCopyService.cs" company="FHWN">
 //     Copyright ©  2019
 // </copyright>
-
 // <summary>Represents the INodeCopyService class of the ElectronicParts.Services project</summary>
 // ***********************************************************************
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using ElectronicParts.Models;
-using Shared;
 
 namespace ElectronicParts.Services.Interfaces
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using ElectronicParts.Models;
+    using Shared;
+
     /// <summary>
     /// Represents the <see cref="INodeCopyService"/> interface.
     /// </summary>
@@ -33,9 +33,9 @@ namespace ElectronicParts.Services.Interfaces
         IEnumerable<IDisplayableNode> CopiedNodes { get; }
 
         /// <summary>
-        /// This asynchronous method returns a Task which can be used to await the currently running copy process.
+        /// Exposes a Task which can be used to await the currently running copyProcess.
         /// </summary>
-        /// <returns>Task.</returns>
+        /// <returns>A task which can be awaited.</returns>
         Task CopyTaskAwaiter();
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace ElectronicParts.Services.Interfaces
         /// <summary>
         /// This Method tries to start a new CopyProcess.
         /// </summary>
-        /// <returns>true if there is no copyProces running at the moment and a new one has been successfully created, false otherwise.</returns>
+        /// <returns>true if there is no copyProcess running at the moment and a new one has been successfully created, false otherwise.</returns>
         bool TryBeginCopyTask();
     }
 }

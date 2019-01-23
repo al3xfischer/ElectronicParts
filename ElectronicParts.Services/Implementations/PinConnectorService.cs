@@ -5,7 +5,6 @@
 // <copyright file="PinConnectorService.cs" company="FHWN">
 //     Copyright ©  2019
 // </copyright>
-
 // <summary>Represents the PinConnectorService class of the ElectronicParts programm</summary>
 // ***********************************************************************
 
@@ -17,16 +16,56 @@ namespace ElectronicParts.Services.Implementations
     using ElectronicParts.Models;
     using ElectronicParts.Services.Interfaces;
     using Shared;
-    
+
+    /// <summary>
+    /// Represents the <see cref="PinConnectorService"/> class of the ElectronicParts.Services application.
+    /// Implements the <see cref="ElectronicParts.Services.Implementations.IPinConnectorService" />
+    /// </summary>
+    /// <seealso cref="ElectronicParts.Services.Implementations.IPinConnectorService" />
     public class PinConnectorService : IPinConnectorService
     {
-        private readonly List<Connector> ExistingConnections;
+        /// <summary>
+        /// Represents the Existing connections.
+        /// </summary>
+        private readonly List<Connector> existingConnections;
+
+        /// <summary>
+        /// Represents the Type comparer service.
+        /// </summary>
         private readonly IGenericTypeComparerService typeComparerService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PinConnectorService"/> class.
+        /// </summary>
+        /// <param name="typeComparerService">The type comparer service.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if the injected <see cref="IGenericTypeComparerService"/> instance is null.</exception>
         public PinConnectorService(IGenericTypeComparerService typeComparerService)
         {
-            this.ExistingConnections = new List<Connector>();
+            this.existingConnections = new List<Connector>();
             this.typeComparerService = typeComparerService ?? throw new ArgumentNullException(nameof(typeComparerService));
+        }
+
+        /// <summary>
+        /// Determines whether the specified output is connectable.
+        /// </summary>
+        /// <param name="output">The output pin.</param>
+        /// <param name="input">The input pin.</param>
+        /// <returns>True if the specified output is connectable and otherwise, False.</returns>
+        public bool IsConnectable(IPin output, IPin input)
+        {
+            return this.typeComparerService.IsSameGenericType(input, output) && !this.existingConnections.Any(connection => connection.InputPin == input);
+        }
+
+        /// <summary>
+        /// Manually adds a connection to the service.
+        /// </summary>
+        /// <param name="connectionToAdd">The connection which will be added.</param>
+        public void ManuallyAddConnectionToExistingConnections(Connector connectionToAdd)
+        {
+            if (!this.existingConnections.Contains(connectionToAdd))
+            {
+                this.existingConnections.Add(connectionToAdd);
+            }
         }
 
         /// <summary>
@@ -35,7 +74,8 @@ namespace ElectronicParts.Services.Implementations
         /// <param name="inputPin">The input pin.</param>
         /// <param name="outputPin">The output pin.</param>
         /// <param name="newConnection">The new connection.</param>
-        /// <returns>true if connecting was successfull, false otherwise.</returns>
+        /// <param name="noConnectionInsertion">A value indicating whether the connection should be added to a collection or not.</param>
+        /// <returns>true if connecting was successful, false otherwise.</returns>
         public bool TryConnectPins(IPin inputPin, IPin outputPin, out Connector newConnection, bool noConnectionInsertion)
         {
             newConnection = null;
@@ -71,27 +111,28 @@ namespace ElectronicParts.Services.Implementations
                 newConnection = new Connector(inputPin, outputPin, outputPin.Value);
                 if (!noConnectionInsertion)
                 {
-                    this.ExistingConnections.Add(newConnection);
+                    this.existingConnections.Add(newConnection);
                 }
+
                 return true;
             }
-            // If the types of pins are not compatible an InvalidCastException gets thrown by the pin instance
             catch (InvalidCastException)
             {
+                // If the types of pins are not compatible an InvalidCastException gets thrown by the pin instance.
                 return false;
             }
         }
 
         /// <summary>
         /// Tries to remove an existing connection and sets the Value properties of both pins to null.
-        /// This way no further communication will happen;
+        /// This way no further communication will happen.
         /// </summary>
         /// <param name="connectorToDelete">Converts to delete.</param>
-        /// <returns>true if deletion was successfull, false otherwise.</returns>
+        /// <returns>true if deletion was successful, false otherwise.</returns>
         public bool TryRemoveConnection(Connector connectorToDelete)
         {
             // In this case the connector is faulty and we have nothing to delete
-            if (connectorToDelete is null || !this.ExistingConnections.Contains(connectorToDelete))
+            if (connectorToDelete is null || !this.existingConnections.Contains(connectorToDelete))
             {
                 return false;
             }
@@ -102,10 +143,15 @@ namespace ElectronicParts.Services.Implementations
                 return false;
             }
 
-            this.ExistingConnections.Remove(connectorToDelete);
+            this.existingConnections.Remove(connectorToDelete);
             return true;
         }
 
+        /// <summary>
+        /// Tries to reset the value of the pin.
+        /// </summary>
+        /// <param name="pin">Represents the pin.</param>
+        /// <returns>True if the operation was successful, false otherwise.</returns>
         private bool TryRefreshPinValue(IPin pin)
         {
             var pinType = pin.GetType();
@@ -122,19 +168,6 @@ namespace ElectronicParts.Services.Implementations
             pin.Value = (IValue)instance;
 
             return true;
-        }
-
-        public bool IsConnectable(IPin output, IPin input)
-        {
-            return this.typeComparerService.IsSameGenericType(input, output) && !this.ExistingConnections.Any(connection => connection.InputPin == input);
-        }
-
-        public void ManuallyAddConnectionToExistingConnections(Connector connectionToAdd)
-        {
-            if (!this.ExistingConnections.Contains(connectionToAdd))
-            {
-                this.ExistingConnections.Add(connectionToAdd);
-            }
         }
     }
 }
