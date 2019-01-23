@@ -425,8 +425,8 @@ namespace ElectronicParts.Views
         {
             PreviewLineViewModel previewLine = this.ViewModel.PreviewLines[0];
 
-            previewLine.PointOneX = this.ViewModel.InputPin.Left;
-            previewLine.PointOneY = this.ViewModel.InputPin.Top;
+            previewLine.PointOneX = pin.Left;
+            previewLine.PointOneY = pin.Top;
 
             previewLine.PointTwoX = mousePoint.X;
             previewLine.PointTwoY = mousePoint.Y;
