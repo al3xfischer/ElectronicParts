@@ -39,8 +39,8 @@ namespace ElectronicParts.Services.Implementations
         {
             newConnection = null;
 
-            // nullcheck returning false if one pin is null
-            if (inputPin is null || outputPin is null || !this.typeComparerService.IsSameGenericType(inputPin, outputPin))
+            // returning false if one pin is null or pins are not connectable.
+            if (inputPin is null || outputPin is null || !this.IsConnectable(outputPin, inputPin))
             {
                 return false;
             }
@@ -58,16 +58,6 @@ namespace ElectronicParts.Services.Implementations
             if (outputPin.Value is null)
             {
                 if (!this.TryRefreshPinValue(outputPin))
-                {
-                    return false;
-                }
-            }
-
-            // checking if the secondPin already has a connection
-            // if second pin has connection returning false.
-            foreach (var conn in this.ExistingConnections)
-            {
-                if (conn.InputPin == inputPin)
                 {
                     return false;
                 }
@@ -135,7 +125,7 @@ namespace ElectronicParts.Services.Implementations
 
         public bool IsConnectable(IPin output, IPin input)
         {
-            return this.typeComparerService.IsSameGenericType(input, output);
+            return this.typeComparerService.IsSameGenericType(input, output) && !this.ExistingConnections.Any(connection => connection.InputPin == input);
         }
 
         public void ManuallyAddConnectionToExistingConnections(Connector connectionToAdd)
