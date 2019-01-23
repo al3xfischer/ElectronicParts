@@ -5,8 +5,7 @@
 // <copyright file="IExecutionService.cs" company="FHWN">
 //     Copyright ©  2019
 // </copyright>
-
-// <summary>Represents the IExecutionService class of the ElectronicParts.Services programm</summary>
+// <summary>Represents the IExecutionService interface of the ElectronicParts programm</summary>
 // ***********************************************************************
 namespace ElectronicParts.Services.Interfaces
 {
@@ -21,28 +20,41 @@ namespace ElectronicParts.Services.Interfaces
     public interface IExecutionService
     {
         /// <summary>
-        /// Gets a value indicating whether this instance is enabled.
+        /// Is invoked when the <see cref="IsEnabled"/> value changes.
         /// </summary>
-        /// <value>true if this instance is enabled; otherwise, false.</value>
-        bool IsEnabled { get; }
-
         event EventHandler OnIsEnabledChanged;
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is enabled.
+        /// </summary>
+        /// <value>True if this instance is enabled; otherwise, false.</value>
+        bool IsEnabled { get; }        
+
+        /// <summary>
+        /// Gets or sets the amount of executions per second. 
+        /// </summary>
+        /// <value>The amount of executions per second. </value>
         int FramesPerSecond { get; set; }
+
+        /// <summary>
+        /// Gets the amount of time it took to complete a loop.
+        /// </summary>
+        /// <value>The amount of time it took to complete a loop.</value>
         long MillisecondsPerLoop { get; }
 
         /// <summary>
         /// Executes one step.
         /// </summary>
         /// <param name="nodes">The nodes.</param>
-        /// <returns>Task.</returns>
+        /// <returns>A await able task.</returns>
         Task ExecuteOnce(IEnumerable<INode> nodes);
 
         /// <summary>
         /// Starts the execution loop.
         /// </summary>
-        /// <param name="nodes">The nodes to simulate</param>
-        /// <returns>Task.</returns>
+        /// <param name="nodes">The nodes to simulate.</param>
+        /// <param name="callback">A callback method.</param>
+        /// <returns>A await able task.</returns>
         Task StartExecutionLoop(IEnumerable<INode> nodes, Action callback);
 
         /// <summary>

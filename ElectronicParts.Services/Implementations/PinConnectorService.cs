@@ -10,13 +10,12 @@
 // ***********************************************************************
 namespace ElectronicParts.Services.Implementations
 {
-    using Shared;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using ElectronicParts.Models;
     using ElectronicParts.Services.Interfaces;
-
+    using Shared;
+    
     public class PinConnectorService : IPinConnectorService
     {
         private readonly List<Connector> ExistingConnections;
