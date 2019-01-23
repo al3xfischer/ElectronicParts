@@ -15,8 +15,6 @@ namespace System
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
-    using System.ComponentModel;
-    using System.Linq;
 
     /// <summary>
     /// Includes extensions for the ElectronicParts program.
@@ -164,6 +162,7 @@ namespace System
                     if (el != null) return el;
                 }
             }
+
             return null;
         }
     }
