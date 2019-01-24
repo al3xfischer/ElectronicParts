@@ -78,7 +78,7 @@
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="HowTo Build Components" Command="{Binding ViewModel.HowToCommand}"/>
-                <MenuItem Header="User Manual"/>
+                <MenuItem Header="User Manual" Command="{Binding ViewModel.UserManualCommand}"/>
                 <MenuItem Header="About" Click="About_Click"/>
             </MenuItem>
         </Menu>
