@@ -26,9 +26,9 @@
         <!-- Input Pin -->
         <DataTemplate x:Key="InputPinTemplate">
             <StackPanel Margin="0">
-                <TextBox MaxLength="20" Width="25" FontSize="8" Margin="0" Height="13" Text="{Binding Pin.Label, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Path=Text, ElementName=pinLabel, UpdateSourceTrigger=PropertyChanged}" x:Name="pinLabel"/>
-                <Button HorizontalAlignment="Right" HorizontalContentAlignment="Right" Width="10" Height="5" Margin="0 0 0 1" Padding="0" BorderThickness="0" Background="Transparent" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
-                    <Border Height="3" Width="11" Padding="0" Background="{Binding CanBeConnected, Converter={StaticResource boolToColor}}" >
+                <TextBox Style="{x:Null}" MaxLength="20" Width="25" FontSize="8" Margin="0" Height="13" Text="{Binding Pin.Label, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Path=Text, ElementName=pinLabel, UpdateSourceTrigger=PropertyChanged}" x:Name="pinLabel"/>
+                <Button Style="{x:Null}" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Width="10" Height="5" Margin="0 0 0 1" Padding="0" BorderThickness="0" Background="Transparent" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
+                    <Border Style="{x:Null}" Cursor="Hand" Height="3" Width="11" Padding="0" Background="{Binding CanBeConnected, Converter={StaticResource boolToColor}}" >
                     </Border>
                 </Button>
             </StackPanel>
@@ -37,16 +37,16 @@
         <!-- Output Pin -->
         <DataTemplate x:Key="OutputPinTemplate">
             <StackPanel Margin="0">
-                <TextBox MaxLength="20" Width="25" FontSize="8" Margin="0" Height="13" Text="{Binding Pin.Label}" ToolTip="{Binding Path=Text, ElementName=pinLabel, UpdateSourceTrigger=PropertyChanged}" x:Name="pinLabel" />
-                <Button HorizontalAlignment="Left" HorizontalContentAlignment="Left" Width="10" Height="5" Margin="0 0 0 1" Padding="0" BorderThickness="0" Background="Transparent" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
-                    <Border Height="3" Width="11" Padding="0" Background="{Binding CanBeConnected, Converter={StaticResource boolToColor}}">
+                <TextBox Style="{x:Null}" MaxLength="20" Width="25" FontSize="8" Margin="0" Height="13" Text="{Binding Pin.Label}" ToolTip="{Binding Path=Text, ElementName=pinLabel, UpdateSourceTrigger=PropertyChanged}" x:Name="pinLabel" />
+                <Button Style="{x:Null}" Cursor="Hand" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Width="10" Height="5" Margin="0 0 0 1" Padding="0" BorderThickness="0" Background="Transparent" Command="{Binding ConnectCommand}" CommandParameter="{Binding}">
+                    <Border Style="{x:Null}"  Height="3" Width="11" Padding="0" Background="{Binding CanBeConnected, Converter={StaticResource boolToColor}}">
                     </Border>
                 </Button>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />

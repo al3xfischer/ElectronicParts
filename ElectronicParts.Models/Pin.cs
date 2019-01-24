@@ -17,6 +17,7 @@ namespace ElectronicParts.Models
     /// Represents the <see cref="Pin{T}"/> class.
     /// </summary>
     /// <typeparam name="T">The value type of the pin.</typeparam>
+    [Serializable]
     public class Pin<T> : IPinGeneric<T>
     {
         /// <summary>

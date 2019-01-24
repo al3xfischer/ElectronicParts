@@ -26,12 +26,14 @@ namespace ElectronicParts.Views
     using ElectronicParts.ViewModels;
     using Microsoft.Extensions.Logging;
     using Microsoft.Win32;
+    using MahApps.Metro.Controls;
     using Point = System.Windows.Point;
+
 
     /// <summary>
     /// Interaction logic for MainWindow.
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         /// <summary>
         /// The service used for the execution of nodes.
