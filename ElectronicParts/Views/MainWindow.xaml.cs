@@ -252,7 +252,7 @@ namespace ElectronicParts.Views
                 return HitTestFilterBehavior.ContinueSkipSelf;
             }
         }
-        
+
         /// <summary>
         /// Handles the hit test.
         /// </summary>
@@ -261,12 +261,14 @@ namespace ElectronicParts.Views
         private HitTestResultBehavior HitTestTesultHandler(HitTestResult result)
         {
             var dataContext = (result.VisualHit as FrameworkElement).DataContext;
+            var nodeViewModel = dataContext as NodeViewModel;
+            var connectorViewModel = dataContext as ConnectorViewModel;
 
-            if (dataContext is NodeViewModel nodeViewModel && !this.ViewModel.SelectedNodes.Contains(nodeViewModel))
+            if (!(nodeViewModel is null) && !this.ViewModel.SelectedNodes.Contains(nodeViewModel))
             {
                 this.ViewModel.SelectedNodes.Add(nodeViewModel);
             }
-            else if (dataContext is ConnectorViewModel connectorViewModel && !this.ViewModel.SelectedConntectors.Contains(connectorViewModel))
+            else if (!(connectorViewModel is null) && !this.ViewModel.SelectedConntectors.Contains(connectorViewModel))
             {
                 this.ViewModel.SelectedConntectors.Add(connectorViewModel);
             }
