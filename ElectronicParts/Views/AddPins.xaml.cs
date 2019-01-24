@@ -35,6 +35,7 @@ namespace ElectronicParts.Views
             this.DataContext = this;
             this.Types = new List<Type> { typeof(string), typeof(int), typeof(bool) };
             this.SelectedType = this.Types[2];
+            this.Amount = 1;
         }
 
         /// <summary>
