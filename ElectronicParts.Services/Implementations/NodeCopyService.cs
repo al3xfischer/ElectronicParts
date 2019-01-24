@@ -29,6 +29,10 @@ namespace ElectronicParts.Services.Implementations
         /// Represents the pin connector service.
         /// </summary>
         private readonly IPinConnectorService connectorService;
+
+        /// <summary>
+        /// The pin creator service.
+        /// </summary>
         private readonly IPinCreatorService pinCreatorService;
 
         /// <summary>
@@ -57,10 +61,15 @@ namespace ElectronicParts.Services.Implementations
         private Task copyTask;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NodeCopyService"/> class.
+        /// Initializes a new instance of the <see cref="NodeCopyService" /> class.
         /// </summary>
         /// <param name="connectorService">The connector service.</param>
-        /// <exception cref="ArgumentNullException">Gets throws if the injected <see cref="PinConnectorService"/> is null.</exception>
+        /// <param name="pinCreatorService">The pin creator service.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// ConnectorService
+        /// or
+        /// pinCreatorService.
+        /// </exception>
         public NodeCopyService(IPinConnectorService connectorService, IPinCreatorService pinCreatorService)
         {
             this.copiedConnectors = new List<Connector>();
@@ -182,7 +191,7 @@ namespace ElectronicParts.Services.Implementations
 
                     for (int j = newNode.Inputs.Count; j < nodesToCopy.ElementAt(i).Inputs.Count; j++)
                     {
-                        var newPin = this.pinCreatorService.CreatePin(nodesToCopy.ElementAt(i).Inputs.ElementAt(j).Value.Current.GetType());
+                        var newPin = this.pinCreatorService.CreatePin(node.Inputs.ElementAt(j).Value.Current.GetType());
                         newNode.Inputs.Add(newPin);
                     }
 

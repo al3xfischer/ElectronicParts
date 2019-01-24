@@ -87,7 +87,7 @@
         </Menu>
         <DockPanel LastChildFill="True">
             <Border DockPanel.Dock="Top" BorderBrush="DarkGray" BorderThickness="0 0 0 1.4">
-                <ComboBox Height="41" Margin="0 0 1 0" BorderThickness="0" ItemsSource="{Binding ViewModel.NodeCategories}" SelectedItem="{Binding ViewModel.SelectedCategory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <ComboBox VerticalContentAlignment="Center" Height="41" Margin="0 0 1 0" BorderThickness="0" ItemsSource="{Binding ViewModel.NodeCategories}" SelectedItem="{Binding ViewModel.SelectedCategory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <ComboBox.Effect>
                             <DropShadowEffect Opacity="0.4" ShadowDepth="1" BlurRadius="1" Direction="270" />
                     </ComboBox.Effect>
