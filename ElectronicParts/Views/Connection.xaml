@@ -11,25 +11,9 @@
 
     <UserControl.Resources>
         <converter:ValueColorConverter x:Key="valueToColor"/>
-        <converter:ConnectionToMarginConverter x:Key="ConnectionMarginConverter"/>
         <converter:IntToPointMulitConverter x:Key="IntToPointConverter"/>
     </UserControl.Resources>
     <Grid>
-        <!--<TextBlock x:Name="valueText" FontSize="10" Text="{Binding CurrentValue.Current}" MaxWidth="40" Height="15" IsHitTestVisible="False">
-            <TextBlock.Margin>
-                <MultiBinding>
-                    <MultiBinding.Converter>
-                        <converter:ConnectionToMarginConverter/>
-                    </MultiBinding.Converter>
-                    <Binding Path="Input.Left"></Binding>
-                    <Binding Path="Input.Top"></Binding>
-                    <Binding Path="Output.Left"></Binding>
-                    <Binding Path="Output.Top"></Binding>
-                    <Binding Path="CenterBottomPoint"></Binding>
-                    <Binding Path="CenterTopPoint"></Binding>
-                </MultiBinding>
-            </TextBlock.Margin>
-        </TextBlock>-->
         <Path Stroke="{Binding CurrentValue, Converter={StaticResource valueToColor} }" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
             <Path.Data>
                 <PathGeometry>
@@ -103,22 +87,5 @@
                 </PathGeometry>
             </Path.Data>
         </Path>
-        <!--<Path.Fill>
-            <VisualBrush >
-                <VisualBrush.Visual>
-                    <TextBlock Text="{Binding CurrentValue.Current}" Padding="1">
-                        <TextBlock.Foreground>
-                            <SolidColorBrush>
-                                <SolidColorBrush.Color>
-                                    <Color>Blue</Color>
-                                </SolidColorBrush.Color>
-                            </SolidColorBrush>
-                        </TextBlock.Foreground>
-                    </TextBlock>
-                </VisualBrush.Visual>
-            </VisualBrush>
-        </Path.Fill>-->
-
-        <!--<Line X1="{Binding Input.Left}" Y1="{Binding Input.Top}" X2="{Binding Output.Left}" Y2="{Binding Output.Top}" Stroke="{Binding CurrentValue, Converter={StaticResource valueToColor} }" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>-->
     </Grid>
 </UserControl>

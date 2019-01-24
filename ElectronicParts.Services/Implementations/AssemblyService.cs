@@ -107,7 +107,7 @@ namespace ElectronicParts.Services.Implementations
                     try
                     {
                         Assembly assembly;
-                        // Loading file into mainmemory and loading assembly. If there is a pdb file load that too
+                        //// Loading file into mainmemory and loading assembly. If there is a pdb file load that too
                         if (File.Exists(Path.Combine(file.DirectoryName, Path.GetFileNameWithoutExtension(file.Name) + ".pdb")))
                         {
                             assembly = Assembly.Load(File.ReadAllBytes(file.FullName), File.ReadAllBytes(Path.Combine(file.DirectoryName, Path.GetFileNameWithoutExtension(file.Name) + ".pdb")));
