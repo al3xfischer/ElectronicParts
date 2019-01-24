@@ -49,6 +49,7 @@
         <KeyBinding Key="C" Modifiers="Ctrl" Command="{Binding ViewModel.CopyCommand}"/>
         <KeyBinding Key="V" Modifiers="Ctrl" Command="{Binding ViewModel.PasteCommand}"/>
         <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding ViewModel.CutCommand}"/>
+        <KeyBinding Key="Delete" Command="{Binding ViewModel.DeleteCommand}"/>
     </Window.InputBindings>
 
     <DockPanel MouseRightButtonDown="DockPanel_MouseRightButtonDown">
@@ -72,6 +73,8 @@
                 <MenuItem Header="_Copy" Command="{Binding ViewModel.CopyCommand}" InputGestureText="Ctrl+C"/>
                 <MenuItem Header="_Paste" Command="{Binding ViewModel.PasteCommand}" InputGestureText="Ctrl+V"/>
                 <MenuItem Header="_Cut" Command="{Binding ViewModel.CutCommand}" InputGestureText="Ctrl+X"/>
+                <Separator/>
+                <MenuItem Header="_Delete" Command="{Binding ViewModel.DeleteCommand}" InputGestureText="Del"/>
             </MenuItem>
         </Menu>
         <DockPanel LastChildFill="True">
