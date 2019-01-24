@@ -93,7 +93,7 @@ namespace ElectronicParts.Components
 
             bool output = true;
 
-            foreach (var input in this.Inputs)
+            foreach (var input in this.Inputs.Where(input => input.Value.Current.GetType() == typeof(bool)))
             {
                 if (!(bool)input.Value.Current)
                 {

@@ -91,10 +91,7 @@ namespace ElectronicParts.Components
                 return;
             }
 
-            bool input1 = (bool)this.Inputs.ElementAt(0).Value.Current;
-            bool input2 = (bool)this.Inputs.ElementAt(1).Value.Current;
-
-            if ((input1 && !input2) || (!input1 && input2))
+            if (this.Inputs.Where(input => input.Value.Current.GetType() == typeof(bool) && (bool)input.Value.Current).Count() % 2 == 1)
             {
                 this.Outputs.ElementAt(0).Value.Current = true;
             }

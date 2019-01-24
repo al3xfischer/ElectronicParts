@@ -56,7 +56,11 @@ namespace ElectronicParts.Components
         public void Execute()
         {
             int newVal = random.Next(10);
-            this.Outputs.ElementAt(0).Value.Current = newVal;
+
+            foreach (var pin in this.Outputs.Where(output => output.Value.Current.GetType() == typeof(int)))
+            {
+                pin.Value.Current = newVal;
+            }
         }
     }
 }
