@@ -72,8 +72,8 @@ namespace ElectronicParts.Services.Implementations
                 var label = node.Label;
                 var description = node.Description;
 
-                node.PictureChanged += NodePictureChanged;
-                node.PictureChanged -= NodePictureChanged;
+                node.PictureChanged += this.NodePictureChanged;
+                node.PictureChanged -= this.NodePictureChanged;
             }
             catch (Exception ex)
             {
@@ -84,6 +84,11 @@ namespace ElectronicParts.Services.Implementations
             return true;
         }
 
+        /// <summary>
+        /// A method which is used to test the delegate subscription handling of a node before it is loaded.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         private void NodePictureChanged(object sender, EventArgs e)
         {
             return;

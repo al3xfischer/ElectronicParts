@@ -53,8 +53,10 @@ namespace ElectronicParts.ViewModels
         /// <param name="executionService">The execution service.</param>
         public PinViewModel(IPin pin, ICommand connectCommand, IExecutionService executionService)
         {
-            this.timer = new Timer();
-            this.timer.Interval = 10;
+            this.timer = new Timer
+            {
+                Interval = 10
+            };
             this.timer.Elapsed += (sender, e) => this.Refresh();
             this.Pin = pin ?? throw new ArgumentNullException(nameof(pin));
             this.ConnectCommand = connectCommand ?? throw new ArgumentNullException(nameof(connectCommand));

@@ -90,9 +90,6 @@ namespace ElectronicParts.Tests
             string s1 = display.Label;
             display.Execute();
             string s2 = display.Label;
-
-            var x = 0;
-            
         }
     }
 }
