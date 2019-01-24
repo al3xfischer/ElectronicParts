@@ -15,6 +15,7 @@ namespace ElectronicParts.ViewModels
     using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.Linq;
+    using System.Reflection;
     using System.Runtime.Serialization;
     using System.Threading.Tasks;
     using System.Timers;
@@ -697,6 +698,13 @@ namespace ElectronicParts.ViewModels
             }, 
             arg => !this.executionService.IsEnabled);
 
+            this.HowToCommand = new RelayCommand(
+                arg =>
+            {
+                var path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                Process.Start(System.IO.Path.Combine(path, @"Resources\ComponentsHandbook.pdf"));
+            });
+
             this.Nodes = new ObservableCollection<NodeViewModel>();
             this.PreviewLines = new ObservableCollection<PreviewLineViewModel>() { new PreviewLineViewModel() };
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
@@ -705,6 +713,26 @@ namespace ElectronicParts.ViewModels
             this.SelectedConntectors = new List<ConnectorViewModel>();
             var reloadingTask = this.ReloadAssemblies();
             this.connectorHelperService.ExistingNodes = this.Nodes.Select(nodeVM => nodeVM.Node);
+            this.connectorHelperService.ExistingConnections = this.Connections.Select(connVM => connVM.Connector);
+            this.connectorHelperService.GetHeightMapping = (pin) =>
+            {
+                var connectionVM = this.Connections.FirstOrDefault(connVM => connVM.Input.Pin == pin);
+
+                if (!(connectionVM is null))
+                {
+                    return connectionVM.Input.Top;
+                }
+                else
+                {
+                    connectionVM = this.Connections.FirstOrDefault(connVM => connVM.Output.Pin == pin);
+                    if (connectionVM is null)
+                    {
+                        return 0;
+                    }
+
+                    return connectionVM.Output.Top;
+                }
+            };
             this.logger.LogInformation("Ctor MainVM done");
         }
 
@@ -1075,6 +1103,12 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <value>The add output pins command.</value>
         public ICommand AddOutputPinsCommand { get; }
+
+        /// <summary>
+        /// Gets the command to open the HowTo pdf.
+        /// </summary>
+        /// <value>The command to open the HowTo pdf.</value>
+        public ICommand HowToCommand { get; }
 
         /// <summary>
         /// Gets or sets the amount of executions per second. 
