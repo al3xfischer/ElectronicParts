@@ -67,6 +67,7 @@
     <Compile Include="Converter\IntToPointMulitConverter.cs" />
     <Compile Include="Converter\PinToHeightConverter.cs" />
     <Compile Include="Converter\NameObserver.cs" />
+    <Compile Include="Converter\ValueColorConverter.cs" />
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
