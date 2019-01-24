@@ -43,7 +43,7 @@ namespace ElectronicParts.Components
 
         public void Execute()
         {
-            this.Outputs.ElementAt(0).Value.Current = this.BoolArrayToByteConverter(this.Inputs.Select(pin => (bool)pin.Value.Current));
+            this.Outputs.ElementAt(0).Value.Current = this.BoolArrayToByteConverter(this.Inputs.Select(pin => (bool)pin.Value.Current).Take(8));
         }
 
         private int BoolArrayToByteConverter(IEnumerable<bool> arr)

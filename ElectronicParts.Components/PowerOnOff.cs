@@ -98,7 +98,10 @@ namespace ElectronicParts.Components
         /// </summary>
         public void Activate()
         {
-            this.Outputs.ElementAt(0).Value.Current = !(bool)this.Outputs.ElementAt(0).Value.Current;
+            foreach (var output in this.Outputs.Where(output => output.Value.Current.GetType() == typeof(bool)))
+            {
+                output.Value.Current = !(bool)this.Outputs.ElementAt(0).Value.Current;
+            }
 
             this.PictureChanged?.Invoke(this, EventArgs.Empty);
         }
