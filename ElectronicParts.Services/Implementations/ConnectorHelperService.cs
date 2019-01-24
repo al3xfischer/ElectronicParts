@@ -18,26 +18,27 @@ namespace ElectronicParts.Services.Implementations
             return this.ExistingNodes.Any(node => node.Inputs.Contains(input) && node.Outputs.Contains(output));
         }
 
-        public double GetOffset(IPin input, IPin output)
+        public double GetOffset(IPin input, IPin output, out int pinCount)
         {
+            pinCount = 1;
+
             if (!this.IsSelfConnecting(input, output))
             {
                 return 0;
             }
 
             var containingNode = ExistingNodes.First(node => node.Inputs.Contains(input));
-            
+            pinCount = containingNode.Inputs.Count;
 
-            if (containingNode.Inputs.Count > containingNode.Outputs.Count)
+            if (pinCount > containingNode.Outputs.Count)
             {
-                if (containingNode.Inputs.IndexOf(input) < containingNode.Inputs.Count / 2)
+                if (containingNode.Inputs.IndexOf(input) < pinCount / 2)
                 {
-                    return -(containingNode.Inputs.Count + 1 - containingNode.Inputs.IndexOf(input) - 1) / 2.0;
+                    return -(pinCount + 1 - containingNode.Inputs.IndexOf(input) - 1) / 2.0;
                 }
 
                 else
                 {
-                    var x = containingNode.Inputs.IndexOf(input);
                     return containingNode.Inputs.IndexOf(input) / 2.0;
                 }
             }

@@ -54,8 +54,9 @@ namespace ElectronicParts.ViewModels
                 {
                     if (this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
                     {
-                        var offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin);
-                        return new Point(this.Input.Left - Math.Abs(offset) * 10, this.Input.Top + offset * 35);
+                        var offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount);
+                        var step = offset < 0 ? pinCount * -10 : pinCount * 10;
+                        return new Point(this.Input.Left - Math.Abs(offset) * 10, this.Input.Top + step);
                     }
                     return new Point(this.Input.Left, ((this.Input.Top + this.Output.Top)) / 2);
                 }
@@ -75,8 +76,9 @@ namespace ElectronicParts.ViewModels
                 {
                     if (this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
                     {
-                        var offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin);
-                        return new Point(this.Output.Left + Math.Abs(offset) * 10, this.Input.Top + offset * 35);
+                        var offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount);
+                        var step = offset < 0 ? pinCount * -10 : pinCount * 10;
+                        return new Point(this.Output.Left + Math.Abs(offset) * 10, this.Input.Top + step);
                     }
                     return new Point((this.Output.Left), (this.Input.Top + this.Output.Top) / 2);
                 }
@@ -94,7 +96,7 @@ namespace ElectronicParts.ViewModels
                     return new Point(this.Input.Left, this.Input.Top);
                 }
 
-                var offset = Math.Abs(this.helperService.GetOffset(this.Input.Pin, this.Output.Pin));
+                var offset = Math.Abs(this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount));
                 return new Point(this.Input.Left - offset * 10, this.Input.Top);
             }
         }
@@ -108,7 +110,7 @@ namespace ElectronicParts.ViewModels
                     return new Point(this.Output.Left, this.Output.Top);
                 }
 
-                var offset = Math.Abs(this.helperService.GetOffset(this.Input.Pin, this.Output.Pin));
+                var offset = Math.Abs(this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount));
                 return new Point(this.Output.Left + offset * 10, this.Output.Top);
             }
         }
