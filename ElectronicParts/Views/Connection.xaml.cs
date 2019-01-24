@@ -10,13 +10,9 @@
 
 namespace ElectronicParts.Views
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Windows;
+    using ElectronicParts.ViewModels;
+    using System.Timers;
     using System.Windows.Controls;
-    using System.Windows.Media;
-    using System.Windows.Shapes;
 
     /// <summary>
     /// Interaction logic for Connection.
@@ -29,6 +25,7 @@ namespace ElectronicParts.Views
         public Connection()
         {
             this.InitializeComponent();
+
         }
     }
 }

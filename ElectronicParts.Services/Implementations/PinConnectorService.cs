@@ -59,7 +59,7 @@ namespace ElectronicParts.Services.Implementations
         /// <summary>
         /// Determines whether the specified pin is involved in a connection.
         /// </summary>
-        /// <param name="pin">The pin.</param>
+        /// <param name="pin">The pin to be checked.</param>
         /// <returns>True if the specified pin has a connection and otherwise, False.</returns>
         public bool HasConnection(IPin pin)
         {

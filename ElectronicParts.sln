@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicParts", "Electron
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicParts.Services", "ElectronicParts.Services\ElectronicParts.Services.csproj", "{A1D0A7F5-2DD5-4BBC-9DEF-38B017072B5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicParts.Tests", "ElectronicParts.Tests\ElectronicParts.Tests.csproj", "{1556C8BD-6949-47CD-97B6-24ABFF7311D9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicParts.Models", "ElectronicParts.Models\ElectronicParts.Models.csproj", "{4294C9BE-14F0-4618-A5EC-F18A30B760FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{F90C9CBB-2FAA-4B3C-BB12-9D481EE86F19}"
@@ -31,10 +29,6 @@ Global
 		{A1D0A7F5-2DD5-4BBC-9DEF-38B017072B5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1D0A7F5-2DD5-4BBC-9DEF-38B017072B5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1D0A7F5-2DD5-4BBC-9DEF-38B017072B5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1556C8BD-6949-47CD-97B6-24ABFF7311D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1556C8BD-6949-47CD-97B6-24ABFF7311D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1556C8BD-6949-47CD-97B6-24ABFF7311D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1556C8BD-6949-47CD-97B6-24ABFF7311D9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4294C9BE-14F0-4618-A5EC-F18A30B760FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4294C9BE-14F0-4618-A5EC-F18A30B760FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4294C9BE-14F0-4618-A5EC-F18A30B760FB}.Release|Any CPU.ActiveCfg = Release|Any CPU

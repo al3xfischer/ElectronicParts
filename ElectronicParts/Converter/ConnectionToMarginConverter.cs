@@ -30,10 +30,32 @@ namespace ElectronicParts.Converter
         /// <returns>The converted margins.</returns>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
+            //    var leftPoint = (Point)values[0];
+            //    var rightPoint = (Point)values[1];
+            //    //var targetPoint = new Point();
+
+            //    //targetPoint.X = leftPoint.X > rightPoint.X ? leftPoint.X - rightPoint.X : rightPoint.X - leftPoint.X;
+            //    //targetPoint.Y = leftPoint.Y > rightPoint.Y ? leftPoint.Y - rightPoint.Y : rightPoint.Y - leftPoint.Y;
+            //    //targetPoint.X += Math.Min(leftPoint.X,rightPoint.X);
+            //    //targetPoint.Y += Math.Min(leftPoint.Y,rightPoint.Y);
+            //    //targetPoint.X += leftPoint.X;
+            //    //targetPoint.Y += leftPoint.Y;
+            //    //leftPoint.X += 60;
+            //    //leftPoint.Y -= 60;
+            //    //leftPoint.X += 20;
+            //    //leftPoint.Y += 20;
+            //    //return leftPoint;
+
+            //    var t = new Thickness(leftPoint.X + leftPoint.X / 4, leftPoint.Y + leftPoint.Y / 4, 0, 0);
+            //    return t;
+
             int inputLeft = (int)values[0];
             int inputTop = (int)values[1];
             int outputLeft = (int)values[2];
             int outputTop = (int)values[3];
+            Point bottomPoint = (Point)values[4];
+            Point topPoint = (Point)values[5];
+
 
             int left = 0;
 
@@ -46,7 +68,8 @@ namespace ElectronicParts.Converter
                 left = inputLeft + (outputLeft - inputLeft) - 10;
             }
 
-            return new Thickness(left, outputTop + ((inputTop - outputTop) / 2) - 20, 0, 0);
+            //return new Thickness(left, outputTop + ((inputTop - outputTop) / 2) - 20, 0, 0);
+            return new Thickness(bottomPoint.X, bottomPoint.Y - 20, 0, 0);
         }
 
         /// <summary>

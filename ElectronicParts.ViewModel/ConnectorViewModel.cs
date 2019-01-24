@@ -11,8 +11,8 @@ namespace ElectronicParts.ViewModels
     using System;
     using System.Windows;
     using System.Windows.Input;
-    using ElectronicParts.Services.Interfaces;
     using ElectronicParts.Models;
+    using ElectronicParts.Services.Interfaces;
     using Shared;
 
     /// <summary>
@@ -20,7 +20,11 @@ namespace ElectronicParts.ViewModels
     /// </summary>
     public class ConnectorViewModel : BaseViewModel
     {
-        private IConnectorHelperService helperService;
+        /// <summary>
+        /// The connector helper service.
+        /// </summary>
+        private readonly IConnectorHelperService helperService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectorViewModel"/> class.
         /// </summary>
@@ -28,9 +32,9 @@ namespace ElectronicParts.ViewModels
         /// <param name="input">The input pin as <see cref="PinViewModel"/>.</param>
         /// <param name="output">The output pin as <see cref="PinViewModel"/>.</param>
         /// <param name="deletionCommand">The <see cref="ICommand"/> to delete the connection.</param>
+        /// <param name="helperService">The <see cref="IConnectorHelperService"/> to manage connectors.</param>
         public ConnectorViewModel(Connector connector, PinViewModel input, PinViewModel output, ICommand deletionCommand, IConnectorHelperService helperService)
         {
-
             this.Connector = connector ?? throw new ArgumentNullException(nameof(connector));
             this.Input = input ?? throw new ArgumentNullException(nameof(input));
             this.Output = output ?? throw new ArgumentNullException(nameof(output));
@@ -56,10 +60,12 @@ namespace ElectronicParts.ViewModels
                     {
                         var offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount);
                         var step = offset < 0 ? pinCount * -10 : pinCount * 10;
-                        return new Point(this.Input.Left - Math.Abs(offset) * 10, this.Input.Top + step);
+                        return new Point(this.Input.Left - (Math.Abs(offset) * 10), this.Input.Top + step);
                     }
-                    return new Point(this.Input.Left, ((this.Input.Top + this.Output.Top)) / 2);
+
+                    return new Point(this.Input.Left, (this.Input.Top + this.Output.Top) / 2);
                 }
+
                 return new Point((this.Input.Left + this.Output.Left) / 2, this.Input.Top);
             }
         }
@@ -78,15 +84,20 @@ namespace ElectronicParts.ViewModels
                     {
                         var offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount);
                         var step = offset < 0 ? pinCount * -10 : pinCount * 10;
-                        return new Point(this.Output.Left + Math.Abs(offset) * 10, this.Input.Top + step);
+                        return new Point(this.Output.Left + (Math.Abs(offset) * 10), this.Input.Top + step);
                     }
-                    return new Point((this.Output.Left), (this.Input.Top + this.Output.Top) / 2);
+
+                    return new Point(this.Output.Left, (this.Input.Top + this.Output.Top) / 2);
                 }
 
                 return new Point((this.Input.Left + this.Output.Left) / 2, this.Output.Top);
             }
         }
 
+        /// <summary>
+        /// Gets the self connection input point.
+        /// </summary>
+        /// <value>The self connection input point.</value>
         public Point SelfConnectionInputPoint
         {
             get
@@ -97,10 +108,14 @@ namespace ElectronicParts.ViewModels
                 }
 
                 var offset = Math.Abs(this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount));
-                return new Point(this.Input.Left - offset * 10, this.Input.Top);
+                return new Point(this.Input.Left - (offset * 10), this.Input.Top);
             }
         }
 
+        /// <summary>
+        /// Gets the self connection output point.
+        /// </summary>
+        /// <value>The self connection output point.</value>
         public Point SelfConnectionOutputPoint
         {
             get
@@ -111,7 +126,7 @@ namespace ElectronicParts.ViewModels
                 }
 
                 var offset = Math.Abs(this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount));
-                return new Point(this.Output.Left + offset * 10, this.Output.Top);
+                return new Point(this.Output.Left + (offset * 10), this.Output.Top);
             }
         }
 

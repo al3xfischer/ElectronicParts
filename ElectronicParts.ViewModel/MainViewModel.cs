@@ -89,6 +89,9 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         private readonly Timer updateMillisecondsPerLoopUpdateTimer;
 
+        /// <summary>
+        /// A helper to manage <see cref="Connector"/>.
+        /// </summary>
         private readonly IConnectorHelperService connectorHelperService;
 
         /// <summary>
@@ -156,7 +159,6 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         private Stack<IEnumerable<ConnectorViewModel>> clearedConnections;
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel" /> class.
         /// </summary>
@@ -171,6 +173,7 @@ namespace ElectronicParts.ViewModels
         /// <param name="genericTypeComparerService">A service which checks if two classes implement the same generic types.</param>
         /// <param name="nodeCopyService">The node copy service.</param>
         /// <param name="pinCreatorService">The pin creator service.</param>
+        /// <param name="connectorHelperService">The connector helper service.</param>
         /// <exception cref="System.ArgumentNullException">
         /// ActionManager
         /// or
@@ -190,7 +193,9 @@ namespace ElectronicParts.ViewModels
         /// or
         /// pinCreatorService
         /// or
-        /// configurationService.
+        /// configurationService
+        /// or
+        /// connectorHelperService.
         /// </exception>
         public MainViewModel(
             IExecutionService executionService,
@@ -324,9 +329,11 @@ namespace ElectronicParts.ViewModels
 
                 foreach (NodeSnapShot node in snapShot.Nodes)
                 {
-                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService);
-                    nodeViewModel.Left = node.Position.X;
-                    nodeViewModel.Top = node.Position.Y;
+                    NodeViewModel nodeViewModel = new NodeViewModel(node.Node, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService)
+                    {
+                        Left = node.Position.X,
+                        Top = node.Position.Y
+                    };
 
                     nodes.Add(nodeViewModel);
                 }
@@ -582,7 +589,6 @@ namespace ElectronicParts.ViewModels
                 {
                     foreach (var node in copiedNodes)
                     {
-                        var x = this.Nodes.FirstOrDefault(nodeVM => nodeVM.Node == node);
                         this.Nodes.Remove(this.Nodes.FirstOrDefault(nodeVM => nodeVM.Node == node));
                     }
                 }));
@@ -1095,6 +1101,18 @@ namespace ElectronicParts.ViewModels
         }
 
         /// <summary>
+        /// Gets the connector view models connected to the <paramref name="nodeVms"/>.
+        /// </summary>
+        /// <param name="nodeVms">The node VMS.</param>
+        /// <param name="connectorVms">The connector VMS.</param>
+        /// <returns>All <see cref="ConnectorViewModel"/> connected to any <see cref="NodeViewModel"/>.</returns>
+        public IEnumerable<ConnectorViewModel> GetConnectorViewModels(IEnumerable<NodeViewModel> nodeVms, IEnumerable<ConnectorViewModel> connectorVms)
+        {
+            var pinVms = nodeVms.SelectMany(n => n.Inputs.Concat(n.Outputs));
+            return connectorVms.Where(c => pinVms.Contains(c.Input) || pinVms.Contains(c.Output));
+        }
+
+        /// <summary>
         /// Resets the marked possible connections.
         /// </summary>
         private void ResetPossibleConnections()
@@ -1186,9 +1204,11 @@ namespace ElectronicParts.ViewModels
             }
 
             var copy = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;
-            var vm = new NodeViewModel(copy, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService);
-            vm.Top = this.VerticalScrollerOffset + 20;
-            vm.Left = this.HorizontalScrollerOffset + 20;
+            var vm = new NodeViewModel(copy, this.DeleteNodeCommand, this.InputPinCommand, this.OutputPinCommand, this.executionService)
+            {
+                Top = this.VerticalScrollerOffset + 20,
+                Left = this.HorizontalScrollerOffset + 20
+            };
             this.actionManager.Execute(new CallMethodAction(() => this.Nodes.Add(vm), () => this.Nodes.Remove(vm)));
             vm.SnapToNewGrid(this.GridSize, false);
         }
@@ -1419,9 +1439,7 @@ namespace ElectronicParts.ViewModels
             connectionVM = null;
             connection = null;
 
-            Connector newConnection = default(Connector);
-
-            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out newConnection, false))
+            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out Connector newConnection, false))
             {
                 connection = newConnection;
                 connectionVM = new ConnectorViewModel(newConnection, input, output, this.DeleteConnectionCommand, this.connectorHelperService);
@@ -1525,18 +1543,6 @@ namespace ElectronicParts.ViewModels
         private PinViewModel GetPinViewModel(IEnumerable<NodeViewModel> nodes, IPin pin)
         {
             return nodes.SelectMany(n => n.Inputs.Concat(n.Outputs)).FirstOrDefault(p => p.Pin.Equals(pin));
-        }
-
-        /// <summary>
-        /// Gets the connector view models connected to the <paramref name="nodeVms"/>.
-        /// </summary>
-        /// <param name="nodeVms">The node VMS.</param>
-        /// <param name="connectorVms">The connector VMS.</param>
-        /// <returns>IEnumerable&lt;ConnectorViewModel&gt;.</returns>
-        public IEnumerable<ConnectorViewModel> GetConnectorViewModels(IEnumerable<NodeViewModel> nodeVms, IEnumerable<ConnectorViewModel> connectorVms)
-        {
-            var pinVms = nodes.SelectMany(n => n.Inputs.Concat(n.Outputs));
-            return connectorVms.Where(c => pinVms.Contains(c.Input) || pinVms.Contains(c.Output));
         }
     }
 }
