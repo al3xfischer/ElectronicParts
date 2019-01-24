@@ -512,6 +512,11 @@ namespace ElectronicParts.Views
             }
         }
 
+        /// <summary>
+        /// Opens a new 'About' window.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
         private void About_Click(object sender, RoutedEventArgs e)
         {
             new About().ShowDialog();
