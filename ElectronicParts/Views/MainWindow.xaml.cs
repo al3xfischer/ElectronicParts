@@ -511,5 +511,10 @@ namespace ElectronicParts.Views
                 }
             }
         }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            new About().ShowDialog();
+        }
     }
 }

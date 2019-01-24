@@ -69,6 +69,9 @@
     <Compile Include="Converter\PinToHeightConverter.cs" />
     <Compile Include="Converter\ValueColorConverter.cs" />
     <Compile Include="Converter\NameObserver.cs" />
+    <Compile Include="Views\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddPins.xaml.cs">
       <DependentUpon>AddPins.xaml</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
     <Compile Include="Views\PreviewLine.xaml.cs">
       <DependentUpon>PreviewLine.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddPins.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -244,6 +251,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="EventArgs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\EPLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
