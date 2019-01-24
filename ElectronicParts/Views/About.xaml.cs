@@ -9,6 +9,7 @@
 // ***********************************************************************
 namespace ElectronicParts.Views
 {
+    using System.Reflection;
     using System.Windows;
 
     /// <summary>
@@ -22,6 +23,8 @@ namespace ElectronicParts.Views
         public About()
         {
             this.InitializeComponent();
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            this.VersionTextBlock.Text = "Version: " + string.Join(".", version.Major.ToString(), version.MajorRevision.ToString());
         }
     }
 }

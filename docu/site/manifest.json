@@ -1,0 +1,1485 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/Silence/Informatik/Kevin/Semester3/TeamProjekt/ElectronicParts/docu",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.App.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.App.html",
+          "hash": "CyLTS/fy8L5vBPdacM+xog=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.AndGate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.AndGate.html",
+          "hash": "+w3O5C70dmz4TNFIFQH6/g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.BitToInteger.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.BitToInteger.html",
+          "hash": "owmijnVk8oQc31b5epSJZw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.BoolLed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.BoolLed.html",
+          "hash": "x8owkyA7DKS/mTwQUh6wEQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.EvilNull.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.EvilNull.html",
+          "hash": "sC5deU+cW9k742llrkBFrw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.IntInverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.IntInverter.html",
+          "hash": "0LMZ1obJ0Vbwl5cb2iESdQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.IntToString.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.IntToString.html",
+          "hash": "eabtMRrwzG4IMrCxMQXqJA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.IntegerAdder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.IntegerAdder.html",
+          "hash": "z7XKeacbosGoHm/AkzmXuw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.IntegerDisplay.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.IntegerDisplay.html",
+          "hash": "7Aciw1ZZUbFzRSzjsOhzVg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.IntegerSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.IntegerSource.html",
+          "hash": "sLwDg+6GC+P02Z86nI01SQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.Inverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.Inverter.html",
+          "hash": "CCIpg3FrMGYF9HVZD0SpRw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.MyValue-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.MyValue-1.html",
+          "hash": "BrLJSHDiigjmOzaDOlG55w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.OrGate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.OrGate.html",
+          "hash": "ANccV7j2q5NEc4+WzVfK9A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.Pin-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.Pin-1.html",
+          "hash": "Lv4YbPjVqwky4WkM08yfuQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.PowerOnOff.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.PowerOnOff.html",
+          "hash": "QSToF1Qf3s8rVwPtSsr0gA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.StringDisplay.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.StringDisplay.html",
+          "hash": "IRxMg6o8+tPerirtfzIJAg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.Switch.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.Switch.html",
+          "hash": "S+Idjq/4XeTSaEBE8GbesA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.Throwing.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.Throwing.html",
+          "hash": "vhpQ3dnB7ekjg8cgOffZmQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.Timer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.Timer.html",
+          "hash": "MvC8l4q5Omlx1RowdH7O2Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.XOrGate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.XOrGate.html",
+          "hash": "rPxNCgPOKl8h1zDR5UE8XQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Components.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Components.html",
+          "hash": "QozGM7OaARG+4cEvIlIvXQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Converter.BitmapToImageSourceConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Converter.BitmapToImageSourceConverter.html",
+          "hash": "c8Fd6Y3xHhUyfpui2FX7MA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Converter.BoolToColorConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Converter.BoolToColorConverter.html",
+          "hash": "VziaJhMuZ6YKYOFIVnWZEA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Converter.BooleanInvertConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Converter.BooleanInvertConverter.html",
+          "hash": "yi2f4hIANI9b9/gXAoOi7w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Converter.ConnectionToMarginConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Converter.ConnectionToMarginConverter.html",
+          "hash": "JyBTaYQsOJHTSP/1UVbtzA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Converter.GridSizeConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Converter.GridSizeConverter.html",
+          "hash": "Fqtc0psEDH2hq7GbSpFQQA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Converter.IntToPointMulitConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Converter.IntToPointMulitConverter.html",
+          "hash": "h+ky9cPbUeGcD/tjSgM8/g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Converter.NameObserver.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Converter.NameObserver.html",
+          "hash": "ZeKOepylmawTab1ILAVB4g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Converter.PinToHeightConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Converter.PinToHeightConverter.html",
+          "hash": "uI9/QvjPYtS2PfMlAeceMA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Converter.ValueColorConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Converter.ValueColorConverter.html",
+          "hash": "eKNxinSLnDF5HjgEhGxCCQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Converter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Converter.html",
+          "hash": "j2KYfZFNHPVfQl0G7qibWA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.DI.Container.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.DI.Container.html",
+          "hash": "c3mm153z2wZtPCMQ01sxPg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.DI.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.DI.html",
+          "hash": "/SdSp5O7TFhUWylWB+Xy3w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Models.Configuration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Models.Configuration.html",
+          "hash": "u2pK49IzDgJusF+zZGWfRg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Models.ConnectionSnapShot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Models.ConnectionSnapShot.html",
+          "hash": "djhlRLa4c1e5jKZTzXKiZQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Models.Connector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Models.Connector.html",
+          "hash": "IBE3aNDD46Agqv30rT/Itw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Models.NodeSnapShot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Models.NodeSnapShot.html",
+          "hash": "VnUU272MHJjZZkBPfSB+HQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Models.Pin-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Models.Pin-1.html",
+          "hash": "RVo2k/3Hb1y0TXhtPb+j2g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Models.PinSnapShot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Models.PinSnapShot.html",
+          "hash": "6XgI+2Xq+yo4kUe0EBtwuw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Models.Rule-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Models.Rule-1.html",
+          "hash": "ZIeCVwtpzILWQNLOKZblkg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Models.SnapShot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Models.SnapShot.html",
+          "hash": "r9A1hF9hnZYj64Alm2scqw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Models.Value-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Models.Value-1.html",
+          "hash": "RyU62p2s5/eGcn3Zeky0LQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Models.html",
+          "hash": "NyO1n7WCupTOEBv+yA28yw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Extensions.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Extensions.Extensions.html",
+          "hash": "fW7/2ct6KSOmfmP2RgKnVQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Extensions.html",
+          "hash": "XUHeDzcSOUk6drMpZR+IgQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.AssemblyBinder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.AssemblyBinder.html",
+          "hash": "vfV9doodvZF3O/j77ja+oA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.AssemblyNameExtractorService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.AssemblyNameExtractorService.html",
+          "hash": "GT3d08wwOW3u9uEDyzZbWw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.AssemblyService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.AssemblyService.html",
+          "hash": "G60C27phgfVdKnZ6Gq4G0A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.ConfigurationService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.ConfigurationService.html",
+          "hash": "xcnuyyRKde6H0v0xsuLCKQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.ConnectorHelperService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.ConnectorHelperService.html",
+          "hash": "iCbB6S4ey58mYAJc96fvsw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.ExecutionService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.ExecutionService.html",
+          "hash": "jV34nmIB9uXNORSOcAiwpg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.GenericTypeComparerService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.GenericTypeComparerService.html",
+          "hash": "l7WbAkvEGV/RCTwNBvY/bw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.IPinConnectorService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.IPinConnectorService.html",
+          "hash": "7LBKSIAEQYKcHNc3yVTUeQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.NodeCopyService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.NodeCopyService.html",
+          "hash": "XkXoCVujVOWZQI/ECTWNsw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.NodeSerializerService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.NodeSerializerService.html",
+          "hash": "nYSIBY2tMVemc6xwyhtMQw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.NodeValidationService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.NodeValidationService.html",
+          "hash": "2ruhwlHHHB+shynjyIfC2w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.PinConnectorService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.PinConnectorService.html",
+          "hash": "PTjDEpfLOPeP23GB/iVYEQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.PinCreatorService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.PinCreatorService.html",
+          "hash": "rH6gu0tryGHeqDVVY8O1hQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Implementations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Implementations.html",
+          "hash": "WiW3ZLoaU/VCb7aCvryTsA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Interfaces.IAssemblyNameExtractorService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Interfaces.IAssemblyNameExtractorService.html",
+          "hash": "/HJqytiZxl2rwACt5C0H5w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Interfaces.IAssemblyService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Interfaces.IAssemblyService.html",
+          "hash": "vvlLl2MwO4jcJ3faSfG0ZA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Interfaces.IConfigurationService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Interfaces.IConfigurationService.html",
+          "hash": "RmJJBxKy8WoZ+8p2r4bFyA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Interfaces.IConnectorHelperService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Interfaces.IConnectorHelperService.html",
+          "hash": "GVXQPNH7bFYV7mjKWJEstA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Interfaces.IExecutionService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Interfaces.IExecutionService.html",
+          "hash": "UnYjZm50awZ26IjmOSEogg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Interfaces.IGenericTypeComparerService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Interfaces.IGenericTypeComparerService.html",
+          "hash": "ImPgcCJkiNINr/RXpWLKzA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Interfaces.INodeCopyService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Interfaces.INodeCopyService.html",
+          "hash": "H7BKtxg5ZRJFpZJR7+QMLg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Interfaces.INodeSerializerService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Interfaces.INodeSerializerService.html",
+          "hash": "spW2hBpSFqM4IdYN4Tx/Nw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Interfaces.INodeValidationService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Interfaces.INodeValidationService.html",
+          "hash": "AayoW/uJLOdDeOm5cRLdcg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Interfaces.IPinCreatorService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Interfaces.IPinCreatorService.html",
+          "hash": "TlMnS20BWPglPSkk52bPUA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Services.Interfaces.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Services.Interfaces.html",
+          "hash": "ZoDyVlll8EdWizlmz9HDoQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Tests.AssemblyTest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Tests.AssemblyTest.html",
+          "hash": "ABVR2cwOAohWMHQyb042bg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Tests.BoolArrayToByteConverterTest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Tests.BoolArrayToByteConverterTest.html",
+          "hash": "xG92zmLtYnQjTCddj5w2sw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Tests.ComponentsTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Tests.ComponentsTests.html",
+          "hash": "DXhM8Qm7sigD3ucKSjtt6A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Tests.ExtensionsTest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Tests.ExtensionsTest.html",
+          "hash": "CnA7cFgw0oS6Y9bXIoceUA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Tests.PinConnectorTest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Tests.PinConnectorTest.html",
+          "hash": "r8REigisU+BVNT41pSFPWA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Tests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Tests.html",
+          "hash": "deQU7vY3MzoDuojQV2LhSQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.BaseViewModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.BaseViewModel.html",
+          "hash": "xwqvgiVOi+mEg9ojIFKzLQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.Commands.RelayCommand.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.Commands.RelayCommand.html",
+          "hash": "OB+U4MYV2eFXsHRkZOSbpA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.Commands.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.Commands.html",
+          "hash": "WqL1zYNvT7vR75RcoUmlcg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.ConnectorViewModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.ConnectorViewModel.html",
+          "hash": "wH3Hoe1wV3370MFBBEvHsw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.Converter.SnapShotConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.Converter.SnapShotConverter.html",
+          "hash": "hw46VeJJ0QlF16LfeKfEAg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.Converter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.Converter.html",
+          "hash": "zudDAe43weLWroIqyyd4DQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.MainViewModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.MainViewModel.html",
+          "hash": "sLXciNaKsezXQ8Frzg4NKw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.NodeViewModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.NodeViewModel.html",
+          "hash": "AkBO5nNgYDyP5XXDzkArUg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.PinViewModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.PinViewModel.html",
+          "hash": "8mYzXljSFyGPspuo+hp4lA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.PreferencesViewModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.PreferencesViewModel.html",
+          "hash": "/CAFgYEqcFgArV1a4l13mw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.PreviewLineViewModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.PreviewLineViewModel.html",
+          "hash": "Svx7d+28vzk19oYVpKqDXg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.RuleViewModel-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.RuleViewModel-1.html",
+          "hash": "B/nqIjbcsjYjdhdSn03ofA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.ViewModels.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.ViewModels.html",
+          "hash": "+JNiIGlXewv9eSIyEIoVHw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Views.About.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Views.About.html",
+          "hash": "Pal9kJWeP22V3c+22u7X6w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Views.AddPins.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Views.AddPins.html",
+          "hash": "8eJ4u1Nyj9qbqCFSKGyiAw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Views.Connection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Views.Connection.html",
+          "hash": "pFpL6jv35kcuv4Gq4/FS7w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Views.MainWindow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Views.MainWindow.html",
+          "hash": "OE9z6V3Hcy/3DaeFQXpOew=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Views.Node.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Views.Node.html",
+          "hash": "ZCCoKiOlPcMppuPqBB0Dlw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Views.NodeInformation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Views.NodeInformation.html",
+          "hash": "PavoJUsvHNKvmpZPpd8sDg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Views.Preferences.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Views.Preferences.html",
+          "hash": "hl8HVPsJ2X+KAUcCWNoDNw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Views.PreviewLine.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Views.PreviewLine.html",
+          "hash": "iSRfaWUtX1gT7JYaB0TVxw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.Views.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.Views.html",
+          "hash": "lLWcSYlba2ZZOV46uGTVjw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/ElectronicParts.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/ElectronicParts.html",
+          "hash": "wqG5cnq7G3QtjLn4Ibg3Kg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extensions.Class1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extensions.Class1.html",
+          "hash": "gGfnHftfIyFPCNaHagC3AQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extensions.html",
+          "hash": "GaesZmsIH/tao6bA5wbIqQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Shared.ExamplePin-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Shared.ExamplePin-1.html",
+          "hash": "U3UhErOcA5we/Oz8fs9T0Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Shared.ExampleValue-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Shared.ExampleValue-1.html",
+          "hash": "WxRuvQ+7o8DaHbJTljGzIA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Shared.IDisplayable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Shared.IDisplayable.html",
+          "hash": "53suoSeoEQ8mFH2eNhlsQg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Shared.IDisplayableNode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Shared.IDisplayableNode.html",
+          "hash": "AE9k3C1qbOWdoSFp2s/N5A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Shared.INode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Shared.INode.html",
+          "hash": "caNXFJsTau01eF5iH7crVw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Shared.IPin.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Shared.IPin.html",
+          "hash": "2caIP5j0Vxz/SFh8ICibpA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Shared.IPinGeneric-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Shared.IPinGeneric-1.html",
+          "hash": "14hOB0EBmdJrlD2MiOiH/A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Shared.IValue.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Shared.IValue.html",
+          "hash": "EuTJcwZavBRLwQWHtCl4yQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Shared.IValueGeneric-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Shared.IValueGeneric-1.html",
+          "hash": "sEkfUHlvFcPffJYZ0BEbXg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Shared.NodeType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Shared.NodeType.html",
+          "hash": "ljRD1n8j/su4jLqKNmEylw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Shared.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Shared.html",
+          "hash": "430diiRrBXjPbXjuulGIMg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/System.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/System.Extensions.html",
+          "hash": "MOSQGWDPYILrSUktWxDb0g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/System.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/System.html",
+          "hash": "WD/Q2zisanvTYJPRZKHbFQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "Ilumijeu+R4AfLBMWxEv3A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "qmhvn9ag/A5QXBQeA29YiA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "2tzE1JGN85e/+ODyyHDwhA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "t7iiFrmuYmrKWisdq+lN6Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "y/m2Y2QasMLe/skb6SY6+g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "k+/dkjFuwAVS32HduMpmBw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because config changed.",
+        "incrementalPhase": "build"
+      },
+      "processors": {
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build"
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build"
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build"
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing"
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
