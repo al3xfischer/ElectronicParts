@@ -175,6 +175,14 @@ namespace ElectronicParts.ViewModels
             this.FirePropertyChanged(nameof(this.CurrentValue));
         }
 
+        public void UpdateLine()
+        {
+            this.FirePropertyChanged(nameof(this.CenterBottomPoint));
+            this.FirePropertyChanged(nameof(this.CenterTopPoint));
+            this.FirePropertyChanged(nameof(this.SelfConnectionInputPoint));
+            this.FirePropertyChanged(nameof(this.SelfConnectionOutputPoint));
+        }
+
         /// <summary>
         /// This method is called when the input changes.
         /// </summary>

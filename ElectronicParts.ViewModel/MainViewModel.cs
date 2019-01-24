@@ -685,6 +685,22 @@ namespace ElectronicParts.ViewModels
                 var information = arg as Tuple<Type, int, NodeViewModel>;
                 var pins = this.pinCreatorService.CreatePins(information.Item1, information.Item2);
                 information.Item3.AddInputPins(pins);
+
+                foreach (var inPin in information.Item3.Inputs)
+                {
+                    foreach(var connectionVM in this.Connections.Where(cVM => cVM.Input == inPin))
+                    {
+                        connectionVM.UpdateLine();
+                    }
+                }
+
+                foreach (var outPin in information.Item3.Outputs)
+                {
+                    foreach (var connectionVM in this.Connections.Where(cVM => cVM.Output == outPin))
+                    {
+                        connectionVM.UpdateLine();
+                    }
+                }
             }, 
             arg => !this.executionService.IsEnabled);
 
@@ -694,6 +710,23 @@ namespace ElectronicParts.ViewModels
                 var information = arg as Tuple<Type, int, NodeViewModel>;
                 var pins = this.pinCreatorService.CreatePins(information.Item1, information.Item2);
                 information.Item3.AddOutputPins(pins);
+
+                foreach (var inPin in information.Item3.Inputs)
+                {
+                    foreach (var connectionVM in this.Connections.Where(cVM => cVM.Input == inPin))
+                    {
+                        connectionVM.UpdateLine();
+                    }
+                }
+
+                foreach (var outPin in information.Item3.Outputs)
+                {
+                    foreach (var connectionVM in this.Connections.Where(cVM => cVM.Output == outPin))
+                    {
+                        connectionVM.UpdateLine();
+                    }
+                }
+
             }, 
             arg => !this.executionService.IsEnabled);
 
