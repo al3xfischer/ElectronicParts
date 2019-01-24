@@ -47,12 +47,33 @@ namespace ElectronicParts.Services.Implementations
             {
                 node.Activate();
                 node.Execute();
-                var input = node.Inputs;
+                var inputs = node.Inputs;
+
+                foreach (var input in inputs)
+                {
+                    if (input is null)
+                    {
+                        throw new NullReferenceException(nameof(input));
+                    }
+                }
+
                 var outputs = node.Outputs;
+
+                foreach (var output in outputs)
+                {
+                    if (output is null)
+                    {
+                        throw new NullReferenceException(nameof(output));
+                    }
+                }
+
                 var picture = node.Picture;
                 var type = node.Type;
                 var label = node.Label;
                 var description = node.Description;
+
+                node.PictureChanged += NodePictureChanged;
+                node.PictureChanged -= NodePictureChanged;
             }
             catch (Exception ex)
             {
@@ -61,6 +82,11 @@ namespace ElectronicParts.Services.Implementations
             }
 
             return true;
+        }
+
+        private void NodePictureChanged(object sender, EventArgs e)
+        {
+            return;
         }
     }
 }

@@ -133,6 +133,12 @@ namespace ElectronicParts.Services.Implementations
             }
         }
 
+        public void RedoConnection(Connector connectionToAdd)
+        {
+            this.TryConnectPins(connectionToAdd.InputPin, connectionToAdd.OutputPin, out Connector newConnection, true);
+            this.ManuallyAddConnectionToExistingConnections(connectionToAdd);
+        }
+
         /// <summary>
         /// Tries to remove an existing connection and sets the Value properties of both pins to null.
         /// This way no further communication will happen.

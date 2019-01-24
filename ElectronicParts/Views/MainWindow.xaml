@@ -76,6 +76,11 @@
                 <Separator/>
                 <MenuItem Header="_Delete" Command="{Binding ViewModel.DeleteCommand}" InputGestureText="Del"/>
             </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="HowTo Build Components" Command="{Binding ViewModel.HowToCommand}"/>
+                <MenuItem Header="User Manual"/>
+                <MenuItem Header="About" Click="About_Click"/>
+            </MenuItem>
         </Menu>
         <DockPanel LastChildFill="True">
             <Border DockPanel.Dock="Top" BorderBrush="DarkGray" BorderThickness="0 0 0 1.4">

@@ -24,6 +24,10 @@ namespace ElectronicParts.Services.Interfaces
         /// </summary>
         /// <value>The existing nodes.</value>
         IEnumerable<IDisplayableNode> ExistingNodes { get; set; }
+        IEnumerable<Connector> ExistingConnections { get; set; }
+        Func<IPin, int> GetHeightMapping { get; set; }
+        int GetMultipleOutputOffset(IPin pin);
+        int MultipleConnectionsOffset(IPin outputPin, Connector con);
 
         /// <summary>
         /// Gets the offset for the specified <see cref="IPin"/>.

@@ -27,6 +27,8 @@ namespace ElectronicParts.Services.Implementations
         /// </summary>
         /// <value>The existing nodes.</value>
         public IEnumerable<IDisplayableNode> ExistingNodes { get; set; }
+        public IEnumerable<Connector> ExistingConnections { get; set; }
+        public Func<IPin, int> GetHeightMapping { get; set; }
 
         /// <summary>
         /// Determines whether two given <see cref="IPin" /> belong to the same <see cref="IDisplayableNode" />.
@@ -55,7 +57,7 @@ namespace ElectronicParts.Services.Implementations
                 return 0;
             }
 
-            var containingNode = this.ExistingNodes.First(node => node.Inputs.Contains(input));
+            var containingNode = this.GetContainingNode(input);
             pinCount = containingNode.Inputs.Count;
 
             if (pinCount > containingNode.Outputs.Count)
@@ -80,6 +82,43 @@ namespace ElectronicParts.Services.Implementations
                     return containingNode.Outputs.IndexOf(output) / 2.0;
                 }
             }
+        }
+
+        public int MultipleConnectionsOffset(IPin outputPin, Connector con)
+        {
+            var existingConnections = this.ExistingConnections.Where(conn => conn.OutputPin == outputPin);
+            var connectionsAmount = existingConnections.Count();
+            Dictionary<IPin, int> heightMapping = new Dictionary<IPin, int>();
+            foreach (var conn in existingConnections)
+            {
+                try
+                {
+                    heightMapping.Add(conn.InputPin, this.GetHeightMapping(conn.InputPin));
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
+            }
+
+            heightMapping = heightMapping.OrderBy(map => map.Value).ToDictionary(dict => dict.Key, dict => dict.Value);
+            return heightMapping.IndexOf(heightMapping.FirstOrDefault(pair => pair.Key == con.InputPin));
+        }
+
+        public int GetMultipleOutputOffset(IPin pin)
+        {
+            var x = this.GetContainingNode(pin);
+            return this.GetContainingNode(pin).Outputs.IndexOf(pin);
+        }
+
+        private int GetOutputPinAmount(IPin pin)
+        {
+            return this.GetContainingNode(pin).Outputs.Count;
+        }
+
+        private IDisplayableNode GetContainingNode(IPin pin)
+        {
+            return ExistingNodes.FirstOrDefault(node => node.Inputs.Contains(pin) || node.Outputs.Contains(pin));
         }
     }
 }
