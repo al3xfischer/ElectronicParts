@@ -18,8 +18,13 @@
     
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button Content="preferences"  Click="Preferences_Click"/>
-            <Button Command="{Binding ViewModel.DocumentationOnlineCommand}">
+            <Button Click="Preferences_Click" Cursor="Hand">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconModern Width="24" Height="24" Kind="Tools" />
+                    <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="preferences"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding ViewModel.DocumentationOnlineCommand}" Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconModern Width="24" Height="24" Kind="Book" />
                     <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Visit Documentation"/>
