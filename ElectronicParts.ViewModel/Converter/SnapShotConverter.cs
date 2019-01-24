@@ -33,7 +33,7 @@ namespace ElectronicParts.ViewModels.Converter
             foreach (NodeViewModel nodeVM in nodes)
             {
                 nodeVM.RemoveDelegate();
-                Point position = new Point(nodeVM.Left, nodeVM.Top);
+                Point position = new Point((int)nodeVM.Left, (int)nodeVM.Top);
 
                 nodeSnapShots.Add(new NodeSnapShot(nodeVM.Node, position));
             }

@@ -35,7 +35,7 @@
             <CollectionContainer Collection="{Binding  Source={StaticResource Nodes}}"/>
             <CollectionContainer Collection="{Binding  Source={StaticResource Connections}}"/>
             <CollectionContainer Collection="{Binding  Source={StaticResource PreviewLines}}"/>
-            <Rectangle Fill="LightBlue" Opacity="0.4"  x:Uid="selectRect" Visibility="Collapsed" />
+            <Rectangle Fill="LightBlue" Opacity="0.4"  x:Uid="selectRect" Visibility="Collapsed" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" MouseLeftButtonUp="Rectangle_MouseLeftButtonUp" Loaded="Rectangle_Loaded" />
         </CompositeCollection>
 
     </Window.Resources>

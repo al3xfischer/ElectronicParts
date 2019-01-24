@@ -43,12 +43,12 @@ namespace ElectronicParts.ViewModels
         /// <summary>
         /// Contains the left value of the node.
         /// </summary>
-        private int left;
+        private double left;
 
         /// <summary>
         /// Contains the top value of the node.
         /// </summary>
-        private int top;
+        private double top;
 
         /// <summary>
         /// Contains the width value of the node.
@@ -166,7 +166,7 @@ namespace ElectronicParts.ViewModels
         /// Gets or sets the left of the node.
         /// </summary>
         /// <value >The left of the node.</value>
-        public int Left
+        public double Left
         {
             get => this.left;
 
@@ -181,15 +181,15 @@ namespace ElectronicParts.ViewModels
                     this.Set(ref this.left, value);
                 }
 
-                this.UpdateLeft(this.Inputs, this.left + 16);
+                this.UpdateLeft(this.Inputs, (int)this.left + 16);
 
                 if (this.Inputs is null || this.Inputs.Count == 0)
                 {
-                    this.UpdateLeft(this.Outputs, this.Left + this.Width + 12);
+                    this.UpdateLeft(this.Outputs, (int)this.Left + this.Width + 12);
                 }
                 else
                 {
-                    this.UpdateLeft(this.Outputs, this.Left + this.Width + 36);
+                    this.UpdateLeft(this.Outputs, (int)this.Left + this.Width + 36);
                 }
             }
         }
@@ -229,7 +229,7 @@ namespace ElectronicParts.ViewModels
         /// Gets or sets the top of the node.
         /// </summary>
         /// <value >The top of the node.</value>
-        public int Top
+        public double Top
         {
             get => this.top;
 
@@ -244,8 +244,8 @@ namespace ElectronicParts.ViewModels
                     this.Set(ref this.top, value);
                 }
 
-                this.UpdateTop(this.Inputs?.Select((p, i) => Tuple.Create(p, i)), this.Top);
-                this.UpdateTop(this.Outputs?.Select((p, i) => Tuple.Create(p, i)), this.Top);
+                this.UpdateTop(this.Inputs?.Select((p, i) => Tuple.Create(p, i)), (int)this.Top);
+                this.UpdateTop(this.Outputs?.Select((p, i) => Tuple.Create(p, i)), (int)this.Top);
             }
         }
 
@@ -413,11 +413,11 @@ namespace ElectronicParts.ViewModels
         {
             if (this.Inputs is null || this.Inputs.Count == 0)
             {
-                this.UpdateLeft(this.Outputs, this.Left + this.Width + 13);
+                this.UpdateLeft(this.Outputs, (int)this.Left + this.Width + 13);
             }
             else
             {
-                this.UpdateLeft(this.Outputs, this.Left + this.Width + 23);
+                this.UpdateLeft(this.Outputs, (int)this.Left + this.Width + 23);
             }
         }
 
