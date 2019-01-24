@@ -567,9 +567,6 @@ namespace ElectronicParts.ViewModels
             {
                 var connectors = this.GetFullSelectedConnectors(this.SelectedConntectors, this.SelectedNodes.SelectMany(n => n.Inputs.Concat(n.Outputs)));
                 this.CopyItems(this.SelectedNodes, connectors);
-
-                this.SelectedNodes.Clear();
-                this.SelectedConntectors.Clear();
             });
 
             this.PasteCommand = new RelayCommand(
@@ -628,9 +625,6 @@ namespace ElectronicParts.ViewModels
                     {
                         this.Nodes.Remove(nodeVm);
                     }
-
-                    this.SelectedNodes.Clear();
-                    this.SelectedConntectors.Clear();
                 }, 
                 () =>
                 {
@@ -1019,6 +1013,10 @@ namespace ElectronicParts.ViewModels
         /// <value>The paste command.</value>
         public ICommand PasteCommand { get; }
 
+        /// <summary>
+        /// Gets the delete command.
+        /// </summary>
+        /// <value>The delete command.</value>
         public ICommand DeleteCommand { get; }
 
         /// <summary>

@@ -306,6 +306,9 @@ namespace ElectronicParts.Views
                 return;
             }
 
+            this.ViewModel.SelectedNodes.Clear();
+            this.ViewModel.SelectedConntectors.Clear();
+
             if (this.selectionRectangle.Visibility == Visibility.Collapsed && e.LeftButton == MouseButtonState.Pressed)
             {
                 this.isDragging = true;
