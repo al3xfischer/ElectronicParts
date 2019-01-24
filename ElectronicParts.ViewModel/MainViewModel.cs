@@ -567,9 +567,6 @@ namespace ElectronicParts.ViewModels
             {
                 var connectors = this.GetFullSelectedConnectors(this.SelectedConntectors, this.SelectedNodes.SelectMany(n => n.Inputs.Concat(n.Outputs)));
                 this.CopyItems(this.SelectedNodes, connectors);
-
-                this.SelectedNodes.Clear();
-                this.SelectedConntectors.Clear();
             });
 
             this.PasteCommand = new RelayCommand(
@@ -590,8 +587,20 @@ namespace ElectronicParts.ViewModels
                     }
                 }));
                 this.nodeCopyService.TryBeginCopyTask();
+
+                this.RepositionNodes();
             }, 
             arg => this.nodeCopyService.IsInitialized && this.nodeCopyService.CopiedNodes?.Count() > 0);
+
+            this.DeleteCommand = new RelayCommand(arg => 
+            {
+                foreach (var node in this.SelectedNodes)
+                {
+                    this.DeleteNodeCommand.Execute(node);
+                }
+
+                this.SelectedNodes.Clear();
+            });
 
             this.CutCommand = new RelayCommand(
                 arg =>
@@ -605,7 +614,7 @@ namespace ElectronicParts.ViewModels
                     // remove all connectors from UI
                     foreach (var connectorVm in selectedConns)
                     {
-                        this.Connections.Remove(connectorVm);
+                        this.RemoveConnection(connectorVm, connectorVm.Connector);
                     }
 
                     // connections to be cut
@@ -616,9 +625,6 @@ namespace ElectronicParts.ViewModels
                     {
                         this.Nodes.Remove(nodeVm);
                     }
-
-                    this.SelectedNodes.Clear();
-                    this.SelectedConntectors.Clear();
                 }, 
                 () =>
                 {
@@ -1008,6 +1014,12 @@ namespace ElectronicParts.ViewModels
         public ICommand PasteCommand { get; }
 
         /// <summary>
+        /// Gets the delete command.
+        /// </summary>
+        /// <value>The delete command.</value>
+        public ICommand DeleteCommand { get; }
+
+        /// <summary>
         /// Gets the cut command.
         /// </summary>
         /// <value>The cut command.</value>
@@ -1318,6 +1330,8 @@ namespace ElectronicParts.ViewModels
         {
             if (!(pinList is null) && !(pinList.GetEnumerator() is null))
             {
+                var xx = pinList.ToList();
+
                 foreach (var pin in pinList)
                 {
                     if (checkExistingConnections)
@@ -1373,7 +1387,7 @@ namespace ElectronicParts.ViewModels
                 }
                 else
                 {
-                    this.CheckPossibleConnections(this.nodes.SelectMany(node => node.Outputs), this.InputPin.Pin, false);
+                    this.CheckPossibleConnections(this.nodes.Where(node => !(node.Outputs is null)).SelectMany(node => node.Outputs), this.InputPin.Pin, false);
                     PreviewLineViewModel previewLineViewModel = this.PreviewLines[0];
                     previewLineViewModel.PointOneX = this.InputPin.Left;
                     previewLineViewModel.PointOneY = this.InputPin.Top;
@@ -1382,7 +1396,7 @@ namespace ElectronicParts.ViewModels
 
             if (!(this.OutputPin is null))
             {
-                this.CheckPossibleConnections(this.nodes.SelectMany(node => node.Inputs), this.OutputPin.Pin, true);
+                this.CheckPossibleConnections(this.nodes.Where(node => !(node.Inputs is null)).SelectMany(node => node.Inputs), this.OutputPin.Pin, true);
                 PreviewLineViewModel previewLineViewModel = this.PreviewLines[0];
                 previewLineViewModel.PointOneX = this.OutputPin.Left;
                 previewLineViewModel.PointOneY = this.OutputPin.Top;

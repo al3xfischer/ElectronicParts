@@ -288,6 +288,11 @@ namespace ElectronicParts.ViewModels
         /// <param name="pins">The input pins.</param>
         public void AddInputPins(IEnumerable<IPin> pins)
         {
+            if (this.Inputs is null)
+            {
+                return;
+            }
+
             foreach (var pin in pins)
             {
                 this.Inputs.Add(new PinViewModel(pin, this.inputPinCommand, this.executionService));
@@ -305,6 +310,11 @@ namespace ElectronicParts.ViewModels
         /// <param name="pins">The output pins.</param>
         public void AddOutputPins(IEnumerable<IPin> pins)
         {
+            if (this.Outputs is null)
+            {
+                return;
+            }
+
             foreach (var pin in pins)
             {
                 this.Outputs.Add(new PinViewModel(pin, this.outputPinCommand, this.executionService));
