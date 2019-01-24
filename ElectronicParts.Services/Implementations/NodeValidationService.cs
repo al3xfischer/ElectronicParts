@@ -53,6 +53,9 @@ namespace ElectronicParts.Services.Implementations
                 var type = node.Type;
                 var label = node.Label;
                 var description = node.Description;
+
+                node.PictureChanged += NodePictureChanged;
+                node.PictureChanged -= NodePictureChanged;
             }
             catch (Exception ex)
             {
@@ -61,6 +64,11 @@ namespace ElectronicParts.Services.Implementations
             }
 
             return true;
+        }
+
+        private void NodePictureChanged(object sender, EventArgs e)
+        {
+            return;
         }
     }
 }
