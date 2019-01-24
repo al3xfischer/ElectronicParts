@@ -594,6 +594,8 @@ namespace ElectronicParts.ViewModels
 
             this.DeleteCommand = new RelayCommand(arg => 
             {
+                var nodesToDelete = this.SelectedNodes.ToList();
+
                 foreach (var node in this.SelectedNodes)
                 {
                     this.DeleteNodeCommand.Execute(node);
@@ -607,6 +609,8 @@ namespace ElectronicParts.ViewModels
             {
                 var selectedConns = this.SelectedConntectors.ToList();
                 var selectedNodeVms = this.SelectedNodes.ToList();
+                this.SelectedConntectors.Clear();
+                this.SelectedNodes.Clear();
 
                 this.actionManager.Execute(new CallMethodAction(
                     () =>

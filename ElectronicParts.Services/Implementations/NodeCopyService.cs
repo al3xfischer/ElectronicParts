@@ -63,8 +63,10 @@ namespace ElectronicParts.Services.Implementations
         public NodeCopyService(IPinConnectorService connectorService)
         {
             this.connectorService = connectorService ?? throw new ArgumentNullException(nameof(connectorService));
+            this.nodesToCopy = Enumerable.Empty<IDisplayableNode>();
+            this.connectorsToCopy = Enumerable.Empty<Connector>();
         }
-
+        
         /// <summary>
         /// Gets the copied connectors.
         /// </summary>
@@ -128,6 +130,8 @@ namespace ElectronicParts.Services.Implementations
         /// <param name="connectors">The connectors.</param>
         public void InitializeCopyProcess(IEnumerable<IDisplayableNode> nodes, IEnumerable<Connector> connectors)
         {
+            this.nodesToCopy = Enumerable.Empty<IDisplayableNode>();
+            this.connectorsToCopy = Enumerable.Empty<Connector>();
             this.nodesToCopy = nodes?.ToList() ?? throw new ArgumentNullException(nameof(nodes));
             this.connectorsToCopy = connectors?.ToList() ?? throw new ArgumentNullException(nameof(connectors));
             this.copyTask = this.MakeCopyAsync();
