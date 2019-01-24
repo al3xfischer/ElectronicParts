@@ -9,13 +9,14 @@
 // ***********************************************************************
 namespace ElectronicParts.Views
 {
+    using MahApps.Metro.Controls;
     using System.Reflection;
     using System.Windows;
 
     /// <summary>
     /// Interaction logic for the About view.
     /// </summary>
-    public partial class About : Window
+    public partial class About : MetroWindow
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="About"/> class.

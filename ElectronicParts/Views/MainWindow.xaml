@@ -15,7 +15,8 @@
         d:DataContext="{Binding Source={d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}}"
         Title="Electronic Parts" MinWidth="1100" MinHeight="400" WindowState="Maximized" MouseMove="Window_MouseMove" d:DesignWidth="1028.2" Loaded="MainW_Loaded"
         GlowBrush="{DynamicResource AccentColorBrush}">
-    
+
+
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Click="Preferences_Click" Cursor="Hand">
@@ -33,7 +34,7 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <!-- Resources -->
-    <Window.Resources>
+    <Controls:MetroWindow.Resources>
 
         <!-- ListViewStyle -->
         <Style TargetType="ListView">
@@ -57,10 +58,10 @@
             <Rectangle Fill="LightBlue" Opacity="0.4"  x:Uid="selectRect" Visibility="Collapsed" />
         </CompositeCollection>
 
-    </Window.Resources>
+    </Controls:MetroWindow.Resources>
 
     <!-- Shortcuts -->
-    <Window.InputBindings>
+    <Controls:MetroWindow.InputBindings>
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding ViewModel.SaveCommand}"/>
         <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding ViewModel.LoadCommand}"/>
         <KeyBinding Key="Z" Modifiers="Ctrl" Command="{Binding ViewModel.UndoCommand}"/>
@@ -69,7 +70,7 @@
         <KeyBinding Key="V" Modifiers="Ctrl" Command="{Binding ViewModel.PasteCommand}"/>
         <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding ViewModel.CutCommand}"/>
         <KeyBinding Key="Delete" Command="{Binding ViewModel.DeleteCommand}"/>
-    </Window.InputBindings>
+    </Controls:MetroWindow.InputBindings>
 
     <DockPanel MouseRightButtonDown="DockPanel_MouseRightButtonDown">
         <!-- Menu -->
@@ -123,11 +124,12 @@
                       SelectedItem="{Binding ViewModel.SelectedNodeInformation}"
                       Width="200" ItemTemplate="{StaticResource NodeInformationTemplate}"
                       Name="AvilableNodes"
-                      PreviewMouseLeftButtonDown="ListViewItem_MouseLeftButtonDown">
+                      PreviewMouseLeftButtonDown="ListViewItem_MouseLeftButtonDown"
+                      >
                     <ListView.Style>
                         <Style TargetType="ListView">
                             <Style.Triggers>
-                                <DataTrigger Value="false">
+                            <DataTrigger Value="false">
                                     <DataTrigger.Binding>
                                         <Binding Path="ViewModel.CanAddNode"/>
                                     </DataTrigger.Binding>
@@ -239,7 +241,8 @@
                                 TickFrequency="5"
                                 TickPlacement="BottomRight"
                                 IsSnapToTickEnabled="True"
-                                Value="{Binding ViewModel.FramesPerSecond, UpdateSourceTrigger=PropertyChanged}"></Slider>
+                                Value="{Binding ViewModel.FramesPerSecond, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{DynamicResource FlatSlider}"/>
                         </DockPanel>
                     </Border>
                     <StackPanel Margin="5 0 0 0" Orientation="Horizontal" VerticalAlignment="Center">
@@ -319,7 +322,7 @@
 
             <!-- Nodes Display -->
             <ScrollViewer Name="boardScroller" ScrollChanged="BoardScroller_ScrollChanged" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <ItemsControl HorizontalAlignment="Stretch" BorderBrush="DarkGray" BorderThickness="1 0 0 0" DockPanel.Dock="Bottom" ItemsSource="{StaticResource DisplayItems}" Background="White"  >
+                <ItemsControl HorizontalAlignment="Stretch" BorderBrush="DarkGray" BorderThickness="1 0 0 0" DockPanel.Dock="Bottom" ItemsSource="{StaticResource DisplayItems}" Background="White">
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type vm:NodeViewModel}">
                             <local:Node MouseLeftButtonDown="Node_MouseLeftButtonDown" MouseLeftButtonUp="Node_MouseLeftButtonUp" >

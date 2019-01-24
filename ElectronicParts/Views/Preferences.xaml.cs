@@ -14,11 +14,12 @@ namespace ElectronicParts.Views
     using System.Windows;
     using ElectronicParts.DI;
     using ElectronicParts.ViewModels;
+    using MahApps.Metro.Controls;
 
     /// <summary>
     /// Interaction logic for Preferences.
     /// </summary>
-    public partial class Preferences : Window
+    public partial class Preferences : MetroWindow
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Preferences"/> class.
