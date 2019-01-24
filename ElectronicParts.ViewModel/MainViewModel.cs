@@ -1543,6 +1543,7 @@ namespace ElectronicParts.ViewModels
 
             foreach (var connectorVm in connectorVms)
             {
+                this.pinConnectorService.RedoConnection(connectorVm.Connector);
                 this.Connections.Add(connectorVm);
             }
         }

@@ -28,6 +28,9 @@ namespace ElectronicParts.Services.Implementations
         /// <returns>True if connecting was successful, false otherwise.</returns>
         bool TryConnectPins(IPin inputPin, IPin outputPin, out Connector newConnection, bool noConnectionInsertion);
 
+
+        void RedoConnection(Connector connectionToAdd);
+
         /// <summary>
         /// Tries to remove the connection between two pins.
         /// </summary>
