@@ -86,10 +86,12 @@ namespace ElectronicParts.Services.Implementations
             }
 
             var containingNode = this.GetContainingNode(input);
-            pinCount = containingNode.Inputs.Count;
+            int pinCountIn = containingNode.Inputs.Count;
+            int pinCountOut = containingNode.Outputs.Count;
 
-            if (pinCount > containingNode.Outputs.Count)
+            if (pinCountIn > pinCountOut)
             {
+                pinCount = pinCountIn;
                 if (containingNode.Inputs.IndexOf(input) < pinCount / 2)
                 {
                     return -(pinCount + 1 - containingNode.Inputs.IndexOf(input) - 1) / 2.0;
@@ -101,6 +103,7 @@ namespace ElectronicParts.Services.Implementations
             }
             else
             {
+                pinCount = pinCountOut;
                 if (containingNode.Outputs.IndexOf(output) < containingNode.Outputs.Count / 2)
                 {
                     return -(containingNode.Outputs.Count + 1 - containingNode.Outputs.IndexOf(output) - 1) / 2.0;
@@ -110,6 +113,16 @@ namespace ElectronicParts.Services.Implementations
                     return containingNode.Outputs.IndexOf(output) / 2.0;
                 }
             }
+        }
+
+        /// <summary>
+        /// Determines whether the containing node has more inputs or outputs.
+        /// </summary>
+        /// <param name="pin">The pin to check the node of.</param>
+        /// <returns>True if is inputs more the specified pin and otherwise, False.</returns>
+        public bool IsInputsMore(IPin pin)
+        {
+            return this.GetContainingNode(pin).Inputs?.Count > this.GetContainingNode(pin).Outputs?.Count;
         }
 
         /// <summary>
