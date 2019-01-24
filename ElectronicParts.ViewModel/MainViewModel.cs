@@ -573,8 +573,8 @@ namespace ElectronicParts.ViewModels
                 async arg =>
             {
                 await this.nodeCopyService.CopyTaskAwaiter();
-                var copiedNodes = this.nodeCopyService.CopiedNodes;
-                var copiedConnectors = this.nodeCopyService.CopiedConnectors;
+                var copiedNodes = this.nodeCopyService.CopiedNodes.ToList();
+                var copiedConnectors = this.nodeCopyService.CopiedConnectors.ToList();
                 var mousePosition = this.GetMousePosition();
                 this.actionManager.Execute(new CallMethodAction(
                     () => { this.AddItems(copiedNodes, copiedConnectors, mousePosition); }, 
@@ -582,8 +582,12 @@ namespace ElectronicParts.ViewModels
                 {
                     foreach (var node in copiedNodes)
                     {
-                        var x = this.Nodes.FirstOrDefault(nodeVM => nodeVM.Node == node);
                         this.Nodes.Remove(this.Nodes.FirstOrDefault(nodeVM => nodeVM.Node == node));
+                        foreach(var conn in copiedConnectors)
+                        {
+                            this.Connections.Remove(this.Connections.FirstOrDefault(connVM => connVM.Connector == conn));
+                            this.pinConnectorService.TryRemoveConnection(conn);
+                        }
                     }
                 }));
                 this.nodeCopyService.TryBeginCopyTask();
