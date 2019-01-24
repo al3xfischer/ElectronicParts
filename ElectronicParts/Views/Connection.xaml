@@ -7,15 +7,15 @@
              xmlns:converter="clr-namespace:ElectronicParts.Converter"
              xmlns:vm="clr-namespace:ElectronicParts.ViewModels;assembly=ElectronicParts.ViewModel"
              mc:Ignorable="d"
-             d:DataContext="{Binding Source={d:DesignInstance Type=vm:ConnectorViewModel, IsDesignTimeCreatable=False}}">
-    
+             d:DataContext="{Binding Source={d:DesignInstance Type=vm:ConnectorViewModel, IsDesignTimeCreatable=False}}" Loaded="UserControl_Loaded">
+
     <UserControl.Resources>
         <converter:ValueColorConverter x:Key="valueToColor"/>
         <converter:ConnectionToMarginConverter x:Key="ConnectionMarginConverter"/>
         <converter:IntToPointMulitConverter x:Key="IntToPointConverter"/>
     </UserControl.Resources>
     <Grid>
-        <TextBlock x:Name="valueText" FontSize="10" Text="{Binding CurrentValue.Current}" MaxWidth="40" Height="15" IsHitTestVisible="False">
+        <!--<TextBlock x:Name="valueText" FontSize="10" Text="{Binding CurrentValue.Current}" MaxWidth="40" Height="15" IsHitTestVisible="False">
             <TextBlock.Margin>
                 <MultiBinding>
                     <MultiBinding.Converter>
@@ -29,78 +29,96 @@
                     <Binding Path="CenterTopPoint"></Binding>
                 </MultiBinding>
             </TextBlock.Margin>
-        </TextBlock>
+        </TextBlock>-->
         <Path Stroke="{Binding CurrentValue, Converter={StaticResource valueToColor} }" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
             <Path.Data>
                 <PathGeometry>
                     <PathGeometry.Figures>
-                        <PathFigure>
-                            <PathFigure.StartPoint>
-                                <MultiBinding>
-                                    <MultiBinding.Converter>
-                                        <converter:IntToPointMulitConverter/>
-                                    </MultiBinding.Converter>
-                                    <MultiBinding.Bindings>
-                                        <Binding Path="Input.Left"/>
-                                        <Binding Path="Input.Top"/>
-                                    </MultiBinding.Bindings>
-                                </MultiBinding>
-                            </PathFigure.StartPoint>
-                            <PathFigure.Segments>
-                                <PathSegmentCollection>
-                                    <LineSegment>
-                                        <LineSegment.Point>
-                                            <Binding Path="SelfConnectionInputPoint"/>
-                                        </LineSegment.Point>
-                                    </LineSegment>
-                                    <LineSegment>
-                                        <LineSegment.Point>
-                                            <Binding Path="CenterBottomPoint"/>
-                                        </LineSegment.Point>
-                                    </LineSegment>
-                                    <LineSegment>
-                                        <LineSegment.Point>
-                                            <Binding Path="CenterTopPoint"/>
-                                        </LineSegment.Point>
-                                    </LineSegment>
-                                    <LineSegment>
-                                        <LineSegment.Point>
-                                            <Binding Path="SelfConnectionOutputPoint"/>
-                                        </LineSegment.Point>
-                                    </LineSegment>
-                                    <LineSegment>
-                                        <LineSegment.Point>
-                                            <MultiBinding>
-                                                <MultiBinding.Converter>
-                                                    <converter:IntToPointMulitConverter/>
-                                                </MultiBinding.Converter>
-                                                <MultiBinding.Bindings>
-                                                    <Binding Path="Output.Left"/>
-                                                    <Binding Path="Output.Top"/>
-                                                </MultiBinding.Bindings>
-                                            </MultiBinding>
-                                        </LineSegment.Point>
-                                    </LineSegment>
-                                    <LineSegment>
-                                        <LineSegment.Point>
-                                            <MultiBinding>
-                                                <MultiBinding.Converter>
-                                                    <converter:IntToPointMulitConverter/>
-                                                </MultiBinding.Converter>
-                                                <MultiBinding.Bindings>
-                                                    <Binding Path="Output.Left"/>
-                                                    <Binding Path="Output.Top"/>
-                                                </MultiBinding.Bindings>
-                                            </MultiBinding>
-                                        </LineSegment.Point>
-                                    </LineSegment>
-                                </PathSegmentCollection>
-                            </PathFigure.Segments>
-                        </PathFigure>
+                        <PathFigureCollection>
+                            <PathFigure>
+                                <PathFigure.StartPoint>
+                                    <MultiBinding>
+                                        <MultiBinding.Converter>
+                                            <converter:IntToPointMulitConverter/>
+                                        </MultiBinding.Converter>
+                                        <MultiBinding.Bindings>
+                                            <Binding Path="Input.Left"/>
+                                            <Binding Path="Input.Top"/>
+                                        </MultiBinding.Bindings>
+                                    </MultiBinding>
+                                </PathFigure.StartPoint>
+                                <PathFigure.Segments>
+                                    <PathSegmentCollection>
+                                        <LineSegment>
+                                            <LineSegment.Point>
+                                                <Binding Path="SelfConnectionInputPoint"/>
+                                            </LineSegment.Point>
+                                        </LineSegment>
+                                        <LineSegment>
+                                            <LineSegment.Point>
+                                                <Binding Path="CenterBottomPoint"/>
+                                            </LineSegment.Point>
+                                        </LineSegment>
+                                        <LineSegment>
+                                            <LineSegment.Point>
+                                                <Binding Path="CenterTopPoint"/>
+                                            </LineSegment.Point>
+                                        </LineSegment>
+                                        <LineSegment>
+                                            <LineSegment.Point>
+                                                <Binding Path="SelfConnectionOutputPoint"/>
+                                            </LineSegment.Point>
+                                        </LineSegment>
+                                        <LineSegment>
+                                            <LineSegment.Point>
+                                                <MultiBinding>
+                                                    <MultiBinding.Converter>
+                                                        <converter:IntToPointMulitConverter/>
+                                                    </MultiBinding.Converter>
+                                                    <MultiBinding.Bindings>
+                                                        <Binding Path="Output.Left"/>
+                                                        <Binding Path="Output.Top"/>
+                                                    </MultiBinding.Bindings>
+                                                </MultiBinding>
+                                            </LineSegment.Point>
+                                        </LineSegment>
+                                        <LineSegment>
+                                            <LineSegment.Point>
+                                                <MultiBinding>
+                                                    <MultiBinding.Converter>
+                                                        <converter:IntToPointMulitConverter/>
+                                                    </MultiBinding.Converter>
+                                                    <MultiBinding.Bindings>
+                                                        <Binding Path="Output.Left"/>
+                                                        <Binding Path="Output.Top"/>
+                                                    </MultiBinding.Bindings>
+                                                </MultiBinding>
+                                            </LineSegment.Point>
+                                        </LineSegment>
+                                    </PathSegmentCollection>
+                                </PathFigure.Segments>
+                            </PathFigure>
+                        </PathFigureCollection>
                     </PathGeometry.Figures>
                 </PathGeometry>
             </Path.Data>
         </Path>
+        <!--<Path.Fill>
+            <VisualBrush >
+                <VisualBrush.Visual>
+                    <TextBlock Text="{Binding CurrentValue.Current}" Padding="1">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush>
+                                <SolidColorBrush.Color>
+                                    <Color>Blue</Color>
+                                </SolidColorBrush.Color>
+                            </SolidColorBrush>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Path.Fill>-->
+
         <!--<Line X1="{Binding Input.Left}" Y1="{Binding Input.Top}" X2="{Binding Output.Left}" Y2="{Binding Output.Top}" Stroke="{Binding CurrentValue, Converter={StaticResource valueToColor} }" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>-->
     </Grid>
 </UserControl>
