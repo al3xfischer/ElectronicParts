@@ -1522,5 +1522,17 @@ namespace ElectronicParts.ViewModels
         {
             return nodes.SelectMany(n => n.Inputs.Concat(n.Outputs)).FirstOrDefault(p => p.Pin.Equals(pin));
         }
+
+        /// <summary>
+        /// Gets the connector view models connected to the <paramref name="nodeVms"/>.
+        /// </summary>
+        /// <param name="nodeVms">The node VMS.</param>
+        /// <param name="connectorVms">The connector VMS.</param>
+        /// <returns>IEnumerable&lt;ConnectorViewModel&gt;.</returns>
+        public IEnumerable<ConnectorViewModel> GetConnectorViewModels(IEnumerable<NodeViewModel> nodeVms, IEnumerable<ConnectorViewModel> connectorVms)
+        {
+            var pinVms = nodes.SelectMany(n => n.Inputs.Concat(n.Outputs));
+            return connectorVms.Where(c => pinVms.Contains(c.Input) || pinVms.Contains(c.Output));
+        }
     }
 }
