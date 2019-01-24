@@ -43,7 +43,7 @@
 
         <TextBlock Grid.Column="1" Text="All Rights reserved ©" Grid.Row="8" VerticalAlignment="Bottom"/>
 
-        <Image Grid.Column="2" Grid.Row="3" Grid.RowSpan="5" Source="../favicon.ico"/>
+        <Image Grid.Column="2" Grid.Row="3" Grid.RowSpan="5" Source="/Resources/EPLogo.png" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"/>
 
     </Grid>
 </Window>
