@@ -35,7 +35,7 @@ namespace ElectronicParts.Services.Implementations
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <exception cref="ArgumentNullException">Gets thrown if the injected logger is null.</exception>
-        public ConnectorHelperService(ILogger logger)
+        public ConnectorHelperService(ILogger<ConnectorHelperService> logger)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

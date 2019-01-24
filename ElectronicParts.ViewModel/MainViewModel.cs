@@ -745,6 +745,13 @@ namespace ElectronicParts.ViewModels
                 Process.Start(System.IO.Path.Combine(path, @"Resources\ComponentsHandbook.pdf"));
             });
 
+            this.UserManualCommand = new RelayCommand(
+                arg =>
+                {
+                    var path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                    Process.Start(System.IO.Path.Combine(path, @"Resources\UserManual.pdf"));
+                });
+
             this.Nodes = new ObservableCollection<NodeViewModel>();
             this.PreviewLines = new ObservableCollection<PreviewLineViewModel>() { new PreviewLineViewModel() };
             this.AvailableNodes = new ObservableCollection<NodeViewModel>();
@@ -993,6 +1000,12 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <value>The command to open the HowTo PDF.</value>
         public ICommand HowToCommand { get; }
+
+        /// <summary>
+        /// Gets the command to open the user manual PDF.
+        /// </summary>
+        /// <value>The command to open the user manual PDF.</value>
+        public ICommand UserManualCommand { get; }
 
         /// <summary>
         /// Gets a command which increases the cell size of the visible grid.

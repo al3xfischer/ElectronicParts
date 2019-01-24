@@ -1,0 +1,450 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IConnectorHelperService
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IConnectorHelperService
+   ">
+    <meta name="generator" content="docfx 2.40.7.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService">
+  
+  
+  <h1 id="ElectronicParts_Services_Interfaces_IConnectorHelperService" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService" class="text-break">Interface IConnectorHelperService
+  </h1>
+  <div class="markdown level0 summary"><p>Represents the <a class="xref" href="ElectronicParts.Services.Interfaces.IConnectorHelperService.html">IConnectorHelperService</a> interface.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="ElectronicParts.Services.Interfaces.html">ElectronicParts.Services.Interfaces</a></h6>
+  <h6><strong>Assembly</strong>: ElectronicParts.Services.dll</h6>
+  <h5 id="ElectronicParts_Services_Interfaces_IConnectorHelperService_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IConnectorHelperService</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_Services_Interfaces_IConnectorHelperService_ExistingConnections.md&amp;value=---%0Auid%3A%20ElectronicParts.Services.Interfaces.IConnectorHelperService.ExistingConnections%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.Services/Interfaces/IConnectorHelperService.cs/#L26">View Source</a>
+  </span>
+  <a id="ElectronicParts_Services_Interfaces_IConnectorHelperService_ExistingConnections_" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.ExistingConnections*"></a>
+  <h4 id="ElectronicParts_Services_Interfaces_IConnectorHelperService_ExistingConnections" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.ExistingConnections">ExistingConnections</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the IEnumerable with which the helper service can iterate over all existing connections.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;Connector&gt; ExistingConnections { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="ElectronicParts.Models.Connector.html">Connector</a>&gt;</td>
+        <td><p>The existing connections.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_Services_Interfaces_IConnectorHelperService_ExistingNodes.md&amp;value=---%0Auid%3A%20ElectronicParts.Services.Interfaces.IConnectorHelperService.ExistingNodes%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.Services/Interfaces/IConnectorHelperService.cs/#L32">View Source</a>
+  </span>
+  <a id="ElectronicParts_Services_Interfaces_IConnectorHelperService_ExistingNodes_" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.ExistingNodes*"></a>
+  <h4 id="ElectronicParts_Services_Interfaces_IConnectorHelperService_ExistingNodes" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.ExistingNodes">ExistingNodes</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the IEnumerable with which the helper service can iterate over all existing Nodes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;IDisplayableNode&gt; ExistingNodes { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Shared.IDisplayableNode.html">IDisplayableNode</a>&gt;</td>
+        <td><p>The existing nodes.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_Services_Interfaces_IConnectorHelperService_GetHeightMapping.md&amp;value=---%0Auid%3A%20ElectronicParts.Services.Interfaces.IConnectorHelperService.GetHeightMapping%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.Services/Interfaces/IConnectorHelperService.cs/#L38">View Source</a>
+  </span>
+  <a id="ElectronicParts_Services_Interfaces_IConnectorHelperService_GetHeightMapping_" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.GetHeightMapping*"></a>
+  <h4 id="ElectronicParts_Services_Interfaces_IConnectorHelperService_GetHeightMapping" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.GetHeightMapping">GetHeightMapping</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a function which can be used to get the current top value of a pin.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Func&lt;IPin, int&gt; GetHeightMapping { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="Shared.IPin.html">IPin</a>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><p>The get height mapping.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_Services_Interfaces_IConnectorHelperService_GetMultipleOutputOffset_Shared_IPin_.md&amp;value=---%0Auid%3A%20ElectronicParts.Services.Interfaces.IConnectorHelperService.GetMultipleOutputOffset(Shared.IPin)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.Services/Interfaces/IConnectorHelperService.cs/#L45">View Source</a>
+  </span>
+  <a id="ElectronicParts_Services_Interfaces_IConnectorHelperService_GetMultipleOutputOffset_" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.GetMultipleOutputOffset*"></a>
+  <h4 id="ElectronicParts_Services_Interfaces_IConnectorHelperService_GetMultipleOutputOffset_Shared_IPin_" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.GetMultipleOutputOffset(Shared.IPin)">GetMultipleOutputOffset(IPin)</h4>
+  <div class="markdown level1 summary"><p>Gets the multiple output offset which is used if the node has multiple outputs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int GetMultipleOutputOffset(IPin pin)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Shared.IPin.html">IPin</a></td>
+        <td><span class="parametername">pin</span></td>
+        <td><p>The pin to check.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The required offset as integer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_Services_Interfaces_IConnectorHelperService_GetOffset_Shared_IPin_Shared_IPin_System_Int32__.md&amp;value=---%0Auid%3A%20ElectronicParts.Services.Interfaces.IConnectorHelperService.GetOffset(Shared.IPin%2CShared.IPin%2CSystem.Int32%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.Services/Interfaces/IConnectorHelperService.cs/#L54">View Source</a>
+  </span>
+  <a id="ElectronicParts_Services_Interfaces_IConnectorHelperService_GetOffset_" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.GetOffset*"></a>
+  <h4 id="ElectronicParts_Services_Interfaces_IConnectorHelperService_GetOffset_Shared_IPin_Shared_IPin_System_Int32__" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.GetOffset(Shared.IPin,Shared.IPin,System.Int32@)">GetOffset(IPin, IPin, out Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the offset which is used to space out the connections.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double GetOffset(IPin input, IPin output, out int pinCount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Shared.IPin.html">IPin</a></td>
+        <td><span class="parametername">input</span></td>
+        <td><p>The input.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Shared.IPin.html">IPin</a></td>
+        <td><span class="parametername">output</span></td>
+        <td><p>The output.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">pinCount</span></td>
+        <td><p>The pin count.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><p>The required offset as double.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_Services_Interfaces_IConnectorHelperService_IsSelfConnecting_Shared_IPin_Shared_IPin_.md&amp;value=---%0Auid%3A%20ElectronicParts.Services.Interfaces.IConnectorHelperService.IsSelfConnecting(Shared.IPin%2CShared.IPin)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.Services/Interfaces/IConnectorHelperService.cs/#L62">View Source</a>
+  </span>
+  <a id="ElectronicParts_Services_Interfaces_IConnectorHelperService_IsSelfConnecting_" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.IsSelfConnecting*"></a>
+  <h4 id="ElectronicParts_Services_Interfaces_IConnectorHelperService_IsSelfConnecting_Shared_IPin_Shared_IPin_" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.IsSelfConnecting(Shared.IPin,Shared.IPin)">IsSelfConnecting(IPin, IPin)</h4>
+  <div class="markdown level1 summary"><p>Determines whether the specified input and output pins are part of the same node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsSelfConnecting(IPin input, IPin output)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Shared.IPin.html">IPin</a></td>
+        <td><span class="parametername">input</span></td>
+        <td><p>The input.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Shared.IPin.html">IPin</a></td>
+        <td><span class="parametername">output</span></td>
+        <td><p>The output.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the pins are part of the same node and otherwise, False.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_Services_Interfaces_IConnectorHelperService_MultipleConnectionsOffset_Shared_IPin_ElectronicParts_Models_Connector_.md&amp;value=---%0Auid%3A%20ElectronicParts.Services.Interfaces.IConnectorHelperService.MultipleConnectionsOffset(Shared.IPin%2CElectronicParts.Models.Connector)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.Services/Interfaces/IConnectorHelperService.cs/#L70">View Source</a>
+  </span>
+  <a id="ElectronicParts_Services_Interfaces_IConnectorHelperService_MultipleConnectionsOffset_" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.MultipleConnectionsOffset*"></a>
+  <h4 id="ElectronicParts_Services_Interfaces_IConnectorHelperService_MultipleConnectionsOffset_Shared_IPin_ElectronicParts_Models_Connector_" data-uid="ElectronicParts.Services.Interfaces.IConnectorHelperService.MultipleConnectionsOffset(Shared.IPin,ElectronicParts.Models.Connector)">MultipleConnectionsOffset(IPin, Connector)</h4>
+  <div class="markdown level1 summary"><p>Gets the offset which is needed if one output pin has multiple connections.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int MultipleConnectionsOffset(IPin outputPin, Connector con)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Shared.IPin.html">IPin</a></td>
+        <td><span class="parametername">outputPin</span></td>
+        <td><p>The output pin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ElectronicParts.Models.Connector.html">Connector</a></td>
+        <td><span class="parametername">con</span></td>
+        <td><p>The connector the pin is a part of.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The required offset as integer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_Services_Interfaces_IConnectorHelperService.md&amp;value=---%0Auid%3A%20ElectronicParts.Services.Interfaces.IConnectorHelperService%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.Services/Interfaces/IConnectorHelperService.cs/#L20" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
