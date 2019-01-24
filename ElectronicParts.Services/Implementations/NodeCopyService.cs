@@ -182,7 +182,7 @@ namespace ElectronicParts.Services.Implementations
 
                     for (int j = newNode.Inputs.Count; j < nodesToCopy.ElementAt(i).Inputs.Count; j++)
                     {
-                        var newPin = this.pinCreatorService.CreatePin(nodesToCopy.ElementAt(i).Inputs.ElementAt(j).Value.Current.GetType());
+                        var newPin = this.pinCreatorService.CreatePin(node.Inputs.ElementAt(j).Value.Current.GetType());
                         newNode.Inputs.Add(newPin);
                     }
 
