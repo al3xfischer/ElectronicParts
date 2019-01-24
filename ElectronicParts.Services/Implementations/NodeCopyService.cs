@@ -43,12 +43,12 @@ namespace ElectronicParts.Services.Implementations
         /// <summary>
         /// Represents the connectors which were copied last.
         /// </summary>
-        private IEnumerable<Connector> copiedConnectors;
+        private ICollection<Connector> copiedConnectors;
 
         /// <summary>
         /// Represents the nodes which were copied last.
         /// </summary>
-        private IEnumerable<IDisplayableNode> copiedNodes;
+        private ICollection<IDisplayableNode> copiedNodes;
 
         /// <summary>
         /// Represents the currently running copy task.
@@ -62,20 +62,24 @@ namespace ElectronicParts.Services.Implementations
         /// <exception cref="ArgumentNullException">Gets throws if the injected <see cref="PinConnectorService"/> is null.</exception>
         public NodeCopyService(IPinConnectorService connectorService)
         {
+            this.copiedConnectors = new List<Connector>();
+            this.copiedNodes = new List<IDisplayableNode>();
             this.connectorService = connectorService ?? throw new ArgumentNullException(nameof(connectorService));
+            this.nodesToCopy = Enumerable.Empty<IDisplayableNode>();
+            this.connectorsToCopy = Enumerable.Empty<Connector>();
         }
-
+        
         /// <summary>
         /// Gets the copied connectors.
         /// </summary>
         /// <value>The copied connectors.</value>
-        public IEnumerable<Connector> CopiedConnectors
+        public ICollection<Connector> CopiedConnectors
         {
             get
             {
                 if (!this.copyTask?.IsCompleted == true)
                 {
-                    return Enumerable.Empty<Connector>();
+                    return new List<Connector>();
                 }
 
                 return this.copiedConnectors;
@@ -86,13 +90,13 @@ namespace ElectronicParts.Services.Implementations
         /// Gets the copied nodes.
         /// </summary>
         /// <value>The copied nodes.</value>
-        public IEnumerable<IDisplayableNode> CopiedNodes
+        public ICollection<IDisplayableNode> CopiedNodes
         {
             get
             {
                 if (!this.copyTask?.IsCompleted == true)
                 {
-                    return Enumerable.Empty<IDisplayableNode>();
+                    return new List<IDisplayableNode>();
                 }
 
                 return this.copiedNodes;
@@ -128,6 +132,10 @@ namespace ElectronicParts.Services.Implementations
         /// <param name="connectors">The connectors.</param>
         public void InitializeCopyProcess(IEnumerable<IDisplayableNode> nodes, IEnumerable<Connector> connectors)
         {
+            this.CopiedNodes.Clear();
+            this.CopiedConnectors.Clear();
+            this.nodesToCopy = Enumerable.Empty<IDisplayableNode>();
+            this.connectorsToCopy = Enumerable.Empty<Connector>();
             this.nodesToCopy = nodes?.ToList() ?? throw new ArgumentNullException(nameof(nodes));
             this.connectorsToCopy = connectors?.ToList() ?? throw new ArgumentNullException(nameof(connectors));
             this.copyTask = this.MakeCopyAsync();

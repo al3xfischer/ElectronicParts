@@ -573,8 +573,8 @@ namespace ElectronicParts.ViewModels
                 async arg =>
             {
                 await this.nodeCopyService.CopyTaskAwaiter();
-                var copiedNodes = this.nodeCopyService.CopiedNodes;
-                var copiedConnectors = this.nodeCopyService.CopiedConnectors;
+                var copiedNodes = this.nodeCopyService.CopiedNodes.ToList();
+                var copiedConnectors = this.nodeCopyService.CopiedConnectors.ToList();
                 var mousePosition = this.GetMousePosition();
                 this.actionManager.Execute(new CallMethodAction(
                     () => { this.AddItems(copiedNodes, copiedConnectors, mousePosition); }, 
@@ -582,8 +582,12 @@ namespace ElectronicParts.ViewModels
                 {
                     foreach (var node in copiedNodes)
                     {
-                        var x = this.Nodes.FirstOrDefault(nodeVM => nodeVM.Node == node);
                         this.Nodes.Remove(this.Nodes.FirstOrDefault(nodeVM => nodeVM.Node == node));
+                        foreach(var conn in copiedConnectors)
+                        {
+                            this.Connections.Remove(this.Connections.FirstOrDefault(connVM => connVM.Connector == conn));
+                            this.pinConnectorService.TryRemoveConnection(conn);
+                        }
                     }
                 }));
                 this.nodeCopyService.TryBeginCopyTask();
@@ -594,12 +598,40 @@ namespace ElectronicParts.ViewModels
 
             this.DeleteCommand = new RelayCommand(arg => 
             {
-                foreach (var node in this.SelectedNodes)
-                {
-                    this.DeleteNodeCommand.Execute(node);
-                }
-
+                var selectedConns = this.SelectedConntectors.ToList();
+                var selectedNodeVms = this.SelectedNodes.ToList();
+                var connsToDelete = selectedConns.Concat(this.GetConnectorViewModels(selectedNodeVms, this.Connections)).Distinct().ToList();
+                this.SelectedConntectors.Clear();
                 this.SelectedNodes.Clear();
+
+                this.actionManager.Execute(new CallMethodAction(
+                    () =>
+                    {
+                        // remove all connectors from UI
+                        foreach (var connectorVm in connsToDelete)
+                        {
+                            this.RemoveConnection(connectorVm, connectorVm.Connector);
+                        }
+
+                        foreach (var nodeVm in selectedNodeVms)
+                        {
+                            this.Nodes.Remove(nodeVm);
+                        }
+                    },
+                () =>
+                {
+                    foreach (var nodeVM in selectedNodeVms)
+                    {
+                        this.Nodes.Add(nodeVM);
+                    }
+
+                    foreach (var connVM in connsToDelete)
+                    {
+                        this.pinConnectorService.TryConnectPins(connVM.Input.Pin, connVM.Output.Pin, out Connector newConn, true);
+                        this.pinConnectorService.ManuallyAddConnectionToExistingConnections(connVM.Connector);
+                        this.Connections.Add(connVM);
+                    }
+                }));
             });
 
             this.CutCommand = new RelayCommand(
@@ -607,12 +639,15 @@ namespace ElectronicParts.ViewModels
             {
                 var selectedConns = this.SelectedConntectors.ToList();
                 var selectedNodeVms = this.SelectedNodes.ToList();
+                var connsToDelete = selectedConns.Concat(this.GetConnectorViewModels(selectedNodeVms, this.Connections)).Distinct().ToList();
+                this.SelectedConntectors.Clear();
+                this.SelectedNodes.Clear();
 
                 this.actionManager.Execute(new CallMethodAction(
                     () =>
                 {
                     // remove all connectors from UI
-                    foreach (var connectorVm in selectedConns)
+                    foreach (var connectorVm in connsToDelete)
                     {
                         this.RemoveConnection(connectorVm, connectorVm.Connector);
                     }
@@ -633,8 +668,10 @@ namespace ElectronicParts.ViewModels
                         this.Nodes.Add(nodeVM);
                     }
 
-                    foreach (var connVM in selectedConns)
+                    foreach (var connVM in connsToDelete)
                     {
+                        this.pinConnectorService.TryConnectPins(connVM.Input.Pin, connVM.Output.Pin, out Connector newConn, true);
+                        this.pinConnectorService.ManuallyAddConnectionToExistingConnections(connVM.Connector);
                         this.Connections.Add(connVM);
                     }
                 }));                
@@ -1368,7 +1405,16 @@ namespace ElectronicParts.ViewModels
                 var outPin = outputPin;
                 Action creationAction = () =>
                 {
-                    this.MakeConnection(inPin, outPin, out createdConnectorVM, out createdConnector);
+                    if (createdConnector is null && createdConnectorVM is null)
+                    {
+                        this.MakeConnection(inPin, outPin, out createdConnectorVM, out createdConnector);
+                    }
+                    else
+                    {
+                        this.pinConnectorService.TryConnectPins(createdConnectorVM.Input.Pin, createdConnectorVM.Output.Pin, out Connector newConn, true);
+                        this.pinConnectorService.ManuallyAddConnectionToExistingConnections(createdConnector);
+                        this.Connections.Add(createdConnectorVM);
+                    }
                 };
                 Action deleteAction = () => this.RemoveConnection(createdConnectorVM, createdConnector);
 
@@ -1497,6 +1543,7 @@ namespace ElectronicParts.ViewModels
 
             foreach (var connectorVm in connectorVms)
             {
+                this.pinConnectorService.RedoConnection(connectorVm.Connector);
                 this.Connections.Add(connectorVm);
             }
         }
@@ -1521,6 +1568,18 @@ namespace ElectronicParts.ViewModels
         private PinViewModel GetPinViewModel(IEnumerable<NodeViewModel> nodes, IPin pin)
         {
             return nodes.SelectMany(n => n.Inputs.Concat(n.Outputs)).FirstOrDefault(p => p.Pin.Equals(pin));
+        }
+
+        /// <summary>
+        /// Gets the connector view models connected to the <paramref name="nodeVms"/>.
+        /// </summary>
+        /// <param name="nodeVms">The node VMS.</param>
+        /// <param name="connectorVms">The connector VMS.</param>
+        /// <returns>IEnumerable&lt;ConnectorViewModel&gt;.</returns>
+        public IEnumerable<ConnectorViewModel> GetConnectorViewModels(IEnumerable<NodeViewModel> nodeVms, IEnumerable<ConnectorViewModel> connectorVms)
+        {
+            var pinVms = nodes.SelectMany(n => n.Inputs.Concat(n.Outputs));
+            return connectorVms.Where(c => pinVms.Contains(c.Input) || pinVms.Contains(c.Output));
         }
     }
 }

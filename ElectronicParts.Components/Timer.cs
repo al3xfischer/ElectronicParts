@@ -48,7 +48,7 @@ namespace ElectronicParts.Components
 
             if (int.TryParse(this.Inputs.ElementAt(0).Value.Current.ToString(), out int intervall))
             {
-                if (now - this.lastChange > TimeSpan.FromSeconds(intervall))
+                if (now - this.lastChange > TimeSpan.FromSeconds(Math.Abs(intervall)))
                 {
                     this.Outputs.ElementAt(0).Value.Current = !(bool)this.Outputs.ElementAt(0).Value.Current;
                     this.lastChange = now;

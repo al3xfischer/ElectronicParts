@@ -13,7 +13,7 @@ namespace ElectronicParts.Components
     {
         public Pin()
         {
-            this.Value = new MyValue<T>();
+            this.Value = new Value<T>();
         }
         public IValueGeneric<T> Value { get; set; }
 
@@ -33,7 +33,7 @@ namespace ElectronicParts.Components
                 }
                 catch (InvalidCastException e)
                 {
-                    this.Value = new MyValue<T>();
+                    this.Value = new Value<T>();
                     Debug.WriteLine(e.Message);
                 }
             }
