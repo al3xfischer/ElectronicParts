@@ -1251,6 +1251,7 @@ namespace ElectronicParts.ViewModels
             {
                 var nodeVm = nodeVms[i];
                 var originalVm = this.nodesToCopy.ElementAt(i);
+
                 nodeVm.Left = originalVm.Left - minLeft + (int)mousePosition.X;
                 nodeVm.Top += originalVm.Top - minTop + (int)mousePosition.Y;
                 this.Nodes.Add(nodeVm);
