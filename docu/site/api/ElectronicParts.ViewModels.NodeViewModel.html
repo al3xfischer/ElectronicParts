@@ -1,0 +1,925 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class NodeViewModel
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class NodeViewModel
+   ">
+    <meta name="generator" content="docfx 2.40.7.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="ElectronicParts.ViewModels.NodeViewModel">
+  
+  
+  <h1 id="ElectronicParts_ViewModels_NodeViewModel" data-uid="ElectronicParts.ViewModels.NodeViewModel" class="text-break">Class NodeViewModel
+  </h1>
+  <div class="markdown level0 summary"><p>Represents the <a class="xref" href="ElectronicParts.ViewModels.NodeViewModel.html">NodeViewModel</a> class.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="ElectronicParts.ViewModels.BaseViewModel.html">BaseViewModel</a></div>
+    <div class="level2"><span class="xref">NodeViewModel</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.ComponentModel.INotifyPropertyChanged</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="ElectronicParts.ViewModels.BaseViewModel.html#ElectronicParts_ViewModels_BaseViewModel_PropertyChanged">BaseViewModel.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="ElectronicParts.ViewModels.BaseViewModel.html#ElectronicParts_ViewModels_BaseViewModel_FirePropertyChanged_System_String_">BaseViewModel.FirePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="ElectronicParts.ViewModels.BaseViewModel.html#ElectronicParts_ViewModels_BaseViewModel_Set__1___0____0_System_String_">BaseViewModel.Set&lt;TValue&gt;(TValue, TValue, String)</a>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="ElectronicParts.ViewModels.html">ElectronicParts.ViewModels</a></h6>
+  <h6><strong>Assembly</strong>: ElectronicParts.ViewModel.dll</h6>
+  <h5 id="ElectronicParts_ViewModels_NodeViewModel_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class NodeViewModel : BaseViewModel, INotifyPropertyChanged</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel__ctor_Shared_IDisplayableNode_System_Windows_Input_ICommand_System_Windows_Input_ICommand_System_Windows_Input_ICommand_ElectronicParts_Services_Interfaces_IExecutionService_.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.%23ctor(Shared.IDisplayableNode%2CSystem.Windows.Input.ICommand%2CSystem.Windows.Input.ICommand%2CSystem.Windows.Input.ICommand%2CElectronicParts.Services.Interfaces.IExecutionService)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L66">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel__ctor_" data-uid="ElectronicParts.ViewModels.NodeViewModel.#ctor*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel__ctor_Shared_IDisplayableNode_System_Windows_Input_ICommand_System_Windows_Input_ICommand_System_Windows_Input_ICommand_ElectronicParts_Services_Interfaces_IExecutionService_" data-uid="ElectronicParts.ViewModels.NodeViewModel.#ctor(Shared.IDisplayableNode,System.Windows.Input.ICommand,System.Windows.Input.ICommand,System.Windows.Input.ICommand,ElectronicParts.Services.Interfaces.IExecutionService)">NodeViewModel(IDisplayableNode, ICommand, ICommand, ICommand, IExecutionService)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="ElectronicParts.ViewModels.NodeViewModel.html">NodeViewModel</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NodeViewModel(IDisplayableNode node, ICommand deleteCommand, ICommand inputPinCommand, ICommand outputPinCommand, IExecutionService executionService)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Shared.IDisplayableNode.html">IDisplayableNode</a></td>
+        <td><span class="parametername">node</span></td>
+        <td><p>The node represented by this view model.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Windows.Input.ICommand</span></td>
+        <td><span class="parametername">deleteCommand</span></td>
+        <td><p>The command to delete this view model.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Windows.Input.ICommand</span></td>
+        <td><span class="parametername">inputPinCommand</span></td>
+        <td><p>The command to be invoked connecting an input pin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Windows.Input.ICommand</span></td>
+        <td><span class="parametername">outputPinCommand</span></td>
+        <td><p>The command to be invoked connecting an output pin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ElectronicParts.Services.Interfaces.IExecutionService.html">IExecutionService</a></td>
+        <td><span class="parametername">executionService</span></td>
+        <td><p>The execution service.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_ActivateCommand.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.ActivateCommand%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L127">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_ActivateCommand_" data-uid="ElectronicParts.ViewModels.NodeViewModel.ActivateCommand*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_ActivateCommand" data-uid="ElectronicParts.ViewModels.NodeViewModel.ActivateCommand">ActivateCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the command to activate the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ICommand ActivateCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Windows.Input.ICommand</span></td>
+        <td><p>The command to activate the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_DecreaseWidthCommand.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.DecreaseWidthCommand%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L133">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_DecreaseWidthCommand_" data-uid="ElectronicParts.ViewModels.NodeViewModel.DecreaseWidthCommand*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_DecreaseWidthCommand" data-uid="ElectronicParts.ViewModels.NodeViewModel.DecreaseWidthCommand">DecreaseWidthCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the command to decrease the width of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ICommand DecreaseWidthCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Windows.Input.ICommand</span></td>
+        <td><p>The command to decrease the width of the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_DeleteCommand.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.DeleteCommand%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L139">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_DeleteCommand_" data-uid="ElectronicParts.ViewModels.NodeViewModel.DeleteCommand*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_DeleteCommand" data-uid="ElectronicParts.ViewModels.NodeViewModel.DeleteCommand">DeleteCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the command to delete the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ICommand DeleteCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Windows.Input.ICommand</span></td>
+        <td><p>The command to delete the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_Description.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.Description%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L145">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_Description_" data-uid="ElectronicParts.ViewModels.NodeViewModel.Description*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_Description" data-uid="ElectronicParts.ViewModels.NodeViewModel.Description">Description</h4>
+  <div class="markdown level1 summary"><p>Gets the description of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Description { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>The description of the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_IncreaseWidthCommand.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.IncreaseWidthCommand%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L151">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_IncreaseWidthCommand_" data-uid="ElectronicParts.ViewModels.NodeViewModel.IncreaseWidthCommand*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_IncreaseWidthCommand" data-uid="ElectronicParts.ViewModels.NodeViewModel.IncreaseWidthCommand">IncreaseWidthCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the command to increase the width of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ICommand IncreaseWidthCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Windows.Input.ICommand</span></td>
+        <td><p>The command to increase the width of the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_Inputs.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.Inputs%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L157">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_Inputs_" data-uid="ElectronicParts.ViewModels.NodeViewModel.Inputs*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_Inputs" data-uid="ElectronicParts.ViewModels.NodeViewModel.Inputs">Inputs</h4>
+  <div class="markdown level1 summary"><p>Gets the input pins of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObservableCollection&lt;PinViewModel&gt; Inputs { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.ObjectModel.ObservableCollection</span>&lt;<a class="xref" href="ElectronicParts.ViewModels.PinViewModel.html">PinViewModel</a>&gt;</td>
+        <td><p>The input pins of the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_Label.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.Label%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L163">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_Label_" data-uid="ElectronicParts.ViewModels.NodeViewModel.Label*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_Label" data-uid="ElectronicParts.ViewModels.NodeViewModel.Label">Label</h4>
+  <div class="markdown level1 summary"><p>Gets the label of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Label { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>The label of the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_Left.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.Left%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L169">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_Left_" data-uid="ElectronicParts.ViewModels.NodeViewModel.Left*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_Left" data-uid="ElectronicParts.ViewModels.NodeViewModel.Left">Left</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the left of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Left { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The left of the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_MaxPins.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.MaxPins%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L202">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_MaxPins_" data-uid="ElectronicParts.ViewModels.NodeViewModel.MaxPins*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_MaxPins" data-uid="ElectronicParts.ViewModels.NodeViewModel.MaxPins">MaxPins</h4>
+  <div class="markdown level1 summary"><p>Gets the maximum number of input or output pins.
+Returns number of input pins if greater than output pins, otherwise returns number of output pins.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaxPins { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The maximum number of input or output pins.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_Node.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.Node%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L214">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_Node_" data-uid="ElectronicParts.ViewModels.NodeViewModel.Node*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_Node" data-uid="ElectronicParts.ViewModels.NodeViewModel.Node">Node</h4>
+  <div class="markdown level1 summary"><p>Gets the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDisplayableNode Node { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Shared.IDisplayableNode.html">IDisplayableNode</a></td>
+        <td><p>The node of this view model.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_Outputs.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.Outputs%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L220">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_Outputs_" data-uid="ElectronicParts.ViewModels.NodeViewModel.Outputs*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_Outputs" data-uid="ElectronicParts.ViewModels.NodeViewModel.Outputs">Outputs</h4>
+  <div class="markdown level1 summary"><p>Gets the output pins of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObservableCollection&lt;PinViewModel&gt; Outputs { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.ObjectModel.ObservableCollection</span>&lt;<a class="xref" href="ElectronicParts.ViewModels.PinViewModel.html">PinViewModel</a>&gt;</td>
+        <td><p>The output pins of the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_Picture.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.Picture%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L226">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_Picture_" data-uid="ElectronicParts.ViewModels.NodeViewModel.Picture*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_Picture" data-uid="ElectronicParts.ViewModels.NodeViewModel.Picture">Picture</h4>
+  <div class="markdown level1 summary"><p>Gets the picture of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bitmap Picture { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Bitmap</span></td>
+        <td><p>The picture of the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_Top.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.Top%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L232">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_Top_" data-uid="ElectronicParts.ViewModels.NodeViewModel.Top*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_Top" data-uid="ElectronicParts.ViewModels.NodeViewModel.Top">Top</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the top of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Top { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The top of the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_Type.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.Type%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L256">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_Type_" data-uid="ElectronicParts.ViewModels.NodeViewModel.Type*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_Type" data-uid="ElectronicParts.ViewModels.NodeViewModel.Type">Type</h4>
+  <div class="markdown level1 summary"><p>Gets the type of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NodeType Type { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Shared.NodeType.html">NodeType</a></td>
+        <td><p>The type of the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_Width.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L262">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_Width_" data-uid="ElectronicParts.ViewModels.NodeViewModel.Width*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_Width" data-uid="ElectronicParts.ViewModels.NodeViewModel.Width">Width</h4>
+  <div class="markdown level1 summary"><p>Gets the width of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Width { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>The width of the node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_AddDelegate.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.AddDelegate%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L287">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_AddDelegate_" data-uid="ElectronicParts.ViewModels.NodeViewModel.AddDelegate*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_AddDelegate" data-uid="ElectronicParts.ViewModels.NodeViewModel.AddDelegate">AddDelegate()</h4>
+  <div class="markdown level1 summary"><p>Adds the delegate NodePictureChanged to the PictureChanged event of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddDelegate()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_AddInputPins_System_Collections_Generic_IEnumerable_Shared_IPin__.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.AddInputPins(System.Collections.Generic.IEnumerable%7BShared.IPin%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L297">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_AddInputPins_" data-uid="ElectronicParts.ViewModels.NodeViewModel.AddInputPins*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_AddInputPins_System_Collections_Generic_IEnumerable_Shared_IPin__" data-uid="ElectronicParts.ViewModels.NodeViewModel.AddInputPins(System.Collections.Generic.IEnumerable{Shared.IPin})">AddInputPins(IEnumerable&lt;IPin&gt;)</h4>
+  <div class="markdown level1 summary"><p>Adds the input pins.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddInputPins(IEnumerable&lt;IPin&gt; pins)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Shared.IPin.html">IPin</a>&gt;</td>
+        <td><span class="parametername">pins</span></td>
+        <td><p>The input pins.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_AddOutputPins_System_Collections_Generic_IEnumerable_Shared_IPin__.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.AddOutputPins(System.Collections.Generic.IEnumerable%7BShared.IPin%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L319">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_AddOutputPins_" data-uid="ElectronicParts.ViewModels.NodeViewModel.AddOutputPins*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_AddOutputPins_System_Collections_Generic_IEnumerable_Shared_IPin__" data-uid="ElectronicParts.ViewModels.NodeViewModel.AddOutputPins(System.Collections.Generic.IEnumerable{Shared.IPin})">AddOutputPins(IEnumerable&lt;IPin&gt;)</h4>
+  <div class="markdown level1 summary"><p>Adds the output pins.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddOutputPins(IEnumerable&lt;IPin&gt; pins)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Shared.IPin.html">IPin</a>&gt;</td>
+        <td><span class="parametername">pins</span></td>
+        <td><p>The output pins.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_RemoveDelegate.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.RemoveDelegate%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L340">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_RemoveDelegate_" data-uid="ElectronicParts.ViewModels.NodeViewModel.RemoveDelegate*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_RemoveDelegate" data-uid="ElectronicParts.ViewModels.NodeViewModel.RemoveDelegate">RemoveDelegate()</h4>
+  <div class="markdown level1 summary"><p>Removes the delegate NodePictureChanged from the PictureChanged event of the node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveDelegate()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_SnapToNewGrid_System_Int32_.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.SnapToNewGrid(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L350">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_SnapToNewGrid_" data-uid="ElectronicParts.ViewModels.NodeViewModel.SnapToNewGrid*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_SnapToNewGrid_System_Int32_" data-uid="ElectronicParts.ViewModels.NodeViewModel.SnapToNewGrid(System.Int32)">SnapToNewGrid(Int32)</h4>
+  <div class="markdown level1 summary"><p>Snaps to grid.
+Will round to the next possible value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SnapToNewGrid(int gridSize)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">gridSize</span></td>
+        <td><p>Size of the grid.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_SnapToNewGrid_System_Int32_System_Boolean_.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.SnapToNewGrid(System.Int32%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L371">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_SnapToNewGrid_" data-uid="ElectronicParts.ViewModels.NodeViewModel.SnapToNewGrid*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_SnapToNewGrid_System_Int32_System_Boolean_" data-uid="ElectronicParts.ViewModels.NodeViewModel.SnapToNewGrid(System.Int32,System.Boolean)">SnapToNewGrid(Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Snaps to grid.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SnapToNewGrid(int gridSize, bool floor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">gridSize</span></td>
+        <td><p>Size of the grid.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">floor</span></td>
+        <td><p>If set to true will floor value else will ceil value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_Update.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.Update%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L404">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_Update_" data-uid="ElectronicParts.ViewModels.NodeViewModel.Update*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_Update" data-uid="ElectronicParts.ViewModels.NodeViewModel.Update">Update()</h4>
+  <div class="markdown level1 summary"><p>Updates the (picture of the) node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Update()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel_UpdatePosition.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel.UpdatePosition%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L412">View Source</a>
+  </span>
+  <a id="ElectronicParts_ViewModels_NodeViewModel_UpdatePosition_" data-uid="ElectronicParts.ViewModels.NodeViewModel.UpdatePosition*"></a>
+  <h4 id="ElectronicParts_ViewModels_NodeViewModel_UpdatePosition" data-uid="ElectronicParts.ViewModels.NodeViewModel.UpdatePosition">UpdatePosition()</h4>
+  <div class="markdown level1 summary"><p>Updates the position of the outputs pins.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdatePosition()</code></pre>
+  </div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.ComponentModel.INotifyPropertyChanged</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/LeqxCodes/ElectronicParts/new/master/apiSpec/new?filename=ElectronicParts_ViewModels_NodeViewModel.md&amp;value=---%0Auid%3A%20ElectronicParts.ViewModels.NodeViewModel%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/LeqxCodes/ElectronicParts/blob/master/ElectronicParts.ViewModel/NodeViewModel.cs/#L26" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
