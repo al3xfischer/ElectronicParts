@@ -1239,7 +1239,7 @@ namespace ElectronicParts.ViewModels
         /// <returns>An Enumerable containing all connector view models per node.</returns>
         public IEnumerable<ConnectorViewModel> GetConnectorViewModels(IEnumerable<NodeViewModel> nodeVms, IEnumerable<ConnectorViewModel> connectorVms)
         {
-            var pinVms = this.nodes.SelectMany(n => n.Inputs.Concat(n.Outputs));
+            var pinVms = nodeVms.SelectMany(n => n.Inputs.Concat(n.Outputs));
             return connectorVms.Where(c => pinVms.Contains(c.Input) || pinVms.Contains(c.Output));
         }
 
@@ -1440,9 +1440,10 @@ namespace ElectronicParts.ViewModels
 
             if (!(this.InputPin is null))
             {
-                if (this.pinConnectorService.HasConnection(this.InputPin.Pin) && !(this.OutputPin is null))
+                this.ResetPossibleConnections();
+                if (this.pinConnectorService.HasConnection(this.InputPin.Pin) || !(this.OutputPin is null))
                 {
-                    this.InputPin = null;
+                    this.ResetPreviewLine();
                 }
                 else
                 {

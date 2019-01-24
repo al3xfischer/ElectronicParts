@@ -1,6 +1,6 @@
 ﻿// ***********************************************************************
 // Assembly         : ElectronicParts
-// Author           : 
+// Author           : Alexander Fischer, Peter Helf, Roman Jahn, Kevin Janisch
 // ***********************************************************************
 // <copyright file="MainWindow.xaml.cs" company="FHWN">
 //     Copyright ©  2019
@@ -20,13 +20,14 @@ namespace ElectronicParts.Views
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
+    using System.Windows.Shapes;
     using ElectronicParts.DI;
     using ElectronicParts.Services.Interfaces;
     using ElectronicParts.ViewModels;
+    using MahApps.Metro.Controls;
     using Microsoft.Extensions.Logging;
     using Microsoft.Win32;
-    using MahApps.Metro.Controls;
-
+    using Point = System.Windows.Point;
 
     /// <summary>
     /// Interaction logic for MainWindow.
@@ -74,6 +75,21 @@ namespace ElectronicParts.Views
         private FrameworkElement selectionRectangle;
 
         /// <summary>
+        /// The start point of the mouse drag.
+        /// </summary>
+        private Point? startPoint;
+
+        /// <summary>
+        /// The selection rectangle.
+        /// </summary>
+        private Rectangle rectangle;
+
+        /// <summary>
+        /// The moved the selection rectangle.
+        /// </summary>
+        private bool movedSelection;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
         public MainWindow()
@@ -118,7 +134,7 @@ namespace ElectronicParts.Views
             System.Windows.Point currentMousePosition = Mouse.GetPosition(this.canvas);
             var left = Math.Min(currentMousePosition.X, this.anchorPoint.X);
             var top = Math.Min(currentMousePosition.Y, this.anchorPoint.Y);
-            var rect = new Rect(new Point(left, top), new Size(this.selectionRectangle.Width, this.selectionRectangle.Height));
+            var rect = new Rect(new Point(left, top), new System.Windows.Size(this.selectionRectangle.Width, this.selectionRectangle.Height));
             var geometry = new RectangleGeometry(rect);
             VisualTreeHelper.HitTest(this.canvas, new HitTestFilterCallback(this.HitTestFilter), new HitTestResultCallback(this.HitTestTesultHandler), new GeometryHitTestParameters(geometry));
         }
@@ -312,6 +328,7 @@ namespace ElectronicParts.Views
                 return;
             }
 
+            this.startPoint = null;
             this.ViewModel.SelectedNodes.Clear();
             this.ViewModel.SelectedConntectors.Clear();
 
@@ -455,7 +472,27 @@ namespace ElectronicParts.Views
                 this.DragSelection();
             }
 
-            if (e.LeftButton == MouseButtonState.Pressed && !(this.currentNode is null))
+            if (e.LeftButton == MouseButtonState.Pressed && !this.isDragging && this.currentNode is null && this.startPoint.HasValue)
+            {
+                var currentPosition = e.GetPosition(this.canvas);
+
+                foreach (var nodeVm in this.ViewModel.SelectedNodes)
+                {
+                    nodeVm.Left -= this.startPoint.Value.X - currentPosition.X;
+                    nodeVm.Top -= this.startPoint.Value.Y - currentPosition.Y;
+                }
+
+                var left = Canvas.GetLeft(this.rectangle);
+                var top = Canvas.GetTop(this.rectangle);
+                left -= this.startPoint.Value.X - currentPosition.X;
+                top -= this.startPoint.Value.Y - currentPosition.Y;
+                Canvas.SetLeft(this.rectangle, left);
+                Canvas.SetTop(this.rectangle, top);
+                this.startPoint = currentPosition;
+                this.movedSelection = true;
+            }
+
+            if (e.LeftButton == MouseButtonState.Pressed && !(this.currentNode is null) && !this.isDragging)
             {
                 var point = e.GetPosition(this.canvas);
 
@@ -524,6 +561,44 @@ namespace ElectronicParts.Views
         private void About_Click(object sender, RoutedEventArgs e)
         {
             new About().ShowDialog();
+        }
+
+        /// <summary>
+        /// Handles the MouseLeftButtonDown event of the Rectangle control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+        private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.startPoint = Mouse.GetPosition(this.canvas);
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Handles the Loaded event of the Rectangle control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Rectangle_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.rectangle = (Rectangle)sender;
+        }
+
+        /// <summary>
+        /// Handles the MouseLeftButtonUp event of the Rectangle control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+        private void Rectangle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.startPoint.HasValue && !this.movedSelection)
+            {
+                this.ResetSelection();
+            }
+            else
+            {
+                this.movedSelection = false;
+            }
         }
     }
 }

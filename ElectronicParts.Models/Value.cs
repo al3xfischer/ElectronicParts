@@ -10,12 +10,14 @@
 
 namespace ElectronicParts.Models
 {
+    using System;
     using Shared;
 
     /// <summary>
     /// Represents the <see cref="Value{T}"/> class.
     /// </summary>
     /// <typeparam name="T">The type of the value.</typeparam>
+    [Serializable]
     public class Value<T> : IValueGeneric<T>
     {
         /// <summary>
