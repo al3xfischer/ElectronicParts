@@ -72,9 +72,18 @@ namespace ElectronicParts.ViewModels
                 {
                     if (this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
                     {
-                        var offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount);
+                        double offset;
+                        int pinCount;
+                        offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out pinCount);
+                        
                         var step = offset < 0 ? pinCount * -10 : pinCount * 10;
-                        return new Point(this.Input.Left - (Math.Abs(offset) * 10), this.Input.Top + step);
+
+                        if (this.helperService.IsInputsMore(this.Input.Pin))
+                        {
+                            return new Point(this.Input.Left - (Math.Abs(offset) * 10), this.Input.Top + step);
+                        }
+
+                        return new Point(this.Input.Left - (Math.Abs(offset) * 10), this.Output.Top + step);
                     }
 
                     return new Point(this.Input.Left - (10 * multipleConnectionsOffset) - multipleOutputPinsOffset, ((this.Input.Top + this.Output.Top) / 2) + multipleOutputPinsOffset);
@@ -94,14 +103,23 @@ namespace ElectronicParts.ViewModels
             {
                 var multipleConnectionsOffset = this.helperService.MultipleConnectionsOffset(this.Output.Pin, this.Connector);
                 var multipleOutputPinsOffset = this.helperService.GetMultipleOutputOffset(this.Output.Pin) * 10;
+                
 
                 if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
                 {
                     if (this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
                     {
-                        var offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount);
+                        double offset;
+                        int pinCount;
+                        offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out pinCount);
+
                         var step = offset < 0 ? pinCount * -10 : pinCount * 10;
-                        return new Point(this.Output.Left + (Math.Abs(offset) * 10), this.Input.Top + step);
+                        if (this.helperService.IsInputsMore(this.Input.Pin))
+                        {
+                            return new Point(this.Output.Left + (Math.Abs(offset) * 10), this.Input.Top + step);
+                        }
+                       
+                        return new Point(this.Output.Left + (Math.Abs(offset) * 10), this.Output.Top + step);
                     }
 
                     return new Point(this.Output.Left + (10 * multipleConnectionsOffset) + multipleOutputPinsOffset, ((this.Input.Top + this.Output.Top) / 2) + multipleOutputPinsOffset);

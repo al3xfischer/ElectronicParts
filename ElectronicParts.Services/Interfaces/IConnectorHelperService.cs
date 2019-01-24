@@ -68,5 +68,12 @@ namespace ElectronicParts.Services.Interfaces
         /// <param name="con">The connector the pin is a part of.</param>
         /// <returns>The required offset as integer.</returns>
         int MultipleConnectionsOffset(IPin outputPin, Connector con);
+
+        /// <summary>
+        /// Determines whether the containing node has more inputs or outputs.
+        /// </summary>
+        /// <param name="pin">The pin.</param>
+        /// <returns>True if is inputs more the specified pin and otherwise, False.</returns>
+        bool IsInputsMore(IPin pin);
     }
 }
