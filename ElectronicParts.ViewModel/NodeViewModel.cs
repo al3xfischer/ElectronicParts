@@ -12,6 +12,7 @@ namespace ElectronicParts.ViewModels
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Linq;
     using System.Windows.Input;
@@ -109,7 +110,14 @@ namespace ElectronicParts.ViewModels
                 }
             });
 
-            this.Node.PictureChanged += this.NodePictureChanged;
+            try
+            {
+                this.Node.PictureChanged += this.NodePictureChanged;
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("An exception occured while subscribing to the PictureChanged event of the node.");
+            }
         }
 
         /// <summary>
