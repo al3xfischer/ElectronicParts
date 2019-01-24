@@ -9,27 +9,25 @@ using System.Threading.Tasks;
 namespace ElectronicParts.Components
 {
     [Serializable]
-    public class IntInverser : IDisplayableNode
+    public class Inverter : IDisplayableNode
     {
-        private DateTime lastChange;
-
-        public IntInverser()
+        public Inverter()
         {
-            this.Inputs = new List<IPin>() { new Pin<bool>(), new Pin<int>() };
+            this.Inputs = new List<IPin>() { new Pin<bool>() };
 
-            this.Outputs = new List<IPin>() { new Pin<int>() };
+            this.Outputs = new List<IPin>() { new Pin<bool>() };
         }
         public ICollection<IPin> Inputs { get; }
 
         public ICollection<IPin> Outputs { get; }
 
-        public string Label => "IntInverser";
+        public string Label => "Inverter";
 
-        public string Description => "Inverses the incoming integer if the incoming boolean is true.";
+        public string Description => "Inverts the incoming boolean.";
 
         public NodeType Type => NodeType.Logic;
 
-        public Bitmap Picture => Properties.Resources.Timer;
+        public Bitmap Picture => Properties.Resources.Inverter;
 
         public event EventHandler PictureChanged;
 
@@ -40,10 +38,7 @@ namespace ElectronicParts.Components
 
         public void Execute()
         {
-            if ((bool)this.Inputs.ElementAt(0).Value.Current)
-            {
-
-            }
+            this.Outputs.ElementAt(0).Value.Current = !(bool)this.Inputs.ElementAt(0).Value.Current;
         }
     }
 }
