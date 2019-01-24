@@ -599,7 +599,7 @@ namespace ElectronicParts.ViewModels
             {
                 foreach (var node in this.SelectedNodes)
                 {
-                    this.Nodes.Remove(node);
+                    this.DeleteNodeCommand.Execute(node);
                 }
 
                 this.SelectedNodes.Clear();
