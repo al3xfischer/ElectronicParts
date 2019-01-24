@@ -617,7 +617,7 @@ namespace ElectronicParts.ViewModels
                     // remove all connectors from UI
                     foreach (var connectorVm in selectedConns)
                     {
-                        this.Connections.Remove(connectorVm);
+                        this.RemoveConnection(connectorVm, connectorVm.Connector);
                     }
 
                     // connections to be cut
