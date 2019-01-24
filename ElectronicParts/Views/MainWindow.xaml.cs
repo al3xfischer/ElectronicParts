@@ -1,6 +1,6 @@
 ﻿// ***********************************************************************
 // Assembly         : ElectronicParts
-// Author           : 
+// Author           : Alexander Fischer, Peter Helf, Roman Jahn, Kevin Janisch
 // ***********************************************************************
 // <copyright file="MainWindow.xaml.cs" company="FHWN">
 //     Copyright ©  2019
@@ -24,11 +24,10 @@ namespace ElectronicParts.Views
     using ElectronicParts.DI;
     using ElectronicParts.Services.Interfaces;
     using ElectronicParts.ViewModels;
+    using MahApps.Metro.Controls;
     using Microsoft.Extensions.Logging;
     using Microsoft.Win32;
-    using MahApps.Metro.Controls;
     using Point = System.Windows.Point;
-
 
     /// <summary>
     /// Interaction logic for MainWindow.
