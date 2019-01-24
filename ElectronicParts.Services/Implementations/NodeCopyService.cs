@@ -29,6 +29,7 @@ namespace ElectronicParts.Services.Implementations
         /// Represents the pin connector service.
         /// </summary>
         private readonly IPinConnectorService connectorService;
+        private readonly IPinCreatorService pinCreatorService;
 
         /// <summary>
         /// Represents the connectors which are to be copied.
@@ -60,11 +61,12 @@ namespace ElectronicParts.Services.Implementations
         /// </summary>
         /// <param name="connectorService">The connector service.</param>
         /// <exception cref="ArgumentNullException">Gets throws if the injected <see cref="PinConnectorService"/> is null.</exception>
-        public NodeCopyService(IPinConnectorService connectorService)
+        public NodeCopyService(IPinConnectorService connectorService, IPinCreatorService pinCreatorService)
         {
             this.copiedConnectors = new List<Connector>();
             this.copiedNodes = new List<IDisplayableNode>();
             this.connectorService = connectorService ?? throw new ArgumentNullException(nameof(connectorService));
+            this.pinCreatorService = pinCreatorService ?? throw new ArgumentNullException(nameof(pinCreatorService));
             this.nodesToCopy = Enumerable.Empty<IDisplayableNode>();
             this.connectorsToCopy = Enumerable.Empty<Connector>();
         }
@@ -173,9 +175,19 @@ namespace ElectronicParts.Services.Implementations
                 var inputPinsDest = copiedNodes.SelectMany(node => node.Inputs);
                 var outputPinsDest = copiedNodes.SelectMany(node => node.Outputs);
 
-                foreach (var node in this.nodesToCopy)
+                for (int i = 0; i < this.nodesToCopy.Count(); i++)
                 {
-                    copiedNodes.Add(Activator.CreateInstance(node?.GetType()) as IDisplayableNode);
+                    var node = nodesToCopy.ElementAt(i);
+                    var newNode = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;                    
+
+                    for (int j = newNode.Inputs.Count; j < nodesToCopy.ElementAt(i).Inputs.Count; j++)
+                    {
+                        var newPin = this.pinCreatorService.CreatePin(nodesToCopy.ElementAt(i).Inputs.ElementAt(j).Value.Current.GetType());
+                        newNode.Inputs.Add(newPin);
+                    }
+
+                    copiedNodes.Add(newNode);
+
                     this.copiedNodes = copiedNodes;
                 }
 
