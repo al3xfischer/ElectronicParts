@@ -1049,7 +1049,16 @@ namespace ElectronicParts.ViewModels
         /// <value>The command to open the user manual PDF.</value>
         public ICommand UserManualCommand { get; }
 
+        /// <summary>
+        /// Gets the documentation command.
+        /// </summary>
+        /// <value>The documentation command.</value>
         public ICommand DocumentationCommand { get; }
+
+        /// <summary>
+        /// Gets the documentation online command.
+        /// </summary>
+        /// <value>The documentation online command.</value>
         public ICommand DocumentationOnlineCommand { get; }
 
         /// <summary>
