@@ -7,7 +7,7 @@ namespace ElectronicParts.Services.Interfaces
     {
         IEnumerable<IDisplayableNode> ExistingNodes { get; set; }
 
-        double GetOffset(IPin input, IPin output);
+        double GetOffset(IPin input, IPin output, out int pinCount);
         bool IsSelfConnecting(IPin input, IPin output);
     }
 }

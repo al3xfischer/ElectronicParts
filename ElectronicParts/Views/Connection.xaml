@@ -28,7 +28,7 @@
                 </MultiBinding>
             </TextBlock.Margin>
         </TextBlock>
-        <Path Stroke="{Binding CurrentValue, Converter={StaticResource valueToColor} }" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round" MouseDown="UserControl_MouseDown">
+        <Path Stroke="{Binding CurrentValue, Converter={StaticResource valueToColor} }" StrokeThickness="3" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
             <Path.Data>
                 <PathGeometry>
                     <PathGeometry.Figures>
