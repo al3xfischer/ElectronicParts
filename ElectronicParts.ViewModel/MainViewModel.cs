@@ -239,24 +239,6 @@ namespace ElectronicParts.ViewModels
             this.GridSnappingEnabled = true;
             this.GridSize = 10;
 
-            this.IncreaseGridSize = new RelayCommand(
-                arg =>
-            {
-                this.GridSize++;
-                this.reSnappingTimer.Stop();
-                this.reSnappingTimer.Start();
-            },
-            arg => this.GridSize < 30);
-
-            this.DecreaseGridSize = new RelayCommand(
-                arg =>
-            {
-                this.GridSize--;
-                this.reSnappingTimer.Stop();
-                this.reSnappingTimer.Start();
-            },
-            arg => this.GridSize > 5);
-
             this.SaveCommand = new RelayCommand(arg =>
             {
                 SnapShot snapShot = SnapShotConverter.Convert(this.Nodes, this.connections);
@@ -920,12 +902,6 @@ namespace ElectronicParts.ViewModels
         public ICommand CutCommand { get; }
 
         /// <summary>
-        /// Gets a command which decreases the cell size of the visible grid.
-        /// </summary>
-        /// <value>A command which decreases the cell size of the visible grid.</value>
-        public ICommand DecreaseGridSize { get; }
-
-        /// <summary>
         /// Gets the delete command.
         /// </summary>
         /// <value>The delete command.</value>
@@ -1060,12 +1036,6 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <value>The documentation online command.</value>
         public ICommand DocumentationOnlineCommand { get; }
-
-        /// <summary>
-        /// Gets a command which increases the cell size of the visible grid.
-        /// </summary>
-        /// <value>A command which increases the cell size of the visible grid.</value>
-        public ICommand IncreaseGridSize { get; }
 
         /// <summary>
         /// Gets or sets the currently selected input pin.
@@ -1515,6 +1485,17 @@ namespace ElectronicParts.ViewModels
                 connection = newConnection;
                 connectionVM = new ConnectorViewModel(newConnection, input, output, this.DeleteConnectionCommand, this.connectorHelperService);
                 this.Connections.Add(connectionVM);
+                try
+                {
+                    foreach (var conn in this.Connections.Where(connVM => connVM.Input == input || connVM.Output == output))
+                    {
+                        conn.UpdateLine();
+                    }
+                }
+                catch
+                {
+
+                }
             }
 
             this.InputPin = null;

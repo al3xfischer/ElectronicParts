@@ -365,6 +365,7 @@ namespace ElectronicParts.Views
                 var vm = item.DataContext as NodeViewModel;
                 if (!(vm is null) && this.ViewModel.AddNodeCommand.CanExecute(null))
                 {
+                    (sender as ListView).UnselectAll();
                     this.ViewModel.AddNodeCommand.Execute(vm.Node);
                 }
             }

@@ -57,7 +57,6 @@
             <CollectionContainer Collection="{Binding  Source={StaticResource PreviewLines}}"/>
             <Rectangle Fill="LightBlue" Opacity="0.4"  x:Uid="selectRect" Visibility="Collapsed" MouseLeftButtonDown="Rectangle_MouseLeftButtonDown" MouseLeftButtonUp="Rectangle_MouseLeftButtonUp" Loaded="Rectangle_Loaded" />
         </CompositeCollection>
-
     </Controls:MetroWindow.Resources>
 
     <!-- Shortcuts -->
@@ -74,7 +73,7 @@
 
     <DockPanel MouseRightButtonDown="DockPanel_MouseRightButtonDown">
         <!-- Menu -->
-        <Menu Background="WhiteSmoke" BorderThickness="0,0,0,1" BorderBrush="DarkGray" DockPanel.Dock="Top" FontSize="14" >
+        <Menu  BorderThickness="0,0,0,1" BorderBrush="DarkGray" DockPanel.Dock="Top" FontSize="14" >
             <MenuItem Header="_File">
                 <MenuItem Header="_Save" Command="{Binding ViewModel.SaveCommand}" InputGestureText="Ctrl+S" />
                 <MenuItem Header="_Open" Command="{Binding ViewModel.LoadCommand}" InputGestureText="Ctrl+O" />
@@ -108,7 +107,7 @@
             <Border DockPanel.Dock="Top" BorderBrush="DarkGray" BorderThickness="0 0 0 1.4">
                 <ComboBox VerticalContentAlignment="Center" Height="41" Margin="0 0 1 0" BorderThickness="0" ItemsSource="{Binding ViewModel.NodeCategories}" SelectedItem="{Binding ViewModel.SelectedCategory, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     <ComboBox.Effect>
-                            <DropShadowEffect Opacity="0.4" ShadowDepth="1" BlurRadius="1" Direction="270" />
+                        <DropShadowEffect Opacity="0.4" ShadowDepth="1" BlurRadius="1" Direction="270" />
                     </ComboBox.Effect>
                     <ComboBox.ItemTemplate>
                         <ItemContainerTemplate>
@@ -117,7 +116,8 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </Border>
-                <ListView DockPanel.Dock="Top"
+            <ListView 
+                        DockPanel.Dock="Top"
                       Height="Auto"
                       BorderThickness="0 0 1 0"
                       ItemsSource="{Binding ViewModel.AvailableNodes}"
@@ -126,42 +126,43 @@
                       Name="AvilableNodes"
                       PreviewMouseLeftButtonDown="ListViewItem_MouseLeftButtonDown"
                       >
-                    <ListView.Style>
-                        <Style TargetType="ListView">
-                            <Style.Triggers>
+                <ListView.Style>
+                    <Style TargetType="ListView">
+                        <Style.Triggers>
                             <DataTrigger Value="false">
-                                    <DataTrigger.Binding>
-                                        <Binding Path="ViewModel.CanAddNode"/>
-                                    </DataTrigger.Binding>
-                                    <Setter Property="Background" Value="LightGray"/>
-                                    <Setter Property="IsHitTestVisible" Value="False"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                            <Style.Setters>
-                                <Setter Property="Background" Value="WhiteSmoke"/>
-                            </Style.Setters>
-                        </Style>
-                    </ListView.Style>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Style.Triggers>
-                                <DataTrigger Value="False">
-                                    <DataTrigger.Binding>
-                                        <Binding Path="ViewModel.CanAddNode" ElementName="mainW"/>
-                                    </DataTrigger.Binding>
-                                    <Setter Property="Opacity" Value="0.4"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                            <Style.Setters>
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                <Setter Property="Opacity" Value="1"/>
-                                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseLeftButtonDown"/>
-                            </Style.Setters>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
+                                <DataTrigger.Binding>
+                                    <Binding Path="ViewModel.CanAddNode"/>
+                                </DataTrigger.Binding>
+                                <Setter Property="Background" Value="LightGray"/>
+                                <Setter Property="IsHitTestVisible" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                        <Style.Setters>
+                            <Setter Property="Background" Value="WhiteSmoke"/>
+                        </Style.Setters>
+                    </Style>
+                </ListView.Style>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Style.Triggers>
+                            <DataTrigger Value="False">
+                                <DataTrigger.Binding>
+                                    <Binding Path="ViewModel.CanAddNode" ElementName="mainW"/>
+                                </DataTrigger.Binding>
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                        <Style.Setters>
+                            <Setter Property="Focusable" Value="false"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Opacity" Value="1"/>
+                            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_MouseLeftButtonDown"/>
+                        </Style.Setters>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
         </DockPanel>
-        
+
 
         <!-- Controls and ItemsDisplay -->
         <DockPanel Margin="-1 1 0 0" Background="LightGray" DockPanel.Dock="Right">
@@ -178,7 +179,7 @@
                         <Style x:Name="RoundedButton" TargetType="{x:Type Button}">
                             <Setter Property="Margin" Value="10,0,0,0"/>
                             <Setter Property="BorderThickness" Value="0"/>
-                            
+
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type Button}">
@@ -288,33 +289,25 @@
                             </Image>
                         </Button>
                         <Button x:Name="redoButton" DockPanel.Dock="Right" Command="{Binding ViewModel.RedoCommand}" ToolTip="Redo">
-                                <Image>
-                                    <Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ElementName=redoButton, Path=IsMouseOver, UpdateSourceTrigger=PropertyChanged}" Value="true">
-                                                    <Setter Property="Source" Value="/Resources/redoMouse.png"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                            <Setter Property="Source" Value="/Resources/redo.png"/>
-                                            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
-                                        </Style>
-                                    </Image.Style>
+                            <Image>
+                                <Image.Style>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=redoButton, Path=IsMouseOver, UpdateSourceTrigger=PropertyChanged}" Value="true">
+                                                <Setter Property="Source" Value="/Resources/redoMouse.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                        <Setter Property="Source" Value="/Resources/redo.png"/>
+                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+                                    </Style>
+                                </Image.Style>
                             </Image>
                         </Button>
                     </DockPanel>
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Height="auto" Margin="0 0 10 0">
                         <TextBlock VerticalAlignment="Center" Text="GridSize: "/>
-                        <TextBlock VerticalAlignment="Center" Text="{Binding ViewModel.GridSize, UpdateSourceTrigger=PropertyChanged}"/>
-                        <StackPanel Margin="8 0 18 0" Orientation="Vertical" VerticalAlignment="Center">
-                            <Button Style="{x:Null}" Height="15" Width="25" Command="{Binding ViewModel.IncreaseGridSize}">
-                                <TextBlock Text="+" Margin="0 0 0 2.5" FontSize="15" LineHeight="15" VerticalAlignment="Center" TextAlignment="Center"/>
-                            </Button>
-                            <Button Style="{x:Null}" Height="15" Width="25" Command="{Binding ViewModel.DecreaseGridSize}">
-                                <TextBlock Text="-" Margin="0 0 0 2.5" FontSize="15" LineHeight="15" VerticalAlignment="Center" TextAlignment="Center"/>
-                            </Button>
-                        </StackPanel>
-                        <TextBlock VerticalAlignment="Center">Snap:</TextBlock>
+                        <Controls:NumericUpDown Margin="0 0 10 0" Minimum="5" Maximum="30" Interval="1" Value="{Binding ViewModel.GridSize}" Background="Transparent" BorderThickness="0"/>
+                        <TextBlock Margin="0 0 3 0" VerticalAlignment="Center">Snap:</TextBlock>
                         <CheckBox VerticalAlignment="Center" IsChecked="{Binding ViewModel.GridSnappingEnabled}"/>
                     </StackPanel>
                 </DockPanel>
@@ -322,7 +315,7 @@
 
             <!-- Nodes Display -->
             <ScrollViewer Name="boardScroller" ScrollChanged="BoardScroller_ScrollChanged" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <ItemsControl HorizontalAlignment="Stretch" BorderBrush="DarkGray" BorderThickness="1 0 0 0" DockPanel.Dock="Bottom" ItemsSource="{StaticResource DisplayItems}" Background="White">
+                <ItemsControl HorizontalAlignment="Stretch" BorderBrush="DarkGray" BorderThickness="1 0 0 0" DockPanel.Dock="Bottom" ItemsSource="{StaticResource DisplayItems}"  Background="White">
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type vm:NodeViewModel}">
                             <local:Node MouseLeftButtonDown="Node_MouseLeftButtonDown" MouseLeftButtonUp="Node_MouseLeftButtonUp" >

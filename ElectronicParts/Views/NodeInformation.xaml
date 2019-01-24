@@ -47,9 +47,10 @@
         <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" MaxWidth="100" TextAlignment="Center" TextTrimming="WordEllipsis" TextWrapping="NoWrap" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
 
         <!-- Inputs -->
-        <ListView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Inputs}" ItemTemplate="{StaticResource PinTemplate}" >
+        <ListView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Inputs}" ItemTemplate="{StaticResource PinTemplate}">
             <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}" >
+            <Style TargetType="{x:Type ListViewItem}" >
+                    
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListViewItem}">
@@ -70,6 +71,16 @@
 
         <!-- Body -->
         <Rectangle Width="50" Stroke="Black" Grid.Column="1" Grid.Row="1" Fill="LightGray" >
+            <Rectangle.Style>
+                <Style TargetType="Rectangle">
+                    <Setter Property="BitmapEffect">
+                        <Setter.Value>
+                            <DropShadowBitmapEffect ShadowDepth="4" Color="Black" Opacity="0.8" Direction="300"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                
+            </Rectangle.Style>
             <Rectangle.Height>
                 <Binding Path="MaxPins">
                     <Binding.Converter>
@@ -78,7 +89,7 @@
                 </Binding>
             </Rectangle.Height>
         </Rectangle>
-        
+
         <Rectangle Width="50" Stroke="Black" Grid.Column="1" Grid.Row="1" >
             <Rectangle.Height>
                 <Binding Path="MaxPins">
