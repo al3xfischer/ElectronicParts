@@ -24,13 +24,13 @@ namespace ElectronicParts.Services.Interfaces
         /// Gets the copied connectors.
         /// </summary>
         /// <value>The copied connectors.</value>
-        IEnumerable<Connector> CopiedConnectors { get; }
+        ICollection<Connector> CopiedConnectors { get; }
 
         /// <summary>
         /// Gets the copied nodes.
         /// </summary>
         /// <value>The copied nodes.</value>
-        IEnumerable<IDisplayableNode> CopiedNodes { get; }
+        ICollection<IDisplayableNode> CopiedNodes { get; }
 
         /// <summary>
         /// Gets a value indicating whether the service has been initialized or not.
