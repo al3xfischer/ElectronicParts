@@ -49,6 +49,7 @@
     <Compile Include="BitToInteger.cs" />
     <Compile Include="BoolLed.cs" />
     <Compile Include="EvilNull.cs" />
+    <Compile Include="IntInverser.cs" />
     <Compile Include="XOrGate.cs" />
     <Compile Include="IntegerAdder.cs" />
     <Compile Include="IntegerDisplay.cs" />
