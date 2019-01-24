@@ -594,7 +594,7 @@ namespace ElectronicParts.ViewModels
 
                 this.RepositionNodes();
             }, 
-            arg => this.nodeCopyService.IsInitialized && this.nodeCopyService.CopiedNodes?.Count() > 0);
+            arg => this.nodeCopyService.IsInitialized && this.nodeCopyService.CopiedNodes?.Count() > 0 && !this.executionService.IsEnabled);
 
             this.DeleteCommand = new RelayCommand(arg => 
             {
@@ -632,7 +632,8 @@ namespace ElectronicParts.ViewModels
                         this.Connections.Add(connVM);
                     }
                 }));
-            });
+            },
+            arg => !this.executionService.IsEnabled);
 
             this.CutCommand = new RelayCommand(
                 arg =>
@@ -675,7 +676,8 @@ namespace ElectronicParts.ViewModels
                         this.Connections.Add(connVM);
                     }
                 }));                
-            });
+            },
+            arg => !this.executionService.IsEnabled);
 
             this.AddInputPinsCommand = new RelayCommand(
                 arg =>
