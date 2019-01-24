@@ -703,6 +703,26 @@ namespace ElectronicParts.ViewModels
             this.SelectedConntectors = new List<ConnectorViewModel>();
             var reloadingTask = this.ReloadAssemblies();
             this.connectorHelperService.ExistingNodes = this.Nodes.Select(nodeVM => nodeVM.Node);
+            this.connectorHelperService.ExistingConnections = this.Connections.Select(connVM => connVM.Connector);
+            this.connectorHelperService.GetHeightMapping = (pin) =>
+            {
+                var connectionVM = this.Connections.FirstOrDefault(connVM => connVM.Input.Pin == pin);
+
+                if (!(connectionVM is null))
+                {
+                    return connectionVM.Input.Top;
+                }
+                else
+                {
+                    connectionVM = this.Connections.FirstOrDefault(connVM => connVM.Output.Pin == pin);
+                    if (connectionVM is null)
+                    {
+                        return 0;
+                    }
+
+                    return connectionVM.Output.Top;
+                }
+            };
             this.logger.LogInformation("Ctor MainVM done");
         }
 

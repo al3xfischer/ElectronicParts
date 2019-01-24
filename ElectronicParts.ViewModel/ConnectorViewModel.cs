@@ -50,6 +50,9 @@ namespace ElectronicParts.ViewModels
         {
             get
             {
+                var x = this.helperService.MultipleConnectionsOffset(this.Output.Pin, this.Connector);
+                var multipleOutputPinsOffset = this.helperService.GetMultipleOutputOffset(this.Output.Pin) * 10;
+
                 if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
                 {
                     if (this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
@@ -58,9 +61,9 @@ namespace ElectronicParts.ViewModels
                         var step = offset < 0 ? pinCount * -10 : pinCount * 10;
                         return new Point(this.Input.Left - Math.Abs(offset) * 10, this.Input.Top + step);
                     }
-                    return new Point(this.Input.Left, ((this.Input.Top + this.Output.Top)) / 2);
+                    return new Point(this.Input.Left - 10 * x - multipleOutputPinsOffset, ((this.Input.Top + this.Output.Top)) / 2 + multipleOutputPinsOffset);
                 }
-                return new Point((this.Input.Left + this.Output.Left) / 2, this.Input.Top);
+                return new Point((this.Input.Left + this.Output.Left) / 2 + x * 10 + multipleOutputPinsOffset, this.Input.Top);
             }
         }
 
@@ -72,6 +75,9 @@ namespace ElectronicParts.ViewModels
         {
             get
             {
+                var x = this.helperService.MultipleConnectionsOffset(this.Output.Pin, this.Connector);
+                var multipleOutputPinsOffset = this.helperService.GetMultipleOutputOffset(this.Output.Pin) * 10;
+
                 if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
                 {
                     if (this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
@@ -80,10 +86,10 @@ namespace ElectronicParts.ViewModels
                         var step = offset < 0 ? pinCount * -10 : pinCount * 10;
                         return new Point(this.Output.Left + Math.Abs(offset) * 10, this.Input.Top + step);
                     }
-                    return new Point((this.Output.Left), (this.Input.Top + this.Output.Top) / 2);
+                    return new Point((this.Output.Left) + 10 * x + multipleOutputPinsOffset, (this.Input.Top + this.Output.Top) / 2 + multipleOutputPinsOffset);
                 }
 
-                return new Point((this.Input.Left + this.Output.Left) / 2, this.Output.Top);
+                return new Point((this.Input.Left + this.Output.Left) / 2 + x * 10 + multipleOutputPinsOffset, this.Output.Top);
             }
         }
 
@@ -93,6 +99,14 @@ namespace ElectronicParts.ViewModels
             {
                 if (!this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
                 {
+                    var x = this.helperService.MultipleConnectionsOffset(this.Output.Pin, this.Connector);
+                    var multipleOutputPinsOffset = this.helperService.GetMultipleOutputOffset(this.Output.Pin) * 10;
+
+                    if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
+                    {
+                        return new Point(this.Input.Left - x * 10 - multipleOutputPinsOffset, this.Input.Top);
+                    }
+
                     return new Point(this.Input.Left, this.Input.Top);
                 }
 
@@ -107,6 +121,14 @@ namespace ElectronicParts.ViewModels
             {
                 if (!this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
                 {
+                    var x = this.helperService.MultipleConnectionsOffset(this.Output.Pin, this.Connector);
+                    var multipleOutputPinsOffset = this.helperService.GetMultipleOutputOffset(this.Output.Pin) * 10;
+
+                    if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
+                    {
+                        return new Point(this.Output.Left + x * 10 + multipleOutputPinsOffset, this.Output.Top);
+                    }
+
                     return new Point(this.Output.Left, this.Output.Top);
                 }
 
