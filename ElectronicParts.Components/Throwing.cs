@@ -23,7 +23,7 @@ namespace ElectronicParts.Components
 
         public Bitmap Picture => throw new NotImplementedException();
 
-        public event EventHandler PictureChanged;
+        public event EventHandler PictureChanged { add { throw new ArgumentException(); } remove { throw new ArgumentException(); } }
 
         public void Activate()
         {
