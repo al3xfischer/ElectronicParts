@@ -11,8 +11,6 @@ namespace ElectronicParts.Components
     [Serializable]
     public class IntInverter : IDisplayableNode
     {
-        private DateTime lastChange;
-
         public IntInverter()
         {
             this.Inputs = new List<IPin>() { new Pin<bool>(), new Pin<int>() };
