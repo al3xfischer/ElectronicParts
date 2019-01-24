@@ -1427,9 +1427,14 @@ namespace ElectronicParts.ViewModels
                 return;
             }
 
+            if (!(this.InputPin is null) && !(this.OutputPin is null))
+            {
+                return;
+            }
+
             if (!(this.InputPin is null))
             {
-                if (this.pinConnectorService.HasConnection(this.InputPin.Pin))
+                if (this.pinConnectorService.HasConnection(this.InputPin.Pin) && !(this.OutputPin is null))
                 {
                     this.InputPin = null;
                 }
