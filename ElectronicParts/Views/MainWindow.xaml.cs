@@ -129,12 +129,14 @@ namespace ElectronicParts.Views
         private void AddAssembly_Click(object sender, RoutedEventArgs e)
         {
             var assemblyPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "assemblies");
-            var fileDialog = new OpenFileDialog();
-            fileDialog.CheckFileExists = true;
-            fileDialog.CheckPathExists = true;
-            fileDialog.AddExtension = true;
-            fileDialog.Multiselect = true;
-            fileDialog.Filter = "Node Assemblies |*.dll";
+            var fileDialog = new OpenFileDialog
+            {
+                CheckFileExists = true,
+                CheckPathExists = true,
+                AddExtension = true,
+                Multiselect = true,
+                Filter = "Node Assemblies |*.dll"
+            };
             var result = fileDialog.ShowDialog();
             if (result.HasValue && result.Value)
             {
