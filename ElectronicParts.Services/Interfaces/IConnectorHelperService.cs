@@ -72,7 +72,7 @@ namespace ElectronicParts.Services.Interfaces
         /// <summary>
         /// Determines whether the containing node has more inputs or outputs.
         /// </summary>
-        /// <param name="pin">The pin.</param>
+        /// <param name="pin">The pin to check the node of.</param>
         /// <returns>True if is inputs more the specified pin and otherwise, False.</returns>
         bool IsInputsMore(IPin pin);
     }

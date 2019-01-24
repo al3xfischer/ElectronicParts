@@ -116,6 +116,16 @@ namespace ElectronicParts.Services.Implementations
         }
 
         /// <summary>
+        /// Determines whether the containing node has more inputs or outputs.
+        /// </summary>
+        /// <param name="pin">The pin to check the node of.</param>
+        /// <returns>True if is inputs more the specified pin and otherwise, False.</returns>
+        public bool IsInputsMore(IPin pin)
+        {
+            return this.GetContainingNode(pin).Inputs?.Count > this.GetContainingNode(pin).Outputs?.Count;
+        }
+
+        /// <summary>
         /// Determines whether the specified input and output pins are part of the same node.
         /// </summary>
         /// <param name="input">The input.</param>
@@ -171,11 +181,6 @@ namespace ElectronicParts.Services.Implementations
         private int GetOutputPinAmount(IPin pin)
         {
             return this.GetContainingNode(pin).Outputs.Count;
-        }
-
-        public bool IsInputsMore(IPin pin)
-        {
-            return this.GetContainingNode(pin).Inputs?.Count > this.GetContainingNode(pin).Outputs?.Count;
         }
     }
 }

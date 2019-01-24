@@ -72,10 +72,8 @@ namespace ElectronicParts.ViewModels
                 {
                     if (this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
                     {
-                        double offset;
-                        int pinCount;
-                        offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out pinCount);
-                        
+                        double offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount);
+
                         var step = offset < 0 ? pinCount * -10 : pinCount * 10;
 
                         if (this.helperService.IsInputsMore(this.Input.Pin))
@@ -103,7 +101,6 @@ namespace ElectronicParts.ViewModels
             {
                 var multipleConnectionsOffset = this.helperService.MultipleConnectionsOffset(this.Output.Pin, this.Connector);
                 var multipleOutputPinsOffset = this.helperService.GetMultipleOutputOffset(this.Output.Pin) * 10;
-                
 
                 if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
                 {
