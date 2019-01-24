@@ -34,16 +34,31 @@
 
         <TextBlock Text="ElectronicParts" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="50"/>
         
-        <TextBlock Grid.Column="1" Text="Version: ..." Grid.Row="1"/>
-        <TextBlock Grid.Column="1" Text="License to:" Grid.Row="2"/>
-        <TextBlock Grid.Column="1" Text="Alexander Fischer" Grid.Row="3"/>
-        <TextBlock Grid.Column="1" Text="Peter Helf" Grid.Row="4"/>
-        <TextBlock Grid.Column="1" Text="Roman Jahn" Grid.Row="5"/>
-        <TextBlock Grid.Column="1" Text="Kevin Janisch" Grid.Row="6"/>
+        <TextBlock Name="VersionTextBlock" Grid.Column="1" Text="" Grid.Row="1" Margin="0 20 0 10"/>
+        <TextBlock Grid.Column="1" Text="Licensed to:" Grid.Row="2"/>
+        <TextBlock Grid.Column="1" Text="Alexander Fischer" Grid.Row="3" Margin="5 10 0 0"/>
+        <TextBlock Grid.Column="1" Text="Peter Helf" Grid.Row="4" Margin="5 0 0 0"/>
+        <TextBlock Grid.Column="1" Text="Roman Jahn" Grid.Row="5" Margin="5 0 0 0"/>
+        <TextBlock Grid.Column="1" Text="Kevin Janisch" Grid.Row="6" Margin="5 0 0 0"/>
 
         <TextBlock Grid.Column="1" Text="All Rights reserved ©" Grid.Row="8" VerticalAlignment="Bottom"/>
-
-        <Image Grid.Column="2" Grid.Row="3" Grid.RowSpan="5" Source="/Resources/EPLogo.png" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"/>
-
+        
+        <Image Opacity="0.1" Grid.Column="2" Grid.Row="3" Grid.RowSpan="5" Source="/Resources/EPLogo.png" RenderOptions.BitmapScalingMode="HighQuality">
+            <Image.RenderTransform>
+                <TransformGroup>
+                   
+                    <ScaleTransform ScaleY="3" CenterY="100" />
+                    <SkewTransform AngleX="-45" CenterY="100" />
+                </TransformGroup>
+            </Image.RenderTransform>
+            <!--<Image.BitmapEffect>
+                <DropShadowBitmapEffect  Color="DarkGray" Direction="300" Opacity="1.0" Softness="1" ShadowDepth="25"/>
+            </Image.BitmapEffect>-->
+        </Image>
+        <Image Opacity="1.0" Grid.Column="2" Grid.Row="3" Grid.RowSpan="5" Source="/Resources/EPLogo.png" RenderOptions.BitmapScalingMode="HighQuality">
+            <Image.BitmapEffect>
+                <DropShadowBitmapEffect  Color="DarkGray" Direction="300" Opacity="1.0" Softness="1" ShadowDepth="25"/>
+            </Image.BitmapEffect>
+        </Image>
     </Grid>
 </Window>

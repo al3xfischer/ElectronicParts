@@ -28,7 +28,10 @@ namespace ElectronicParts.Services.Implementations
         /// <returns>True if connecting was successful, false otherwise.</returns>
         bool TryConnectPins(IPin inputPin, IPin outputPin, out Connector newConnection, bool noConnectionInsertion);
 
-
+        /// <summary>
+        /// Reapplies an existing connection to the involved pins.
+        /// </summary>
+        /// <param name="connectionToAdd">Converts to add.</param>
         void RedoConnection(Connector connectionToAdd);
 
         /// <summary>
@@ -49,7 +52,7 @@ namespace ElectronicParts.Services.Implementations
         /// <summary>
         /// Determines whether the specified pin is involved in a connection.
         /// </summary>
-        /// <param name="pin">The pin to be checked.</param>
+        /// <param name="pin">The pin to check.</param>
         /// <returns>True if the specified pin has a connection and otherwise, False.</returns>
         bool HasConnection(IPin pin);
 

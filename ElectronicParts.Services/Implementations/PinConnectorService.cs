@@ -59,7 +59,7 @@ namespace ElectronicParts.Services.Implementations
         /// <summary>
         /// Determines whether the specified pin is involved in a connection.
         /// </summary>
-        /// <param name="pin">The pin to be checked.</param>
+        /// <param name="pin">The pin to check.</param>
         /// <returns>True if the specified pin has a connection and otherwise, False.</returns>
         public bool HasConnection(IPin pin)
         {
@@ -133,6 +133,10 @@ namespace ElectronicParts.Services.Implementations
             }
         }
 
+        /// <summary>
+        /// Reapplies an existing connection to the involved pins.
+        /// </summary>
+        /// <param name="connectionToAdd">The connection to redo.</param>
         public void RedoConnection(Connector connectionToAdd)
         {
             this.TryConnectPins(connectionToAdd.InputPin, connectionToAdd.OutputPin, out Connector newConnection, true);
