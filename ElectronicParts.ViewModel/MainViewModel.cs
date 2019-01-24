@@ -385,6 +385,7 @@ namespace ElectronicParts.ViewModels
                 foreach (ConnectorViewModel connection in connections)
                 {
                     this.connections.Add(connection);
+                    this.pinConnectorService.ManuallyAddConnectionToExistingConnections(connection.Connector);
                 }
 
                 this.RepositionNodes();
