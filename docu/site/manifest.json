@@ -297,7 +297,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Converter.ConnectionToMarginConverter.html",
-          "hash": "JyBTaYQsOJHTSP/1UVbtzA=="
+          "hash": "xBuQA9uyBVNENPf+icYALA=="
         }
       },
       "is_incremental": false,
@@ -597,7 +597,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Services.Implementations.ConnectorHelperService.html",
-          "hash": "iCbB6S4ey58mYAJc96fvsw=="
+          "hash": "ylEK9WivNksxiLJcohp/mw=="
         }
       },
       "is_incremental": false,
@@ -753,7 +753,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Services.Interfaces.IConnectorHelperService.html",
-          "hash": "GVXQPNH7bFYV7mjKWJEstA=="
+          "hash": "gyr4l6iPnp4DIG/ZZAJ2wg=="
         }
       },
       "is_incremental": false,
@@ -845,78 +845,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/ElectronicParts.Tests.AssemblyTest.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/ElectronicParts.Tests.AssemblyTest.html",
-          "hash": "ABVR2cwOAohWMHQyb042bg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/ElectronicParts.Tests.BoolArrayToByteConverterTest.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/ElectronicParts.Tests.BoolArrayToByteConverterTest.html",
-          "hash": "xG92zmLtYnQjTCddj5w2sw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/ElectronicParts.Tests.ComponentsTests.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/ElectronicParts.Tests.ComponentsTests.html",
-          "hash": "DXhM8Qm7sigD3ucKSjtt6A=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/ElectronicParts.Tests.ExtensionsTest.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/ElectronicParts.Tests.ExtensionsTest.html",
-          "hash": "CnA7cFgw0oS6Y9bXIoceUA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/ElectronicParts.Tests.PinConnectorTest.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/ElectronicParts.Tests.PinConnectorTest.html",
-          "hash": "r8REigisU+BVNT41pSFPWA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/ElectronicParts.Tests.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/ElectronicParts.Tests.html",
-          "hash": "deQU7vY3MzoDuojQV2LhSQ=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/ElectronicParts.ViewModels.BaseViewModel.yml",
       "output": {
         ".html": {
@@ -957,7 +885,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.ViewModels.ConnectorViewModel.html",
-          "hash": "wH3Hoe1wV3370MFBBEvHsw=="
+          "hash": "rX1+OV+X++5NgVN58+ILcw=="
         }
       },
       "is_incremental": false,
@@ -993,7 +921,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.ViewModels.MainViewModel.html",
-          "hash": "sLXciNaKsezXQ8Frzg4NKw=="
+          "hash": "1sUZt8nLFBnFw98+Zr4QvA=="
         }
       },
       "is_incremental": false,
@@ -1101,7 +1029,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Views.Connection.html",
-          "hash": "pFpL6jv35kcuv4Gq4/FS7w=="
+          "hash": "I7fDag5AElgMMTnAuorG9A=="
         }
       },
       "is_incremental": false,
@@ -1389,7 +1317,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "qmhvn9ag/A5QXBQeA29YiA=="
+          "hash": "KZSa9v5lZqpM1/fOXvVipw=="
         }
       },
       "is_incremental": false,

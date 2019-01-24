@@ -73,7 +73,7 @@ namespace ElectronicParts.Views
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.connectorViewModel = (e.Source as FrameworkElement).DataContext as ConnectorViewModel;
-            connectorViewModel.PropertyChanged += (vm, args) => Application.Current.Dispatcher.InvokeAsync(() =>this.InvalidateVisual());
+            connectorViewModel.PropertyChanged += (vm, args) => Application.Current.Dispatcher.InvokeAsync(() => this.InvalidateVisual());
             this.InvalidateVisual();
         }
     }

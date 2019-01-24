@@ -79,6 +79,8 @@
             <MenuItem Header="_Help">
                 <MenuItem Header="HowTo Build Components" Command="{Binding ViewModel.HowToCommand}"/>
                 <MenuItem Header="User Manual" Command="{Binding ViewModel.UserManualCommand}"/>
+                <MenuItem Header="Documentation" Command="{Binding ViewModel.DocumentationOnlineCommand}"/>
+                <MenuItem Header="Documentation-Offline" Command="{Binding ViewModel.DocumentationCommand}"/>
                 <MenuItem Header="About" Click="About_Click"/>
             </MenuItem>
         </Menu>

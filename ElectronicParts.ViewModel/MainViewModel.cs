@@ -742,14 +742,56 @@ namespace ElectronicParts.ViewModels
                 arg =>
             {
                 var path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                Process.Start(System.IO.Path.Combine(path, @"Resources\ComponentsHandbook.pdf"));
+                try
+                {
+                    Process.Start(System.IO.Path.Combine(path, @"Resources\ComponentsHandbook.pdf"));
+                }
+                catch (Exception e)
+                {
+                    this.logger.LogError(e.Message);
+                }
             });
 
             this.UserManualCommand = new RelayCommand(
                 arg =>
                 {
                     var path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                    Process.Start(System.IO.Path.Combine(path, @"Resources\UserManual.pdf"));
+                    try
+                    {
+                        Process.Start(System.IO.Path.Combine(path, @"Resources\UserManual.pdf"));
+                    }
+                    catch (Exception e)
+                    {
+                        this.logger.LogError(e.Message);
+                    }
+                });
+
+            this.DocumentationCommand = new RelayCommand(
+                arg =>
+                {
+                    var path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                    try
+                    {
+                        Process.Start(System.IO.Path.Combine(path, @"Resources\Documentation.pdf"));
+                    }
+                    catch (Exception e)
+                    {
+                        this.logger.LogError(e.Message);
+                    }
+                });
+
+            this.DocumentationOnlineCommand = new RelayCommand(
+                arg =>
+                {
+                    var path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                    try
+                    {
+                        Process.Start("https://bleialf.synology.me/site/api/index.html");
+                    }
+                    catch (Exception e)
+                    {
+                        this.logger.LogError(e.Message);
+                    }
                 });
 
             this.Nodes = new ObservableCollection<NodeViewModel>();
@@ -1006,6 +1048,9 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <value>The command to open the user manual PDF.</value>
         public ICommand UserManualCommand { get; }
+
+        public ICommand DocumentationCommand { get; }
+        public ICommand DocumentationOnlineCommand { get; }
 
         /// <summary>
         /// Gets a command which increases the cell size of the visible grid.

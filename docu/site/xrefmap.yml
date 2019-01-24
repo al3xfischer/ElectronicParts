@@ -3553,6 +3553,19 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.Services.Implementations.ConnectorHelperService.GetOffset
   nameWithType: ConnectorHelperService.GetOffset
+- uid: ElectronicParts.Services.Implementations.ConnectorHelperService.IsInputsMore(Shared.IPin)
+  name: IsInputsMore(IPin)
+  href: api/ElectronicParts.Services.Implementations.ConnectorHelperService.html#ElectronicParts_Services_Implementations_ConnectorHelperService_IsInputsMore_Shared_IPin_
+  commentId: M:ElectronicParts.Services.Implementations.ConnectorHelperService.IsInputsMore(Shared.IPin)
+  fullName: ElectronicParts.Services.Implementations.ConnectorHelperService.IsInputsMore(Shared.IPin)
+  nameWithType: ConnectorHelperService.IsInputsMore(IPin)
+- uid: ElectronicParts.Services.Implementations.ConnectorHelperService.IsInputsMore*
+  name: IsInputsMore
+  href: api/ElectronicParts.Services.Implementations.ConnectorHelperService.html#ElectronicParts_Services_Implementations_ConnectorHelperService_IsInputsMore_
+  commentId: Overload:ElectronicParts.Services.Implementations.ConnectorHelperService.IsInputsMore
+  isSpec: "True"
+  fullName: ElectronicParts.Services.Implementations.ConnectorHelperService.IsInputsMore
+  nameWithType: ConnectorHelperService.IsInputsMore
 - uid: ElectronicParts.Services.Implementations.ConnectorHelperService.IsSelfConnecting(Shared.IPin,Shared.IPin)
   name: IsSelfConnecting(IPin, IPin)
   href: api/ElectronicParts.Services.Implementations.ConnectorHelperService.html#ElectronicParts_Services_Implementations_ConnectorHelperService_IsSelfConnecting_Shared_IPin_Shared_IPin_
@@ -4278,6 +4291,19 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.Services.Interfaces.IConnectorHelperService.GetOffset
   nameWithType: IConnectorHelperService.GetOffset
+- uid: ElectronicParts.Services.Interfaces.IConnectorHelperService.IsInputsMore(Shared.IPin)
+  name: IsInputsMore(IPin)
+  href: api/ElectronicParts.Services.Interfaces.IConnectorHelperService.html#ElectronicParts_Services_Interfaces_IConnectorHelperService_IsInputsMore_Shared_IPin_
+  commentId: M:ElectronicParts.Services.Interfaces.IConnectorHelperService.IsInputsMore(Shared.IPin)
+  fullName: ElectronicParts.Services.Interfaces.IConnectorHelperService.IsInputsMore(Shared.IPin)
+  nameWithType: IConnectorHelperService.IsInputsMore(IPin)
+- uid: ElectronicParts.Services.Interfaces.IConnectorHelperService.IsInputsMore*
+  name: IsInputsMore
+  href: api/ElectronicParts.Services.Interfaces.IConnectorHelperService.html#ElectronicParts_Services_Interfaces_IConnectorHelperService_IsInputsMore_
+  commentId: Overload:ElectronicParts.Services.Interfaces.IConnectorHelperService.IsInputsMore
+  isSpec: "True"
+  fullName: ElectronicParts.Services.Interfaces.IConnectorHelperService.IsInputsMore
+  nameWithType: IConnectorHelperService.IsInputsMore
 - uid: ElectronicParts.Services.Interfaces.IConnectorHelperService.IsSelfConnecting(Shared.IPin,Shared.IPin)
   name: IsSelfConnecting(IPin, IPin)
   href: api/ElectronicParts.Services.Interfaces.IConnectorHelperService.html#ElectronicParts_Services_Interfaces_IConnectorHelperService_IsSelfConnecting_Shared_IPin_Shared_IPin_
@@ -4589,133 +4615,6 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.Services.Interfaces.IPinCreatorService.CreatePins
   nameWithType: IPinCreatorService.CreatePins
-- uid: ElectronicParts.Tests
-  name: ElectronicParts.Tests
-  href: api/ElectronicParts.Tests.html
-  commentId: N:ElectronicParts.Tests
-  fullName: ElectronicParts.Tests
-  nameWithType: ElectronicParts.Tests
-- uid: ElectronicParts.Tests.AssemblyTest
-  name: AssemblyTest
-  href: api/ElectronicParts.Tests.AssemblyTest.html
-  commentId: T:ElectronicParts.Tests.AssemblyTest
-  fullName: ElectronicParts.Tests.AssemblyTest
-  nameWithType: AssemblyTest
-- uid: ElectronicParts.Tests.AssemblyTest.TestAssemblyCtor
-  name: TestAssemblyCtor()
-  href: api/ElectronicParts.Tests.AssemblyTest.html#ElectronicParts_Tests_AssemblyTest_TestAssemblyCtor
-  commentId: M:ElectronicParts.Tests.AssemblyTest.TestAssemblyCtor
-  fullName: ElectronicParts.Tests.AssemblyTest.TestAssemblyCtor()
-  nameWithType: AssemblyTest.TestAssemblyCtor()
-- uid: ElectronicParts.Tests.AssemblyTest.TestAssemblyCtor*
-  name: TestAssemblyCtor
-  href: api/ElectronicParts.Tests.AssemblyTest.html#ElectronicParts_Tests_AssemblyTest_TestAssemblyCtor_
-  commentId: Overload:ElectronicParts.Tests.AssemblyTest.TestAssemblyCtor
-  isSpec: "True"
-  fullName: ElectronicParts.Tests.AssemblyTest.TestAssemblyCtor
-  nameWithType: AssemblyTest.TestAssemblyCtor
-- uid: ElectronicParts.Tests.BoolArrayToByteConverterTest
-  name: BoolArrayToByteConverterTest
-  href: api/ElectronicParts.Tests.BoolArrayToByteConverterTest.html
-  commentId: T:ElectronicParts.Tests.BoolArrayToByteConverterTest
-  fullName: ElectronicParts.Tests.BoolArrayToByteConverterTest
-  nameWithType: BoolArrayToByteConverterTest
-- uid: ElectronicParts.Tests.BoolArrayToByteConverterTest.TestBoolArrayToByteMethod
-  name: TestBoolArrayToByteMethod()
-  href: api/ElectronicParts.Tests.BoolArrayToByteConverterTest.html#ElectronicParts_Tests_BoolArrayToByteConverterTest_TestBoolArrayToByteMethod
-  commentId: M:ElectronicParts.Tests.BoolArrayToByteConverterTest.TestBoolArrayToByteMethod
-  fullName: ElectronicParts.Tests.BoolArrayToByteConverterTest.TestBoolArrayToByteMethod()
-  nameWithType: BoolArrayToByteConverterTest.TestBoolArrayToByteMethod()
-- uid: ElectronicParts.Tests.BoolArrayToByteConverterTest.TestBoolArrayToByteMethod*
-  name: TestBoolArrayToByteMethod
-  href: api/ElectronicParts.Tests.BoolArrayToByteConverterTest.html#ElectronicParts_Tests_BoolArrayToByteConverterTest_TestBoolArrayToByteMethod_
-  commentId: Overload:ElectronicParts.Tests.BoolArrayToByteConverterTest.TestBoolArrayToByteMethod
-  isSpec: "True"
-  fullName: ElectronicParts.Tests.BoolArrayToByteConverterTest.TestBoolArrayToByteMethod
-  nameWithType: BoolArrayToByteConverterTest.TestBoolArrayToByteMethod
-- uid: ElectronicParts.Tests.ComponentsTests
-  name: ComponentsTests
-  href: api/ElectronicParts.Tests.ComponentsTests.html
-  commentId: T:ElectronicParts.Tests.ComponentsTests
-  fullName: ElectronicParts.Tests.ComponentsTests
-  nameWithType: ComponentsTests
-- uid: ElectronicParts.Tests.ComponentsTests.AndGateTest
-  name: AndGateTest()
-  href: api/ElectronicParts.Tests.ComponentsTests.html#ElectronicParts_Tests_ComponentsTests_AndGateTest
-  commentId: M:ElectronicParts.Tests.ComponentsTests.AndGateTest
-  fullName: ElectronicParts.Tests.ComponentsTests.AndGateTest()
-  nameWithType: ComponentsTests.AndGateTest()
-- uid: ElectronicParts.Tests.ComponentsTests.AndGateTest*
-  name: AndGateTest
-  href: api/ElectronicParts.Tests.ComponentsTests.html#ElectronicParts_Tests_ComponentsTests_AndGateTest_
-  commentId: Overload:ElectronicParts.Tests.ComponentsTests.AndGateTest
-  isSpec: "True"
-  fullName: ElectronicParts.Tests.ComponentsTests.AndGateTest
-  nameWithType: ComponentsTests.AndGateTest
-- uid: ElectronicParts.Tests.ComponentsTests.IntegerSourceAdderDisplayTest
-  name: IntegerSourceAdderDisplayTest()
-  href: api/ElectronicParts.Tests.ComponentsTests.html#ElectronicParts_Tests_ComponentsTests_IntegerSourceAdderDisplayTest
-  commentId: M:ElectronicParts.Tests.ComponentsTests.IntegerSourceAdderDisplayTest
-  fullName: ElectronicParts.Tests.ComponentsTests.IntegerSourceAdderDisplayTest()
-  nameWithType: ComponentsTests.IntegerSourceAdderDisplayTest()
-- uid: ElectronicParts.Tests.ComponentsTests.IntegerSourceAdderDisplayTest*
-  name: IntegerSourceAdderDisplayTest
-  href: api/ElectronicParts.Tests.ComponentsTests.html#ElectronicParts_Tests_ComponentsTests_IntegerSourceAdderDisplayTest_
-  commentId: Overload:ElectronicParts.Tests.ComponentsTests.IntegerSourceAdderDisplayTest
-  isSpec: "True"
-  fullName: ElectronicParts.Tests.ComponentsTests.IntegerSourceAdderDisplayTest
-  nameWithType: ComponentsTests.IntegerSourceAdderDisplayTest
-- uid: ElectronicParts.Tests.ComponentsTests.OrGateTest
-  name: OrGateTest()
-  href: api/ElectronicParts.Tests.ComponentsTests.html#ElectronicParts_Tests_ComponentsTests_OrGateTest
-  commentId: M:ElectronicParts.Tests.ComponentsTests.OrGateTest
-  fullName: ElectronicParts.Tests.ComponentsTests.OrGateTest()
-  nameWithType: ComponentsTests.OrGateTest()
-- uid: ElectronicParts.Tests.ComponentsTests.OrGateTest*
-  name: OrGateTest
-  href: api/ElectronicParts.Tests.ComponentsTests.html#ElectronicParts_Tests_ComponentsTests_OrGateTest_
-  commentId: Overload:ElectronicParts.Tests.ComponentsTests.OrGateTest
-  isSpec: "True"
-  fullName: ElectronicParts.Tests.ComponentsTests.OrGateTest
-  nameWithType: ComponentsTests.OrGateTest
-- uid: ElectronicParts.Tests.ExtensionsTest
-  name: ExtensionsTest
-  href: api/ElectronicParts.Tests.ExtensionsTest.html
-  commentId: T:ElectronicParts.Tests.ExtensionsTest
-  fullName: ElectronicParts.Tests.ExtensionsTest
-  nameWithType: ExtensionsTest
-- uid: ElectronicParts.Tests.ExtensionsTest.TestRoundToFunction
-  name: TestRoundToFunction()
-  href: api/ElectronicParts.Tests.ExtensionsTest.html#ElectronicParts_Tests_ExtensionsTest_TestRoundToFunction
-  commentId: M:ElectronicParts.Tests.ExtensionsTest.TestRoundToFunction
-  fullName: ElectronicParts.Tests.ExtensionsTest.TestRoundToFunction()
-  nameWithType: ExtensionsTest.TestRoundToFunction()
-- uid: ElectronicParts.Tests.ExtensionsTest.TestRoundToFunction*
-  name: TestRoundToFunction
-  href: api/ElectronicParts.Tests.ExtensionsTest.html#ElectronicParts_Tests_ExtensionsTest_TestRoundToFunction_
-  commentId: Overload:ElectronicParts.Tests.ExtensionsTest.TestRoundToFunction
-  isSpec: "True"
-  fullName: ElectronicParts.Tests.ExtensionsTest.TestRoundToFunction
-  nameWithType: ExtensionsTest.TestRoundToFunction
-- uid: ElectronicParts.Tests.PinConnectorTest
-  name: PinConnectorTest
-  href: api/ElectronicParts.Tests.PinConnectorTest.html
-  commentId: T:ElectronicParts.Tests.PinConnectorTest
-  fullName: ElectronicParts.Tests.PinConnectorTest
-  nameWithType: PinConnectorTest
-- uid: ElectronicParts.Tests.PinConnectorTest.TestPinConnectorNullValuePin
-  name: TestPinConnectorNullValuePin()
-  href: api/ElectronicParts.Tests.PinConnectorTest.html#ElectronicParts_Tests_PinConnectorTest_TestPinConnectorNullValuePin
-  commentId: M:ElectronicParts.Tests.PinConnectorTest.TestPinConnectorNullValuePin
-  fullName: ElectronicParts.Tests.PinConnectorTest.TestPinConnectorNullValuePin()
-  nameWithType: PinConnectorTest.TestPinConnectorNullValuePin()
-- uid: ElectronicParts.Tests.PinConnectorTest.TestPinConnectorNullValuePin*
-  name: TestPinConnectorNullValuePin
-  href: api/ElectronicParts.Tests.PinConnectorTest.html#ElectronicParts_Tests_PinConnectorTest_TestPinConnectorNullValuePin_
-  commentId: Overload:ElectronicParts.Tests.PinConnectorTest.TestPinConnectorNullValuePin
-  isSpec: "True"
-  fullName: ElectronicParts.Tests.PinConnectorTest.TestPinConnectorNullValuePin
-  nameWithType: PinConnectorTest.TestPinConnectorNullValuePin
 - uid: ElectronicParts.ViewModels
   name: ElectronicParts.ViewModels
   href: api/ElectronicParts.ViewModels.html
@@ -5243,6 +5142,19 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.ViewModels.MainViewModel.DeleteNodeCommand
   nameWithType: MainViewModel.DeleteNodeCommand
+- uid: ElectronicParts.ViewModels.MainViewModel.DocumentationCommand
+  name: DocumentationCommand
+  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_DocumentationCommand
+  commentId: P:ElectronicParts.ViewModels.MainViewModel.DocumentationCommand
+  fullName: ElectronicParts.ViewModels.MainViewModel.DocumentationCommand
+  nameWithType: MainViewModel.DocumentationCommand
+- uid: ElectronicParts.ViewModels.MainViewModel.DocumentationCommand*
+  name: DocumentationCommand
+  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_DocumentationCommand_
+  commentId: Overload:ElectronicParts.ViewModels.MainViewModel.DocumentationCommand
+  isSpec: "True"
+  fullName: ElectronicParts.ViewModels.MainViewModel.DocumentationCommand
+  nameWithType: MainViewModel.DocumentationCommand
 - uid: ElectronicParts.ViewModels.MainViewModel.ExecutionStartLoopCommand
   name: ExecutionStartLoopCommand
   href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_ExecutionStartLoopCommand
@@ -5714,6 +5626,19 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.ViewModels.MainViewModel.UpdateBoardSize
   nameWithType: MainViewModel.UpdateBoardSize
+- uid: ElectronicParts.ViewModels.MainViewModel.UserManualCommand
+  name: UserManualCommand
+  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_UserManualCommand
+  commentId: P:ElectronicParts.ViewModels.MainViewModel.UserManualCommand
+  fullName: ElectronicParts.ViewModels.MainViewModel.UserManualCommand
+  nameWithType: MainViewModel.UserManualCommand
+- uid: ElectronicParts.ViewModels.MainViewModel.UserManualCommand*
+  name: UserManualCommand
+  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_UserManualCommand_
+  commentId: Overload:ElectronicParts.ViewModels.MainViewModel.UserManualCommand
+  isSpec: "True"
+  fullName: ElectronicParts.ViewModels.MainViewModel.UserManualCommand
+  nameWithType: MainViewModel.UserManualCommand
 - uid: ElectronicParts.ViewModels.MainViewModel.VerticalScrollerOffset
   name: VerticalScrollerOffset
   href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_VerticalScrollerOffset
@@ -6681,6 +6606,19 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.Views.Connection.InitializeComponent
   nameWithType: Connection.InitializeComponent
+- uid: ElectronicParts.Views.Connection.OnRender(System.Windows.Media.DrawingContext)
+  name: OnRender(DrawingContext)
+  href: api/ElectronicParts.Views.Connection.html#ElectronicParts_Views_Connection_OnRender_System_Windows_Media_DrawingContext_
+  commentId: M:ElectronicParts.Views.Connection.OnRender(System.Windows.Media.DrawingContext)
+  fullName: ElectronicParts.Views.Connection.OnRender(System.Windows.Media.DrawingContext)
+  nameWithType: Connection.OnRender(DrawingContext)
+- uid: ElectronicParts.Views.Connection.OnRender*
+  name: OnRender
+  href: api/ElectronicParts.Views.Connection.html#ElectronicParts_Views_Connection_OnRender_
+  commentId: Overload:ElectronicParts.Views.Connection.OnRender
+  isSpec: "True"
+  fullName: ElectronicParts.Views.Connection.OnRender
+  nameWithType: Connection.OnRender
 - uid: ElectronicParts.Views.MainWindow
   name: MainWindow
   href: api/ElectronicParts.Views.MainWindow.html
