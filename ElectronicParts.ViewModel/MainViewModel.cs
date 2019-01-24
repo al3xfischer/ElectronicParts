@@ -1,6 +1,6 @@
 ﻿// ***********************************************************************
 // Assembly         : ElectronicParts.Services
-// Author           : 
+// Author           : Alex Fischer, Peter Helf, Roman Jahn, Kevin Janisch
 // ***********************************************************************
 // <copyright file="MainViewModel.cs" company="FHWN">
 //     Copyright ©  2019
