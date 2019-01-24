@@ -25,6 +25,8 @@ namespace ElectronicParts.Views
     using ElectronicParts.ViewModels;
     using Microsoft.Extensions.Logging;
     using Microsoft.Win32;
+    using MahApps.Metro.Controls;
+
 
     /// <summary>
     /// Interaction logic for MainWindow.

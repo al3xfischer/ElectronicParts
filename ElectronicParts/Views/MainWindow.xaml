@@ -8,6 +8,7 @@
         xmlns:converters="clr-namespace:ElectronicParts.Converter"
         xmlns:shared="clr-namespace:Shared;assembly=Shared"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         x:Name="mainW"
         mc:Ignorable="d"
         d:DataContext="{Binding Source={d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}}"
