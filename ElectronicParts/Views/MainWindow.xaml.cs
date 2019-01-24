@@ -31,7 +31,7 @@ namespace ElectronicParts.Views
     /// <summary>
     /// Interaction logic for MainWindow.
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         /// <summary>
         /// The service used for the execution of nodes.
