@@ -51,14 +51,11 @@
     <Compile Include="IValueGeneric.cs" />
     <Compile Include="NodeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestNode.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    <Compile Include="ExamplePin.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="TestPin.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Include="TestValue.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    <Compile Include="ExampleValue.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
