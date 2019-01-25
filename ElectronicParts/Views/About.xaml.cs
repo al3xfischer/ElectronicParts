@@ -1,6 +1,6 @@
 ﻿// ***********************************************************************
 // Assembly         : ElectronicParts
-// Author           : Romane Jahn
+// Author           : Roman Jahn
 // ***********************************************************************
 // <copyright file="About.xaml.cs" company="FHWN">
 //     Copyright ©  2019
