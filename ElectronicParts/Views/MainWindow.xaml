@@ -306,7 +306,7 @@
                     </DockPanel>
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Height="auto" Margin="0 0 10 0">
                         <TextBlock VerticalAlignment="Center" Text="GridSize: "/>
-                        <Controls:NumericUpDown Margin="0 0 10 0" Minimum="5" Maximum="30" Interval="1" Value="{Binding ViewModel.GridSize}" Background="Transparent" BorderThickness="0"/>
+                        <Controls:NumericUpDown Margin="0 0 10 0" Minimum="5" Maximum="30" Interval="1" Value="{Binding ViewModel.GridSize, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0"/>
                         <TextBlock Margin="0 0 3 0" VerticalAlignment="Center">Snap:</TextBlock>
                         <CheckBox VerticalAlignment="Center" IsChecked="{Binding ViewModel.GridSnappingEnabled}"/>
                     </StackPanel>

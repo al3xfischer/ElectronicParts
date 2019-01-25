@@ -320,6 +320,13 @@ namespace ElectronicParts.ViewModels
                     nodes.Add(nodeViewModel);
                 }
 
+                this.nodes.Clear();
+
+                foreach (NodeViewModel node in nodes)
+                {
+                    this.nodes.Add(node);
+                }
+
                 foreach (ConnectionSnapShot connection in snapShot.Connections)
                 {
                     PinViewModel outputPinViewModel = null;
@@ -355,18 +362,11 @@ namespace ElectronicParts.ViewModels
                     connections.Add(connectorViewModel);
                 }
 
-                this.nodes.Clear();
-
-                foreach (NodeViewModel node in nodes)
-                {
-                    this.nodes.Add(node);
-                }
-
-                this.connections.Clear();
+                this.Connections.Clear();
 
                 foreach (ConnectorViewModel connection in connections)
                 {
-                    this.connections.Add(connection);
+                    this.Connections.Add(connection);
                     this.pinConnectorService.ManuallyAddConnectionToExistingConnections(connection.Connector);
                 }
 
@@ -681,7 +681,7 @@ namespace ElectronicParts.ViewModels
                 {
                     foreach (var connectionVM in this.Connections.Where(cVM => cVM.Input == inPin))
                     {
-                        connectionVM.UpdateLine();
+                        connectionVM.RecalculateOffsets();
                     }
                 }
 
@@ -689,7 +689,7 @@ namespace ElectronicParts.ViewModels
                 {
                     foreach (var connectionVM in this.Connections.Where(cVM => cVM.Output == outPin))
                     {
-                        connectionVM.UpdateLine();
+                        connectionVM.RecalculateOffsets();
                     }
                 }
             },
@@ -706,7 +706,7 @@ namespace ElectronicParts.ViewModels
                 {
                     foreach (var connectionVM in this.Connections.Where(cVM => cVM.Input == inPin))
                     {
-                        connectionVM.UpdateLine();
+                        connectionVM.RecalculateOffsets();
                     }
                 }
 
@@ -714,7 +714,7 @@ namespace ElectronicParts.ViewModels
                 {
                     foreach (var connectionVM in this.Connections.Where(cVM => cVM.Output == outPin))
                     {
-                        connectionVM.UpdateLine();
+                        connectionVM.RecalculateOffsets();
                     }
                 }
             },
@@ -1386,12 +1386,14 @@ namespace ElectronicParts.ViewModels
                     if (createdConnector is null && createdConnectorVM is null)
                     {
                         this.MakeConnection(inPin, outPin, out createdConnectorVM, out createdConnector);
+                        createdConnectorVM.RecalculateOffsets();
                     }
                     else
                     {
                         this.pinConnectorService.TryConnectPins(createdConnectorVM.Input.Pin, createdConnectorVM.Output.Pin, out Connector newConn, true);
                         this.pinConnectorService.ManuallyAddConnectionToExistingConnections(createdConnector);
                         this.Connections.Add(createdConnectorVM);
+                        createdConnectorVM.RecalculateOffsets();
                     }
                 };
                 Action deleteAction = () => this.RemoveConnection(createdConnectorVM, createdConnector);
