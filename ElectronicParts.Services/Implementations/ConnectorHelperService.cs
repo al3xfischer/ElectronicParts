@@ -65,8 +65,14 @@ namespace ElectronicParts.Services.Implementations
         /// <returns>The required offset as integer.</returns>
         public int GetMultipleOutputOffset(IPin pin)
         {
-            var x = this.GetContainingNode(pin);
-            return this.GetContainingNode(pin).Outputs.IndexOf(pin);
+            try
+            {
+                return this.GetContainingNode(pin).Outputs.IndexOf(pin);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
 
         /// <summary>

@@ -1,12 +1,10 @@
-﻿// ***********************************************************************
-// Assembly         : ElectronicParts
-// Author           : Alexander Fischer, Peter Helf, Roman Jahn, Kevin Janisch
-// ***********************************************************************
-// <copyright file="MainWindow.xaml.cs" company="FHWN">
-//     Copyright ©  2019
+﻿// ------------------------------------------------------------------------
+// <copyright file="MainWindow.xaml.cs" company="FHWN.ac.at">
+// Copyright (c) FHWN. All rights reserved.
 // </copyright>
 // <summary>Represents the MainWindow class of the ElectronicParts programm</summary>
-// ***********************************************************************
+// <author>Alexander Fischer</author>
+// ------------------------------------------------------------------------
 
 namespace ElectronicParts.Views
 {
@@ -16,6 +14,8 @@ namespace ElectronicParts.Views
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
+    using System.Timers;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -32,6 +32,9 @@ namespace ElectronicParts.Views
     /// <summary>
     /// Interaction logic for MainWindow.
     /// </summary>
+    /// <seealso cref="MahApps.Metro.Controls.MetroWindow" />
+    /// <seealso cref="System.Windows.Markup.IComponentConnector" />
+    /// <seealso cref="System.Windows.Markup.IStyleConnector" />
     public partial class MainWindow : MetroWindow
     {
         /// <summary>
@@ -40,12 +43,12 @@ namespace ElectronicParts.Views
         private readonly IExecutionService executionService;
 
         /// <summary>
-        /// The logger of the <see cref="MainWindow"/> class.
+        /// The logger of the <see cref="MainWindow" /> class.
         /// </summary>
         private readonly ILogger<MainWindow> logger;
 
         /// <summary>
-        /// The anchor point of the <see cref="selectionRectangle"/>.
+        /// The anchor point of the <see cref="selectionRectangle" />.
         /// </summary>
         private System.Windows.Point anchorPoint;
 
@@ -90,7 +93,17 @@ namespace ElectronicParts.Views
         private bool movedSelection;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// The start time of the board move action.
+        /// </summary>
+        private DateTime? startTime;
+
+        /// <summary>
+        /// The board scroll timer.
+        /// </summary>
+        private Timer boardScrollTimer;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow" /> class.
         /// </summary>
         public MainWindow()
         {
@@ -101,6 +114,13 @@ namespace ElectronicParts.Views
             this.executionService = Container.Resolve<IExecutionService>();
             this.items = new List<object>();
             this.ViewModel.GetMousePosition = () => Mouse.GetPosition(this.canvas);
+            this.boardScrollTimer = new Timer();
+            this.boardScrollTimer.Elapsed += (sender, e) =>
+            {
+                this.boardScrollTimer.Stop();
+                Task.Run(() => this.ScrollBoard());
+            };
+            this.boardScrollTimer.Interval = 300;
         }
 
         /// <summary>
@@ -113,7 +133,7 @@ namespace ElectronicParts.Views
         /// Gets the information of a pin.
         /// </summary>
         /// <param name="node">The node of the pin.</param>
-        /// <returns>A tuple with type <see cref="Type"/>, <see cref="int"/>, <see cref="NodeViewModel"/>.</returns>
+        /// <returns>A tuple with type <see cref="Type" />, <see cref="int" />, <see cref="NodeViewModel" />.</returns>
         public Tuple<Type, int, NodeViewModel> GetPinInformation(NodeViewModel node)
         {
             var addPins = new AddPins();
@@ -129,8 +149,10 @@ namespace ElectronicParts.Views
         /// <summary>
         /// Selects the items.
         /// </summary>
-        public void SelectedItems()
+        public void SelectItems()
         {
+            this.ViewModel.SelectedNodes.Clear();
+            this.ViewModel.SelectedConntectors.Clear();
             System.Windows.Point currentMousePosition = Mouse.GetPosition(this.canvas);
             var left = Math.Min(currentMousePosition.X, this.anchorPoint.X);
             var top = Math.Min(currentMousePosition.Y, this.anchorPoint.Y);
@@ -252,14 +274,14 @@ namespace ElectronicParts.Views
                 this.selectionRectangle.Visibility = Visibility.Visible;
             }
 
-            this.SelectedItems();
+            this.SelectItems();
         }
 
         /// <summary>
         /// Filters the hit test.
         /// </summary>
         /// <param name="dependencyObject">The dependency object.</param>
-        /// <returns><see cref="HitTestFilterBehavior"/>.</returns>
+        /// <returns><see cref="HitTestFilterBehavior" />.</returns>
         private HitTestFilterBehavior HitTestFilter(DependencyObject dependencyObject)
         {
             var element = dependencyObject as FrameworkElement;
@@ -277,7 +299,7 @@ namespace ElectronicParts.Views
         /// Handles the hit test.
         /// </summary>
         /// <param name="result">The result of the hit test.</param>
-        /// <returns><see cref="HitTestResultBehavior.Continue"/>.</returns>
+        /// <returns><see cref="HitTestResultBehavior.Continue" />.</returns>
         private HitTestResultBehavior HitTestTesultHandler(HitTestResult result)
         {
             var dataContext = (result.VisualHit as FrameworkElement).DataContext;
@@ -468,6 +490,11 @@ namespace ElectronicParts.Views
         /// <param name="e">The event args.</param>
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
+            if (this.executionService.IsEnabled)
+            {
+                return;
+            }
+
             if (this.isDragging)
             {
                 this.DragSelection();
@@ -475,42 +502,47 @@ namespace ElectronicParts.Views
 
             if (e.LeftButton == MouseButtonState.Pressed && !this.isDragging && this.currentNode is null && this.startPoint.HasValue)
             {
-                var currentPosition = e.GetPosition(this.canvas);
-
-                foreach (var nodeVm in this.ViewModel.SelectedNodes)
-                {
-                    nodeVm.Left -= this.startPoint.Value.X - currentPosition.X;
-                    nodeVm.Top -= this.startPoint.Value.Y - currentPosition.Y;
-                }
-
-                var left = Canvas.GetLeft(this.rectangle);
-                var top = Canvas.GetTop(this.rectangle);
-                left -= this.startPoint.Value.X - currentPosition.X;
-                top -= this.startPoint.Value.Y - currentPosition.Y;
-                Canvas.SetLeft(this.rectangle, left);
-                Canvas.SetTop(this.rectangle, top);
-                this.startPoint = currentPosition;
-                this.movedSelection = true;
+                this.MoveSelection();
             }
 
             if (e.LeftButton == MouseButtonState.Pressed && !(this.currentNode is null) && !this.isDragging)
             {
-                var point = e.GetPosition(this.canvas);
-
-                if (this.currentNode is null || point.X <= 0 || point.Y <= 0 || point.X + this.currentNode.Width >= this.canvas.ActualWidth || point.Y + ((this.currentNode.MaxPins - 1) * 20) >= this.canvas.ActualHeight)
-                {
-                    return;
-                }
-
-                this.currentNode.Left = (int)point.X - 40;
-                this.currentNode.Top = (int)point.Y - 20;
-                if (this.ViewModel.GridSnappingEnabled)
-                {
-                    this.currentNode.SnapToNewGrid(this.ViewModel.GridSize, false);
-                }
+                this.MoveNode();
             }
 
-            var mousePoint = e.GetPosition(this.canvas);
+            this.MovePreview();
+
+            var mousePosition = e.GetPosition(this.boardScroller);
+            if (((mousePosition.X > 0 && mousePosition.X < this.boardScroller.ActualWidth - 15) && ((mousePosition.Y <= 20 && mousePosition.Y > 0) || (mousePosition.Y > this.boardScroller.ActualHeight - 40 && mousePosition.Y < this.boardScroller.ActualHeight - 15))) || ((mousePosition.Y > 0 && mousePosition.Y < this.ActualHeight - 15) && ((mousePosition.X <= 20 && mousePosition.X > 0) || (mousePosition.X > this.boardScroller.ActualWidth - 40 && mousePosition.X < this.boardScroller.ActualWidth - 15))))
+            {
+                if (!this.startTime.HasValue)
+                {
+                    this.startTime = DateTime.Now;
+                    this.boardScrollTimer.Start();
+                }
+            }
+            else
+            {
+                this.startTime = null;
+            }
+        }
+
+        /// <summary>
+        /// Opens a new 'About' window.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            new About().ShowDialog();
+        }
+
+        /// <summary>
+        /// Moves the preview.
+        /// </summary>
+        private void MovePreview()
+        {
+            var mousePoint = Mouse.GetPosition(this.canvas);
 
             if (this.ViewModel.InputPin is null && this.ViewModel.OutputPin is null)
             {
@@ -527,48 +559,110 @@ namespace ElectronicParts.Views
             {
                 this.SetPreviewLineStartPosition(this.ViewModel.OutputPin, mousePoint);
             }
+        }
 
-            var mousePosition = e.GetPosition(this.boardScroller);
-            if (mousePosition.X > 0 && mousePosition.X < this.boardScroller.ActualWidth)
+        /// <summary>
+        /// Moves the node.
+        /// </summary>
+        private void MoveNode()
+        {
+            var point = Mouse.GetPosition(this.canvas);
+
+            if (this.currentNode is null || point.X <= 0 || point.Y <= 0 || point.X + this.currentNode.Width >= this.canvas.ActualWidth || point.Y + ((this.currentNode.MaxPins - 1) * 20) >= this.canvas.ActualHeight)
             {
-                if (mousePosition.Y <= 20 && mousePosition.Y > 0)
-                {
-                    boardScroller.ScrollToVerticalOffset(boardScroller.ContentVerticalOffset - 0.1);
-                }
-                else if (mousePosition.Y > this.boardScroller.ActualHeight - 40 && mousePosition.Y < this.boardScroller.ActualHeight)
-                {
-                    boardScroller.ScrollToVerticalOffset(boardScroller.ContentVerticalOffset + 0.1);
-                }
+                return;
             }
 
-            if (mousePosition.Y > 0 && mousePosition.Y < this.ActualHeight)
+            this.currentNode.Left = (int)point.X - 40;
+            this.currentNode.Top = (int)point.Y - 20;
+            if (this.ViewModel.GridSnappingEnabled)
             {
-                if (mousePosition.X <= 20 && mousePosition.X > 0)
-                {
-                    boardScroller.ScrollToHorizontalOffset(boardScroller.ContentHorizontalOffset - 0.1);
-                }
-                else if (mousePosition.X > this.boardScroller.ActualWidth - 40 && mousePosition.X < this.boardScroller.ActualWidth)
-                {
-                    boardScroller.ScrollToHorizontalOffset(boardScroller.ContentHorizontalOffset + 0.1);
-                }
+                this.currentNode.SnapToNewGrid(this.ViewModel.GridSize, false);
             }
         }
 
         /// <summary>
-        /// Opens a new 'About' window.
+        /// Moves the selected items.
         /// </summary>
-        /// <param name="sender">The sender of the event.</param>
-        /// <param name="e">The event args.</param>
-        private void About_Click(object sender, RoutedEventArgs e)
+        private void MoveSelection()
         {
-            new About().ShowDialog();
+            var currentPosition = Mouse.GetPosition(this.canvas);
+
+            foreach (var nodeVm in this.ViewModel.SelectedNodes)
+            {
+                nodeVm.Left -= this.startPoint.Value.X - currentPosition.X;
+                nodeVm.Top -= this.startPoint.Value.Y - currentPosition.Y;
+            }
+
+            var left = Canvas.GetLeft(this.rectangle);
+            var top = Canvas.GetTop(this.rectangle);
+            left -= this.startPoint.Value.X - currentPosition.X;
+            top -= this.startPoint.Value.Y - currentPosition.Y;
+            Canvas.SetLeft(this.rectangle, left);
+            Canvas.SetTop(this.rectangle, top);
+            this.startPoint = currentPosition;
+            this.movedSelection = true;
+
+            this.ViewModel.RepositionNodes();
+        }
+
+        /// <summary>
+        /// Scrolls the board.
+        /// </summary>
+        private void ScrollBoard()
+        {
+            var mousePosition = new Point();
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                mousePosition = Mouse.GetPosition(this.boardScroller);
+            });
+
+            while (!(this.startTime is null))
+            {
+                if (mousePosition.X > 0 && mousePosition.X < this.boardScroller.ActualWidth)
+                {
+                    if (mousePosition.Y <= 20 && mousePosition.Y > 0)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            boardScroller.ScrollToVerticalOffset(boardScroller.ContentVerticalOffset - 0.1);
+                        });
+                    }
+                    else if (mousePosition.Y > this.boardScroller.ActualHeight - 40 && mousePosition.Y < this.boardScroller.ActualHeight)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            boardScroller.ScrollToVerticalOffset(boardScroller.ContentVerticalOffset + 0.1);
+                        });
+                    }
+                }
+
+                if (mousePosition.Y > 0 && mousePosition.Y < this.ActualHeight)
+                {
+                    if (mousePosition.X <= 20 && mousePosition.X > 0)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            boardScroller.ScrollToHorizontalOffset(boardScroller.ContentHorizontalOffset - 0.1);
+                        });
+                    }
+                    else if (mousePosition.X > this.boardScroller.ActualWidth - 40 && mousePosition.X < this.boardScroller.ActualWidth)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            boardScroller.ScrollToHorizontalOffset(boardScroller.ContentHorizontalOffset + 0.1);
+                        });
+                    }
+                }
+            }
         }
 
         /// <summary>
         /// Handles the MouseLeftButtonDown event of the Rectangle control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="MouseButtonEventArgs" /> instance containing the event data.</param>
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.startPoint = Mouse.GetPosition(this.canvas);
@@ -579,7 +673,7 @@ namespace ElectronicParts.Views
         /// Handles the Loaded event of the Rectangle control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void Rectangle_Loaded(object sender, RoutedEventArgs e)
         {
             this.rectangle = (Rectangle)sender;
@@ -589,7 +683,7 @@ namespace ElectronicParts.Views
         /// Handles the MouseLeftButtonUp event of the Rectangle control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="MouseButtonEventArgs" /> instance containing the event data.</param>
         private void Rectangle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (this.startPoint.HasValue && !this.movedSelection)

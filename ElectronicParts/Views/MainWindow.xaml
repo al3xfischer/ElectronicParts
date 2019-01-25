@@ -46,6 +46,9 @@
         <DataTemplate x:Key="NodeInformationTemplate">
             <local:NodeInformation HorizontalAlignment="Center"/>
         </DataTemplate>
+        
+        <!-- Converter -->
+        <converters:BooleanInvertConverter x:Key="boolInverter" />
 
         <!-- Display Items-->
         <CollectionViewSource Source="{Binding ViewModel.Nodes}" x:Key="Nodes"/>
@@ -306,7 +309,7 @@
                     </DockPanel>
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Height="auto" Margin="0 0 10 0">
                         <TextBlock VerticalAlignment="Center" Text="GridSize: "/>
-                        <Controls:NumericUpDown Margin="0 0 10 0" Minimum="5" Maximum="30" Interval="1" Value="{Binding ViewModel.GridSize}" Background="Transparent" BorderThickness="0"/>
+                        <Controls:NumericUpDown Margin="0 0 10 0" Minimum="5" Maximum="30" Interval="1" Value="{Binding ViewModel.GridSize, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0"/>
                         <TextBlock Margin="0 0 3 0" VerticalAlignment="Center">Snap:</TextBlock>
                         <CheckBox VerticalAlignment="Center" IsChecked="{Binding ViewModel.GridSnappingEnabled}"/>
                     </StackPanel>
@@ -324,8 +327,8 @@
                                         <MenuItem Header="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding}"/>
                                         <MenuItem Header="Increase Width" Command="{Binding IncreaseWidthCommand}"/>
                                         <MenuItem Header="Decrease Width" Command="{Binding DecreaseWidthCommand}"/>
-                                        <MenuItem Header="Add Input Pins" Click="AddInputPins_Click"/>
-                                        <MenuItem Header="Add Output Pins" Click="AddOuputPins_Click"/>
+                                        <MenuItem Header="Add Input Pins" Click="AddInputPins_Click" IsEnabled="{Binding CanAddPin}"/>
+                                        <MenuItem Header="Add Output Pins" Click="AddOuputPins_Click" IsEnabled="{Binding CanAddPin}"/>
                                     </ContextMenu>
                                 </local:Node.ContextMenu>
                             </local:Node>

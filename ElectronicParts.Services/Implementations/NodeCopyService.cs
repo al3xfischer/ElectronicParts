@@ -187,12 +187,18 @@ namespace ElectronicParts.Services.Implementations
                 for (int i = 0; i < this.nodesToCopy.Count(); i++)
                 {
                     var node = nodesToCopy.ElementAt(i);
-                    var newNode = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;                    
+                    var newNode = Activator.CreateInstance(node?.GetType()) as IDisplayableNode;
 
                     for (int j = newNode.Inputs.Count; j < nodesToCopy.ElementAt(i).Inputs.Count; j++)
                     {
                         var newPin = this.pinCreatorService.CreatePin(node.Inputs.ElementAt(j).Value.Current.GetType());
                         newNode.Inputs.Add(newPin);
+                    }
+
+                    for (int j = newNode.Outputs.Count; j < nodesToCopy.ElementAt(i).Outputs.Count; j++)
+                    {
+                        var newPin = this.pinCreatorService.CreatePin(node.Outputs.ElementAt(j).Value.Current.GetType());
+                        newNode.Outputs.Add(newPin);
                     }
 
                     copiedNodes.Add(newNode);

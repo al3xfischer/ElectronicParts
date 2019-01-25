@@ -163,6 +163,7 @@
     <None Include="Resources\UserManual.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SavedCircuits\Adder.bin" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
