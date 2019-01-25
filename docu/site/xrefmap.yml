@@ -2438,44 +2438,6 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.Converter.BoolToColorConverter.ConvertBack
   nameWithType: BoolToColorConverter.ConvertBack
-- uid: ElectronicParts.Converter.ConnectionToMarginConverter
-  name: ConnectionToMarginConverter
-  href: api/ElectronicParts.Converter.ConnectionToMarginConverter.html
-  commentId: T:ElectronicParts.Converter.ConnectionToMarginConverter
-  fullName: ElectronicParts.Converter.ConnectionToMarginConverter
-  nameWithType: ConnectionToMarginConverter
-- uid: ElectronicParts.Converter.ConnectionToMarginConverter.Convert(System.Object[],System.Type,System.Object,System.Globalization.CultureInfo)
-  name: Convert(Object[], Type, Object, CultureInfo)
-  href: api/ElectronicParts.Converter.ConnectionToMarginConverter.html#ElectronicParts_Converter_ConnectionToMarginConverter_Convert_System_Object___System_Type_System_Object_System_Globalization_CultureInfo_
-  commentId: M:ElectronicParts.Converter.ConnectionToMarginConverter.Convert(System.Object[],System.Type,System.Object,System.Globalization.CultureInfo)
-  name.vb: Convert(Object(), Type, Object, CultureInfo)
-  fullName: ElectronicParts.Converter.ConnectionToMarginConverter.Convert(System.Object[], System.Type, System.Object, System.Globalization.CultureInfo)
-  fullName.vb: ElectronicParts.Converter.ConnectionToMarginConverter.Convert(System.Object(), System.Type, System.Object, System.Globalization.CultureInfo)
-  nameWithType: ConnectionToMarginConverter.Convert(Object[], Type, Object, CultureInfo)
-  nameWithType.vb: ConnectionToMarginConverter.Convert(Object(), Type, Object, CultureInfo)
-- uid: ElectronicParts.Converter.ConnectionToMarginConverter.Convert*
-  name: Convert
-  href: api/ElectronicParts.Converter.ConnectionToMarginConverter.html#ElectronicParts_Converter_ConnectionToMarginConverter_Convert_
-  commentId: Overload:ElectronicParts.Converter.ConnectionToMarginConverter.Convert
-  isSpec: "True"
-  fullName: ElectronicParts.Converter.ConnectionToMarginConverter.Convert
-  nameWithType: ConnectionToMarginConverter.Convert
-- uid: ElectronicParts.Converter.ConnectionToMarginConverter.ConvertBack(System.Object,System.Type[],System.Object,System.Globalization.CultureInfo)
-  name: ConvertBack(Object, Type[], Object, CultureInfo)
-  href: api/ElectronicParts.Converter.ConnectionToMarginConverter.html#ElectronicParts_Converter_ConnectionToMarginConverter_ConvertBack_System_Object_System_Type___System_Object_System_Globalization_CultureInfo_
-  commentId: M:ElectronicParts.Converter.ConnectionToMarginConverter.ConvertBack(System.Object,System.Type[],System.Object,System.Globalization.CultureInfo)
-  name.vb: ConvertBack(Object, Type(), Object, CultureInfo)
-  fullName: ElectronicParts.Converter.ConnectionToMarginConverter.ConvertBack(System.Object, System.Type[], System.Object, System.Globalization.CultureInfo)
-  fullName.vb: ElectronicParts.Converter.ConnectionToMarginConverter.ConvertBack(System.Object, System.Type(), System.Object, System.Globalization.CultureInfo)
-  nameWithType: ConnectionToMarginConverter.ConvertBack(Object, Type[], Object, CultureInfo)
-  nameWithType.vb: ConnectionToMarginConverter.ConvertBack(Object, Type(), Object, CultureInfo)
-- uid: ElectronicParts.Converter.ConnectionToMarginConverter.ConvertBack*
-  name: ConvertBack
-  href: api/ElectronicParts.Converter.ConnectionToMarginConverter.html#ElectronicParts_Converter_ConnectionToMarginConverter_ConvertBack_
-  commentId: Overload:ElectronicParts.Converter.ConnectionToMarginConverter.ConvertBack
-  isSpec: "True"
-  fullName: ElectronicParts.Converter.ConnectionToMarginConverter.ConvertBack
-  nameWithType: ConnectionToMarginConverter.ConvertBack
 - uid: ElectronicParts.Converter.GridSizeConverter
   name: GridSizeConverter
   href: api/ElectronicParts.Converter.GridSizeConverter.html
@@ -3822,12 +3784,12 @@ references:
   commentId: T:ElectronicParts.Services.Implementations.NodeCopyService
   fullName: ElectronicParts.Services.Implementations.NodeCopyService
   nameWithType: NodeCopyService
-- uid: ElectronicParts.Services.Implementations.NodeCopyService.#ctor(ElectronicParts.Services.Implementations.IPinConnectorService)
-  name: NodeCopyService(IPinConnectorService)
-  href: api/ElectronicParts.Services.Implementations.NodeCopyService.html#ElectronicParts_Services_Implementations_NodeCopyService__ctor_ElectronicParts_Services_Implementations_IPinConnectorService_
-  commentId: M:ElectronicParts.Services.Implementations.NodeCopyService.#ctor(ElectronicParts.Services.Implementations.IPinConnectorService)
-  fullName: ElectronicParts.Services.Implementations.NodeCopyService.NodeCopyService(ElectronicParts.Services.Implementations.IPinConnectorService)
-  nameWithType: NodeCopyService.NodeCopyService(IPinConnectorService)
+- uid: ElectronicParts.Services.Implementations.NodeCopyService.#ctor(ElectronicParts.Services.Implementations.IPinConnectorService,ElectronicParts.Services.Interfaces.IPinCreatorService)
+  name: NodeCopyService(IPinConnectorService, IPinCreatorService)
+  href: api/ElectronicParts.Services.Implementations.NodeCopyService.html#ElectronicParts_Services_Implementations_NodeCopyService__ctor_ElectronicParts_Services_Implementations_IPinConnectorService_ElectronicParts_Services_Interfaces_IPinCreatorService_
+  commentId: M:ElectronicParts.Services.Implementations.NodeCopyService.#ctor(ElectronicParts.Services.Implementations.IPinConnectorService,ElectronicParts.Services.Interfaces.IPinCreatorService)
+  fullName: ElectronicParts.Services.Implementations.NodeCopyService.NodeCopyService(ElectronicParts.Services.Implementations.IPinConnectorService, ElectronicParts.Services.Interfaces.IPinCreatorService)
+  nameWithType: NodeCopyService.NodeCopyService(IPinConnectorService, IPinCreatorService)
 - uid: ElectronicParts.Services.Implementations.NodeCopyService.#ctor*
   name: NodeCopyService
   href: api/ElectronicParts.Services.Implementations.NodeCopyService.html#ElectronicParts_Services_Implementations_NodeCopyService__ctor_
@@ -4832,6 +4794,19 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.ViewModels.ConnectorViewModel.Output
   nameWithType: ConnectorViewModel.Output
+- uid: ElectronicParts.ViewModels.ConnectorViewModel.RecalculateOffsets
+  name: RecalculateOffsets()
+  href: api/ElectronicParts.ViewModels.ConnectorViewModel.html#ElectronicParts_ViewModels_ConnectorViewModel_RecalculateOffsets
+  commentId: M:ElectronicParts.ViewModels.ConnectorViewModel.RecalculateOffsets
+  fullName: ElectronicParts.ViewModels.ConnectorViewModel.RecalculateOffsets()
+  nameWithType: ConnectorViewModel.RecalculateOffsets()
+- uid: ElectronicParts.ViewModels.ConnectorViewModel.RecalculateOffsets*
+  name: RecalculateOffsets
+  href: api/ElectronicParts.ViewModels.ConnectorViewModel.html#ElectronicParts_ViewModels_ConnectorViewModel_RecalculateOffsets_
+  commentId: Overload:ElectronicParts.ViewModels.ConnectorViewModel.RecalculateOffsets
+  isSpec: "True"
+  fullName: ElectronicParts.ViewModels.ConnectorViewModel.RecalculateOffsets
+  nameWithType: ConnectorViewModel.RecalculateOffsets
 - uid: ElectronicParts.ViewModels.ConnectorViewModel.SelfConnectionInputPoint
   name: SelfConnectionInputPoint
   href: api/ElectronicParts.ViewModels.ConnectorViewModel.html#ElectronicParts_ViewModels_ConnectorViewModel_SelfConnectionInputPoint
@@ -5090,19 +5065,6 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.ViewModels.MainViewModel.CutCommand
   nameWithType: MainViewModel.CutCommand
-- uid: ElectronicParts.ViewModels.MainViewModel.DecreaseGridSize
-  name: DecreaseGridSize
-  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_DecreaseGridSize
-  commentId: P:ElectronicParts.ViewModels.MainViewModel.DecreaseGridSize
-  fullName: ElectronicParts.ViewModels.MainViewModel.DecreaseGridSize
-  nameWithType: MainViewModel.DecreaseGridSize
-- uid: ElectronicParts.ViewModels.MainViewModel.DecreaseGridSize*
-  name: DecreaseGridSize
-  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_DecreaseGridSize_
-  commentId: Overload:ElectronicParts.ViewModels.MainViewModel.DecreaseGridSize
-  isSpec: "True"
-  fullName: ElectronicParts.ViewModels.MainViewModel.DecreaseGridSize
-  nameWithType: MainViewModel.DecreaseGridSize
 - uid: ElectronicParts.ViewModels.MainViewModel.DeleteCommand
   name: DeleteCommand
   href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_DeleteCommand
@@ -5155,6 +5117,19 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.ViewModels.MainViewModel.DocumentationCommand
   nameWithType: MainViewModel.DocumentationCommand
+- uid: ElectronicParts.ViewModels.MainViewModel.DocumentationOnlineCommand
+  name: DocumentationOnlineCommand
+  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_DocumentationOnlineCommand
+  commentId: P:ElectronicParts.ViewModels.MainViewModel.DocumentationOnlineCommand
+  fullName: ElectronicParts.ViewModels.MainViewModel.DocumentationOnlineCommand
+  nameWithType: MainViewModel.DocumentationOnlineCommand
+- uid: ElectronicParts.ViewModels.MainViewModel.DocumentationOnlineCommand*
+  name: DocumentationOnlineCommand
+  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_DocumentationOnlineCommand_
+  commentId: Overload:ElectronicParts.ViewModels.MainViewModel.DocumentationOnlineCommand
+  isSpec: "True"
+  fullName: ElectronicParts.ViewModels.MainViewModel.DocumentationOnlineCommand
+  nameWithType: MainViewModel.DocumentationOnlineCommand
 - uid: ElectronicParts.ViewModels.MainViewModel.ExecutionStartLoopCommand
   name: ExecutionStartLoopCommand
   href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_ExecutionStartLoopCommand
@@ -5314,19 +5289,6 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.ViewModels.MainViewModel.HowToCommand
   nameWithType: MainViewModel.HowToCommand
-- uid: ElectronicParts.ViewModels.MainViewModel.IncreaseGridSize
-  name: IncreaseGridSize
-  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_IncreaseGridSize
-  commentId: P:ElectronicParts.ViewModels.MainViewModel.IncreaseGridSize
-  fullName: ElectronicParts.ViewModels.MainViewModel.IncreaseGridSize
-  nameWithType: MainViewModel.IncreaseGridSize
-- uid: ElectronicParts.ViewModels.MainViewModel.IncreaseGridSize*
-  name: IncreaseGridSize
-  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_IncreaseGridSize_
-  commentId: Overload:ElectronicParts.ViewModels.MainViewModel.IncreaseGridSize
-  isSpec: "True"
-  fullName: ElectronicParts.ViewModels.MainViewModel.IncreaseGridSize
-  nameWithType: MainViewModel.IncreaseGridSize
 - uid: ElectronicParts.ViewModels.MainViewModel.InputPin
   name: InputPin
   href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_InputPin
@@ -5496,6 +5458,19 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.ViewModels.MainViewModel.ReloadAssembliesCommand
   nameWithType: MainViewModel.ReloadAssembliesCommand
+- uid: ElectronicParts.ViewModels.MainViewModel.RepositionNodes
+  name: RepositionNodes()
+  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_RepositionNodes
+  commentId: M:ElectronicParts.ViewModels.MainViewModel.RepositionNodes
+  fullName: ElectronicParts.ViewModels.MainViewModel.RepositionNodes()
+  nameWithType: MainViewModel.RepositionNodes()
+- uid: ElectronicParts.ViewModels.MainViewModel.RepositionNodes*
+  name: RepositionNodes
+  href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_RepositionNodes_
+  commentId: Overload:ElectronicParts.ViewModels.MainViewModel.RepositionNodes
+  isSpec: "True"
+  fullName: ElectronicParts.ViewModels.MainViewModel.RepositionNodes
+  nameWithType: MainViewModel.RepositionNodes
 - uid: ElectronicParts.ViewModels.MainViewModel.ResetAllConnectionsCommand
   name: ResetAllConnectionsCommand
   href: api/ElectronicParts.ViewModels.MainViewModel.html#ElectronicParts_ViewModels_MainViewModel_ResetAllConnectionsCommand
@@ -5729,6 +5704,19 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.ViewModels.NodeViewModel.AddOutputPins
   nameWithType: NodeViewModel.AddOutputPins
+- uid: ElectronicParts.ViewModels.NodeViewModel.CanAddPin
+  name: CanAddPin
+  href: api/ElectronicParts.ViewModels.NodeViewModel.html#ElectronicParts_ViewModels_NodeViewModel_CanAddPin
+  commentId: P:ElectronicParts.ViewModels.NodeViewModel.CanAddPin
+  fullName: ElectronicParts.ViewModels.NodeViewModel.CanAddPin
+  nameWithType: NodeViewModel.CanAddPin
+- uid: ElectronicParts.ViewModels.NodeViewModel.CanAddPin*
+  name: CanAddPin
+  href: api/ElectronicParts.ViewModels.NodeViewModel.html#ElectronicParts_ViewModels_NodeViewModel_CanAddPin_
+  commentId: Overload:ElectronicParts.ViewModels.NodeViewModel.CanAddPin
+  isSpec: "True"
+  fullName: ElectronicParts.ViewModels.NodeViewModel.CanAddPin
+  nameWithType: NodeViewModel.CanAddPin
 - uid: ElectronicParts.ViewModels.NodeViewModel.DecreaseWidthCommand
   name: DecreaseWidthCommand
   href: api/ElectronicParts.ViewModels.NodeViewModel.html#ElectronicParts_ViewModels_NodeViewModel_DecreaseWidthCommand
@@ -6664,19 +6652,19 @@ references:
   isSpec: "True"
   fullName: ElectronicParts.Views.MainWindow.InitializeComponent
   nameWithType: MainWindow.InitializeComponent
-- uid: ElectronicParts.Views.MainWindow.SelectedItems
-  name: SelectedItems()
-  href: api/ElectronicParts.Views.MainWindow.html#ElectronicParts_Views_MainWindow_SelectedItems
-  commentId: M:ElectronicParts.Views.MainWindow.SelectedItems
-  fullName: ElectronicParts.Views.MainWindow.SelectedItems()
-  nameWithType: MainWindow.SelectedItems()
-- uid: ElectronicParts.Views.MainWindow.SelectedItems*
-  name: SelectedItems
-  href: api/ElectronicParts.Views.MainWindow.html#ElectronicParts_Views_MainWindow_SelectedItems_
-  commentId: Overload:ElectronicParts.Views.MainWindow.SelectedItems
+- uid: ElectronicParts.Views.MainWindow.SelectItems
+  name: SelectItems()
+  href: api/ElectronicParts.Views.MainWindow.html#ElectronicParts_Views_MainWindow_SelectItems
+  commentId: M:ElectronicParts.Views.MainWindow.SelectItems
+  fullName: ElectronicParts.Views.MainWindow.SelectItems()
+  nameWithType: MainWindow.SelectItems()
+- uid: ElectronicParts.Views.MainWindow.SelectItems*
+  name: SelectItems
+  href: api/ElectronicParts.Views.MainWindow.html#ElectronicParts_Views_MainWindow_SelectItems_
+  commentId: Overload:ElectronicParts.Views.MainWindow.SelectItems
   isSpec: "True"
-  fullName: ElectronicParts.Views.MainWindow.SelectedItems
-  nameWithType: MainWindow.SelectedItems
+  fullName: ElectronicParts.Views.MainWindow.SelectItems
+  nameWithType: MainWindow.SelectItems
 - uid: ElectronicParts.Views.MainWindow.ViewModel
   name: ViewModel
   href: api/ElectronicParts.Views.MainWindow.html#ElectronicParts_Views_MainWindow_ViewModel

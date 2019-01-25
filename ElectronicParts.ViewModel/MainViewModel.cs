@@ -509,6 +509,8 @@ namespace ElectronicParts.ViewModels
                             this.pinConnectorService.ManuallyAddConnectionToExistingConnections(c.Connector);
                             this.Connections.Add(c);
                         });
+                        this.reSnappingTimer.Stop();
+                        this.reSnappingTimer.Start();
                         this.Nodes.Add(nodeVm);
                     }));
             },
@@ -572,7 +574,12 @@ namespace ElectronicParts.ViewModels
                 var copiedConnectors = this.nodeCopyService.CopiedConnectors.ToList();
                 var mousePosition = this.GetMousePosition();
                 this.actionManager.Execute(new CallMethodAction(
-                    () => { this.AddItems(copiedNodes, copiedConnectors, mousePosition); },
+                    () => 
+                    {
+                        this.AddItems(copiedNodes, copiedConnectors, mousePosition);
+                        this.reSnappingTimer.Stop();
+                        this.reSnappingTimer.Start();
+                    },
                     () =>
                 {
                     foreach (var node in copiedNodes)
@@ -628,6 +635,9 @@ namespace ElectronicParts.ViewModels
                             this.pinConnectorService.ManuallyAddConnectionToExistingConnections(connVM.Connector);
                             this.Connections.Add(connVM);
                         }
+
+                        this.reSnappingTimer.Stop();
+                        this.reSnappingTimer.Start();
                     }));
                 },
             arg => !this.executionService.IsEnabled);
@@ -641,8 +651,10 @@ namespace ElectronicParts.ViewModels
                     var connsToDelete = selectedConns.Concat(this.GetConnectorViewModels(selectedNodeVms, this.Connections)).Distinct().ToList();
                     this.SelectedConntectors.Clear();
                     this.SelectedNodes.Clear();
+                    this.reSnappingTimer.Stop();
+                    this.reSnappingTimer.Start();
 
-                this.actionManager.Execute(new CallMethodAction(
+                    this.actionManager.Execute(new CallMethodAction(
                     () =>
                 {
                     // remove all connectors from UI
@@ -1333,8 +1345,14 @@ namespace ElectronicParts.ViewModels
                 Top = this.VerticalScrollerOffset + 20,
                 Left = this.HorizontalScrollerOffset + 20
             };
-            this.actionManager.Execute(new CallMethodAction(() => this.Nodes.Add(vm), () => this.Nodes.Remove(vm)));
-            vm.SnapToNewGrid(this.GridSize, false);
+            this.actionManager.Execute(new CallMethodAction(
+                () =>
+                {
+                    this.Nodes.Add(vm);
+                    this.reSnappingTimer.Stop();
+                    this.reSnappingTimer.Start();
+                }, 
+                () => this.Nodes.Remove(vm)));
         }
 
         /// <summary>
