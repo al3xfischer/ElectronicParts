@@ -60,7 +60,7 @@ namespace ElectronicParts.ViewModels.Commands
         /// </summary>
         /// <param name="parameter">A value used to decide if the command can execute or not.</param>
         /// <returns>A value indicating whether the command can execute or not.</returns>
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object parameter = null)
         {
             return this.canExecute?.Invoke(parameter) ?? true;
         }

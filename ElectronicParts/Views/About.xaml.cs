@@ -10,7 +10,6 @@
 namespace ElectronicParts.Views
 {
     using System.Reflection;
-    using System.Windows;
     using MahApps.Metro.Controls;
 
     /// <summary>

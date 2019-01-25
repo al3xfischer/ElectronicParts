@@ -26,6 +26,26 @@ namespace ElectronicParts.ViewModels
         private readonly IConnectorHelperService helperService;
 
         /// <summary>
+        /// Represents the offset needed in case of multiple outputs.
+        /// </summary>
+        private int multipleOutputOffset;
+
+        /// <summary>
+        /// Represents the offset needed in case of multiple output connections.
+        /// </summary>
+        private int multipleConnectionsOffset;
+
+        /// <summary>
+        /// Represents the offset needed always.
+        /// </summary>
+        private double defaultOffset;
+
+        /// <summary>
+        /// Represents the pin count of the containing node.
+        /// </summary>
+        private int pinCount;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ConnectorViewModel" /> class.
         /// </summary>
         /// <param name="connector">The connector represented by this view model.</param>
@@ -51,6 +71,7 @@ namespace ElectronicParts.ViewModels
             this.Output = output ?? throw new ArgumentNullException(nameof(output));
             this.DeleteCommand = deletionCommand ?? throw new ArgumentNullException(nameof(deletionCommand));
             this.helperService = helperService ?? throw new ArgumentNullException(nameof(helperService));
+            this.RecalculateOffsets();
             this.Input.OnValueChanged += this.RefreshPins;
             this.Output.OnValueChanged += this.RefreshPins;
             this.Input.PropertyChanged += this.Input_PropertyChanged;
@@ -65,29 +86,24 @@ namespace ElectronicParts.ViewModels
         {
             get
             {
-                var multipleConnectionsOffset = this.helperService.MultipleConnectionsOffset(this.Output.Pin, this.Connector);
-                var multipleOutputPinsOffset = this.helperService.GetMultipleOutputOffset(this.Output.Pin) * 10;
-
                 if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
                 {
                     if (this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
                     {
-                        double offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount);
-
-                        var step = offset < 0 ? pinCount * -10 : pinCount * 10;
+                        var step = this.defaultOffset < 0 ? this.pinCount * -10 : this.pinCount * 10;
 
                         if (this.helperService.IsInputsMore(this.Input.Pin))
                         {
-                            return new Point(this.Input.Left - (Math.Abs(offset) * 10), this.Input.Top + step);
+                            return new Point(this.Input.Left - (Math.Abs(this.defaultOffset) * 10), this.Input.Top + step);
                         }
 
-                        return new Point(this.Input.Left - (Math.Abs(offset) * 10), this.Output.Top + step);
+                        return new Point(this.Input.Left - (Math.Abs(this.defaultOffset) * 10), this.Output.Top + step);
                     }
 
-                    return new Point(this.Input.Left - (10 * multipleConnectionsOffset) - multipleOutputPinsOffset, ((this.Input.Top + this.Output.Top) / 2) + multipleOutputPinsOffset);
+                    return new Point(this.Input.Left - (10 * this.multipleConnectionsOffset) - this.multipleOutputOffset, ((this.Input.Top + this.Output.Top) / 2) + this.multipleOutputOffset);
                 }
 
-                return new Point(((this.Input.Left + this.Output.Left) / 2) + (multipleConnectionsOffset * 10) + multipleOutputPinsOffset, this.Input.Top);
+                return new Point(((this.Input.Left + this.Output.Left) / 2) + (this.multipleConnectionsOffset * 10) + this.multipleOutputOffset, this.Input.Top);
             }
         }
 
@@ -99,30 +115,23 @@ namespace ElectronicParts.ViewModels
         {
             get
             {
-                var multipleConnectionsOffset = this.helperService.MultipleConnectionsOffset(this.Output.Pin, this.Connector);
-                var multipleOutputPinsOffset = this.helperService.GetMultipleOutputOffset(this.Output.Pin) * 10;
-
                 if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
                 {
                     if (this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
                     {
-                        double offset;
-                        int pinCount;
-                        offset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out pinCount);
-
-                        var step = offset < 0 ? pinCount * -10 : pinCount * 10;
+                        var step = this.defaultOffset < 0 ? this.pinCount * -10 : this.pinCount * 10;
                         if (this.helperService.IsInputsMore(this.Input.Pin))
                         {
-                            return new Point(this.Output.Left + (Math.Abs(offset) * 10), this.Input.Top + step);
+                            return new Point(this.Output.Left + (Math.Abs(this.defaultOffset) * 10), this.Input.Top + step);
                         }
                        
-                        return new Point(this.Output.Left + (Math.Abs(offset) * 10), this.Output.Top + step);
+                        return new Point(this.Output.Left + (Math.Abs(this.defaultOffset) * 10), this.Output.Top + step);
                     }
 
-                    return new Point(this.Output.Left + (10 * multipleConnectionsOffset) + multipleOutputPinsOffset, ((this.Input.Top + this.Output.Top) / 2) + multipleOutputPinsOffset);
+                    return new Point(this.Output.Left + (10 * this.multipleConnectionsOffset) + this.multipleOutputOffset, ((this.Input.Top + this.Output.Top) / 2) + this.multipleOutputOffset);
                 }
 
-                return new Point(((this.Input.Left + this.Output.Left) / 2) + (multipleConnectionsOffset * 10) + multipleOutputPinsOffset, this.Output.Top);
+                return new Point(((this.Input.Left + this.Output.Left) / 2) + (this.multipleConnectionsOffset * 10) + this.multipleOutputOffset, this.Output.Top);
             }
         }
 
@@ -166,19 +175,15 @@ namespace ElectronicParts.ViewModels
             {
                 if (!this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
                 {
-                    var multipleConnectionsOffset = this.helperService.MultipleConnectionsOffset(this.Output.Pin, this.Connector);
-                    var multipleOutputPinsOffset = this.helperService.GetMultipleOutputOffset(this.Output.Pin) * 10;
-
                     if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
                     {
-                        return new Point(this.Input.Left - (multipleConnectionsOffset * 10) - multipleOutputPinsOffset, this.Input.Top);
+                        return new Point(this.Input.Left - (this.multipleConnectionsOffset * 10) - this.multipleOutputOffset, this.Input.Top);
                     }
 
                     return new Point(this.Input.Left, this.Input.Top);
                 }
 
-                var offset = Math.Abs(this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount));
-                return new Point(this.Input.Left - (offset * 10), this.Input.Top);
+                return new Point(this.Input.Left - (Math.Abs(this.defaultOffset) * 10), this.Input.Top);
             }
         }
 
@@ -192,19 +197,15 @@ namespace ElectronicParts.ViewModels
             {
                 if (!this.helperService.IsSelfConnecting(this.Input.Pin, this.Output.Pin))
                 {
-                    var multipleConnectionsOffset = this.helperService.MultipleConnectionsOffset(this.Output.Pin, this.Connector);
-                    var multipleOutputPinsOffset = this.helperService.GetMultipleOutputOffset(this.Output.Pin) * 10;
-
                     if (this.Output.Left > (this.Input.Left + this.Output.Left) / 2)
                     {
-                        return new Point(this.Output.Left + (multipleConnectionsOffset * 10) + multipleOutputPinsOffset, this.Output.Top);
+                        return new Point(this.Output.Left + (this.multipleConnectionsOffset * 10) + this.multipleOutputOffset, this.Output.Top);
                     }
 
                     return new Point(this.Output.Left, this.Output.Top);
                 }
 
-                var offset = Math.Abs(this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out int pinCount));
-                return new Point(this.Output.Left + (offset * 10), this.Output.Top);
+                return new Point(this.Output.Left + (Math.Abs(this.defaultOffset) * 10), this.Output.Top);
             }
         }
 
@@ -214,6 +215,17 @@ namespace ElectronicParts.ViewModels
         public void Update()
         {
             this.FirePropertyChanged(nameof(this.CurrentValue));
+        }
+
+        /// <summary>
+        /// Recalculates the offsets and updates the lines.
+        /// </summary>
+        public void RecalculateOffsets()
+        {
+            this.multipleOutputOffset = this.helperService.GetMultipleOutputOffset(this.Output.Pin);
+            this.multipleConnectionsOffset = this.helperService.MultipleConnectionsOffset(this.Output.Pin, this.Connector);
+            this.defaultOffset = this.helperService.GetOffset(this.Input.Pin, this.Output.Pin, out this.pinCount);
+            this.UpdateLine();
         }
 
         /// <summary>

@@ -235,6 +235,10 @@ namespace ElectronicParts.ViewModels
             this.reSnappingTimer.AutoReset = false;
             this.FramesPerSecond = 50;
             this.SelectedCategory = this.NodeCategories.First();
+            this.executionService.OnIsEnabledChanged += (sender, e) =>
+            {
+                this.FirePropertyChanged(nameof(CanAddNode));
+            };
 
             this.GridSnappingEnabled = true;
             this.GridSize = 10;
@@ -320,6 +324,13 @@ namespace ElectronicParts.ViewModels
                     nodes.Add(nodeViewModel);
                 }
 
+                this.nodes.Clear();
+
+                foreach (NodeViewModel node in nodes)
+                {
+                    this.nodes.Add(node);
+                }
+
                 foreach (ConnectionSnapShot connection in snapShot.Connections)
                 {
                     PinViewModel outputPinViewModel = null;
@@ -355,18 +366,11 @@ namespace ElectronicParts.ViewModels
                     connections.Add(connectorViewModel);
                 }
 
-                this.nodes.Clear();
-
-                foreach (NodeViewModel node in nodes)
-                {
-                    this.nodes.Add(node);
-                }
-
-                this.connections.Clear();
+                this.Connections.Clear();
 
                 foreach (ConnectorViewModel connection in connections)
                 {
-                    this.connections.Add(connection);
+                    this.Connections.Add(connection);
                     this.pinConnectorService.ManuallyAddConnectionToExistingConnections(connection.Connector);
                 }
 
@@ -684,7 +688,7 @@ namespace ElectronicParts.ViewModels
                 {
                     foreach (var connectionVM in this.Connections.Where(cVM => cVM.Input == inPin))
                     {
-                        connectionVM.UpdateLine();
+                        connectionVM.RecalculateOffsets();
                     }
                 }
 
@@ -692,7 +696,7 @@ namespace ElectronicParts.ViewModels
                 {
                     foreach (var connectionVM in this.Connections.Where(cVM => cVM.Output == outPin))
                     {
-                        connectionVM.UpdateLine();
+                        connectionVM.RecalculateOffsets();
                     }
                 }
             },
@@ -709,7 +713,7 @@ namespace ElectronicParts.ViewModels
                 {
                     foreach (var connectionVM in this.Connections.Where(cVM => cVM.Input == inPin))
                     {
-                        connectionVM.UpdateLine();
+                        connectionVM.RecalculateOffsets();
                     }
                 }
 
@@ -717,7 +721,7 @@ namespace ElectronicParts.ViewModels
                 {
                     foreach (var connectionVM in this.Connections.Where(cVM => cVM.Output == outPin))
                     {
-                        connectionVM.UpdateLine();
+                        connectionVM.RecalculateOffsets();
                     }
                 }
             },
@@ -1247,6 +1251,25 @@ namespace ElectronicParts.ViewModels
         }
 
         /// <summary>
+        /// Repositions nodes when the board size changed.
+        /// </summary>
+        public void RepositionNodes()
+        {
+            foreach (var node in this.Nodes)
+            {
+                if (node.Left + node.Width + 20 >= this.BoardWidth)
+                {
+                    node.Left = this.BoardWidth - node.Width - 20;
+                }
+
+                if (node.Top + (20 * node.MaxPins) >= this.BoardHeight)
+                {
+                    node.Top = this.BoardHeight - (20 * node.MaxPins);
+                }
+            }
+        }
+
+        /// <summary>
         /// Adds <see cref="IDisplayableNode"/> and <see cref="Connector"/> instances to the view model.
         /// </summary>
         /// <param name="nodes">The nodes being added.</param>
@@ -1389,12 +1412,14 @@ namespace ElectronicParts.ViewModels
                     if (createdConnector is null && createdConnectorVM is null)
                     {
                         this.MakeConnection(inPin, outPin, out createdConnectorVM, out createdConnector);
+                        createdConnectorVM.RecalculateOffsets();
                     }
                     else
                     {
                         this.pinConnectorService.TryConnectPins(createdConnectorVM.Input.Pin, createdConnectorVM.Output.Pin, out Connector newConn, true);
                         this.pinConnectorService.ManuallyAddConnectionToExistingConnections(createdConnector);
                         this.Connections.Add(createdConnectorVM);
+                        createdConnectorVM.RecalculateOffsets();
                     }
                 };
                 Action deleteAction = () => this.RemoveConnection(createdConnectorVM, createdConnector);
@@ -1482,12 +1507,9 @@ namespace ElectronicParts.ViewModels
             connectionVM = null;
             connection = null;
 
-            Connector newConnection = null;
-
-            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out newConnection, false))
+            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out connection, false))
             {
-                connection = newConnection;
-                connectionVM = new ConnectorViewModel(newConnection, input, output, this.DeleteConnectionCommand, this.connectorHelperService);
+                connectionVM = new ConnectorViewModel(connection, input, output, this.DeleteConnectionCommand, this.connectorHelperService);
                 this.Connections.Add(connectionVM);
                 try
                 {
@@ -1496,8 +1518,9 @@ namespace ElectronicParts.ViewModels
                         conn.UpdateLine();
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    this.logger.LogError(ex, "Error while creating conntectors.");
                 }
             }
 
@@ -1518,25 +1541,6 @@ namespace ElectronicParts.ViewModels
                 if (this.pinConnectorService.TryRemoveConnection(connection))
                 {
                     this.Connections.Remove(connectionVM);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Repositions nodes when the board size changed.
-        /// </summary>
-        private void RepositionNodes()
-        {
-            foreach (var node in this.Nodes)
-            {
-                if (node.Left + node.Width + 20 >= this.BoardWidth)
-                {
-                    node.Left = this.BoardWidth - node.Width - 20;
-                }
-
-                if (node.Top + (20 * node.MaxPins) >= this.BoardHeight)
-                {
-                    node.Top = this.BoardHeight - (20 * node.MaxPins);
                 }
             }
         }
