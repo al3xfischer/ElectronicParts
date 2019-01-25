@@ -5,7 +5,7 @@
 // <copyright file="NameObserver.cs" company="FHWN">
 //     Copyright ©  2019
 // </copyright>
-// <summary>Represents the NameObserver.cs class of the ElectronicParts programm</summary>
+// <summary>Represents the NameObserver class of the ElectronicParts programm</summary>
 // ***********************************************************************
 
 namespace ElectronicParts.Converter

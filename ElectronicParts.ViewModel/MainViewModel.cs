@@ -513,6 +513,7 @@ namespace ElectronicParts.ViewModels
             this.UndoCommand = new RelayCommand(
                 arg =>
             {
+                this.ResetPreviewLine();
                 this.actionManager.Undo();
             },
             arg => this.actionManager.CanUndo && !this.executionService.IsEnabled);
@@ -1407,10 +1408,11 @@ namespace ElectronicParts.ViewModels
             {
                 return;
             }
+            
+            this.ResetPossibleConnections();
 
             if (!(this.InputPin is null))
             {
-                this.ResetPossibleConnections();
                 if (this.pinConnectorService.HasConnection(this.InputPin.Pin) || !(this.OutputPin is null))
                 {
                     this.ResetPreviewLine();
