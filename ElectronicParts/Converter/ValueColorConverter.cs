@@ -5,7 +5,7 @@
 // <copyright file="ValueColorConverter.cs" company="FHWN">
 //     Copyright ©  2019
 // </copyright>
-// <summary>Represents the ValueColorConverter.cs class of the ElectronicParts programm</summary>
+// <summary>Represents the ValueColorConverter class of the ElectronicParts programm</summary>
 // ***********************************************************************
 
 namespace ElectronicParts.Converter

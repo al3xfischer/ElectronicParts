@@ -5,7 +5,7 @@
 // <copyright file="IntToPointMulitConverter.cs" company="FHWN">
 //     Copyright ©  2019
 // </copyright>
-// <summary>Represents the IntToPointMulitConverter.cs class of the ElectronicParts programm</summary>
+// <summary>Represents the IntToPointMulitConverter class of the ElectronicParts programm</summary>
 // ***********************************************************************
 
 namespace ElectronicParts.Converter
