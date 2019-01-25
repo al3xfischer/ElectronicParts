@@ -9,9 +9,9 @@
 // ***********************************************************************
 namespace ElectronicParts.Views
 {
-    using MahApps.Metro.Controls;
     using System.Reflection;
     using System.Windows;
+    using MahApps.Metro.Controls;
 
     /// <summary>
     /// Interaction logic for the About view.

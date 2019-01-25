@@ -590,6 +590,7 @@ namespace ElectronicParts.ViewModels
             this.DeleteCommand = new RelayCommand(
                 arg =>
                 {
+                    this.ResetPreviewLine();
                     var selectedConns = this.SelectedConntectors.ToList();
                     var selectedNodeVms = this.SelectedNodes.ToList();
                     var connsToDelete = selectedConns.Concat(this.GetConnectorViewModels(selectedNodeVms, this.Connections)).Distinct().ToList();
@@ -629,12 +630,13 @@ namespace ElectronicParts.ViewModels
 
             this.CutCommand = new RelayCommand(
                 arg =>
-            {
-                var selectedConns = this.SelectedConntectors.ToList();
-                var selectedNodeVms = this.SelectedNodes.ToList();
-                var connsToDelete = selectedConns.Concat(this.GetConnectorViewModels(selectedNodeVms, this.Connections)).Distinct().ToList();
-                this.SelectedConntectors.Clear();
-                this.SelectedNodes.Clear();
+                {
+                    this.ResetPreviewLine();
+                    var selectedConns = this.SelectedConntectors.ToList();
+                    var selectedNodeVms = this.SelectedNodes.ToList();
+                    var connsToDelete = selectedConns.Concat(this.GetConnectorViewModels(selectedNodeVms, this.Connections)).Distinct().ToList();
+                    this.SelectedConntectors.Clear();
+                    this.SelectedNodes.Clear();
 
                 this.actionManager.Execute(new CallMethodAction(
                     () =>
@@ -1496,7 +1498,6 @@ namespace ElectronicParts.ViewModels
                 }
                 catch
                 {
-
                 }
             }
 
