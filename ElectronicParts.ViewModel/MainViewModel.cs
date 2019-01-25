@@ -1353,7 +1353,6 @@ namespace ElectronicParts.ViewModels
                     this.reSnappingTimer.Start();
                 }, 
                 () => this.Nodes.Remove(vm)));
-            
         }
 
         /// <summary>
