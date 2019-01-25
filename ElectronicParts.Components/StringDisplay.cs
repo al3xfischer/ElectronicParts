@@ -52,7 +52,7 @@ namespace ElectronicParts.Components
                 return;
             }
 
-            this.SetNewPicture(this.Inputs.First().Value.Current.ToString());
+            this.SetNewPicture(this.Inputs.First().Value.Current?.ToString() ?? string.Empty);
             this.PictureChanged?.Invoke(this, EventArgs.Empty);
         }
 

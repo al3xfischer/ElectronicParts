@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.App.html",
-          "hash": "CyLTS/fy8L5vBPdacM+xog=="
+          "hash": "HQI84movXt1MzipCSUYK4Q=="
         }
       },
       "is_incremental": false,
@@ -293,18 +293,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/ElectronicParts.Converter.ConnectionToMarginConverter.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/ElectronicParts.Converter.ConnectionToMarginConverter.html",
-          "hash": "xBuQA9uyBVNENPf+icYALA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/ElectronicParts.Converter.GridSizeConverter.yml",
       "output": {
         ".html": {
@@ -369,7 +357,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Converter.html",
-          "hash": "j2KYfZFNHPVfQl0G7qibWA=="
+          "hash": "et00JMiKes+TiJHA4s8EJw=="
         }
       },
       "is_incremental": false,
@@ -453,7 +441,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Models.Pin-1.html",
-          "hash": "RVo2k/3Hb1y0TXhtPb+j2g=="
+          "hash": "zbcE2hIDrPgqD2B4PIHWPQ=="
         }
       },
       "is_incremental": false,
@@ -501,7 +489,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Models.Value-1.html",
-          "hash": "RyU62p2s5/eGcn3Zeky0LQ=="
+          "hash": "aqG2epVNfduc488icUu9PA=="
         }
       },
       "is_incremental": false,
@@ -597,7 +585,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Services.Implementations.ConnectorHelperService.html",
-          "hash": "ylEK9WivNksxiLJcohp/mw=="
+          "hash": "N/qkEfCyc0npeBCUpYx+lQ=="
         }
       },
       "is_incremental": false,
@@ -645,7 +633,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Services.Implementations.NodeCopyService.html",
-          "hash": "XkXoCVujVOWZQI/ECTWNsw=="
+          "hash": "YXCwQm/RgyFtu5Twmu9w+Q=="
         }
       },
       "is_incremental": false,
@@ -861,7 +849,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.ViewModels.Commands.RelayCommand.html",
-          "hash": "OB+U4MYV2eFXsHRkZOSbpA=="
+          "hash": "rm4h6d6DTeHpwwG0bHHdnQ=="
         }
       },
       "is_incremental": false,
@@ -885,7 +873,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.ViewModels.ConnectorViewModel.html",
-          "hash": "rX1+OV+X++5NgVN58+ILcw=="
+          "hash": "prhGxCtC6Ul7iH6+6Y7zQw=="
         }
       },
       "is_incremental": false,
@@ -921,7 +909,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.ViewModels.MainViewModel.html",
-          "hash": "1sUZt8nLFBnFw98+Zr4QvA=="
+          "hash": "03wj5ugk6I1ywl9qO1xXZw=="
         }
       },
       "is_incremental": false,
@@ -933,7 +921,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.ViewModels.NodeViewModel.html",
-          "hash": "AkBO5nNgYDyP5XXDzkArUg=="
+          "hash": "HrgwgrhMYgcv6vNsHRNKPQ=="
         }
       },
       "is_incremental": false,
@@ -1005,7 +993,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Views.About.html",
-          "hash": "Pal9kJWeP22V3c+22u7X6w=="
+          "hash": "KrlQiyQukqa0hWxy0HwgbA=="
         }
       },
       "is_incremental": false,
@@ -1017,7 +1005,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Views.AddPins.html",
-          "hash": "8eJ4u1Nyj9qbqCFSKGyiAw=="
+          "hash": "qhcJywitzY701mz52uE1UA=="
         }
       },
       "is_incremental": false,
@@ -1029,7 +1017,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Views.Connection.html",
-          "hash": "I7fDag5AElgMMTnAuorG9A=="
+          "hash": "mW88HnTeHc8PjhkiumLXvg=="
         }
       },
       "is_incremental": false,
@@ -1041,7 +1029,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Views.MainWindow.html",
-          "hash": "OE9z6V3Hcy/3DaeFQXpOew=="
+          "hash": "btbm+EiZwX9zsZX+vxmbcg=="
         }
       },
       "is_incremental": false,
@@ -1077,7 +1065,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ElectronicParts.Views.Preferences.html",
-          "hash": "hl8HVPsJ2X+KAUcCWNoDNw=="
+          "hash": "VwQLyvu+eK1lKJCwlY7P1A=="
         }
       },
       "is_incremental": false,
@@ -1317,7 +1305,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "KZSa9v5lZqpM1/fOXvVipw=="
+          "hash": "FDI7vFK71WkA1IqcYj8V4Q=="
         }
       },
       "is_incremental": false,
