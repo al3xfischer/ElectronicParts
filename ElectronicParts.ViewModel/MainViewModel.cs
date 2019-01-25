@@ -235,6 +235,10 @@ namespace ElectronicParts.ViewModels
             this.reSnappingTimer.AutoReset = false;
             this.FramesPerSecond = 50;
             this.SelectedCategory = this.NodeCategories.First();
+            this.executionService.OnIsEnabledChanged += (sender, e) =>
+            {
+                this.FirePropertyChanged(nameof(CanAddNode));
+            };
 
             this.GridSnappingEnabled = true;
             this.GridSize = 10;
@@ -1247,6 +1251,25 @@ namespace ElectronicParts.ViewModels
         }
 
         /// <summary>
+        /// Repositions nodes when the board size changed.
+        /// </summary>
+        public void RepositionNodes()
+        {
+            foreach (var node in this.Nodes)
+            {
+                if (node.Left + node.Width + 20 >= this.BoardWidth)
+                {
+                    node.Left = this.BoardWidth - node.Width - 20;
+                }
+
+                if (node.Top + (20 * node.MaxPins) >= this.BoardHeight)
+                {
+                    node.Top = this.BoardHeight - (20 * node.MaxPins);
+                }
+            }
+        }
+
+        /// <summary>
         /// Adds <see cref="IDisplayableNode"/> and <see cref="Connector"/> instances to the view model.
         /// </summary>
         /// <param name="nodes">The nodes being added.</param>
@@ -1482,12 +1505,9 @@ namespace ElectronicParts.ViewModels
             connectionVM = null;
             connection = null;
 
-            Connector newConnection = null;
-
-            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out newConnection, false))
+            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out connection, false))
             {
-                connection = newConnection;
-                connectionVM = new ConnectorViewModel(newConnection, input, output, this.DeleteConnectionCommand, this.connectorHelperService);
+                connectionVM = new ConnectorViewModel(connection, input, output, this.DeleteConnectionCommand, this.connectorHelperService);
                 this.Connections.Add(connectionVM);
                 try
                 {
@@ -1496,8 +1516,9 @@ namespace ElectronicParts.ViewModels
                         conn.UpdateLine();
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    this.logger.LogError(ex, "Error while creating conntectors.");
                 }
             }
 
@@ -1518,25 +1539,6 @@ namespace ElectronicParts.ViewModels
                 if (this.pinConnectorService.TryRemoveConnection(connection))
                 {
                     this.Connections.Remove(connectionVM);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Repositions nodes when the board size changed.
-        /// </summary>
-        private void RepositionNodes()
-        {
-            foreach (var node in this.Nodes)
-            {
-                if (node.Left + node.Width + 20 >= this.BoardWidth)
-                {
-                    node.Left = this.BoardWidth - node.Width - 20;
-                }
-
-                if (node.Top + (20 * node.MaxPins) >= this.BoardHeight)
-                {
-                    node.Top = this.BoardHeight - (20 * node.MaxPins);
                 }
             }
         }

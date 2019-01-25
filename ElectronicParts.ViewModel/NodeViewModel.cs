@@ -75,6 +75,7 @@ namespace ElectronicParts.ViewModels
             this.Top = 18;
             this.Left = 20;
             this.Width = 50;
+            this.executionService.OnIsEnabledChanged += (sender, e) => this.FirePropertyChanged(nameof(this.CanAddPin));
 
             this.IncreaseWidthCommand = new RelayCommand(arg =>
             {
@@ -90,7 +91,8 @@ namespace ElectronicParts.ViewModels
                 this.FirePropertyChanged(string.Empty);
             });
 
-            this.ActivateCommand = new RelayCommand(arg =>
+            this.ActivateCommand = new RelayCommand(
+                arg =>
             {
                 this.Node.Activate();
                 if (!(this.Inputs is null))
@@ -108,7 +110,8 @@ namespace ElectronicParts.ViewModels
                         output.Update();
                     }
                 }
-            });
+            },
+            arg => this.executionService.IsEnabled);
 
             try
             {
@@ -161,6 +164,12 @@ namespace ElectronicParts.ViewModels
         /// </summary>
         /// <value>The label of the node.</value>
         public string Label { get => this.Node.Label; }
+
+        /// <summary>
+        /// Gets a value indicating whether pins can be added.
+        /// </summary>
+        /// <value>Whether pins can be added.</value>
+        public bool CanAddPin { get => !this.executionService.IsEnabled; }
 
         /// <summary>
         /// Gets or sets the left of the node.
