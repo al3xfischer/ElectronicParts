@@ -118,7 +118,7 @@ namespace ElectronicParts.Views
             this.boardScrollTimer.Elapsed += (sender, e) =>
             {
                 this.boardScrollTimer.Stop();
-                Task.Run(() =>  this.ScrollBoard());
+                Task.Run(() => this.ScrollBoard());
             };
             this.boardScrollTimer.Interval = 300;
         }
@@ -149,8 +149,10 @@ namespace ElectronicParts.Views
         /// <summary>
         /// Selects the items.
         /// </summary>
-        public void SelectedItems()
+        public void SelectItems()
         {
+            this.ViewModel.SelectedNodes.Clear();
+            this.ViewModel.SelectedConntectors.Clear();
             System.Windows.Point currentMousePosition = Mouse.GetPosition(this.canvas);
             var left = Math.Min(currentMousePosition.X, this.anchorPoint.X);
             var top = Math.Min(currentMousePosition.Y, this.anchorPoint.Y);
@@ -272,7 +274,7 @@ namespace ElectronicParts.Views
                 this.selectionRectangle.Visibility = Visibility.Visible;
             }
 
-            this.SelectedItems();
+            this.SelectItems();
         }
 
         /// <summary>
@@ -500,42 +502,47 @@ namespace ElectronicParts.Views
 
             if (e.LeftButton == MouseButtonState.Pressed && !this.isDragging && this.currentNode is null && this.startPoint.HasValue)
             {
-                var currentPosition = e.GetPosition(this.canvas);
-
-                foreach (var nodeVm in this.ViewModel.SelectedNodes)
-                {
-                    nodeVm.Left -= this.startPoint.Value.X - currentPosition.X;
-                    nodeVm.Top -= this.startPoint.Value.Y - currentPosition.Y;
-                }
-
-                var left = Canvas.GetLeft(this.rectangle);
-                var top = Canvas.GetTop(this.rectangle);
-                left -= this.startPoint.Value.X - currentPosition.X;
-                top -= this.startPoint.Value.Y - currentPosition.Y;
-                Canvas.SetLeft(this.rectangle, left);
-                Canvas.SetTop(this.rectangle, top);
-                this.startPoint = currentPosition;
-                this.movedSelection = true;
+                this.MoveSelection();
             }
 
             if (e.LeftButton == MouseButtonState.Pressed && !(this.currentNode is null) && !this.isDragging)
             {
-                var point = e.GetPosition(this.canvas);
-
-                if (this.currentNode is null || point.X <= 0 || point.Y <= 0 || point.X + this.currentNode.Width >= this.canvas.ActualWidth || point.Y + ((this.currentNode.MaxPins - 1) * 20) >= this.canvas.ActualHeight)
-                {
-                    return;
-                }
-
-                this.currentNode.Left = (int)point.X - 40;
-                this.currentNode.Top = (int)point.Y - 20;
-                if (this.ViewModel.GridSnappingEnabled)
-                {
-                    this.currentNode.SnapToNewGrid(this.ViewModel.GridSize, false);
-                }
+                this.MoveNode();
             }
 
-            var mousePoint = e.GetPosition(this.canvas);
+            this.MovePreview();
+
+            var mousePosition = e.GetPosition(this.boardScroller);
+            if (((mousePosition.X > 0 && mousePosition.X < this.boardScroller.ActualWidth - 15) && ((mousePosition.Y <= 20 && mousePosition.Y > 0) || (mousePosition.Y > this.boardScroller.ActualHeight - 40 && mousePosition.Y < this.boardScroller.ActualHeight - 15))) || ((mousePosition.Y > 0 && mousePosition.Y < this.ActualHeight - 15) && ((mousePosition.X <= 20 && mousePosition.X > 0) || (mousePosition.X > this.boardScroller.ActualWidth - 40 && mousePosition.X < this.boardScroller.ActualWidth - 15))))
+            {
+                if (!this.startTime.HasValue)
+                {
+                    this.startTime = DateTime.Now;
+                    this.boardScrollTimer.Start();
+                }
+            }
+            else
+            {
+                this.startTime = null;
+            }
+        }
+
+        /// <summary>
+        /// Opens a new 'About' window.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args.</param>
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            new About().ShowDialog();
+        }
+
+        /// <summary>
+        /// Moves the preview.
+        /// </summary>
+        private void MovePreview()
+        {
+            var mousePoint = Mouse.GetPosition(this.canvas);
 
             if (this.ViewModel.InputPin is null && this.ViewModel.OutputPin is null)
             {
@@ -552,57 +559,63 @@ namespace ElectronicParts.Views
             {
                 this.SetPreviewLineStartPosition(this.ViewModel.OutputPin, mousePoint);
             }
-
-            var mousePosition = e.GetPosition(this.boardScroller);
-            if ((mousePosition.X > 0 && mousePosition.X < this.boardScroller.ActualWidth) && ((mousePosition.Y <= 20 && mousePosition.Y > 0) || (mousePosition.Y > this.boardScroller.ActualHeight - 40 && mousePosition.Y < this.boardScroller.ActualHeight)) || (mousePosition.Y > 0 && mousePosition.Y < this.ActualHeight) && ((mousePosition.X <= 20 && mousePosition.X > 0) || (mousePosition.X > this.boardScroller.ActualWidth - 40 && mousePosition.X < this.boardScroller.ActualWidth)))
-            {
-                if (!this.startTime.HasValue)
-                {
-                    this.startTime = DateTime.Now;
-                    this.boardScrollTimer.Start();
-                    return;
-                }
-                //else if (this.startTime.HasValue && (DateTime.Now.Millisecond - this.startTime.Value.Millisecond) < 300)
-                //{
-                //    return;
-                //}
-            }
-            else
-            {
-                this.boardScrollTimer.Stop();
-                this.startTime = null;
-                return;
-            }
-
-
         }
 
         /// <summary>
-        /// Opens a new 'About' window.
+        /// Moves the node.
         /// </summary>
-        /// <param name="sender">The sender of the event.</param>
-        /// <param name="e">The event args.</param>
-        private void About_Click(object sender, RoutedEventArgs e)
+        private void MoveNode()
         {
-            new About().ShowDialog();
+            var point = Mouse.GetPosition(this.canvas);
+
+            if (this.currentNode is null || point.X <= 0 || point.Y <= 0 || point.X + this.currentNode.Width >= this.canvas.ActualWidth || point.Y + ((this.currentNode.MaxPins - 1) * 20) >= this.canvas.ActualHeight)
+            {
+                return;
+            }
+
+            this.currentNode.Left = (int)point.X - 40;
+            this.currentNode.Top = (int)point.Y - 20;
+            if (this.ViewModel.GridSnappingEnabled)
+            {
+                this.currentNode.SnapToNewGrid(this.ViewModel.GridSize, false);
+            }
         }
 
+        /// <summary>
+        /// Moves the selected items.
+        /// </summary>
+        private void MoveSelection()
+        {
+            var currentPosition = Mouse.GetPosition(this.canvas);
+
+            foreach (var nodeVm in this.ViewModel.SelectedNodes)
+            {
+                nodeVm.Left -= this.startPoint.Value.X - currentPosition.X;
+                nodeVm.Top -= this.startPoint.Value.Y - currentPosition.Y;
+            }
+
+            var left = Canvas.GetLeft(this.rectangle);
+            var top = Canvas.GetTop(this.rectangle);
+            left -= this.startPoint.Value.X - currentPosition.X;
+            top -= this.startPoint.Value.Y - currentPosition.Y;
+            Canvas.SetLeft(this.rectangle, left);
+            Canvas.SetTop(this.rectangle, top);
+            this.startPoint = currentPosition;
+            this.movedSelection = true;
+
+            this.ViewModel.RepositionNodes();
+        }
+
+        /// <summary>
+        /// Scrolls the board.
+        /// </summary>
         private void ScrollBoard()
         {
-            //if (!this.startTime.HasValue)
-            //{
-            //    this.startTime = DateTime.Now;
-            //    return;
-            //}
-            //else if (this.startTime.HasValue && (DateTime.Now.Millisecond - this.startTime.Value.Millisecond) < 300)
-            //{
-            //    return;
-            //}
             var mousePosition = new Point();
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                mousePosition = Mouse.GetPosition(this.canvas);
+                mousePosition = Mouse.GetPosition(this.boardScroller);
             });
 
             while (!(this.startTime is null))
@@ -643,7 +656,6 @@ namespace ElectronicParts.Views
                     }
                 }
             }
-            var z = 1;
         }
 
         /// <summary>

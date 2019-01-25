@@ -75,23 +75,24 @@ namespace ElectronicParts.ViewModels
             this.Top = 18;
             this.Left = 20;
             this.Width = 50;
-            this.executionService.OnIsEnabledChanged += (sender, e) => this.FirePropertyChanged(nameof(CanAddPin));
+            this.executionService.OnIsEnabledChanged += (sender, e) => this.FirePropertyChanged(nameof(this.CanAddPin));
 
             this.IncreaseWidthCommand = new RelayCommand(arg =>
             {
                 this.Width += 20;
                 this.UpdatePosition();
                 this.FirePropertyChanged(string.Empty);
-            },arg => !this.executionService.IsEnabled);
+            });
 
             this.DecreaseWidthCommand = new RelayCommand(arg =>
             {
                 this.Width -= 20;
                 this.UpdatePosition();
                 this.FirePropertyChanged(string.Empty);
-            },arg => !this.executionService.IsEnabled);
+            });
 
-            this.ActivateCommand = new RelayCommand(arg =>
+            this.ActivateCommand = new RelayCommand(
+                arg =>
             {
                 this.Node.Activate();
                 if (!(this.Inputs is null))
@@ -109,7 +110,8 @@ namespace ElectronicParts.ViewModels
                         output.Update();
                     }
                 }
-            },arg => this.executionService.IsEnabled);
+            },
+            arg => this.executionService.IsEnabled);
 
             try
             {
