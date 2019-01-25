@@ -235,6 +235,10 @@ namespace ElectronicParts.ViewModels
             this.reSnappingTimer.AutoReset = false;
             this.FramesPerSecond = 50;
             this.SelectedCategory = this.NodeCategories.First();
+            this.executionService.OnIsEnabledChanged += (sender, e) =>
+            {
+                this.FirePropertyChanged(nameof(CanAddNode));
+            };
 
             this.GridSnappingEnabled = true;
             this.GridSize = 10;
@@ -1478,9 +1482,8 @@ namespace ElectronicParts.ViewModels
             connectionVM = null;
             connection = null;
 
-            Connector newConnection = null;
 
-            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out newConnection, false))
+            if (this.pinConnectorService.TryConnectPins(input.Pin, output.Pin, out Connector newConnection, false))
             {
                 connection = newConnection;
                 connectionVM = new ConnectorViewModel(newConnection, input, output, this.DeleteConnectionCommand, this.connectorHelperService);
