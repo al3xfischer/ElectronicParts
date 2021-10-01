@@ -1,4 +1,4 @@
-# ElectronicParts
+# Electronic Parts
 ### Documentation:
 https://bleialf.synology.me/docu
 
