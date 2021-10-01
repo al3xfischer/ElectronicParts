@@ -11,27 +11,27 @@
 namespace Shared
 {
     /// <summary>
-    /// The available types of nodes.
+    ///     The available types of nodes.
     /// </summary>
     public enum NodeType
     {
         /// <summary>
-        /// A logical node.
+        ///     A logical node.
         /// </summary>
         Logic,
 
         /// <summary>
-        /// A display node.
+        ///     A display node.
         /// </summary>
         Display,
 
         /// <summary>
-        /// A source node.
+        ///     A source node.
         /// </summary>
         Source,
 
         /// <summary>
-        /// A node which can be switch on/off.
+        ///     A node which can be switch on/off.
         /// </summary>
         Switch
     }
