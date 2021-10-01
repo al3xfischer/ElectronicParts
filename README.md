@@ -1,6 +1,3 @@
-# Electronic Parts
-### Documentation:
-https://bleialf.synology.me/docu
+# ElectronicParts
 
-
-# You are welcome to change this repo
+## You are welcome to change this repo
