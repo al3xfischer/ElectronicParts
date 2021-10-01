@@ -7,18 +7,19 @@
 // </copyright>
 // <summary>Represents the Extensions class of the ElectronicParts.Services project</summary>
 // ***********************************************************************
+
+using System.Collections.Generic;
+using System.Linq;
+
 namespace ElectronicParts.Services.Extensions
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     /// <summary>
-    /// Represents the <see cref="Extensions"/> class of the ElectronicParts.Services application.
+    ///     Represents the <see cref="Extensions" /> class of the ElectronicParts.Services application.
     /// </summary>
     public static class Extensions
     {
         /// <summary>
-        /// Returns the index of a given object within an IEnumerable. Using the default EqualityComparer.
+        ///     Returns the index of a given object within an IEnumerable. Using the default EqualityComparer.
         /// </summary>
         /// <typeparam name="T">Represents the type of the value.</typeparam>
         /// <param name="input">The input enumerable.</param>
@@ -30,7 +31,7 @@ namespace ElectronicParts.Services.Extensions
         }
 
         /// <summary>
-        /// Returns the index of a given object within an IEnumerable. Using the default EqualityComparer.
+        ///     Returns the index of a given object within an IEnumerable. Using the default EqualityComparer.
         /// </summary>
         /// <typeparam name="T">Represents the type of the value.</typeparam>
         /// <param name="input">The input enumerable.</param>
@@ -41,7 +42,7 @@ namespace ElectronicParts.Services.Extensions
         {
             comparer = comparer ?? EqualityComparer<T>.Default;
             var found = input
-                .Select((a, i) => new { a, i })
+                .Select((a, i) => new {a, i})
                 .FirstOrDefault(x => comparer.Equals(x.a, value));
             return found == null ? -1 : found.i;
         }
