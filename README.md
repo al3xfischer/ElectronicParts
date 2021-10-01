@@ -1,8 +1,4 @@
-# ElectronicParts
-An application to simulate logic circuits.
+# Electronic Parts
 
-### Documentation:
-https://bleialf.synology.me/docu
-
-
-# You are welcome to change this repo
+## You are welcome to change this repo
+But please don't break anything.
