@@ -11,12 +11,12 @@
 namespace Shared
 {
     /// <summary>
-    /// An interface used for values.
+    ///     An interface used for values.
     /// </summary>
     public interface IValue
     {
         /// <summary>
-        /// Gets or sets the current value.
+        ///     Gets or sets the current value.
         /// </summary>
         /// <value>The current value.</value>
         object Current { get; set; }

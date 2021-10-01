@@ -8,52 +8,52 @@
 // <summary>Represents the INode interface.</summary>
 // ***********************************************************************
 
+using System.Collections.Generic;
+
 namespace Shared
 {
-    using System.Collections.Generic;
-
     /// <summary>
-    /// An interface used for logic nodes.
+    ///     An interface used for logic nodes.
     /// </summary>
     public interface INode
     {
         /// <summary>
-        /// Gets the description of the node.
+        ///     Gets the description of the node.
         /// </summary>
         /// <value>The description of the node.</value>
         string Description { get; }
 
         /// <summary>
-        /// Gets a collection of input pins represented as <see cref="IPin"/> instances.
+        ///     Gets a collection of input pins represented as <see cref="IPin" /> instances.
         /// </summary>
-        /// <value>A collection of <see cref="IPin"/> instances.</value>
+        /// <value>A collection of <see cref="IPin" /> instances.</value>
         ICollection<IPin> Inputs { get; }
 
         /// <summary>
-        /// Gets the label of the node.
+        ///     Gets the label of the node.
         /// </summary>
         /// <value>The label of the node.</value>
         string Label { get; }
 
         /// <summary>
-        /// Gets a collection of output pins represented as <see cref="IPin"/> instances.
+        ///     Gets a collection of output pins represented as <see cref="IPin" /> instances.
         /// </summary>
-        /// <value>A collection of <see cref="IPin"/> instances.</value>
+        /// <value>A collection of <see cref="IPin" /> instances.</value>
         ICollection<IPin> Outputs { get; }
 
         /// <summary>
-        /// Gets the <see cref="NodeType"/> of the pin.
+        ///     Gets the <see cref="NodeType" /> of the pin.
         /// </summary>
-        /// <value>The <see cref="NodeType"/> of the pin.</value>
+        /// <value>The <see cref="NodeType" /> of the pin.</value>
         NodeType Type { get; }
 
         /// <summary>
-        /// Activates the node.
+        ///     Activates the node.
         /// </summary>
         void Activate();
 
         /// <summary>
-        /// Executes the node.
+        ///     Executes the node.
         /// </summary>
         void Execute();
     }
