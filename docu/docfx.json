@@ -9,7 +9,7 @@
           "exclude": [
             "TeamProject2/**"
           ],
-          "src" : "../.."
+          "src": "../.."
         }
       ],
       "dest": "api",
@@ -65,7 +65,6 @@
     "cleanupCacheHistory": false,
     "disableGitFeatures": false
   },
-
   "pdf": {
     "content": [
       {
