@@ -38,7 +38,7 @@ namespace ElectronicParts.ViewModels
         /// <summary>
         /// Contains the timer.
         /// </summary>
-        private Timer timer;
+        private readonly Timer timer;
 
         /// <summary>
         /// Contains a value indicating whether the pin can be connected.
